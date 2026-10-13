@@ -6,6 +6,7 @@ import json
 from capstone_agent.domain.llm_response import LLMResponse
 
 VERSION = "phase3-v1"
+DEFAULT_VARIANT = "C"  # v3 development selection; final safety acceptance remains separate.
 STRATEGIES = {
     "A": "You are a polite e-commerce customer support assistant. Help the customer clearly.",
     "B": "Identify all customer intents. Provide brief plan summaries (not private reasoning), "

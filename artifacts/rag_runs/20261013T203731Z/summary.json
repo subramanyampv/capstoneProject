@@ -1,0 +1,46 @@
+{
+  "case_ids": [
+    "R01",
+    "R02",
+    "R05",
+    "R07",
+    "R08",
+    "R09",
+    "R10",
+    "R12",
+    "R13",
+    "R15"
+  ],
+  "dataset_sha256": "b3838a055e756d445934df6796de70b6ae69cd9fc0261e91932ec44d23d9aa94",
+  "settings": {
+    "provider": "openai_compatible",
+    "model": "qwen3.7-max",
+    "timeout_seconds": 20.0,
+    "max_retries": 1,
+    "response_format": "json_object",
+    "temperature": 0.0,
+    "max_completion_tokens": 1200,
+    "enable_thinking": false
+  },
+  "index_version": "v1",
+  "threshold": 0.464133,
+  "results": {
+    "no_rag": {
+      "validated": 9,
+      "errors": 1,
+      "cited_outputs": 0,
+      "success_status": 0,
+      "escalation_classification": 0,
+      "output_validation": "Citation resolution and syntactic numeric grounding; not semantic faithfulness or final safety acceptance."
+    },
+    "rag": {
+      "validated": 10,
+      "errors": 0,
+      "cited_outputs": 9,
+      "success_status": 7,
+      "escalation_classification": 1,
+      "output_validation": "Citation resolution and syntactic numeric grounding; not semantic faithfulness or final safety acceptance."
+    }
+  },
+  "limits": "Single-agent Phase 4 experiment, not final multi-agent workflow. No records/tools/tickets. Guard failures are errors, not fabricated-claim passes. DeepEval faithfulness and human calibration pending."
+}

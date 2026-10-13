@@ -1,0 +1,2 @@
+# Preserve the supplied authoritative plan byte-for-byte, including its final blank lines.
+docs/architecture_and_plan.md whitespace=-blank-at-eof

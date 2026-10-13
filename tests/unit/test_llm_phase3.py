@@ -239,3 +239,28 @@ def test_invalid_provider_envelopes_fail_safely(payload):
 def test_prompt_hashes_are_distinct_and_stable():
     assert len({prompt_hash(v) for v in "ABC"}) == 3
     assert prompt_hash("C") == prompt_hash("C")
+
+
+def test_v3_default_and_input_limit():
+    from capstone_agent.main import build_parser
+    assert build_parser().parse_args(["llm-ask", "return question"]).prompt == "C"
+    fake = FakeClient()
+    with pytest.raises(ValueError, match="2000"):
+        respond("x" * 2001, fake, variant="C", today=TODAY)
+    assert fake.messages == []
+
+
+def test_v3_model_aliases_and_deferred_ui_defaults(tmp_path, monkeypatch):
+    from capstone_agent.config import show_deferred_ui
+    for name in ["CAPSTONE_LLM_PROVIDER", "MODEL_BASE_URL", "MODEL_NAME", "MODEL_API_KEY", "UI_SHOW_DEFERRED"]:
+        monkeypatch.delenv(name, raising=False)
+    env = tmp_path / ".env"
+    env.write_text('CAPSTONE_LLM_PROVIDER=openai_compatible\nMODEL_BASE_URL=http://localhost:1234/v1\nMODEL_NAME=canonical-model\nMODEL_API_KEY=synthetic-key\n')
+    config = LLMConfig.from_env(env)
+    assert config.model == "canonical-model" and config.api_key == "synthetic-key"
+    assert not show_deferred_ui(env)
+    monkeypatch.setenv("UI_SHOW_DEFERRED", "true")
+    assert show_deferred_ui(env)
+    monkeypatch.setenv("UI_SHOW_DEFERRED", "invalid")
+    with pytest.raises(ConfigurationError):
+        show_deferred_ui(env)

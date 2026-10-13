@@ -1,48 +1,19 @@
-# Engineering & Product Justification
+# Engineering and product justification — v3
 
-Status: **initial decisions recorded from the architecture plan; revisit at Phase 9
-with measured evidence. No results claimed.**
+Authority: [Architecture and Plan v3](architecture_and_plan.md), sections 4, 18 and 19. Final outcome measurements are pending.
 
-## Key decisions
-| Area | Decision |
+| Decision | Rationale |
 |---|---|
-| Business scope | Tier-1 e-commerce support: order status, returns, shipping, product questions, escalation |
-| Baseline vs. target | Demonstrate rule-based single-agent baseline and each stage before the final multi-agent build |
-| Authority boundaries | LLM interprets and drafts; deterministic policy + authorization services decide eligibility and action permission |
-| Knowledge sources | Policy/catalog/FAQ via RAG; order status and shipment events via structured mock services |
-| Transactions | Simulated writes only; exact-action confirmation, authorization, result verification |
-| Feedback | Bounded, auditable configuration changes; raw feedback never rewrites policy or disables safeguards |
-| Framework strategy | Plain Python interfaces first; orchestration framework only if it materially improves tracing/routing/maintainability |
-| Monitoring | Structured logs + trace IDs first; one tracing backend only if available and useful |
+| LangChain + LangGraph | Framework Track A; explicit routing, bounded agents and control state |
+| Three specialists / six tools | Minimal genuine multi-agent design with clear authority boundaries |
+| Deterministic guards | LLM interpretation cannot remove safety flags or grant permissions |
+| Local Voyage-4-nano + Chroma | One embedding model; local document/query representation; version metadata and persistence |
+| Mock escalation as the only write | Focus on support resolution; defer transaction confirmation complexity |
+| In-process memory + style profile | Demonstrate follow-ups/reset and reversible adaptation with bounded retention |
+| JSONL primary; masked LangSmith opt-in | Reproducible local evidence plus visual routing traces |
+| DeepEval + deterministic gates + human calibration | Standardized quality measurement without judge-controlled safety |
+| Development default Prompt C | Reviewed A/B outputs invent policy windows; C is faster, but known failures require later guards |
 
-## Why supervisor–specialist (and its risk)
-One orchestrator owns routing, plan execution, state transitions, budgets, final
-assembly; specialists stay narrow and bounded. Main risk: multi-agent complexity
-reducing reliability — mitigated by narrow specialists, bounded delegation, and
-actually *measuring* the value of delegation (vs. single-agent paths).
+Knowledge graph, distance/weather delivery engine, external commerce APIs, extended corpus, asymmetric hosted embeddings and return/refund/cancellation writes are deferred until the initial product succeeds. Their historical code is preserved and excluded from default UI/evaluation.
 
-## Risk register -> mitigations
-| Risk | Mitigation |
-|---|---|
-| Agents conflict | Central policy service + validated specialist results |
-| Irrelevant RAG evidence | Labeled retrieval set, ranking metrics, calibrated threshold, abstention |
-| False claim of action success | Validated tool results + post-action state verification |
-| Feedback weakens safety | Whitelisted adaptive params; policy/safety immutable to feedback |
-| Memory retains sensitive data | Minimize retention, separate stores, tested reset/deletion |
-| Averages hide safety failures | Hard safety gates independent of aggregate quality |
-| Framework lock-in | Framework-independent domain logic, pinned dependencies |
-| Scope creep | Synthetic data, local deployment, simulated writes, small corpus |
-
-## Trace-stage capture (observability)
-Request entry (trace ID, timestamp, sanitized intent) · safety gateway (decision
-category, rule IDs) · orchestration (specialist, plan steps, iterations) · retrieval
-(index version, source IDs, top-k, scores) · tool execution (name, duration, status,
-retries) · model invocation (model ID, prompt version, latency, tokens if available) ·
-final response (outcome, citation IDs, escalation state) · error (category, recovery
-path, sanitized diagnostics). **Never log private chain-of-thought**; record plan
-summaries, decisions, evidence refs, observable tool events.
-
-## Roadmap priorities
-Per-phase (see README status). Open items to resolve with evidence at Phase 9:
-provider/embedding choice performance, whether an orchestration framework earns
-adoption, whether to add the deferred API layer.
+The risks are latency from sequential LLM calls, small labeled datasets, same-model judging, lexical safety misses and simulated identity. Measure and disclose them. Future work follows v3's roadmap, including parallel routing, an independent judge, confirmed actions and durable checkpointing.

@@ -1,3 +1,5 @@
+> Historical run report. Metrics remain valid; v3 now selects Prompt C for development. See [current comparison](prompt_comparison.md). The earlier selection decision below is preserved as history.
+
 # Phase 3 live prompt comparison — 2026-10-12 (America/New_York)
 
 Run ID: `20261013T030651Z-b48a462e`. Timestamp in the directory name is UTC.

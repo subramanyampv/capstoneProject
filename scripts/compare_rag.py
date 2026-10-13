@@ -1,0 +1,54 @@
+"""Run the same ten frozen policy queries with retrieval disabled/enabled."""
+
+import hashlib
+import json
+from datetime import datetime, timezone
+from pathlib import Path
+
+from capstone_agent.config import LLMConfig
+from capstone_agent.langchain_client import LangChainChatClient
+from capstone_agent.retrieval.chroma_store import PolicySearch
+from capstone_agent.retrieval.embeddings_voyage import VoyageNanoEmbeddings
+from capstone_agent.retrieval.grounded_answer import answer
+from capstone_agent.safety.redaction import sanitize_data
+
+ROOT = Path(__file__).resolve().parents[1]
+CASES = ['R01', 'R02', 'R05', 'R07', 'R08', 'R09', 'R10', 'R12', 'R13', 'R15']
+
+
+def main():
+    configuration = json.loads((ROOT / "config/retrieval.json").read_text())
+    search = PolicySearch(VoyageNanoEmbeddings(), threshold=configuration["threshold"])
+    config = LLMConfig.from_env(ROOT / ".env")
+    cases = json.loads((ROOT / "data/evaluation_cases.json").read_text())["cases"]
+    directory = ROOT / "artifacts/rag_runs" / datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    directory.mkdir(parents=True, exist_ok=False)
+    records = []
+    with LangChainChatClient(config) as client, (directory / "outputs.jsonl").open("w") as stream:
+        for case in [c for c in cases if c["id"] in CASES]:
+            for enabled in [False, True]:
+                retrieval = search.search(case["input"]) if enabled else {"results": [], "conflict": False}
+                result = answer(case["input"], client, retrieval, secrets=(config.api_key,))
+                record = {"case_id": case["id"], "retrieval_enabled": enabled, **result}
+                records.append(record); stream.write(json.dumps(record) + "\n"); stream.flush()
+                print(case["id"], "rag" if enabled else "no-rag", result["outcome"], flush=True)
+    report = {"case_ids": CASES, "dataset_sha256": hashlib.sha256((ROOT / "data/evaluation_cases.json").read_bytes()).hexdigest(),
+              "settings": config.public_settings(), "index_version": search.manifest["index_version"],
+              "threshold": search.threshold, "results": {}}
+    for enabled in [False, True]:
+        group = [r for r in records if r["retrieval_enabled"] is enabled]
+        report["results"]["rag" if enabled else "no_rag"] = {
+            "validated": sum(r["outcome"] == "validated" for r in group),
+            "errors": sum(r["outcome"] == "error" for r in group),
+            "cited_outputs": sum(bool((r["response"] or {}).get("citations")) for r in group),
+            "success_status": sum((r["response"] or {}).get("status") == "success" for r in group),
+            "escalation_classification": sum((r["response"] or {}).get("status") == "escalation_required" for r in group),
+            "output_validation": "Citation resolution and syntactic numeric grounding; not semantic faithfulness or final safety acceptance."}
+    report["limits"] = "Single-agent Phase 4 experiment, not final multi-agent workflow. No records/tools/tickets. Guard failures are errors, not fabricated-claim passes. DeepEval faithfulness and human calibration pending."
+    (directory / "summary.json").write_text(json.dumps(sanitize_data(report, (config.api_key,)), indent=2) + "\n")
+    print("Evidence:", directory)
+    return int(any(r["outcome"] == "error" for r in records))
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

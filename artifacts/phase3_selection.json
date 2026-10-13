@@ -1,0 +1,45 @@
+{
+  "architecture_version": "3.0",
+  "source_run": "20261013T030651Z-b48a462e",
+  "source_sha256": "ed198f456b738cdee09362268fa93f2afc6a9fe00289925c042515eb386bab24",
+  "selected_default": "C",
+  "selection_scope": "Development default under v3 section 14.5; not final safety acceptance.",
+  "final_safety_pass": false,
+  "aggregates": {
+    "A": {
+      "schema_valid": 65,
+      "cases": 65,
+      "median_seconds": 6.126,
+      "p95_seconds": 7.967,
+      "model_calls": 65,
+      "escalation_classification_failures": [
+        "R05",
+        "S01",
+        "S15"
+      ]
+    },
+    "B": {
+      "schema_valid": 65,
+      "cases": 65,
+      "median_seconds": 6.142,
+      "p95_seconds": 7.841,
+      "model_calls": 65,
+      "escalation_classification_failures": [
+        "R05",
+        "S15"
+      ]
+    },
+    "C": {
+      "schema_valid": 65,
+      "cases": 65,
+      "median_seconds": 5.155,
+      "p95_seconds": 6.249,
+      "model_calls": 66,
+      "escalation_classification_failures": [
+        "R05",
+        "S15"
+      ]
+    }
+  },
+  "total_tokens": 175357
+}

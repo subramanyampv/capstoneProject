@@ -1,0 +1,13 @@
+{
+  "model": "voyageai/voyage-4-nano",
+  "revision": "67fabc9bef010dabc5f6024aa1b1b6b93410426f",
+  "dimension": 2048,
+  "normalized": true,
+  "device": "cpu",
+  "elapsed_seconds": 101.884,
+  "document_count": 2,
+  "query_document_scores": [
+    0.7296,
+    0.6008
+  ]
+}

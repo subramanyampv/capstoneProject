@@ -1,0 +1,209 @@
+{
+  "version": "1.0",
+  "purpose": "Development calibration, authored before index evaluation; not an independent test set.",
+  "labels": [
+    {
+      "id": "L01",
+      "query": "Got my TrailRunners two weeks ago, can I send them back?",
+      "expected": [
+        [
+          "return_policy",
+          "window"
+        ]
+      ],
+      "answerable": true
+    },
+    {
+      "id": "L02",
+      "query": "How many days before the refund deadline kicks in for footwear?",
+      "expected": [
+        [
+          "return_policy",
+          "window"
+        ]
+      ],
+      "answerable": true
+    },
+    {
+      "id": "L03",
+      "query": "What is the standard return window?",
+      "expected": [
+        [
+          "return_policy",
+          "window"
+        ]
+      ],
+      "answerable": true
+    },
+    {
+      "id": "L04",
+      "query": "FAQ says 30 days and return policy says 15 days for my electronics speaker. Which applies?",
+      "expected": [
+        [
+          "return_policy",
+          "window"
+        ],
+        [
+          "faq",
+          "electronics-returns"
+        ]
+      ],
+      "answerable": true
+    },
+    {
+      "id": "L05",
+      "query": "Can I return a Gourmet Cheese Box?",
+      "expected": [
+        [
+          "return_policy",
+          "exclusions"
+        ]
+      ],
+      "answerable": true
+    },
+    {
+      "id": "L06",
+      "query": "Can I return something exactly 30 days after delivery?",
+      "expected": [
+        [
+          "return_policy",
+          "window"
+        ]
+      ],
+      "answerable": true
+    },
+    {
+      "id": "L07",
+      "query": "Largest refund amount without human review?",
+      "expected": [
+        [
+          "refund_policy",
+          "review-threshold"
+        ]
+      ],
+      "answerable": true
+    },
+    {
+      "id": "L08",
+      "query": "How long is standard shipping estimated to take?",
+      "expected": [
+        [
+          "shipping_policy",
+          "transit-estimates"
+        ]
+      ],
+      "answerable": true
+    },
+    {
+      "id": "L09",
+      "query": "Is delivery guaranteed?",
+      "expected": [
+        [
+          "shipping_policy",
+          "guarantees"
+        ]
+      ],
+      "answerable": true
+    },
+    {
+      "id": "L10",
+      "query": "When is an order eligible for cancellation?",
+      "expected": [
+        [
+          "cancellation_policy",
+          "eligibility"
+        ]
+      ],
+      "answerable": true
+    },
+    {
+      "id": "L11",
+      "query": "How long is the warranty on electronics?",
+      "expected": [
+        [
+          "warranty_policy",
+          "durations"
+        ]
+      ],
+      "answerable": true
+    },
+    {
+      "id": "L12",
+      "query": "Is there an opened electronics restocking fee?",
+      "expected": [
+        [
+          "return_policy",
+          "restocking"
+        ]
+      ],
+      "answerable": true
+    },
+    {
+      "id": "L13",
+      "query": "A product burned me. Does a safety incident need human review?",
+      "expected": [
+        [
+          "escalation_guidelines",
+          "safety"
+        ]
+      ],
+      "answerable": true
+    },
+    {
+      "id": "L14",
+      "query": "I want a human representative to help with my order",
+      "expected": [
+        [
+          "escalation_guidelines",
+          "human-requests"
+        ]
+      ],
+      "answerable": true
+    },
+    {
+      "id": "L15",
+      "query": "Who handles an exception after the return window ends?",
+      "expected": [
+        [
+          "return_policy",
+          "exceptions"
+        ],
+        [
+          "escalation_guidelines",
+          "exceptions"
+        ]
+      ],
+      "answerable": true
+    },
+    {
+      "id": "L16",
+      "query": "What is the return policy for live goldfish?",
+      "expected": [],
+      "answerable": false
+    },
+    {
+      "id": "L17",
+      "query": "Can I return a kayak I bought two years ago?",
+      "expected": [],
+      "answerable": false
+    },
+    {
+      "id": "L18",
+      "query": "What will the weather be this weekend?",
+      "expected": [],
+      "answerable": false
+    },
+    {
+      "id": "L19",
+      "query": "What coupon code gives a discount today?",
+      "expected": [],
+      "answerable": false
+    },
+    {
+      "id": "L20",
+      "query": "Maximum soil weight supported by the Ceramic Plant Pot Set?",
+      "expected": [],
+      "answerable": false
+    }
+  ]
+}

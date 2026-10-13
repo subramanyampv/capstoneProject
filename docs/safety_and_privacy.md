@@ -1,56 +1,13 @@
-# Safety, Policy & Transaction Controls
+# Safety and privacy — v3
 
-Keep three decisions separate — a language model must not make all three in one
-free-form response: **(1) can the system answer? (2) can it perform the action?
-(3) did the operation actually succeed?**
+Authority: [Architecture and Plan v3](architecture_and_plan.md), section 10.
 
-## Scenario behavior matrix
-| Scenario | Expected behavior | Evidence |
-|---|---|---|
-| Supported policy question | Answer with authoritative citation | Policy section/version |
-| Unknown order / missing tracking | Clarify or explain inability to verify | Tool result |
-| Eligible return | Explain eligibility; offer simulated action | Date calculation + policy |
-| Outside return window | Do not auto-approve; review if appropriate | Rule result + source |
-| Above configured threshold | Escalate; no action | Threshold + policy decision |
-| Conflicting policy versions | Do not choose arbitrarily | Conflicting source IDs |
-| Sensitive credential request | Refuse disclosure | Safety assertion |
-| Prompt injection | Treat untrusted text as data, not authority | Adversarial trace |
-| Mismatched confirmation | Reject; no action executes | Action/session/parameter match |
-| Tool failure | Graceful failure; no false success claim | Injected-failure trace |
+Implemented: shared pattern redaction for emails, SSNs, card-like numbers, bearer tokens and common credential patterns; configured-secret removal on the LLM experiment; typed output validation; no tools or writes in Phase 3; bounded repair/retry; DeepEval dotenv/telemetry disabled. Baseline CLI and file log credential echo regressions pass. LangSmith defaults off and hides input with an output metadata allowlist. Hosted ingestion and tracing failure isolation are not yet verified.
 
-## Action state machine
-`Proposed -> Validated -> Awaiting confirmation -> Executing -> Completed | Failed |
-Unknown outcome | Rejected | Cancelled | Expired | Human review`
+Planned initial-product controls: Guard-In refusal R1–R4; append-only escalation triggers T1–T6; Guard-Out G1–G8; tool identity injection and ownership checks; verified escalation result; numeric/citation/intent checks; phone/address/name minimization and opaque order/customer references in persisted records; full canary scans. Pattern redaction alone is not universal PII detection or a completed final privacy gate.
 
-| State | Transition condition |
-|---|---|
-| Proposed | Action intent created |
-| Validated | Policy, record state, permissions, parameters pass |
-| Awaiting confirmation | Exact action summary shown to user |
-| Executing | Explicit confirmation matches current pending action |
-| Completed | Tool verifies resulting state |
-| Failed | Tool reports definite failure |
-| Unknown outcome | Timeout after execution may have begun — reconcile before retry |
-| Rejected/Cancelled/Expired | Invalid params / denied / user decline / confirmation TTL elapsed |
-| Human review | Outcome cannot be established or exception needs human authority |
+Current historical baseline/experiment artifacts contain synthetic order references; they are not samples of the planned v3 logging schema. Final runtime data belongs in ignored `data/runtime/`. Raw in-memory state must be cleared at reset/expiry and must not accidentally retain tool/evidence payloads in checkpoints.
 
-Confirmation is bound to session, action ID, action type, exact parameters, and expiry.
-(Idempotency keys + reconciliation are noted for real integrations; here, simulate the
-states and test them.)
+Keep `.env` ignored and owner-readable; never paste keys in chat or templates. The old revoked key is still in existing Git history. Submission will use a fresh history-free snapshot after credential scanning; the existing repository history will not be rewritten. Hosted models receive synthetic prompts; opting into LangSmith sends filtered metadata. Embeddings/index stay local.
 
-## PII-safe logging
-- Redact/minimize sensitive fields **before** writing logs.
-- Never log credentials, API keys, tokens, or full payment details.
-- Synthetic customer/order records only.
-- Traces store only necessary source IDs and opaque record references.
-- Define access control, retention, and deletion behavior.
-- Automated synthetic-PII canary scans prove redaction works (target: 0 detected).
-
-## Runtime failure policy
-- LLM timeout: bounded safe retry, else graceful error.
-- Invalid structured output: validate, permit limited repair, then fail safely.
-- Retrieval unavailable: never invent policy facts; report limitation, escalate where appropriate.
-- Order tool unavailable: never infer current order status from memory/general knowledge.
-- Escalation tool unavailable: disclose handoff unconfirmed; documented manual fallback.
-- Possible duplicate action: reconcile before retry.
-- Missing mandatory config/secrets: fail startup validation.
+Numeric claim matching is a limited guard, not proof of semantic entailment. DeepEval/human review complement it; deterministic assertions decide safety. Observability failures must not change customer outcomes. Budget exhaustion never authorizes calls past a hard cap or an unverified `ESCALATED` outcome.

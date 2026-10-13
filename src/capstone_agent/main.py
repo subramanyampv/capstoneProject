@@ -15,7 +15,7 @@ from pathlib import Path
 PHASES = [
     (1, "problem framing & success definition — DONE"),
     (2, "rule-based Python baseline — DONE (single agent, deterministic rules)"),
-    (3, "LLM integration & prompt evaluation"),
+    (3, "LLM integration & prompt evaluation — DONE (v3 selects Prompt C; final safety open)"),
     (4, "knowledge & retrieval (RAG)"),
     (5, "tools & multi-agent orchestration"),
     (6, "planning, memory, context"),
@@ -29,7 +29,7 @@ def cmd_status(_: argparse.Namespace) -> int:
     print("capstone-agent — multi-agent e-commerce support agent")
     print("Phases:")
     for num, name in PHASES:
-        active = num == 3
+        active = num == 4
         print(f"  {'>' if active else ' '} phase {num}: {name}")
     print("\nTry:  capstone-agent ask \"Can I return order O-1001?\" --today 2026-10-12")
     print("Baseline evidence run:  scripts/run_baseline.sh")
@@ -101,6 +101,26 @@ def cmd_evaluate(args):
     return 1 if failed or incomplete else 0
 
 
+def cmd_ingest(args):
+    import json
+    from capstone_agent.retrieval.embeddings_voyage import VoyageNanoEmbeddings
+    from capstone_agent.retrieval.chroma_store import ingest
+    manifest = ingest(VoyageNanoEmbeddings(), version=args.index_version)
+    print(json.dumps(manifest, indent=2))
+    return 0
+
+
+def cmd_search_policy(args):
+    import json
+    from capstone_agent.retrieval.embeddings_voyage import VoyageNanoEmbeddings
+    from capstone_agent.retrieval.chroma_store import PolicySearch
+    from capstone_agent.safety.redaction import sanitize_data
+    result = PolicySearch(VoyageNanoEmbeddings(), version=args.index_version,
+                          threshold=args.threshold).search(args.query)
+    print(json.dumps(sanitize_data(result), indent=2))
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="capstone-agent")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -111,8 +131,9 @@ def build_parser() -> argparse.ArgumentParser:
     ask_p.set_defaults(func=cmd_ask)
     llm = sub.add_parser("llm-ask", help="Phase 3 LLM-only request; no tools/actions")
     llm.add_argument("message")
-    llm.add_argument("--prompt", choices=["A", "B", "C"], required=True,
-                     help="explicit experimental variant; no default selected yet")
+    from capstone_agent.prompts.templates import DEFAULT_VARIANT
+    llm.add_argument("--prompt", choices=["A", "B", "C"], default=DEFAULT_VARIANT,
+                     help="v3 development default C; A/B remain available for comparison")
     llm.add_argument("--env-file", default=".env")
     llm.add_argument("--today", default="2026-10-12")
     llm.set_defaults(func=cmd_llm_ask)
@@ -129,6 +150,14 @@ def build_parser() -> argparse.ArgumentParser:
     evaluate.add_argument("--judge-env-file", help="explicit separate judge provider config; enables LLM scoring")
     evaluate.add_argument("--case", action="append")
     evaluate.set_defaults(func=cmd_evaluate)
+    ingest_p = sub.add_parser("ingest", help="Build the pinned local Voyage/Chroma policy index")
+    ingest_p.add_argument("--index-version", default="v1")
+    ingest_p.set_defaults(func=cmd_ingest)
+    search = sub.add_parser("search-policy", help="Retrieve cited policy passages locally")
+    search.add_argument("query")
+    search.add_argument("--index-version", default="v1")
+    search.add_argument("--threshold", type=float, help="Override the calibrated local threshold")
+    search.set_defaults(func=cmd_search_policy)
     return parser
 
 

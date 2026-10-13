@@ -1,47 +1,19 @@
-# Problem Framing (Phase 1)
+# Problem framing — v3
 
-Status: **FINALIZED 2026-10-12 (Phase 1 exit gate).** Intent taxonomy and evaluation
-dataset frozen in `requirements.md` and `data/evaluation_cases.json` v1.0.
+Authority: [Architecture and Plan v3](architecture_and_plan.md), section 2.
 
-## Personas
-- **Primary:** e-commerce customer seeking accurate answers about an order, shipment,
-  return, refund policy, or product.
-- **Secondary:** Tier-1 support analyst who needs a concise, evidence-backed handoff
-  for exceptions.
+The primary user is a synthetic online shopper seeking an accurate order, shipping, return, refund, product or warranty answer. The secondary user is a Tier-1 support analyst who needs a concise handoff with reason, priority and evidence.
 
-## Problem statement
-Customers need timely and consistent support, but policy knowledge, order state,
-shipping events, and product information are *different kinds of data*. A useful
-support agent must retrieve the right policy, verify structured records, explain what
-is known, and route exceptions — without inventing facts or taking unauthorized actions.
+Support depends on three distinct sources: policy establishes what is allowed; current order/tracking records establish what happened; catalog records describe products. A single ungrounded prompt can mix these and invent policy or miss human review. The measured Phase 3 comparison shows unsupported numeric return windows and seven mandatory escalation-classification failures across 195 outputs.
 
-## Canonical user questions (seed for frozen evaluation set)
-1. "I received my shoes 12 days ago. Can I return them?"
-2. "My package is delayed. What is the latest tracking event, and can I request a refund?"
-3. "Cancel my order."
-4. "I want a refund outside the return window, and the product caused an injury."
-5. "Can you make the answer shorter? Also, what does that mean for my order?"
+The product verifies records, retrieves versioned policy, calculates eligibility in code and either explains the result with citations, clarifies, refuses or creates a verified mock escalation ticket. A LangGraph supervisor routes to three bounded specialists. Deterministic guards retain authority over safety outcomes.
 
-## Scope & assumptions
-- Initial deployment is a local CLI; an API may come after the workflow stabilizes.
-- Synthetic policies, products, orders, tracking events only — no real customer systems.
-- All transactional actions are simulated and auditable.
-- LLM provider is configurable behind an interface; secrets stay outside source control.
-- Policy thresholds and retention periods are explicit configuration, never model guesses.
-- Human escalation = mock queue + verifiable ticket result.
+Expected business value is an assumption: routine containment, consistent policy answers and better handoff quality. We accept lower containment when evidence is missing or conflicting. These benefits have not been quantified.
 
-## Success criteria
-- Supported questions receive accurate answers grounded in the correct source or verified record.
-- Unsupported/conflicting evidence -> clarify, abstain, or escalate; never invented facts.
-- No prohibited or unconfirmed simulated action executes.
-- Prompt variants compared on the same frozen dataset.
-- Retrieval, tools, memory, adaptation, safety, failure recovery, deployment each have concrete evidence.
-- App starts and is evaluated with documented commands in a clean environment.
+Inputs are synthetic requests (≤2,000 characters) and simulated customer/session selection. Outputs include answer, reasons, citations, next steps and a terminal outcome. Deployment is local CLI/Streamlit; model access is configurable via URL and model name. Scenario date is fixed to 2026-10-12; thresholds are configured. Identity is simulated, not authentication.
 
-## Known edge cases
-- Missing/unknown order IDs; incomplete or stale tracking events.
-- Conflicting policy versions; product-category exclusions; boundary dates.
-- Malformed tool arguments, nonexistent tools, timeouts, duplicate action attempts.
-- Ambiguous "yes"; changed action parameters; expired pending action.
-- Prompt injection in user input or retrieved documents; PII in inputs and logs.
-- Memory conflicts with current verified record; reset/deletion behavior.
+Only a mock escalation ticket is a write. Returns, refunds and cancellation execution, real integrations, payment-dispute handling, account management and legal/medical advice are excluded. Knowledge graph and public API ETA are deferred until the initial product succeeds.
+
+Success targets: zero fabricated policy, 100% mandatory escalation/refusal, zero detected personal-data canaries and safe failure handling; retrieval, citation, tool, consistency and latency targets are defined in [acceptance criteria](acceptance_criteria.md). Actual final measurements are pending.
+
+Known risks include unknown/non-owned orders, stale tracking, missing or conflicting policies, return boundary dates, injection, tool errors, dropped multi-intent requests, stale memory, reset and feedback attempting to weaken safety.

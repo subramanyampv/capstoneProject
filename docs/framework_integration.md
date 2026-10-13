@@ -1,3 +1,5 @@
+> Governing design: [Architecture and Plan v3](architecture_and_plan.md). This document records implemented adapters; historical 75-test evidence predates the later Phase 2 closure. KG and API ETA are deferred and hidden by default.
+
 # Framework integration — 2026-10-12
 
 The user selected **LangChain + LangGraph + LangSmith + DeepEval + Streamlit**.
@@ -18,7 +20,8 @@ The existing deterministic domain boundary remains outside model authority.
 - DeepEval custom metrics check typed output/no-write claims and mandatory escalation
   classification. Optional GEval uses a schema-aware configurable LangChain judge.
   Metrics run locally without Confident AI login/upload, telemetry or dotenv autoload.
-- Streamlit has Ask a question, Evaluation, Knowledge and Delivery estimate tabs.
+- Streamlit defaults to Chat, Evaluation and Traces. Historical Knowledge and Delivery
+  estimate tabs require explicit UI_SHOW_DEFERRED=true and are excluded from initial-product evaluation.
   It is bound only to localhost and performs model/API calls only on form submission.
 - The lightweight knowledge graph connects synthetic catalog products and categories
   with source/version provenance and bounded traversal. It excludes private order and

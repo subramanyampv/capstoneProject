@@ -1,0 +1,178 @@
+[
+  {
+    "query": "Got my TrailRunners two weeks ago, can I send them back?",
+    "expected": [
+      [
+        "return_policy",
+        "window"
+      ]
+    ],
+    "top_3": [
+      {
+        "authority": "faq",
+        "doc_id": "faq",
+        "evaluation_conflict": "electronics_return_window",
+        "rule_version": "2026-10-01",
+        "effective_date": "2026-10-01",
+        "version": "v1",
+        "instruction_flag": false,
+        "content_hash": "0ec6ffe7c6a7f551c7759f9fcd47da7f5a66b7610f0b60706f2cf49ad8437d5c",
+        "section_id": "shoes-returns",
+        "chunk_id": "faq:v1:shoes-returns:0",
+        "text": "Shoes returns\nFor footwear return windows and inclusive date counting, see return_policy section window. Eligibility requires a verified order and configured rules.",
+        "score": 0.441003,
+        "labeled_relevant": false,
+        "review_note": "Not the labeled governing section; similarity alone is not policy authority."
+      },
+      {
+        "content_hash": "bfde12926bb84b2a1c83fd6dced197c93bda73b40ecd1e198ecf474bc2dcf067",
+        "instruction_flag": false,
+        "evaluation_conflict": "",
+        "effective_date": "2026-10-01",
+        "doc_id": "return_policy",
+        "rule_version": "2026-10-01",
+        "authority": "policy",
+        "version": "v1",
+        "section_id": "window",
+        "chunk_id": "return_policy:v1:window:0",
+        "text": "Window\nReturns use calendar days from verified delivery, inclusive on the final day. The default return window is 30 days. Footwear and apparel have 30-day windows, home products have 30 days, and electronics have 15 days. An undelivered order has not started its return window. The earlier reported 60-day window is not current; use this version and disclose the discrepancy.",
+        "score": 0.40576,
+        "labeled_relevant": true,
+        "review_note": "Matches the labeled governing section."
+      },
+      {
+        "content_hash": "745dac3188df82a7f7c698fe26b2f8374c9ca75f2e1e207ce977d11bc9e0b838",
+        "section_id": "electronics-returns",
+        "rule_version": "2026-10-01",
+        "effective_date": "2026-10-01",
+        "instruction_flag": false,
+        "version": "v1",
+        "doc_id": "faq",
+        "evaluation_conflict": "electronics_return_window",
+        "authority": "faq",
+        "chunk_id": "faq:v1:electronics-returns:0",
+        "text": "Electronics returns\nLegacy FAQ wording says electronics, including the Bluetooth Speaker, can be returned within 30 days. This deliberately inconsistent FAQ passage is retained for conflict evaluation: return_policy v1 section window says 15 days. Both sources are applicable in the scenario and the discrepancy is unresolved. Do not use this FAQ to override policy; surface both references and escalate per escalation_guidelines section conflicts.",
+        "score": 0.393363,
+        "labeled_relevant": false,
+        "review_note": "Not the labeled governing section; similarity alone is not policy authority."
+      }
+    ]
+  },
+  {
+    "query": "FAQ says 30 days and return policy says 15 days for my electronics speaker. Which applies?",
+    "expected": [
+      [
+        "return_policy",
+        "window"
+      ],
+      [
+        "faq",
+        "electronics-returns"
+      ]
+    ],
+    "top_3": [
+      {
+        "authority": "faq",
+        "doc_id": "faq",
+        "version": "v1",
+        "instruction_flag": false,
+        "section_id": "electronics-returns",
+        "rule_version": "2026-10-01",
+        "evaluation_conflict": "electronics_return_window",
+        "content_hash": "745dac3188df82a7f7c698fe26b2f8374c9ca75f2e1e207ce977d11bc9e0b838",
+        "effective_date": "2026-10-01",
+        "chunk_id": "faq:v1:electronics-returns:0",
+        "text": "Electronics returns\nLegacy FAQ wording says electronics, including the Bluetooth Speaker, can be returned within 30 days. This deliberately inconsistent FAQ passage is retained for conflict evaluation: return_policy v1 section window says 15 days. Both sources are applicable in the scenario and the discrepancy is unresolved. Do not use this FAQ to override policy; surface both references and escalate per escalation_guidelines section conflicts.",
+        "score": 0.730083,
+        "labeled_relevant": true,
+        "review_note": "Matches the labeled governing section."
+      },
+      {
+        "evaluation_conflict": "",
+        "rule_version": "2026-10-01",
+        "effective_date": "2026-10-01",
+        "authority": "policy",
+        "content_hash": "bfde12926bb84b2a1c83fd6dced197c93bda73b40ecd1e198ecf474bc2dcf067",
+        "instruction_flag": false,
+        "version": "v1",
+        "section_id": "window",
+        "doc_id": "return_policy",
+        "chunk_id": "return_policy:v1:window:0",
+        "text": "Window\nReturns use calendar days from verified delivery, inclusive on the final day. The default return window is 30 days. Footwear and apparel have 30-day windows, home products have 30 days, and electronics have 15 days. An undelivered order has not started its return window. The earlier reported 60-day window is not current; use this version and disclose the discrepancy.",
+        "score": 0.596202,
+        "labeled_relevant": true,
+        "review_note": "Matches the labeled governing section."
+      },
+      {
+        "effective_date": "2026-10-01",
+        "doc_id": "faq",
+        "rule_version": "2026-10-01",
+        "version": "v1",
+        "instruction_flag": false,
+        "authority": "faq",
+        "evaluation_conflict": "electronics_return_window",
+        "content_hash": "0ec6ffe7c6a7f551c7759f9fcd47da7f5a66b7610f0b60706f2cf49ad8437d5c",
+        "section_id": "shoes-returns",
+        "chunk_id": "faq:v1:shoes-returns:0",
+        "text": "Shoes returns\nFor footwear return windows and inclusive date counting, see return_policy section window. Eligibility requires a verified order and configured rules.",
+        "score": 0.500235,
+        "labeled_relevant": false,
+        "review_note": "Not the labeled governing section; similarity alone is not policy authority."
+      }
+    ]
+  },
+  {
+    "query": "What will the weather be this weekend?",
+    "expected": [],
+    "top_3": [
+      {
+        "rule_version": "2026-10-01",
+        "authority": "policy",
+        "version": "v1",
+        "section_id": "guarantees",
+        "effective_date": "2026-10-01",
+        "evaluation_conflict": "",
+        "content_hash": "7cb18cdf7b62fbee16acac0257b146386bb8235d8d98ef6f7206ace6464e6837",
+        "doc_id": "shipping_policy",
+        "instruction_flag": false,
+        "chunk_id": "shipping_policy:v1:guarantees:0",
+        "text": "Guarantees\nShipping is not guaranteed. Weather/distance API estimates are deferred and are not an authoritative source for the initial product.",
+        "score": 0.302195,
+        "labeled_relevant": false,
+        "review_note": "Not the labeled governing section; similarity alone is not policy authority."
+      },
+      {
+        "doc_id": "shipping_policy",
+        "authority": "policy",
+        "content_hash": "135ceb4e5cbbf7e592a29a9237fdc269814bce9cf3b9d98eea77fb1396844585",
+        "version": "v1",
+        "evaluation_conflict": "",
+        "rule_version": "2026-10-01",
+        "effective_date": "2026-10-01",
+        "section_id": "transit-estimates",
+        "instruction_flag": false,
+        "chunk_id": "shipping_policy:v1:transit-estimates:0",
+        "text": "Transit estimates\nStandard shipping is estimated at 3 to 7 days. This range is an estimate, not a guarantee, and cannot establish an exact arrival date without a verified dispatch anchor. A carrier estimate from current tracking records takes precedence when available. Do not invent a missing carrier estimate.",
+        "score": 0.188426,
+        "labeled_relevant": false,
+        "review_note": "Not the labeled governing section; similarity alone is not policy authority."
+      },
+      {
+        "section_id": "shoes-returns",
+        "rule_version": "2026-10-01",
+        "version": "v1",
+        "authority": "faq",
+        "content_hash": "0ec6ffe7c6a7f551c7759f9fcd47da7f5a66b7610f0b60706f2cf49ad8437d5c",
+        "effective_date": "2026-10-01",
+        "doc_id": "faq",
+        "instruction_flag": false,
+        "evaluation_conflict": "electronics_return_window",
+        "chunk_id": "faq:v1:shoes-returns:0",
+        "text": "Shoes returns\nFor footwear return windows and inclusive date counting, see return_policy section window. Eligibility requires a verified order and configured rules.",
+        "score": 0.180854,
+        "labeled_relevant": false,
+        "review_note": "Not the labeled governing section; similarity alone is not policy authority."
+      }
+    ]
+  }
+]

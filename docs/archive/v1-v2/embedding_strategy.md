@@ -1,3 +1,5 @@
+> Historical document. Superseded by [Architecture and Plan v3](../../architecture_and_plan.md). Not an active requirement.
+
 # Phase 4 embedding recommendation
 
 Candidate recommendation: **asymmetric retrieval with `voyage-4-large` document

@@ -16,6 +16,9 @@ dist/
 .ruff_cache/
 .deepeval/
 .deepeval*
+data/runtime/
+submission/
+.cache/
 
 # Generated knowledge artifacts (rebuilt by scripts/; keep the folder markers)
 knowledge/index/*

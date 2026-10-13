@@ -1,0 +1,6 @@
+{
+  "index_version": "v1",
+  "threshold": 0.464133,
+  "dimension": 2048,
+  "top_k": 5
+}

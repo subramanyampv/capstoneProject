@@ -60,8 +60,8 @@ class RequestState(TypedDict, total=False):
 def respond(message: str, client: ModelClient, *, variant: str,
             today: date, secrets: tuple[str, ...] = (), repair: bool = True,
             observability: ObservabilityConfig | None = None) -> LLMRun:
-    if not message.strip() or len(message) > 16000:
-        raise ValueError("Message must contain 1–16000 characters.")
+    if not message.strip() or len(message) > 2000:
+        raise ValueError("Message must contain 1–2000 characters.")
     started = time.perf_counter()
     request_id = uuid.uuid4().hex
 

@@ -1,3 +1,5 @@
+> Historical document. Superseded by [Architecture and Plan v3](../../architecture_and_plan.md). Not an active requirement.
+
 # Documentation review — 2026-10-12
 
 ## Current state

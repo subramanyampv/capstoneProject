@@ -1,3 +1,5 @@
+> Historical Phase 2 closure. Its baseline results remain valid; Architecture v3 now closes Phase 3 for development with Prompt C. Final safety acceptance is still open.
+
 # Phase 2 closure — 2026-10-13
 
 Status: **COMPLETE, reverified 2026-10-13 (America/New_York).**

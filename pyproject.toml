@@ -18,8 +18,12 @@ dependencies = [
 
 [project.optional-dependencies]
 rag = [
-    "faiss-cpu>=1.8",
-    "numpy>=1.26",
+    "sentence-transformers==5.2.0",
+    "transformers==4.57.3",
+    "torch==2.9.1",
+    "langchain-chroma==1.1.0",
+    "chromadb==1.5.9",
+    "PyYAML>=6",
 ]
 dev = [
     "pytest>=8",

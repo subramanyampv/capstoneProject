@@ -11,6 +11,13 @@ class ConfigurationError(ValueError):
     pass
 
 
+def show_deferred_ui(path: Path) -> bool:
+    value = load_environment(path).get("UI_SHOW_DEFERRED", "false").strip().lower()
+    if value not in {"true", "false"}:
+        raise ConfigurationError("UI_SHOW_DEFERRED must be true or false.")
+    return value == "true"
+
+
 def load_environment(path: Path) -> dict[str, str]:
     """Read simple KEY=value files without shell evaluation. Environment takes precedence."""
     values = {}
@@ -74,8 +81,9 @@ class LLMConfig:
             raise ConfigurationError("LLM_ENABLE_THINKING must be blank, true, or false.")
         try:
             return cls(
-                base_url=env.get("LLM_BASE_URL", "").rstrip("/"),
-                model=env.get("LLM_MODEL", ""), api_key=env.get("LLM_API_KEY", ""),
+                base_url=env.get("MODEL_BASE_URL", env.get("LLM_BASE_URL", "")).rstrip("/"),
+                model=env.get("MODEL_NAME", env.get("LLM_MODEL", "")),
+                api_key=env.get("MODEL_API_KEY", env.get("LLM_API_KEY", "")),
                 timeout_seconds=float(env.get("LLM_TIMEOUT_SECONDS", "20")),
                 max_retries=int(env.get("LLM_MAX_RETRIES", "1")),
                 response_format=env.get("LLM_RESPONSE_FORMAT", "json_object"),
