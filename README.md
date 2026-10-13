@@ -21,7 +21,9 @@ are **simulated** and auditable. Synthetic data only — no real customer system
 | 8 | Deployment readiness | not started |
 | 9 | Evaluation & engineering review | not started |
 
-Blueprint: `../multi_agent_capstone_architecture_plan.pdf`
+Blueprint: [Architecture plan](docs/capstone_architecture_plan.pdf)
+
+Continuation notes: [Documentation review](docs/documentation_review.md).
 
 ## Layout
 
