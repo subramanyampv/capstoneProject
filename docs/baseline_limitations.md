@@ -2,9 +2,12 @@
 
 Evidence: `scripts/run_baseline.sh` → `artifacts/baseline_run.log` (sanitized JSONL,
 scenario clock pinned to 2026-10-12) and `artifacts/baseline_demo_outputs.txt`.
-Run 2026-10-12: 8 requests, median latency 0.02 ms, 5 matched successes, 1 clean
-fallback, 2 demonstrated limitations below. Re-runs reproduce identical intents and
-answers because data is frozen and the clock is pinned.
+Reverified 2026-10-13: 8 requests, median latency 0.025 ms, 6 supported demo
+successes and 2 demonstrated limitations below. The fallback is the paraphrase
+limitation, not an additional successful case. Re-runs reproduce identical intents
+and answers because data is frozen and the clock is pinned. Request IDs, timestamps
+and latency measurements vary. See `phase2_closure.md` and
+`artifacts/phase2_verification.json` for exit evidence.
 
 ## Why deterministic rules don't generalize
 The baseline maps free-form language onto a fixed regex table (`INTENT_RULES`) and
@@ -45,14 +48,16 @@ Input: *"Where is order O-1002 and can I return the jacket if it arrives late?"*
   never executed — by design, writes require the Phase 5 gates.
 - **No memory or adaptation:** every request is stateless; feedback gets a canned
   acknowledgment (Phases 6–7).
-- **No safety gateway:** prompt-injection phrasing, PII in input, or authorization
-  boundaries are handled only by log redaction, not request-time policy (Phase 5+).
+- **No safety gateway:** prompt-injection phrasing or authorization boundaries are
+  not subject to request-time policy (Phase 5+). Shared pattern redaction minimizes
+  SSN/card/credential/email patterns in CLI output and logs; it is not universal PII
+  detection and does not establish final privacy acceptance.
 
 ## Measured baseline summary (for Phase 3/9 comparison)
 | Aspect | Baseline value |
 |---|---|
 | Supported-phrasing accuracy on 8-request demo | 6/8 correct intent; 2 required failures deliberate |
-| Latency | 0.01–0.17 ms per request (no model call) |
+| Latency | 0.01–0.19 ms per request in the 2026-10-13 demo (no model call) |
 | Model cost | none |
 | Paraphrase robustness | fails whenever literal keywords absent |
 | Multi-intent | impossible by construction |

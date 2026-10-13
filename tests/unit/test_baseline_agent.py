@@ -8,7 +8,7 @@ from datetime import date
 
 import pytest
 
-from capstone_agent.baseline_agent import DataBundle, log_line, redact, respond
+from capstone_agent.baseline_agent import DataBundle, log_line, main, redact, respond
 
 TODAY = date(2026, 10, 12)  # scenario clock; O-1001 = 12d, O-1005 = 31d, boundary = exactly 30d
 
@@ -85,6 +85,22 @@ class TestRequiredLimitations:
 
 
 class TestLoggingSafety:
+    @pytest.mark.parametrize("secret", [
+        "api_key=synthetic-canary-key", "Bearer synthetic-canary-token",
+        "sk-syntheticcanary123", "customer@example.test", "4111 1111 1111 1111",
+    ])
+    def test_sensitive_patterns_removed_from_log(self, secret):
+        msg = f"{secret} track order O-1003"
+        assert secret not in log_line(respond(msg, today=TODAY), msg)
+
+    def test_cli_does_not_echo_credentials(self, capsys, tmp_path):
+        secret = "synthetic-canary-key"
+        log = tmp_path / "requests.jsonl"
+        assert main(["--ask", f"api_key={secret} track order O-1003",
+                     "--today", TODAY.isoformat(), "--log", str(log)]) == 0
+        assert secret not in capsys.readouterr().out
+        assert secret not in log.read_text()
+
     def test_ssn_and_card_redacted_in_log_lines(self):
         msg = "my ssn is 123-45-6789 and card 4111111111111111 — where is order O-1003"
         line = log_line(respond(msg, today=TODAY), msg)
@@ -99,3 +115,22 @@ class TestLoggingSafety:
         assert re.match(r"^\{.*\}$", line)
         parsed = json.loads(line)
         assert set(parsed) >= {"ts", "request_id", "intent", "matched", "latency_ms", "input"}
+
+
+class TestAdditionalHandlers:
+    def test_above_threshold_refund_requires_human_without_ticket_claim(self):
+        result = ask("Refund order O-1006")
+        assert result.intent == "refund_request"
+        assert "requires human review" in result.response
+        assert "cannot create the escalation ticket" in result.response
+
+    def test_warranty_from_config_and_category_exclusion(self):
+        assert "365-day warranty" in ask("Warranty for O-1003").response
+        assert "no warranty" in ask("Warranty for O-1004").response
+
+    def test_missing_catalog_spec_is_disclosed(self):
+        assert "no size specification" in ask("What size is order O-1005?").response
+
+    def test_escalation_and_feedback_disclose_unavailable_capabilities(self):
+        assert "can't create a human-handoff ticket" in ask("Speak to a human").response
+        assert "no adaptation module" in ask("Make it shorter").response

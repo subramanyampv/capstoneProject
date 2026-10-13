@@ -14,7 +14,10 @@ rm -f artifacts/baseline_run.log
   "$PY" -m capstone_agent.baseline_agent --demo --today 2026-10-12 --log artifacts/baseline_run.log
 } | tee artifacts/baseline_demo_outputs.txt
 
+"$PY" scripts/verify_baseline.py
+
 echo
 echo "evidence written:"
 echo "  artifacts/baseline_run.log          ($(wc -l < artifacts/baseline_run.log | tr -d ' ') sanitized JSONL request lines)"
 echo "  artifacts/baseline_demo_outputs.txt"
+echo "  artifacts/phase2_verification.json"

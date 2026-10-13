@@ -23,18 +23,17 @@ from datetime import date
 from pathlib import Path
 from typing import Callable
 
+from capstone_agent.safety.redaction import sanitize
+
 REPO_ROOT = Path(__file__).resolve().parents[2]
 
 ORDER_ID_RE = re.compile(r"\bO[- ]?(\d{4})\b", re.IGNORECASE)
 DAYS_AGO_RE = re.compile(r"\b(\d{1,3})\s*(?:day|days)\s*(?:ago|before that)\b")
-SSN_RE = re.compile(r"\b\d{3}-\d{2}-\d{4}\b")
-CARD_RE = re.compile(r"\b\d{13,19}\b")
 
 
 def redact(text: str) -> str:
     """Minimize sensitive values BEFORE anything is logged (invariant)."""
-    text = SSN_RE.sub("[REDACTED-PII]", text)
-    return CARD_RE.sub("[REDACTED-PII]", text)
+    return sanitize(text)
 
 
 @dataclass
@@ -335,7 +334,7 @@ def main(argv: list[str] | None = None) -> int:
 
     def run(msg: str) -> BaselineResult:
         result = respond(msg, today=today)
-        print(f"\nIN : {msg}\nOUT: {result.response}\n     intent={result.intent} matched={result.matched} latency={result.latency_ms}ms")
+        print(f"\nIN : {redact(msg)}\nOUT: {redact(result.response)}\n     intent={result.intent} matched={result.matched} latency={result.latency_ms}ms")
         if log_path:
             with log_path.open("a") as fh:
                 fh.write(log_line(result, msg) + "\n")

@@ -51,3 +51,6 @@ format in evaluation_report.md).
 - [x] `artifacts/baseline_run.log` contains matched successes **and** both required
       limitation failures (paraphrase, multi-intent) as sanitized JSONL lines.
 - [x] Limitations analyzed in `docs/baseline_limitations.md`.
+- [x] Reverified 2026-10-13: six supported demos, two required limitations, shared
+      CLI/log sanitizer and synthetic canary checks. See `docs/phase2_closure.md`
+      and `artifacts/phase2_verification.json`; this does not assert final-system gates.

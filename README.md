@@ -13,7 +13,7 @@ The planned transaction layer will use simulated writes. Synthetic data only.
 | Phase | Description | Status |
 |---|---|---|
 | 1 | Problem framing & success definition | **done 2026-10-12** — taxonomy, corpus, and 65-case dataset frozen |
-| 2 | Rule-based Python baseline | **done 2026-10-12** — `baseline_agent.py`, pinned-clock repro run, both required limitations demonstrated + test-locked |
+| 2 | Rule-based Python baseline | **done; reverified 2026-10-13** — six supported demos, two required limitations, sanitized evidence and closure report |
 | 3 | LLM integration & prompt evaluation | 195-response live comparison complete; quality defects documented, default selection pending |
 | 4 | Knowledge & retrieval (RAG) | not started |
 | 5 | Tools & multi-agent orchestration | not started |
@@ -29,6 +29,7 @@ Updated blueprint: [Architecture plan v2](docs/capstone_architecture_plan_v2.pdf
 Frameworks and demo UI: [integration notes](docs/framework_integration.md).
 
 Continuation notes: [Documentation review](docs/documentation_review.md).
+Phase 2 exit evidence: [closure report](docs/phase2_closure.md).
 
 ## Layout
 

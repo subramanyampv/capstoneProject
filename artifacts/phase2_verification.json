@@ -1,0 +1,94 @@
+{
+  "phase": 2,
+  "status": "passed",
+  "verified_at": "2026-10-13T09:28:51.472100-04:00",
+  "scenario_clock": "2026-10-12",
+  "policy_version": "2026-10-01",
+  "catalog_version": "2026-10-12",
+  "supported_demo_cases": 6,
+  "known_limitations_demonstrated": 2,
+  "demo_evidence_matches": true,
+  "log_canary_check_passed": true,
+  "median_demo_latency_ms": 0.025,
+  "scope": "Eight scripted demo cases and pattern-based synthetic canaries; not the 65-case final acceptance suite.",
+  "cases": [
+    {
+      "case": 1,
+      "label": "success: order status",
+      "kind": "supported_demo",
+      "expected_intent": "shipping_tracking",
+      "observed_intent": "shipping_tracking",
+      "evidence_verified": true
+    },
+    {
+      "case": 2,
+      "label": "success: return eligibility (canonical demo input)",
+      "kind": "supported_demo",
+      "expected_intent": "return_eligibility",
+      "observed_intent": "return_eligibility",
+      "evidence_verified": true
+    },
+    {
+      "case": 3,
+      "label": "LIMITATION 1 - paraphrase failure expected",
+      "kind": "known_limitation",
+      "expected_intent": "fallback",
+      "observed_intent": "fallback",
+      "evidence_verified": true
+    },
+    {
+      "case": 4,
+      "label": "LIMITATION 2 - multi-intent failure expected",
+      "kind": "known_limitation",
+      "expected_intent": "return_eligibility",
+      "observed_intent": "return_eligibility",
+      "evidence_verified": true
+    },
+    {
+      "case": 5,
+      "label": "success: boundary outside window",
+      "kind": "supported_demo",
+      "expected_intent": "return_eligibility",
+      "observed_intent": "return_eligibility",
+      "evidence_verified": true
+    },
+    {
+      "case": 6,
+      "label": "success: unknown order handled",
+      "kind": "supported_demo",
+      "expected_intent": "shipping_tracking",
+      "observed_intent": "shipping_tracking",
+      "evidence_verified": true
+    },
+    {
+      "case": 7,
+      "label": "success: cancellation eligibility",
+      "kind": "supported_demo",
+      "expected_intent": "cancellation",
+      "observed_intent": "cancellation",
+      "evidence_verified": true
+    },
+    {
+      "case": 8,
+      "label": "success: product info",
+      "kind": "supported_demo",
+      "expected_intent": "product_information",
+      "observed_intent": "product_information",
+      "evidence_verified": true
+    }
+  ],
+  "sha256": {
+    "data/policy_rules.json": "83bed31dfad9cae5cfb3bc825874671617757564e6ceda66f192872b8e273acb",
+    "data/sample_orders.json": "91eeff0665915588a70b7356a09b4981f8cefa4b2c78d13e8cd8249811e07332",
+    "data/sample_tracking_events.json": "4163c63c8c2f7022aaf6b43638b24e77e0f51ba4607864b8cff09cff04940a19",
+    "data/product_catalog.json": "4edc0280346e3be7d33364d7d21411300a799e68cdba44a64abdbafc64c38196",
+    "data/evaluation_cases.json": "b3838a055e756d445934df6796de70b6ae69cd9fc0261e91932ec44d23d9aa94",
+    "src/capstone_agent/baseline_agent.py": "70696c9d6059db904823162bd56bcc575e1b97a06bc758bd65a69c6884e5c68b",
+    "src/capstone_agent/safety/redaction.py": "6c4fd7cda9f9a413a483c9cf739dd0636b9be03ca433d1bd0bfe9ce40781b2d4",
+    "scripts/run_baseline.sh": "8cb65e8d91c4ea83f6f7ee9f5c8df8ae2a636b34f9ffd1af6f3bcf683a0fd265",
+    "scripts/verify_baseline.py": "3631b8cdc3605dbcf806d925bbb88a1272e7ad0f06e6392c137fb2f6be5fbace",
+    "tests/unit/test_baseline_agent.py": "06b91143f767279c23ce0a6612cd6e2044f5f3e443ee8dfa6882085affcbb9f5",
+    "artifacts/baseline_run.log": "c171fcafc763b8466397f8ce7c62f64b1822066b99f2610c772cb1bd434baba5",
+    "artifacts/baseline_demo_outputs.txt": "68227f48db2a95f5839345b7d15122a3f8a2fe9c02c8fa4aa49364826c9c5eee"
+  }
+}

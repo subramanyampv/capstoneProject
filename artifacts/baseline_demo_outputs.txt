@@ -4,7 +4,7 @@
 
 IN : Where is my order O-1003? Has it shipped?
 OUT: Order O-1003: status 'processing'. No carrier events yet (placed 2026-10-11).
-     intent=shipping_tracking matched=True latency=0.02ms
+     intent=shipping_tracking matched=True latency=0.03ms
 
 === success: return eligibility (canonical demo input) ===
 
@@ -46,6 +46,6 @@ OUT: Order O-1003 is 'processing' (not dispatched), so cancellation is permitted
 
 IN : What sizes do the TrailRunner Shoes come in?
 OUT: TrailRunner Shoes comes in sizes [7, 8, 9, 10, 11, 12]. Runs true to size; wide fitting available in sizes 8-11. (source: data/product_catalog.json v2026-10-12)
-     intent=product_information matched=True latency=0.16ms
+     intent=product_information matched=True latency=0.19ms
 
 Scenario clock: 2026-10-12  |  data versions: policy_rules v2026-10-01
