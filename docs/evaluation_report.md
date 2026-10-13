@@ -6,7 +6,8 @@
 
 Status: **final-suite runs pending — full acceptance harness lands in Phase 9.**
 Phase 2 saved baseline evidence exists. Phase 3 client/harness tests are documented
-in `prompt_evaluation.md`; a live model comparison remains pending.
+in `prompt_evaluation.md`; the live 195-response comparison and its quality misses
+are recorded in `phase3_live_results.md`. Final-system acceptance is still pending.
 
 ## Provisional metric targets
 | Metric | Provisional target | Method |

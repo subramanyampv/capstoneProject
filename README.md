@@ -14,7 +14,7 @@ The planned transaction layer will use simulated writes. Synthetic data only.
 |---|---|---|
 | 1 | Problem framing & success definition | **done 2026-10-12** — taxonomy, corpus, and 65-case dataset frozen |
 | 2 | Rule-based Python baseline | **done 2026-10-12** — `baseline_agent.py`, pinned-clock repro run, both required limitations demonstrated + test-locked |
-| 3 | LLM integration & prompt evaluation | implementation + offline tests ready; live comparison and default selection pending |
+| 3 | LLM integration & prompt evaluation | 195-response live comparison complete; quality defects documented, default selection pending |
 | 4 | Knowledge & retrieval (RAG) | not started |
 | 5 | Tools & multi-agent orchestration | not started |
 | 6 | Planning, memory, context | not started |
@@ -89,7 +89,11 @@ Each comparison uses a new directory in `artifacts/prompt_runs/`, with a manifes
 prompt snapshots, sanitized outputs, a review CSV, and a summary. The full run has
 195 scheduled requests; repair and retry budgets may increase HTTP attempts.
 Errors produce nonzero CLI exit status. No prompt default has been selected.
+Configuration is loaded once per run. After rotating a key or changing provider
+settings, start a new run; an in-progress comparison keeps its original configuration.
 See [Phase 3 evidence and limits](docs/prompt_evaluation.md).
+Measured run: [live comparison results](docs/phase3_live_results.md).
+Phase 4 candidate: [embedding recommendation](docs/embedding_strategy.md).
 
 ## Target architecture invariants
 

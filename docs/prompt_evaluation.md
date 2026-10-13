@@ -1,7 +1,9 @@
 # Phase 3 implementation and evidence
 
-Status: **client, prompts, CLI and comparison harness implemented; live model
-evaluation and default prompt selection pending. Phase 3 exit gate remains open.**
+Status: **client, prompts, CLI and live 195-response comparison complete; response
+quality defects and default selection pending. Phase 3 exit gate remains open.**
+
+Latest measured evidence and selection rationale: [live results](phase3_live_results.md).
 
 ## Delivered
 

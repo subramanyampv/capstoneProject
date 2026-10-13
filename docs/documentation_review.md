@@ -65,4 +65,6 @@ The user approved creation of the project `.venv` and chose a local OpenAI-compa
 server. The virtual environment, Phase 3 client/prompts/harness, documentation
 clarifications, venv-only script guard and dependency constraints are now implemented.
 See `prompt_evaluation.md` for current verification and remaining work. Live model
-results and default selection still require the actual server URL/model and review.
+results are now preserved in `phase3_live_results.md`. The configured Qwen provider
+completed 195 schema-valid responses; semantic defects still block default selection.
+The embedding recommendation for Phase 4 is documented in `embedding_strategy.md`.

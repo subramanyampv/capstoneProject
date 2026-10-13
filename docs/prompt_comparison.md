@@ -3,7 +3,11 @@
 Controlled comparison of 3 prompt variants on the **same frozen test set**. Hold model
 version, evidence, tool availability, and decoding settings constant. Version/hash each
 prompt; capture actual output. **Status: A/B/C prompts and comparison harness
-implemented; live comparison results and default selection pending.**
+implemented; live comparison complete, default selection withheld due to quality misses.**
+
+Actual measured results: [Phase 3 live report](phase3_live_results.md), with all
+195 outputs preserved in the cited run directory. All responses passed final schema
+validation; grounding/escalation findings prevent treating this as full acceptance.
 
 Run `bash scripts/run_prompt_comparison.sh` after configuring the local server in
 `.env`. Every case starts with fresh context, empty evidence, and no tools; this
