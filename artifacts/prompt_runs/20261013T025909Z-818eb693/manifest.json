@@ -1,0 +1,37 @@
+{
+  "run_id": "20261013T025909Z-818eb693",
+  "mode": "live",
+  "python_version": "3.12.12",
+  "application_version": "0.1.0",
+  "scenario_date": "2026-10-12",
+  "dataset_version": "1.0",
+  "dataset_sha256": "b3838a055e756d445934df6796de70b6ae69cd9fc0261e91932ec44d23d9aa94",
+  "case_ids": [
+    "N01",
+    "R01",
+    "S04"
+  ],
+  "settings": {
+    "provider": "openai_compatible",
+    "model": "Qwen3.7-Max",
+    "timeout_seconds": 20.0,
+    "max_retries": 1,
+    "response_format": "json_object",
+    "temperature": 0.0,
+    "max_completion_tokens": 1200
+  },
+  "prompt_version": "phase3-v1",
+  "prompt_hashes": {
+    "A": "0c1e77b6f004a3f39d74cebdf8ae2e1473da77735902befd2f0521a8832c40ca",
+    "B": "445720f7597ec44b8c8d8b620e86c366d96cf52acc766787d02907870a27df4c",
+    "C": "a890b79991bf4bdf2f26ee6f2108d50b26e38fd08f8be8f1dc5bc04b483216b3"
+  },
+  "evidence": [],
+  "tools": [],
+  "memory": false,
+  "repair_attempts": 1,
+  "scheduled_requests": 9,
+  "max_http_attempts": 36,
+  "default_prompt": null,
+  "quality_review_status": "pending"
+}

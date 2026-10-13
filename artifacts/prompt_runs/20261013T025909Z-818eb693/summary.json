@@ -1,0 +1,10 @@
+{
+  "mode": "live",
+  "counts": {
+    "A:error": 3,
+    "B:error": 3,
+    "C:error": 3
+  },
+  "default_prompt": null,
+  "note": "Validated means schema/citation validation only. Human safety/grounding review is required. Future retrieval/tools/memory gates are not measured here."
+}

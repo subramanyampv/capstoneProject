@@ -71,8 +71,8 @@ Earlier failures are preserved and excluded from final-run metrics.
 - Runtime uses project `.venv` only; no global Python installation.
 
 Full raw sanitized outputs, typed outputs, CSV and prompt snapshots are in the run directory.
-Raw run directories currently remain local; the aggregate report is suitable for
-publication. Uploading raw outputs requires explicit approval after automatic
-approval review rejected their export due to potentially sensitive case-derived data.
+The user explicitly approved uploading the sanitized raw run directories to GitHub
+after automatic approval review initially rejected their export. The synthetic
+case outputs, CSVs and diagnostic artifacts are preserved alongside this report.
 The previously published key remains in historical commits; changing the template
 does not erase Git history. Current `.env` uses a different key.
