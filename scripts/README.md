@@ -9,3 +9,9 @@ One documented command per action — added as phases land, never magic.
 | `ingest.sh` | 4 | knowledge/raw -> processed chunks + FAISS index snapshot |
 | `run_demo.sh` | 5+ | Execute the five forced demo interactions |
 | `evaluate.sh` | 9 | One command to run the full frozen evaluation suite |
+
+Currently implemented: `run_baseline.sh`, `run_prompt_comparison.sh`, and the shared
+`venv.sh` helper. Other table entries are planned. Run scripts with `bash` from any
+directory; they resolve the project root and require its `.venv/bin/python`.
+The baseline runner overwrites saved Phase 2 outputs. Prompt comparisons create
+unique directories and retain previous runs.

@@ -3,9 +3,10 @@
 A supervisor–specialist multi-agent support agent for Tier-1 e-commerce questions:
 order status, returns, shipping, product questions, and escalation.
 
-Safety-first by design: the LLM interprets and drafts; deterministic policy,
-authorization, confirmation, and action-state services decide. All write actions
-are **simulated** and auditable. Synthetic data only — no real customer systems.
+The target architecture separates LLM interpretation from deterministic policy,
+authorization, confirmation, and action-state services. The current implementation
+has a rule baseline and an LLM-only experimental path with **no write actions**.
+The planned transaction layer will use simulated writes. Synthetic data only.
 
 ## Status
 
@@ -13,7 +14,7 @@ are **simulated** and auditable. Synthetic data only — no real customer system
 |---|---|---|
 | 1 | Problem framing & success definition | **done 2026-10-12** — taxonomy, corpus, and 65-case dataset frozen |
 | 2 | Rule-based Python baseline | **done 2026-10-12** — `baseline_agent.py`, pinned-clock repro run, both required limitations demonstrated + test-locked |
-| 3 | LLM integration & prompt evaluation | not started (next) |
+| 3 | LLM integration & prompt evaluation | implementation + offline tests ready; live comparison and default selection pending |
 | 4 | Knowledge & retrieval (RAG) | not started |
 | 5 | Tools & multi-agent orchestration | not started |
 | 6 | Planning, memory, context | not started |
@@ -51,23 +52,45 @@ scripts/       run, ingest, build index, evaluate (one documented command each)
 
 ## Quickstart
 
-Requires Python 3.10+ (developed against 3.12). Use the workspace venv.
+Requires Python 3.10+ (developed against 3.12). Run commands from this directory.
+Use the approved project-local `.venv`; if absent, obtain approval before creating one.
 
 ```bash
-source ../.venv/bin/activate        # or your own venv
-pip install -e ".[dev]"
+.venv/bin/python -m pip install -c constraints-dev.txt -e ".[dev]"
 
-capstone-agent status                                    # phase overview
-capstone-agent ask "Can I return order O-1001?" --today 2026-10-12   # rule baseline
-scripts/run_baseline.sh                                  # reproducible evidence run -> artifacts/
-pytest                                                   # unit tests incl. limitation locks
-cp .env.example .env                # add provider settings when Phase 3 lands
+.venv/bin/capstone-agent status
+.venv/bin/capstone-agent ask "Can I return order O-1001?" --today 2026-10-12
+bash scripts/run_baseline.sh                 # overwrites baseline evidence; run intentionally
+.venv/bin/python -m pytest -q
+cp .env.example .env                         # configure local provider; keep credentials local
 ```
 
 The Phase 2 baseline is deterministic: answers depend only on the frozen fixtures and
 the `--today` scenario clock. Ingest/evaluate commands arrive in Phases 4 and 9.
 
-## Key invariants (enforced, not aspirational)
+## Phase 3 local model experiment
+
+Set `LLM_BASE_URL` to your local server's API base (including `/v1`) and `LLM_MODEL`
+to its exact model ID in `.env`. A key is optional for loopback servers. The default
+port in `.env.example` is illustrative; it does not start or discover a server.
+
+```bash
+.venv/bin/capstone-agent llm-ask "Can I return my shoes?" --prompt C
+bash scripts/run_prompt_comparison.sh --dry-run    # plan only; no requests
+bash scripts/run_prompt_comparison.sh --case N01 --case R01  # smoke comparison
+bash scripts/run_prompt_comparison.sh             # all 65 cases x 3 variants
+```
+
+Each comparison uses a new directory in `artifacts/prompt_runs/`, with a manifest,
+prompt snapshots, sanitized outputs, a review CSV, and a summary. The full run has
+195 scheduled requests; repair and retry budgets may increase HTTP attempts.
+Errors produce nonzero CLI exit status. No prompt default has been selected.
+See [Phase 3 evidence and limits](docs/prompt_evaluation.md).
+
+## Target architecture invariants
+
+These are acceptance requirements for later phases. The current baseline and LLM
+experiment do not establish full policy, authorization, confirmation, or memory gates.
 
 - No unsupported policy claim is stated as fact.
 - Confirmation is bound to session, action ID, action type, exact parameters, and expiry.

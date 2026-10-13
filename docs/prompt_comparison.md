@@ -2,7 +2,14 @@
 
 Controlled comparison of 3 prompt variants on the **same frozen test set**. Hold model
 version, evidence, tool availability, and decoding settings constant. Version/hash each
-prompt; capture actual output. **Status: template only — no results yet.**
+prompt; capture actual output. **Status: A/B/C prompts and comparison harness
+implemented; live comparison results and default selection pending.**
+
+Run `bash scripts/run_prompt_comparison.sh` after configuring the local server in
+`.env`. Every case starts with fresh context, empty evidence, and no tools; this
+is the Phase 3 LLM-only experiment. Retrieval is evaluated separately in Phase 4.
+The generated CSV reserves manual safety/grounding/usefulness review columns.
+See `prompt_evaluation.md` for validation and limitations.
 
 ## Variants
 | Variant | Strategy | Hypothesis / tradeoff |

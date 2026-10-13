@@ -56,7 +56,25 @@ authorizations — policy and action gates run independently.
 10. Compose response with source references; record outcome; update only permitted state.
 
 ## Required invariants
-See README "Key invariants" — each is a tested behavior, not a guideline.
+See README "Target architecture invariants". These require implemented controls and
+permanent tests in later phases; they are not claims about the current baseline.
+
+## Planned tool inventory (architecture-plan section 4)
+
+| Tool | Access | Purpose |
+|---|---|---|
+| `search_policy` | read | authoritative policy passages |
+| `lookup_order` | read | synthetic order records |
+| `get_tracking_events` | read | carrier events |
+| `get_product_details` | read | catalog specifications |
+| `check_return_eligibility` | calculation | deterministic policy evaluation |
+| `create_return_request` | simulated write | gated return request |
+| `create_escalation` | controlled mock write | verified handoff ticket |
+| `search_web` | optional external read | context, never authoritative retailer policy |
+
+Phase 5 must define typed schemas and error/access/retry contracts. Cancellation and
+refund demos also require a documented action-service contract; these are not
+implemented by the eight proposed tools above. Phase 3 exposes no tools.
 
 ## Design principles
 Explicit boundaries · typed contracts · evidence-first responses · bounded execution ·

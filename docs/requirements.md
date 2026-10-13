@@ -39,6 +39,11 @@ Policy/knowledge documents (Phase 4 ingestion; live in `knowledge/raw/`):
 `return_policy.md`, `refund_policy.md`, `shipping_policy.md`, `cancellation_policy.md`,
 `warranty_policy.md`, `faq.md`, `escalation_guidelines.md`
 
+Implementation erratum: the **inventory** is frozen, but these documents have not
+yet been authored; `knowledge/raw/` currently contains only a folder marker.
+The PDF schedules preparation and ingestion in Phase 4. Phase 3 uses no retrieved
+evidence. This clarification changes no frozen intents, thresholds, or cases.
+
 Structured records (deterministic, versioned; live in `data/`):
 `product_catalog.json`, `sample_orders.json`, `sample_tracking_events.json`,
 `policy_rules.json` (machine-readable thresholds referenced by `.env.example`)

@@ -1,10 +1,12 @@
 # Evaluation Report
 
 > The targets below are **proposed engineering goals, not measured results**. No
-> implementation or evaluation results are claimed yet. Finalize against the dataset
+> final-system evaluation results are claimed yet. Finalize against the dataset
 > and implementation; report misses honestly.
 
-Status: **no runs yet — harness lands in Phase 9; cases start freezing in Phase 1.**
+Status: **final-suite runs pending — full acceptance harness lands in Phase 9.**
+Phase 2 saved baseline evidence exists. Phase 3 client/harness tests are documented
+in `prompt_evaluation.md`; a live model comparison remains pending.
 
 ## Provisional metric targets
 | Metric | Provisional target | Method |

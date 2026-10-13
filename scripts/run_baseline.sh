@@ -5,12 +5,7 @@
 set -euo pipefail
 cd "$(dirname "$0")/.."
 
-PY="${PYTHON:-python3}"
-if [[ -z "${VIRTUAL_ENV:-}" ]]; then
-  echo "warning: no virtualenv active; expected ../.venv or your project venv" >&2
-fi
-
-export PYTHONPATH=src
+source scripts/venv.sh
 mkdir -p artifacts
 rm -f artifacts/baseline_run.log
 

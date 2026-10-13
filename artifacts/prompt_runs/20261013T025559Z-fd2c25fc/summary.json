@@ -1,0 +1,6 @@
+{
+  "mode": "dry_run",
+  "model_requests": 0,
+  "default_prompt": null,
+  "note": "Plan only. No model outputs or quality measurements."
+}

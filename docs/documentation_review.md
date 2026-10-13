@@ -58,3 +58,11 @@ so it resolves from GitHub and standalone clones.
   distinguish unsupported future capabilities from Phase 3 failures.
 - Preserve the existing baseline evidence and compare the known paraphrase and
   multi-intent failures without claiming future phases are already implemented.
+
+## Continuation update
+
+The user approved creation of the project `.venv` and chose a local OpenAI-compatible
+server. The virtual environment, Phase 3 client/prompts/harness, documentation
+clarifications, venv-only script guard and dependency constraints are now implemented.
+See `prompt_evaluation.md` for current verification and remaining work. Live model
+results and default selection still require the actual server URL/model and review.

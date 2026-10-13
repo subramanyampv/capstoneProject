@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import sys
 from datetime import date
+from pathlib import Path
 
 PHASES = [
     (1, "problem framing & success definition — DONE"),
@@ -45,6 +46,39 @@ def cmd_ask(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_llm_ask(args: argparse.Namespace) -> int:
+    import json
+    from capstone_agent.config import LLMConfig
+    from capstone_agent.llm_agent import respond
+    from capstone_agent.model_client import OpenAICompatibleClient
+
+    config = LLMConfig.from_env(Path(args.env_file))
+    result = respond(args.message, OpenAICompatibleClient(config), variant=args.prompt,
+                     today=date.fromisoformat(args.today), secrets=(config.api_key,))
+    print(json.dumps(result.as_dict(), indent=2))
+    return 0 if result.outcome == "validated" else 1
+
+
+def cmd_compare(args: argparse.Namespace) -> int:
+    from capstone_agent.config import LLMConfig
+    from capstone_agent.evaluation.prompt_comparison import ROOT, run_comparison
+    from capstone_agent.model_client import OpenAICompatibleClient
+
+    config = LLMConfig.from_env(Path(args.env_file))
+    output = run_comparison(OpenAICompatibleClient(config), config,
+                            dataset=ROOT / "data/evaluation_cases.json",
+                            output_root=Path(args.output), today=date.fromisoformat(args.today),
+                            case_ids=args.case, dry_run=args.dry_run,
+                            progress=lambda case, prompt, outcome: print(f"{case} {prompt}: {outcome}", flush=True))
+    print(f"Evidence: {output.resolve()}")
+    if not args.dry_run:
+        import json
+        counts = json.loads((output / "summary.json").read_text())["counts"]
+        if any(key.endswith(":error") and value for key, value in counts.items()):
+            return 1
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="capstone-agent")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -53,12 +87,31 @@ def build_parser() -> argparse.ArgumentParser:
     ask_p.add_argument("message")
     ask_p.add_argument("--today", metavar="YYYY-MM-DD", help="pin the scenario clock for reproducible answers")
     ask_p.set_defaults(func=cmd_ask)
+    llm = sub.add_parser("llm-ask", help="Phase 3 LLM-only request; no tools/actions")
+    llm.add_argument("message")
+    llm.add_argument("--prompt", choices=["A", "B", "C"], required=True,
+                     help="explicit experimental variant; no default selected yet")
+    llm.add_argument("--env-file", default=".env")
+    llm.add_argument("--today", default="2026-10-12")
+    llm.set_defaults(func=cmd_llm_ask)
+    compare = sub.add_parser("compare-prompts", help="A/B/C comparison on frozen cases")
+    compare.add_argument("--env-file", default=".env")
+    compare.add_argument("--today", default="2026-10-12")
+    compare.add_argument("--output", default="artifacts/prompt_runs")
+    compare.add_argument("--case", action="append", help="optional subset; repeat for each case ID")
+    compare.add_argument("--dry-run", action="store_true", help="save manifest without contacting model")
+    compare.set_defaults(func=cmd_compare)
     return parser
 
 
 def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
-    return args.func(args)
+    try:
+        return args.func(args)
+    except ValueError as exc:
+        # Configuration and input errors carry deliberately non-sensitive diagnostics.
+        print(f"Configuration/input error: {exc}", file=sys.stderr)
+        return 2
 
 
 if __name__ == "__main__":
