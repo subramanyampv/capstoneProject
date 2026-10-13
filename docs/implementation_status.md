@@ -16,4 +16,6 @@ Authority: [Architecture and Plan v3](architecture_and_plan.md). Updated 2026-10
 
 98 offline tests passed in 5.60s after v3/Phase 4 changes. LangChain/LangGraph single-agent workflow, local DeepEval metrics and Streamlit are implemented. Hosted LangSmith, final supervisor/tool hierarchy and final safety acceptance are not verified. Phase 3's seven escalation-classification failures remain open final-product defects. Historical KG/OSRM/NWS demos are deferred; default UI shows Chat, Evaluation and Traces.
 
-Needed from the owner: author/student name; fresh submission repository name. Later: optional LangSmith credentials in ignored `.env` for live trace verification and human review of 20 judged outputs. A separate judge endpoint is optional; same-model judging will be disclosed if used.
+No author/student name or new repository name is required. Work continues in the existing GitHub repository. Optional later input: LangSmith credentials in ignored `.env` for hosted verification; an independent judge endpoint if desired; human calibration of twenty final judged outputs. None blocks the next local implementation steps.
+
+See [detailed progress and remaining work](project_progress.md).

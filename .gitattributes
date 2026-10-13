@@ -1,2 +1,2 @@
-# Preserve the supplied authoritative plan byte-for-byte, including its final blank lines.
-docs/architecture_and_plan.md whitespace=-blank-at-eof
+# Preserve the originally supplied plan byte-for-byte in its historical archive.
+docs/archive/v3/architecture_and_plan_supplied_20261013.md whitespace=-blank-at-eof

@@ -1,16 +1,14 @@
-
 # Multi-Agent E-commerce Support Resolution Agent
 ## Final Architecture Design and Project Plan
 
 | Field | Value |
 |---|---|
 | Document | Final Architecture Design & Project Plan |
-| Version | 3.0 (supersedes Architecture Plan v1 and v2.0) |
+| Version | 3.1 — implementation/status update; retains the v3 scope and supersedes prior revisions |
 | Date | 2026-10-13 (America/New_York) |
 | Industry scenario | Scenario 3: Customer Support, AI Support Resolution Agent |
 | Framework track | Track A, framework-based: LangChain (with LangGraph, LangChain's orchestration library) |
 | Submission target | 2026-10-18 |
-| Author / owner | [Student name] |
 
 **Status labels used throughout**
 
@@ -27,7 +25,7 @@
 
 **What we are building.** A multi-agent customer-support resolution agent for a synthetic e-commerce retailer. It answers order, shipping, delivery, return, refund, product, and warranty questions.
 
-**How it works.**
+**Target workflow.** The full supervisor/specialist workflow and deterministic guards below remain **PLANNED**; the baseline, single-agent LangGraph experiment and local policy retrieval are implemented.
 - A LangGraph **supervisor** plans each request and delegates to three **specialist agents**: Order & Shipping, Policy & Product, and Escalation.
 - Each specialist is a bounded LangChain tool-calling agent with its own small tool allowlist.
 - Policy answers come from retrieval-augmented generation (RAG) over a versioned policy corpus. The corpus is embedded with **Voyage-4-nano** (Hugging Face, local) and stored in **Chroma**.
@@ -35,13 +33,16 @@
 
 **How we prove it.**
 - **DeepEval** provides standardized quality metrics and written evaluation rubrics. Deterministic assertions decide all safety outcomes.
-- **LangSmith** provides masked hierarchical traces of agent routing. Local redacted JSONL logs are the primary evidence.
+- **LangSmith** has an opt-in hidden-input/metadata wrapper implemented. Hosted verification and hierarchical specialist/tool traces are **PLANNED**. Local redacted evidence remains primary.
 - Every rubric capability maps to a named artifact (Section 3).
 
 **Where we are.**
 - Phases 1–2 are complete with exit evidence.
-- Phase 3 is complete except for the written comparison table. The prompt experiment produced 195/195 schema-valid outputs across three prompt variants on the frozen 65-case set (**MEASURED**), and Prompt C is selected as the default (Section 14.5).
-- Phases 4–9 are **PLANNED** across a 5-day schedule ending 2026-10-18.
+- Phase 3 is complete: the written ten-case comparison, per-prompt failure breakdown and development selection are recorded. The frozen experiment produced 195/195 schema-valid outputs (**MEASURED**). Prompt C is the development default; this does not establish final safety acceptance (Section 14.5).
+- Phase 4 has seven authored documents, 28 indexed sections, pinned local Voyage-4-nano/Chroma, 20 retrieval labels and a live ten-case RAG on/off comparison (**IMPLEMENTED / MEASURED**). Thresholded coverage remains open (Section 9.7).
+- Phases 5–9 remain **PLANNED**. The target submission date stays 2026-10-18; schedule dates are targets, not delivery guarantees.
+- Latest offline regression: 98 tests passed in 5.60s. [Detailed progress and remaining work](project_progress.md) records the evidence and next steps.
+- Author/student name and a new GitHub repository are not required. Continue in the existing repository; use the scanned history-free source snapshot for packaging.
 
 **Key design stance.** The rubric evaluates "engineering judgment, reliability, explainability, safety-first design, and practical usefulness… not unnecessary complexity." The architecture is therefore deliberately minimal:
 - 3 specialists (not 5).
@@ -230,12 +231,12 @@ A single LLM prompt mixes these and fails in two costly ways, both observed in t
 | LLM access | LangChain `langchain-openai` against an OpenAI-compatible endpoint; model `qwen3.7-max` | All LLM calls | Track A requirement; provider-swappable via base URL and model name; already measured in Phase 3 | IMPLEMENTED |
 | Orchestration | LangGraph `StateGraph` + checkpointer | Control flow, multi-agent routing, session memory | Explicit nodes and conditional edges map to safety gates and terminal outcomes; built-in checkpointed memory | IMPLEMENTED (single-agent workflow); multi-agent PLANNED |
 | Specialist agents | LangGraph/LangChain prebuilt tool-calling (ReAct-style) agent per specialist | Bounded tool use | Standard, traceable, step limits supported | PLANNED |
-| Embeddings | `voyageai/voyage-4-nano` (Hugging Face, local, pinned revision) | Document and query embeddings | Local (no document export); retrieval-tuned; query/document input modes | PLANNED |
-| Vector store | Chroma via `langchain-chroma`, persisted | Similarity search with metadata filters | Named in the rubric; persistence and metadata filtering (version/section/effective date) needed for conflict detection | PLANNED |
-| Evaluation | DeepEval + frozen harness | Quality metrics, GEval rubrics, tool correctness | Standardized metrics; written evaluation prompts; local execution | IMPLEMENTED (deterministic metrics); judged metrics PLANNED |
+| Embeddings | `voyageai/voyage-4-nano` (Hugging Face, local, pinned revision) | Document and query embeddings | Local (no document export); retrieval-tuned; query/document input modes | IMPLEMENTED / MEASURED, normalized 2048 dimensions |
+| Vector store | Chroma via `langchain-chroma`, persisted | Similarity search with metadata filters | Named in the rubric; persistence and metadata filtering (version/section/effective date) needed for conflict detection | IMPLEMENTED / MEASURED, policies_v1 with 28 sections |
+| Evaluation | DeepEval + frozen harness | Quality metrics, GEval rubrics, tool correctness | Standardized metrics; written evaluation prompts; local execution | IMPLEMENTED (deterministic metrics + nine indicative RAG faithfulness scores); final calibration PLANNED |
 | Tracing | LangSmith (opt-in, masked) + local JSONL (primary) | Hierarchical traces; audit logs | Visual multi-agent routing evidence; local logs keep evidence reproducible for graders | Wrapper IMPLEMENTED; masked auto-tracing PLANNED |
 | UI | Streamlit (local) | Demo interface and deployment evidence | Python-only; fast; AppTest available | IMPLEMENTED (initial) |
-| Data | Synthetic JSON fixtures + 7 Markdown policy documents | Records and corpus | Reproducible; no real customer data | Fixtures exist; corpus PLANNED |
+| Data | Synthetic JSON fixtures + 7 Markdown policy documents | Records and corpus | Reproducible; no real customer data | IMPLEMENTED: frozen fixtures and seven corpus documents |
 
 ---
 
@@ -667,16 +668,15 @@ Each document starts with YAML front matter:
 ```yaml
 doc_id: return_policy
 title: Return Policy
-version: v2
-effective_date: 2026-09-01
-supersedes: v1
-owner: Customer Policy Team (synthetic)
+version: v1
+effective_date: 2026-10-01
+owner: Synthetic Customer Policy Team
 authority: policy          # policy | faq
 ```
 
 | Document | Required sections | Notes |
 |---|---|---|
-| `return_policy.md` | General window; condition requirements; category rules (footwear, electronics, final-sale exclusions); how dates are counted; exceptions → human review | **Includes the deliberate version conflict required by R05.** The section and versions are authored to match R05's expected outcome in `evaluation_cases.json`. |
+| `return_policy.md` | General window; condition requirements; category rules (footwear, electronics, final-sale exclusions); how dates are counted; exceptions → human review | **R05 uses a deliberately contradictory FAQ/policy pair.** Current return_policy v1 says 15 days for electronics; faq v1 contains labeled legacy 30-day wording. Both references are surfaced and escalation is required; broader overlapping-version evaluation remains planned. |
 | `refund_policy.md` | Refund methods; processing time ranges; threshold requiring review (must equal `policy_rules.json`); delayed-shipment refunds | Supports S15 and Demo 2 |
 | `shipping_policy.md` | Shipping services; transit ranges; dispatch timing; how to read tracking; estimates are not guarantees | Delivery-estimate intent |
 | `cancellation_policy.md` | Eligibility before/after dispatch; how cancellations are handled (human action) | Information-only |
@@ -742,6 +742,27 @@ class VoyageNanoEmbeddings(Embeddings):
 | With vs. without RAG | 10 frozen cases (policy-dependent) run with `RETRIEVAL_ENABLED=false` vs. `true`; compare fabricated-claim count, citation support, DeepEval faithfulness |
 | Relevance examples | 3 worked examples in the report: query → top-3 chunks with scores → whether relevant and why |
 | Limitation | τ is calibrated on a small label set; disclosed in the report |
+
+
+### 9.7 Current Phase 4 implementation and measured results — 2026-10-13
+
+| Item | Implemented/measured result |
+|---|---|
+| Corpus | Seven synthetic Markdown documents with owner, version, effective date and authority; thresholds checked against frozen rules |
+| Embeddings | Local Voyage-4-nano, revision `67fabc9bef010dabc5f6024aa1b1b6b93410426f`, CPU, 2048 dimensions, finite and normalized |
+| Index | `policies_v1`, 28 authored heading sections; cosine Chroma; telemetry off; source/metadata/manifest checks fail closed |
+| Chunking | Whole authored sections bounded to 2400 UTF-8 bytes; oversized sections fail rather than truncate. Token-aware overlapping splits are a future extension, not currently implemented |
+| Development labels | 20 queries: 15 answerable and 5 unanswerable; ten holdout cases saved separately and not used for tuning |
+| Candidate retrieval | Recall@5 100%, MRR 0.90 before threshold/conflict insertion |
+| Threshold | 0.464133, calibrated on the same development labels; no independent test-set claim |
+| Thresholded retrieval | Recall@5 80%; two answerable queries fully rejected; all five unanswerable queries rejected |
+| Conflict | R05 declared FAQ/policy topic check retains both sources. This insertion is separate from vector recall |
+| RAG comparison | Ten same frozen cases per mode: RAG 10 validated/9 cited; no-RAG 9 validated/0 cited/1 rejected output |
+| DeepEval faithfulness | Nine context-bearing outputs scored 1.0 each; eleven no-context outputs skipped; no judge errors; same-model indicative judging |
+
+The thresholded 80% recall is an open coverage defect, not a completed final retrieval gate. Improve coverage using development labels, keep the holdout untouched, and report abstention trade-offs. Doc-type filtering is implemented; category is presently a topic hint for the electronics conflict check rather than full category metadata filtering. The Phase 4 answer experiment is single-agent and has no order tools, write actions, memory or escalation tickets. Citation resolution and numeric screening do not establish semantic entailment or final zero-fabrication acceptance.
+
+Evidence: [retrieval design](retrieval_design.md), [retrieval summary](../artifacts/retrieval/summary.json), [RAG comparison](../artifacts/rag_runs/20261013T203731Z/summary.json), [DeepEval faithfulness](../artifacts/rag_runs/20261013T203731Z/deepeval_faithfulness.json), and [validation record](../artifacts/phase4_validation.md).
 
 ---
 
@@ -918,7 +939,7 @@ This record is illustrative of the schema; the values are not measured results.
 
 ### 13.2 LangSmith tracing
 
-- **Mode:** LangGraph automatic tracing to project `capstone-final`, opt-in via `.env`. Default is off.
+- **Target mode (PLANNED):** masked LangGraph hierarchical tracing, opt-in via `.env`. Default is off. The current wrapper hides inputs and filters outputs to safe scalar metadata; hosted ingestion, agent/tool hierarchy and failure isolation remain unverified.
 - **Masking:** inputs and outputs pass through LangSmith's anonymizer hook using the **same redaction function** as local logs. If the hook is unavailable on the pinned SDK version, inputs and outputs are hidden entirely, and node, tool, timing, and status remain visible.
 - **Verification:** after Demo 3, query the run via the LangSmith client for the canary strings and record `canary_found: false` in `artifacts/langsmith_canary.json`.
 - **Failure isolation:** tracing errors are caught and logged locally. A test run with tracing enabled and an invalid key must produce identical agent behavior.
@@ -1036,6 +1057,8 @@ The Knowledge and Delivery-estimate tabs are hidden behind `UI_SHOW_DEFERRED=fal
 
 ### 14.4 Capability ladder (showing the evolution)
 
+The multi-agent ladder stages remain planned. The measured Phase 4 single-agent retrieval probe is preliminary evidence, not a completed final multi-agent stage.
+
 | Stage | Configuration | Source |
 |---|---|---|
 | 1 Baseline | Phase 2 rule-based agent | **MEASURED** (existing logs) |
@@ -1112,20 +1135,22 @@ Each RCA record uses the template: test ID; observed vs. expected; root cause; f
 |---|---|---|---|---|---|
 | **1 Problem & success** | Personas, workflow, scope, metrics, failure cases, frozen dataset | **Done** (exit evidence exists) | Condense to the 1–2 page deliverable; add business value section | `problem_framing.md` | Framing (10) |
 | **2 Baseline** | Rule-based Python CLI with documented limitations | **Done** | Reference in the capability ladder | Baseline logs, limitations | Baseline (5) |
-| **3 LLM & prompts** | LLM integration; A/B/C comparison; default selection | **Closing.** Experiment MEASURED; LangChain/LangGraph integrated; 75 offline tests passing (MEASURED) | Comparison table; failure breakdown; justification (Day 1) | `prompt_comparison.md` | LLM & Prompt (15) |
-| **4 Knowledge & retrieval** | Corpus, Voyage-nano + Chroma, `search_policy`, retrieval evaluation | PLANNED (Day 1) | Sections 9.1–9.6 | Recall@5 table, with/without comparison, relevance examples | RAG (10) |
+| **3 LLM & prompts** | LLM integration; A/B/C comparison; default selection | **Done for development.** Comparison and C selection recorded; 195 valid outputs | Final safety defects carried into guarded build; not a prompt-only safety pass | `prompt_comparison.md`, `artifacts/phase3_selection.json` | LLM & Prompt (15) |
+| **4 Knowledge & retrieval** | Corpus, Voyage-nano + Chroma, `search_policy`, retrieval evaluation | **Initial build IMPLEMENTED / MEASURED** | Improve 80% post-threshold coverage; integration into Phase 5; later human calibration | `retrieval_design.md`, retrieval/RAG artifacts | RAG (10) |
 | **5 Tools & multi-agent** | 6 tools, registry, 3 specialists, supervisor, guards, budgets | PLANNED (Days 2–3) | Sections 5, 7, 8 | Tool correctness, failed-call traces, routing traces | Tools (15), Architecture (15) |
 | **6 Planning, memory & context** | Plans, checkpointer memory, TTL, reset | PLANNED (Day 3) | Section 11 | Memory on/off results, reset demo | Architecture/Memory (15) |
 | **7 Adaptive behaviour** | Feedback signals, style adaptation | PLANNED (Day 3) | Section 12 | Before/after logs, limits | Adaptive (5) |
 | **8 Deployment readiness** | Packaging, logs, tracing, failure handling | PLANNED (Days 3–4) | Section 13 | Clean-venv run, latency/error report, trace samples, canary reports | Deployment (10) |
 | **9 Evaluation & review** | Full evaluation, consistency, RCA, safety review, roadmap | PLANNED (Days 4–5) | Section 14 | `evaluation_report.md` | Safety/Eval (15) |
 
-### 16.2 Five-day schedule
+### 16.2 Delivery schedule (targets; current status takes precedence)
+
+The original Day 1 implementation tasks were substantially completed on 2026-10-13. Next work is Phase 4 coverage improvement and Phase 5 tools/guards. The daily blocks below are planning targets, not claims of completion or guaranteed dates. No author/student identity or new repository is a dependency.
 
 **Day 0: Tuesday 2026-10-13 (evening, ~1.5 h)**
 - Freeze scope. Add feature flags for deferred components and hide deferred UI tabs.
 - Read the R05, S15, and S01 expected outcomes in `evaluation_cases.json` to inform corpus authoring.
-- Create a fresh repository for submission. Confirm `.env` and `.gitignore`.
+- Continue in the existing GitHub repository. Confirm `.env` and `.gitignore`; prepare a scanned history-free source snapshot. A new repository and author/student name are not required.
 
 **Day 1: Wednesday 2026-10-14 (Phases 3 close + 4)**
 
@@ -1249,7 +1274,7 @@ Each RCA record uses the template: test ID; observed vs. expected; root cause; f
 | D11 | DeepEval for judged metrics; deterministic assertions decide gates; human calibration | Standardized metrics without letting a self-judge decide safety | Judge-only; manual-only | Easy |
 | D12 | Prompt C as default | A/B fabricated policy; C fastest; C's failures fixed architecturally | A or B | Easy |
 | D13 | Fixed scenario clock (2026-10-12) | Reproducible date calculations | Wall clock | Easy |
-| D14 | Fresh repository snapshot for submission | Avoid distributing a revoked key in history | History rewrite | — |
+| D14 | History-free source snapshot; continue existing GitHub repository | Avoid distributing the revoked key in a submission archive; no new repository/name required | Optional separate repository; no history rewrite | Easy |
 
 ### Deferred items
 
@@ -1273,10 +1298,10 @@ These were explored or considered and deliberately excluded from evaluated scope
 
 - **Latency:** sequential multi-agent LLM calls make tool paths slower than a single prompt.
 - **Small evaluation sets:** strata of 15 cases mean coarse percentages (each case ≈6.7 points). Results are reported as counts and percentages.
-- **Self-judging:** LLM-judged metrics use the generation model unless an independent judge is configured. Results are calibrated against a 20-output human sample.
-- **Retrieval threshold:** τ is calibrated on 20 labels.
-- **Memory:** in-process only; lost on restart; no durable cross-session conversation memory.
-- **Adaptation:** style only, per customer, from small signal counts.
+- **Self-judging:** the nine measured Phase 4 faithfulness scores use the generation model. Human calibration of twenty final judged outputs is PLANNED, not completed. An independent judge is optional.
+- **Retrieval threshold:** τ is calibrated on 20 development labels. Candidate recall is 100%, but retained evidence recall is 80%; two answerable paraphrases are fully rejected.
+- **Memory (PLANNED):** in-process only, lost on restart; reset/TTL and exclusion of intermediate tool/evidence checkpoint payloads must be tested. No session memory is implemented yet.
+- **Adaptation (PLANNED):** style only, per customer, from small signal counts; no adaptive preference mechanism is implemented yet.
 - **Rule-based safety detection:** lexicon rules can miss novel phrasings (mitigated by OR-ing with LLM flags) and can over-trigger (accepted, since the cost is an unnecessary escalation).
 - **Identity:** customer identity is simulated by session selection; there is no authentication.
 - **Data:** all data is synthetic; real deployment would require access control, retention, and deletion policies for real personal data.
@@ -1384,6 +1409,4 @@ class SupervisorPlan(BaseModel):
 
 ---
 
-*This document is a design and delivery plan. Items marked PLANNED are not yet implemented; their results will be reported only from recorded artifacts in the Evaluation Report.*
-
-
+*Revision 3.1 reconciles measured implementation and remaining work with the v3 design. The originally supplied v3.0 plan is preserved in docs/archive/v3/. Items marked PLANNED are not implemented; no final-system safety acceptance is claimed.*

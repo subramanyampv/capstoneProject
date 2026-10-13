@@ -1,6 +1,6 @@
 # E-commerce Support Resolution Agent
 
-The authoritative [Architecture and Plan v3](docs/architecture_and_plan.md) supersedes all earlier designs. See the [document index](docs/README.md) and [implementation status](docs/implementation_status.md).
+The authoritative [Architecture and Plan v3.1](docs/architecture_and_plan.md) supersedes all earlier designs. See the [document index](docs/README.md), [implementation status](docs/implementation_status.md), and [detailed progress summary](docs/project_progress.md).
 
 The initial product targets a LangGraph supervisor, three LangChain specialists and six typed tools. Policy retrieval uses local Voyage-4-nano and Chroma. Deterministic guards decide safety, eligibility and verified mock escalation. Return/refund/cancellation writes, the knowledge graph and external API ETA are deferred until the initial product succeeds. Synthetic data only.
 
@@ -48,4 +48,4 @@ LangSmith defaults off. Configure its key/project in ignored `.env` to verify ho
 
 [Phase 2 closure](docs/phase2_closure.md) · [Phase 3 comparison](docs/prompt_comparison.md) · [Plan review](docs/plan_review.md). Dated artifacts establish measured results; planned capabilities and targets are labeled explicitly. No final safety pass is claimed.
 
-The existing repository contains a historical revoked credential. A fresh, scanned submission snapshot without Git history will be prepared separately; the current repository will not be rewritten. `.env`, runtime stores, model cache and generated indices remain ignored.
+The existing repository contains a historical revoked credential. A scanned history-free source snapshot has been prepared locally and will be refreshed as work continues. The current repository remains in use; a new repository and author/student name are not required, and existing history will not be rewritten. `.env`, runtime stores, model cache and generated indices remain ignored.

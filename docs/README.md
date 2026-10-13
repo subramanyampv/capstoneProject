@@ -1,9 +1,10 @@
 # Project documents
 
-[Architecture and Plan v3](architecture_and_plan.md) is the authoritative design and delivery plan. It supersedes all earlier documents. [Implementation status](implementation_status.md) distinguishes measured results from targets in the plan.
+[Architecture and Plan v3.1](architecture_and_plan.md) is the authoritative design and delivery plan. It supersedes all earlier documents. [Implementation status](implementation_status.md) distinguishes measured results from targets in the plan.
 
 | Document | Purpose |
 |---|---|
+| [Detailed progress](project_progress.md) | Completed work, evidence, limitations and remaining delivery steps |
 | [Requirements](requirements.md) | Current scope and frozen dataset boundary |
 | [Acceptance criteria](acceptance_criteria.md) | v3 hard gates and quality targets |
 | [Problem framing](problem_framing.md) | Concise submission framing |
