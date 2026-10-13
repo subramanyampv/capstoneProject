@@ -2,6 +2,8 @@
 
 The project has a tested baseline, a completed LLM prompt comparison, framework integration and a working local policy-retrieval experiment. It is **not yet the final multi-agent support resolution product**. Architecture revision 3.1 records this distinction. The latest implementation/evidence commit is `1fe4976`; the existing GitHub repository remains the working repository.
 
+The [detailed task checklist](task_list.md) translates this summary into tracked work items with done/update/not-started states.
+
 ## 1. Current scope and architecture
 
 The initial product uses LangChain for model access and LangGraph for orchestration. Its target design is one supervisor, three specialists (Order & Shipping, Policy & Product, Escalation), and six typed tools. Deterministic code controls safety, identity, eligibility, budgets and confirmed escalation. The only allowed write is a mock escalation ticket. Return/refund/cancellation execution is excluded.

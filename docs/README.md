@@ -4,6 +4,7 @@
 
 | Document | Purpose |
 |---|---|
+| [Task checklist](task_list.md) | Done / update / not-started ledger with priorities, dependencies and completion criteria |
 | [Detailed progress](project_progress.md) | Completed work, evidence, limitations and remaining delivery steps |
 | [Requirements](requirements.md) | Current scope and frozen dataset boundary |
 | [Acceptance criteria](acceptance_criteria.md) | v3 hard gates and quality targets |

@@ -19,3 +19,5 @@ Authority: [Architecture and Plan v3](architecture_and_plan.md). Updated 2026-10
 No author/student name or new repository name is required. Work continues in the existing GitHub repository. Optional later input: LangSmith credentials in ignored `.env` for hosted verification; an independent judge endpoint if desired; human calibration of twenty final judged outputs. None blocks the next local implementation steps.
 
 See [detailed progress and remaining work](project_progress.md).
+
+Execution ledger: [detailed task checklist](task_list.md).

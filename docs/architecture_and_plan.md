@@ -1131,6 +1131,8 @@ Each RCA record uses the template: test ID; observed vs. expected; root cause; f
 
 ### 16.1 Phase status and remaining work
 
+The [detailed task checklist](task_list.md) tracks completed, update-needed and untouched tasks with dependencies and acceptance criteria.
+
 | Phase | Objective | Status | Remaining tasks | Exit evidence | Rubric |
 |---|---|---|---|---|---|
 | **1 Problem & success** | Personas, workflow, scope, metrics, failure cases, frozen dataset | **Done** (exit evidence exists) | Condense to the 1–2 page deliverable; add business value section | `problem_framing.md` | Framing (10) |
