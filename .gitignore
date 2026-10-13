@@ -1,0 +1,29 @@
+# Environments & secrets
+.env
+.venv/
+venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Generated knowledge artifacts (rebuilt by scripts/; keep the folder markers)
+knowledge/index/*
+knowledge/processed/*
+!knowledge/index/.gitkeep
+!knowledge/processed/.gitkeep
+
+# Evidence artifacts (baseline logs, eval outputs) ARE committed — the rubric requires
+# preserved evidence at each stage. Only scratch/temp outputs are ignored:
+artifacts/*.tmp
+
+# OS / editors
+.DS_Store
+.idea/
+.vscode/

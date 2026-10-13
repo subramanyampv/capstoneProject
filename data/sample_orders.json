@@ -1,0 +1,12 @@
+{
+  "version": "2026-10-12",
+  "record_owner_note": "Synthetic records only. Baseline session default customer is C-100 (O-1001, O-1003, O-1005). O-1002 belongs to C-102 — used by cross-account case S13. Authorization checks arrive with the safety layer in Phase 5.",
+  "orders": [
+    { "order_id": "O-1001", "customer_ref": "C-100", "item_sku": "SKU-SHOES-001", "item_name": "TrailRunner Shoes", "category": "footwear", "amount_usd": 89.99, "status": "delivered", "placed_on": "2026-09-25", "shipped_on": "2026-09-28", "delivered_on": "2026-09-30" },
+    { "order_id": "O-1002", "customer_ref": "C-102", "item_sku": "SKU-JKT-002", "item_name": "Alpine Down Jacket", "category": "apparel", "amount_usd": 149.00, "status": "shipped", "placed_on": "2026-09-24", "shipped_on": "2026-09-28", "delivered_on": null },
+    { "order_id": "O-1003", "customer_ref": "C-100", "item_sku": "SKU-ELEC-004", "item_name": "Bluetooth Speaker", "category": "electronics", "amount_usd": 45.00, "status": "processing", "placed_on": "2026-10-11", "shipped_on": null, "delivered_on": null },
+    { "order_id": "O-1004", "customer_ref": "C-101", "item_sku": "SKU-PER-006", "item_name": "Gourmet Cheese Box", "category": "perishable_grocery", "amount_usd": 62.50, "status": "delivered", "placed_on": "2026-08-29", "shipped_on": "2026-08-31", "delivered_on": "2026-09-01" },
+    { "order_id": "O-1005", "customer_ref": "C-100", "item_sku": "SKU-POTS-003", "item_name": "Ceramic Plant Pot Set", "category": "home", "amount_usd": 54.00, "status": "delivered", "placed_on": "2026-09-08", "shipped_on": "2026-09-10", "delivered_on": "2026-09-11" },
+    { "order_id": "O-1006", "customer_ref": "C-103", "item_sku": "SKU-KNIFE-005", "item_name": "Chef Knife Set", "category": "home", "amount_usd": 250.00, "status": "delivered", "placed_on": "2026-10-03", "shipped_on": "2026-10-05", "delivered_on": "2026-10-07" }
+  ]
+}

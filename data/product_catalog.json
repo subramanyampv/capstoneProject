@@ -1,0 +1,12 @@
+{
+  "version": "2026-10-12",
+  "note": "Synthetic catalog. Intentionally missing specs (e.g., pot soil capacity) exercise 'disclose missing specification' behavior.",
+  "products": [
+    { "sku": "SKU-SHOES-001", "name": "TrailRunner Shoes", "category": "footwear", "price_usd": 89.99, "sizes": [7, 8, 9, 10, 11, 12], "material": "recycled polyester mesh upper, rubber outsole", "care": "Machine wash cold, air dry. Do not tumble dry.", "sizing_note": "Runs true to size; wide fitting available in sizes 8-11." },
+    { "sku": "SKU-JKT-002", "name": "Alpine Down Jacket", "category": "apparel", "price_usd": 149.00, "sizes": ["S", "M", "L", "XL"], "material": "recycled nylon shell, RDS down fill", "care": "Machine wash cold on gentle, low-heat tumble dry with tennis balls.", "sizing_note": "Athletic fit; size up for layering." },
+    { "sku": "SKU-POTS-003", "name": "Ceramic Plant Pot Set", "category": "home", "price_usd": 54.00, "sizes": null, "material": "glazed stoneware with drainage holes", "care": "Hand wash. Not dishwasher safe.", "sizing_note": null },
+    { "sku": "SKU-ELEC-004", "name": "Bluetooth Speaker", "category": "electronics", "price_usd": 45.00, "sizes": null, "material": "ABS housing, IPX7 rating", "care": "Wipe with dry cloth.", "sizing_note": null },
+    { "sku": "SKU-KNIFE-005", "name": "Chef Knife Set", "category": "home", "price_usd": 250.00, "sizes": null, "material": "high-carbon stainless steel", "care": "Hand wash and dry immediately.", "sizing_note": null },
+    { "sku": "SKU-PER-006", "name": "Gourmet Cheese Box", "category": "perishable_grocery", "price_usd": 62.50, "sizes": null, "material": null, "care": "Refrigerate on arrival.", "sizing_note": null }
+  ]
+}

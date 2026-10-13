@@ -1,0 +1,34 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "capstone-agent"
+version = "0.1.0"
+description = "Multi-agent e-commerce support agent (capstone): supervisor + bounded specialists with deterministic policy enforcement"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "pydantic>=2.7",
+]
+
+[project.optional-dependencies]
+rag = [
+    "faiss-cpu>=1.8",
+    "numpy>=1.26",
+]
+dev = [
+    "pytest>=8",
+    "pytest-timeout>=2.3",
+]
+
+[project.scripts]
+capstone-agent = "capstone_agent.main:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+timeout = 60

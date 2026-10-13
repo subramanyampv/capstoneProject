@@ -1,0 +1,28 @@
+{
+  "version": "2026-10-12",
+  "note": "Latest event wins; O-1002 is intentionally stale (no event since 2026-10-05) to exercise delayed/stale tracking cases.",
+  "events": {
+    "O-1001": [
+      { "timestamp": "2026-09-28T08:12:00Z", "location": "Origin facility, Reno NV", "event": "shipped" },
+      { "timestamp": "2026-09-29T14:03:00Z", "location": "Denver CO hub", "event": "out_for_delivery" },
+      { "timestamp": "2026-09-30T10:47:00Z", "location": "Denver CO", "event": "delivered" }
+    ],
+    "O-1002": [
+      { "timestamp": "2026-09-28T09:00:00Z", "location": "Origin facility, Reno NV", "event": "shipped" },
+      { "timestamp": "2026-10-01T21:15:00Z", "location": "Sacramento CA transit", "event": "departed_origin_hub" },
+      { "timestamp": "2026-10-05T07:30:00Z", "location": "Regional sorting facility, Fresno CA", "event": "arrived_sorting_facility", "exception": "delayed" }
+    ],
+    "O-1004": [
+      { "timestamp": "2026-08-31T11:00:00Z", "location": "Origin facility", "event": "shipped" },
+      { "timestamp": "2026-09-01T16:20:00Z", "location": "Portland OR", "event": "delivered" }
+    ],
+    "O-1005": [
+      { "timestamp": "2026-09-10T10:00:00Z", "location": "Origin facility", "event": "shipped" },
+      { "timestamp": "2026-09-11T13:05:00Z", "location": "Austin TX", "event": "delivered" }
+    ],
+    "O-1006": [
+      { "timestamp": "2026-10-05T09:40:00Z", "location": "Origin facility", "event": "shipped" },
+      { "timestamp": "2026-10-07T12:12:00Z", "location": "Seattle WA", "event": "delivered" }
+    ]
+  }
+}

@@ -1,0 +1,8 @@
+{"ts": "2026-10-12T22:27:02", "request_id": "6a9123a67115", "intent": "shipping_tracking", "matched": true, "latency_ms": 0.02, "input": "Where is my order O-1003? Has it shipped?", "response_chars": 77}
+{"ts": "2026-10-12T22:27:02", "request_id": "7a50d8941e10", "intent": "return_eligibility", "matched": true, "latency_ms": 0.03, "input": "I received my shoes (order O-1001) 12 days ago. Can I return them?", "response_chars": 317}
+{"ts": "2026-10-12T22:27:02", "request_id": "60c8070ad9f2", "intent": "fallback", "matched": false, "latency_ms": 0.04, "input": "Am I able to send these trainers back? A fortnight has passed since I got them.", "response_chars": 244}
+{"ts": "2026-10-12T22:27:02", "request_id": "62d4b298b1b4", "intent": "return_eligibility", "matched": true, "latency_ms": 0.02, "input": "Where is order O-1002 and can I return the jacket if it arrives late?", "response_chars": 130}
+{"ts": "2026-10-12T22:27:02", "request_id": "7d5ead0e2023", "intent": "return_eligibility", "matched": true, "latency_ms": 0.02, "input": "Can I return order O-1005? It was delivered a while ago.", "response_chars": 297}
+{"ts": "2026-10-12T22:27:02", "request_id": "5ee5118b05da", "intent": "shipping_tracking", "matched": true, "latency_ms": 0.01, "input": "track order O-9999", "response_chars": 130}
+{"ts": "2026-10-12T22:27:02", "request_id": "bdaacf2ad5d1", "intent": "cancellation", "matched": true, "latency_ms": 0.01, "input": "Cancel my order O-1003.", "response_chars": 270}
+{"ts": "2026-10-12T22:27:02", "request_id": "7fdf722f07e9", "intent": "product_information", "matched": true, "latency_ms": 0.16, "input": "What sizes do the TrailRunner Shoes come in?", "response_chars": 160}

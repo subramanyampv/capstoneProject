@@ -1,0 +1,16 @@
+{
+  "version": "2026-10-01",
+  "source_note": "Machine-readable mirror of the knowledge/raw policy documents (authored in Phase 4). Thresholds live here as explicit configuration — the model never guesses them. Keep in sync with .env.example.",
+  "return_window_days": { "default": 30, "footwear": 30, "apparel": 30, "electronics": 15, "home": 30 },
+  "return_window_inclusive": true,
+  "return_excluded_categories": ["perishable_grocery"],
+  "cancellation_allowed_statuses": ["pending", "processing"],
+  "refund_auto_approve_max_amount": 100,
+  "restocking_fee_pct": { "electronics_opened": 10 },
+  "warranty_days": { "footwear": 90, "apparel": 90, "electronics": 365, "home": 30, "perishable_grocery": 0 },
+  "shipping_standard_days_estimate": [3, 7],
+  "shipping_guarantee": false,
+  "international_shipping": false,
+  "escalation_confirmation_ttl_minutes": 15,
+  "session_ttl_minutes": 30
+}
