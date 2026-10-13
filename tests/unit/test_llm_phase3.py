@@ -132,6 +132,24 @@ def test_full_dry_run_makes_no_model_calls(tmp_path):
     assert not (dest / "outputs.jsonl").exists()
 
 
+def test_concurrent_comparison_uses_independent_clients_and_complete_records(tmp_path):
+    clients = []
+
+    def factory():
+        client = FakeClient()
+        clients.append(client)
+        return client
+
+    dest = run_comparison(FakeClient(), config(), dataset=ROOT / "data/evaluation_cases.json",
+                          output_root=tmp_path, today=TODAY, case_ids=["N01", "R01"],
+                          workers=3, client_factory=factory)
+    records = [json.loads(line) for line in (dest / "outputs.jsonl").read_text().splitlines()]
+    assert len(records) == len(clients) == 6
+    assert all(len(client.messages) == 1 for client in clients)
+    assert [(r["case_id"], r["prompt_variant"]) for r in records] == [
+        (case, variant) for case in ["N01", "R01"] for variant in "ABC"]
+
+
 class FakeOpener:
     def __init__(self, *results):
         self.results = list(results)
@@ -160,6 +178,31 @@ def test_adapter_contract_and_no_key_for_local_server():
     assert json.loads(request.data)["response_format"] == {"type": "json_object"}
     assert result.usage == {"total_tokens": 42}
     assert timeout == 20
+    assert "enable_thinking" not in json.loads(request.data)
+
+
+def test_qwen_thinking_setting_is_explicit_and_recorded():
+    client = OpenAICompatibleClient(config(enable_thinking=False))
+    client.opener = FakeOpener(wire_response())
+    client.complete([])
+    assert json.loads(client.opener.requests[0][0].data)["enable_thinking"] is False
+    assert client.config.public_settings()["enable_thinking"] is False
+
+
+def test_openai_provider_alias(tmp_path, monkeypatch):
+    monkeypatch.delenv("CAPSTONE_LLM_PROVIDER", raising=False)
+    monkeypatch.delenv("LLM_ENABLE_THINKING", raising=False)
+    env = tmp_path / ".env"
+    env.write_text('CAPSTONE_LLM_PROVIDER=openai\nLLM_BASE_URL=http://localhost:1234/v1\n'
+                   'LLM_MODEL=test-model\n')
+    assert LLMConfig.from_env(env).enable_thinking is None
+
+
+def test_committed_env_template_contains_no_api_key():
+    lines = (ROOT / ".env.example").read_text().splitlines()
+    key_values = [line.split("=", 1)[1].split(" #", 1)[0].strip().strip("\"'")
+                  for line in lines if line.strip().startswith("LLM_API_KEY=")]
+    assert key_values == [""]
 
 
 def test_timeout_retries_are_bounded(monkeypatch):

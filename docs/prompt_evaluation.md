@@ -24,10 +24,23 @@ evaluation and default prompt selection pending. Phase 3 exit gate remains open.
 ## Verification
 
 The approved project-local Python 3.12 `.venv` is installed. Before Phase 3 edits,
-the 15 baseline tests passed. The expanded suite currently has 47 passing tests.
+the 15 baseline tests passed. The expanded suite currently has 51 passing tests.
 Checks cover schema failures, recovery, multi-intent representation, isolated cases,
 bounded timeout retries, auth failure, provider envelopes, nonexistent citations,
 PII/secret canaries and a 195-request dry-run plan with zero model requests.
+
+Provider configuration now also accepts `openai`. Optional `LLM_ENABLE_THINKING`
+is omitted when blank, or explicitly sent as a boolean when configured. For the
+configured Qwen experiment it is `false`, consistently across prompts. This follows
+[Qwen's structured-output guidance](https://docs.qwencloud.com/developer-guides/text-generation/structured-output).
+The configured model ID was corrected to documented lowercase `qwen3.7-max`.
+`--workers` supports 1–4 concurrent independent clients; the worker count is recorded
+in each manifest and output writing remains serialized in frozen case/variant order.
+
+A live smoke comparison of N01/R01/S04 produced nine validated responses:
+`artifacts/prompt_runs/20261013T030203Z-95d2bcd5/`.
+Earlier diagnostic runs preserve network errors, model-name 404s and truncation
+failures. They are distinct experiments, not overwritten or counted as successes.
 
 Saved dry-run manifest: `artifacts/prompt_runs/20261013T025559Z-fd2c25fc/`.
 Its model ID is explicitly an unconfigured placeholder. No live model was contacted.

@@ -68,17 +68,21 @@ cp .env.example .env                         # configure local provider; keep cr
 The Phase 2 baseline is deterministic: answers depend only on the frozen fixtures and
 the `--today` scenario clock. Ingest/evaluate commands arrive in Phases 4 and 9.
 
-## Phase 3 local model experiment
+## Phase 3 model experiment
 
-Set `LLM_BASE_URL` to your local server's API base (including `/v1`) and `LLM_MODEL`
-to its exact model ID in `.env`. A key is optional for loopback servers. The default
-port in `.env.example` is illustrative; it does not start or discover a server.
+Set `LLM_BASE_URL` to the provider's API base (including `/v1`) and `LLM_MODEL`
+to its exact model ID in `.env`. Set `CAPSTONE_LLM_PROVIDER` to `openai` or
+`openai_compatible`. Remote endpoints require a key; loopback servers may omit it.
+Keep keys only in the ignored `.env`, and leave `LLM_API_KEY` empty in `.env.example`.
+For OpenAI, use `https://api.openai.com/v1` and a model available to your account.
+For compatible providers, use their documented URL and model ID.
 
 ```bash
 .venv/bin/capstone-agent llm-ask "Can I return my shoes?" --prompt C
 bash scripts/run_prompt_comparison.sh --dry-run    # plan only; no requests
 bash scripts/run_prompt_comparison.sh --case N01 --case R01  # smoke comparison
 bash scripts/run_prompt_comparison.sh             # all 65 cases x 3 variants
+bash scripts/run_prompt_comparison.sh --workers 3 # bounded concurrent clients
 ```
 
 Each comparison uses a new directory in `artifacts/prompt_runs/`, with a manifest,

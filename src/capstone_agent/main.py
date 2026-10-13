@@ -68,7 +68,8 @@ def cmd_compare(args: argparse.Namespace) -> int:
     output = run_comparison(OpenAICompatibleClient(config), config,
                             dataset=ROOT / "data/evaluation_cases.json",
                             output_root=Path(args.output), today=date.fromisoformat(args.today),
-                            case_ids=args.case, dry_run=args.dry_run,
+                            case_ids=args.case, dry_run=args.dry_run, workers=args.workers,
+                            client_factory=lambda: OpenAICompatibleClient(config),
                             progress=lambda case, prompt, outcome: print(f"{case} {prompt}: {outcome}", flush=True))
     print(f"Evidence: {output.resolve()}")
     if not args.dry_run:
@@ -100,6 +101,7 @@ def build_parser() -> argparse.ArgumentParser:
     compare.add_argument("--output", default="artifacts/prompt_runs")
     compare.add_argument("--case", action="append", help="optional subset; repeat for each case ID")
     compare.add_argument("--dry-run", action="store_true", help="save manifest without contacting model")
+    compare.add_argument("--workers", type=int, default=1, help="1–4 independent concurrent model clients")
     compare.set_defaults(func=cmd_compare)
     return parser
 

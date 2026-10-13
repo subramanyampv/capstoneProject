@@ -6,6 +6,7 @@ import json
 import platform
 import uuid
 from collections import Counter
+from concurrent.futures import ThreadPoolExecutor
 from datetime import date, datetime, timezone
 from pathlib import Path
 
@@ -29,7 +30,11 @@ def load_cases(path: Path):
 
 def run_comparison(client: ModelClient, config: LLMConfig, *, dataset: Path,
                    output_root: Path, today: date, case_ids: list[str] | None = None,
-                   dry_run: bool = False, progress=None) -> Path:
+                   dry_run: bool = False, progress=None, workers: int = 1, client_factory=None) -> Path:
+    if not 1 <= workers <= 4:
+        raise ValueError("workers must be between 1 and 4.")
+    if workers > 1 and client_factory is None:
+        raise ValueError("Concurrent runs require an independent client factory.")
     payload, dataset_hash = load_cases(dataset)
     cases = payload["cases"]
     if case_ids:
@@ -48,6 +53,7 @@ def run_comparison(client: ModelClient, config: LLMConfig, *, dataset: Path,
         "settings": config.public_settings(), "prompt_version": VERSION,
         "prompt_hashes": {v: prompt_hash(v) for v in STRATEGIES},
         "evidence": [], "tools": [], "memory": False, "repair_attempts": 1,
+        "workers": workers,
         "scheduled_requests": len(cases) * len(STRATEGIES),
         "max_http_attempts": len(cases) * len(STRATEGIES) * 2 * (config.max_retries + 1),
         "default_prompt": None, "quality_review_status": "pending",
@@ -69,9 +75,16 @@ def run_comparison(client: ModelClient, config: LLMConfig, *, dataset: Path,
     with (output / "outputs.jsonl").open("w") as records, (output / "prompt_comparison.csv").open("w", newline="") as sheet:
         writer = csv.DictWriter(sheet, fieldnames=fields)
         writer.writeheader()
-        for case in cases:
-            for variant in STRATEGIES:
-                result = respond(case["input"], client, variant=variant, today=today, secrets=secrets)
+        tasks = [(case, variant) for case in cases for variant in STRATEGIES]
+
+        def evaluate(task):
+            case, variant = task
+            worker_client = client_factory() if client_factory else client
+            result = respond(case["input"], worker_client, variant=variant, today=today, secrets=secrets)
+            return case, variant, result
+
+        with ThreadPoolExecutor(max_workers=workers) as executor:
+            for case, variant, result in executor.map(evaluate, tasks):
                 record = {"case_id": case["id"], "category": case["category"],
                           "expected_behavior": case["expected_behavior"], **result.as_dict()}
                 records.write(json.dumps(sanitize_data(record, secrets)) + "\n")

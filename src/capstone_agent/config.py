@@ -39,6 +39,7 @@ class LLMConfig:
     response_format: str = "json_object"
     temperature: float = 0
     max_completion_tokens: int = 1200
+    enable_thinking: bool | None = None
 
     def __post_init__(self):
         url = urlsplit(self.base_url)
@@ -66,8 +67,11 @@ class LLMConfig:
     @classmethod
     def from_env(cls, path: Path):
         env = load_environment(path)
-        if env.get("CAPSTONE_LLM_PROVIDER") != "openai_compatible":
-            raise ConfigurationError("Set CAPSTONE_LLM_PROVIDER=openai_compatible.")
+        if env.get("CAPSTONE_LLM_PROVIDER") not in {"openai", "openai_compatible"}:
+            raise ConfigurationError("Set CAPSTONE_LLM_PROVIDER=openai or openai_compatible.")
+        thinking = env.get("LLM_ENABLE_THINKING", "").strip().lower()
+        if thinking not in {"", "true", "false"}:
+            raise ConfigurationError("LLM_ENABLE_THINKING must be blank, true, or false.")
         try:
             return cls(
                 base_url=env.get("LLM_BASE_URL", "").rstrip("/"),
@@ -77,6 +81,7 @@ class LLMConfig:
                 response_format=env.get("LLM_RESPONSE_FORMAT", "json_object"),
                 temperature=float(env.get("LLM_TEMPERATURE", "0")),
                 max_completion_tokens=int(env.get("LLM_MAX_COMPLETION_TOKENS", "1200")),
+                enable_thinking=None if not thinking else thinking == "true",
             )
         except ValueError as exc:
             if isinstance(exc, ConfigurationError):
@@ -88,4 +93,5 @@ class LLMConfig:
         return {"provider": "openai_compatible", "model": self.model,
                 "timeout_seconds": self.timeout_seconds, "max_retries": self.max_retries,
                 "response_format": self.response_format, "temperature": self.temperature,
-                "max_completion_tokens": self.max_completion_tokens}
+                "max_completion_tokens": self.max_completion_tokens,
+                "enable_thinking": self.enable_thinking}

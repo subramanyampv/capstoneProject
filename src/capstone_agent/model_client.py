@@ -46,6 +46,8 @@ class OpenAICompatibleClient:
                 "temperature": self.config.temperature,
                 "max_completion_tokens": self.config.max_completion_tokens,
                 "stream": False}
+        if self.config.enable_thinking is not None:
+            body["enable_thinking"] = self.config.enable_thinking
         if self.config.response_format == "json_schema":
             body["response_format"] = {"type": "json_schema", "json_schema": {
                 "name": "support_response", "strict": True,
