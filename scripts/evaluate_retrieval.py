@@ -8,6 +8,7 @@ from pathlib import Path
 
 from capstone_agent.retrieval.chroma_store import PolicySearch
 from capstone_agent.retrieval.embeddings_voyage import VoyageNanoEmbeddings
+from capstone_agent.retrieval.query_expansion import PROFILE
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -20,11 +21,13 @@ def main():
     thresholds = sorted({0., 1., *(round(c["score"] + delta, 6) for _, result in raw
                                   for c in result["raw_vector_top_k"] for delta in (0, .000001))})
     def calibration(threshold):
-        tp = sum(bool(result["raw_vector_top_k"]) and result["raw_vector_top_k"][0]["score"] >= threshold
+        tp = sum(any(c["score"] >= threshold for c in result["raw_vector_top_k"])
                  for label, result in raw if label["answerable"])
-        tn = sum(not result["raw_vector_top_k"] or result["raw_vector_top_k"][0]["score"] < threshold
+        tn = sum(not any(c["score"] >= threshold for c in result["raw_vector_top_k"])
                  for label, result in raw if not label["answerable"])
-        return ((tp / 15 + tn / 5) / 2, tn, tp)
+        positives = sum(label["answerable"] for label in labels)
+        negatives = len(labels) - positives
+        return ((tp / positives + tn / negatives) / 2, tn, tp)
     threshold = max(thresholds, key=calibration)
     search.threshold = threshold
     records = []
@@ -41,12 +44,15 @@ def main():
                         "recall_at_5": recall, "reciprocal_rank": rr,
                         "post_threshold_recall_at_5": len(expected & {(r['doc_id'], r['section_id']) for r in admitted}) / len(expected) if expected else None,
                         "below_threshold": not admitted, "abstention_correct": not admitted if not expected else None,
-                        "top_score": ranked[0]["score"] if ranked else None,
+                        "top_score": max((c["score"] for c in ranked), default=None),
+                        "query_hints": first["query_hints"],
                         "top_5": [r["chunk_id"] for r in ranked]})
     answerable = [r for r in records if r["answerable"]]
     unknown = [r for r in records if not r["answerable"]]
     conflict = search.search(labels[3]["query"])
     summary = {"recorded_at": datetime.now(timezone.utc).isoformat(), "index_version": search.manifest["index_version"],
+               "query_profile": PROFILE,
+               "query_expansion_sha256": hashlib.sha256((ROOT / "src/capstone_agent/retrieval/query_expansion.py").read_bytes()).hexdigest(),
                "labels_sha256": hashlib.sha256(label_path.read_bytes()).hexdigest(), "queries": len(records),
                "answerable": len(answerable), "unanswerable": len(unknown), "threshold": threshold,
                "threshold_selection": "Maximize balanced answerability accuracy on the same development label set; not held-out validation.",
@@ -76,7 +82,8 @@ def main():
     (artifacts / "relevance_examples.json").write_text(json.dumps(examples, indent=2) + "\n")
     (ROOT / "config").mkdir(exist_ok=True)
     (ROOT / "config/retrieval.json").write_text(json.dumps({"index_version": "v1", "threshold": threshold,
-                  "dimension": search.manifest["dimension"], "top_k": 5}, indent=2) + "\n")
+                  "dimension": search.manifest["dimension"], "top_k": 5, "query_profile": PROFILE,
+                  "query_expansion_sha256": summary["query_expansion_sha256"]}, indent=2) + "\n")
     print(json.dumps(summary, indent=2))
 
 

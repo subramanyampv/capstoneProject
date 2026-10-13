@@ -1,6 +1,6 @@
 # Project progress and remaining work — 2026-10-13
 
-The project has a tested baseline, a completed LLM prompt comparison, framework integration and a working local policy-retrieval experiment. It is **not yet the final multi-agent support resolution product**. Architecture revision 3.1 records this distinction. The latest implementation/evidence commit is `1fe4976`; the existing GitHub repository remains the working repository.
+The project has a tested baseline, a completed LLM prompt comparison, framework integration and a working local policy-retrieval experiment. It is **not yet the final multi-agent support resolution product**. Architecture revision 3.1 records this distinction. The initial v3/Phase 4 implementation was recorded in `1fe4976`; later commits contain the documented follow-through; the existing GitHub repository remains the working repository.
 
 The [detailed task checklist](task_list.md) translates this summary into tracked work items with done/update/not-started states.
 
@@ -47,7 +47,7 @@ Knowledge graph, external distance/weather ETA, external commerce APIs, extended
 - Built 28 heading-based sections in the persisted cosine Chroma collection `policies_v1`. Telemetry is off; caches and the vector database are ignored by Git.
 - Added deterministic IDs, source/metadata hashes, dimension/revision manifests, idempotent reuse and fail-closed checks for changed, incompatible or tampered sources/index data.
 - Saved 20 development retrieval labels and a separate ten-case holdout; the holdout has not been used for tuning.
-- Candidate Recall@5 was 100% and MRR 0.90. The calibrated threshold 0.464133 rejected all five unanswerable queries but fully rejected two answerable paraphrases and removed some additional useful sections. **Post-threshold Recall@5 is 80%, an open coverage gap.**
+- Candidate Recall@5 was 100% and MRR 0.90. The calibrated threshold 0.464133 rejected all five unanswerable queries but fully rejected two answerable paraphrases and removed some additional useful sections. **That initial 80% retained-source recall improved to 100% after the query-profile follow-through; candidate MRR remains .90.**
 - Ran the same ten frozen policy cases with RAG disabled/enabled. RAG: 10 validated, 9 cited, 7 policy-success classifications, 1 escalation classification. No RAG: 9 validated, no citations, one rejected output.
 - R05 with RAG surfaces both sources and requests human review. This is classification only; no verified escalation ticket exists yet.
 - DeepEval faithfulness measured nine context-bearing outputs, each scoring 1.0. Eleven outputs without usable context were skipped; no judge errors occurred. The judge is the same model, so these are indicative scores without human calibration.
@@ -58,14 +58,14 @@ Knowledge graph, external distance/weather ETA, external commerce APIs, extended
 - Local DeepEval execution has dotenv autoload and telemetry disabled; no results were uploaded to DeepEval. Missing context/judge failures are not passes.
 - LangSmith's optional wrapper hides inputs and filters safe scalar output metadata. Hosted ingestion and final hierarchical agent/tool traces are not verified.
 - Pinned app/dev/eval/UI/RAG installation succeeds in the existing local venv; dependency checks pass. No global Python installation is used.
-- Latest suite: **98 tests passed in 5.60 seconds**, including corpus drift, index tampering, revision mismatch, superseded evidence, invalid citations/numbers, credential redaction and bounded failures.
+- Latest suite: **104 tests passed in 9.90 seconds**, including corpus drift, index tampering, revision mismatch, superseded evidence, invalid citations/numbers, credential redaction and bounded failures.
 - Current and historically revoked keys were checked against staged source/evidence and were absent. The ignored `.env` was not exported. A scanned ZIP source snapshot without Git history is available locally; it must be refreshed after subsequent changes.
 
 ## 4. Remaining work, in delivery order
 
-### Phase 4 follow-through — improve useful evidence coverage
+### Phase 4 follow-through — development coverage corrected
 
-Diagnose the rejected TrailRunner paraphrase and exception query and the lower-scored governing passages. Improve query/document representation or retrieval calibration using only development labels. Measure both candidate and retained-source recall and unanswerable abstention; do not report 100% candidate recall as a complete coverage pass. Evaluate the operating point again in the integrated tool path. Preserve the holdout for the final generalization run.
+The public-catalog/topic query profile now retains 100% of labeled sources with MRR .90, no answerable full rejections and five of five unknown abstentions. Both the initial 80% result and new measurements are retained. Conflict checks also cover small k, filters and overlapping versions. Generalization, category filtering and final registered-tool integration remain open. R02 semantic wording was flagged in the fresh judged run; the targeted prompt-v2 R01/R02/R05/R08 outputs are valid/cited and self-score 1.0; do not equate a schema pass with faithfulness.
 
 ### Phase 5 — genuine tool-using multi-agent resolution
 
@@ -96,6 +96,8 @@ Run the frozen 65 cases and ten untouched holdout cases; repeat the safety/consi
 Run the capability ladder, memory on/off, adaptation before/after, RAG comparison and RCA before/after with repeats. Apply standardized judged quality metrics and human calibration on twenty final judged outputs. Report failures and unavailable metrics explicitly.
 
 Complete five forced demo packets and the final framing, evaluation, engineering justification and deployment instructions. Refresh/scan the history-free source package. The existing GitHub repository remains in use; a separate repository is optional, not a requirement.
+
+The [market comparison](market_comparison.md) contrasts implemented/planned capabilities with Intercom Fin, Zendesk AI agents and Salesforce Agentforce using official documentation. No vendor trial or scope expansion was performed.
 
 ## 5. Inputs from the user
 

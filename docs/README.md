@@ -4,6 +4,7 @@
 
 | Document | Purpose |
 |---|---|
+| [Market comparison](market_comparison.md) | Official-source desk comparison with Fin, Zendesk and Agentforce; analysis only |
 | [Task checklist](task_list.md) | Done / update / not-started ledger with priorities, dependencies and completion criteria |
 | [Detailed progress](project_progress.md) | Completed work, evidence, limitations and remaining delivery steps |
 | [Requirements](requirements.md) | Current scope and frozen dataset boundary |

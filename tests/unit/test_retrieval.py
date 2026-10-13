@@ -161,3 +161,77 @@ def test_empty_context_cannot_support_success_and_model_failure_is_disclosed():
     result = answer("Return policy?", FailedClient(), {"results": [], "conflict": False})
     assert result["outcome"] == "error" and result["response"] is None
     assert result["model_calls"] == 1
+
+
+def test_catalog_hints_help_policy_queries_without_inventing_product_specs():
+    from capstone_agent.retrieval.query_expansion import expand_query
+    products = json.loads((ROOT / "data/product_catalog.json").read_text())["products"]
+    query = "May these TrailRunners be sent back under your return policy?"
+    expanded, hints = expand_query(query, products)
+    assert expanded.startswith(query) and hints == ["Product category: footwear."]
+    # A known product name does not make an unsupported specification answerable.
+    query = "How much soil fits in the Ceramic Plant Pot Set?"
+    assert expand_query(query, products) == (query, [])
+    query = "What warranty does an UnknownBrand guitar have?"
+    assert expand_query(query, products) == (query, [])
+
+
+def test_exception_and_human_hints_do_not_convert_review_bypass_into_a_request():
+    from capstone_agent.retrieval.query_expansion import expand_query
+    _, hints = expand_query("Need an exception to a return rule", [])
+    assert any("exception" in hint for hint in hints)
+    _, hints = expand_query("Please connect me with a supervisor", [])
+    assert hints == ["Escalation guidelines human requests."]
+    _, hints = expand_query("How much refund can I get without a human?", [])
+    assert hints == []
+    _, hints = expand_query("Does a product injury need human review?", [])
+    assert hints == []  # safety review is not a general representative request
+
+
+def test_declared_conflict_cannot_be_hidden_by_filter_or_k(corpus_root):
+    from capstone_agent.retrieval.chroma_store import PolicySearch, ingest
+    wrapper = embeddings()
+    ingest(wrapper, root=corpus_root)
+    result = PolicySearch(wrapper, root=corpus_root, threshold=1).search(
+        "speaker return policy conflict", k=1, doc_types=["return_policy"])
+    assert result["conflict"] and result["conflict_evidence_exceeds_k"]
+    assert {r["doc_id"] for r in result["results"]} == {"faq", "return_policy"}
+    # No fabricated vector score is assigned to a source excluded by the filter.
+    assert next(r for r in result["results"] if r["doc_id"] == "faq")["score"] is None
+
+
+def test_overlapping_versions_keep_both_sources_when_k_is_one(corpus_root):
+    from capstone_agent.retrieval.chroma_store import PolicySearch, ingest
+    original = corpus_root / "knowledge/raw/cancellation_policy.md"
+    older = corpus_root / "knowledge/raw/cancellation_policy_older.md"
+    older.write_text(original.read_text().replace("version: v1\n", "version: v0\n", 1))
+    wrapper = embeddings(); ingest(wrapper, root=corpus_root)
+    result = PolicySearch(wrapper, root=corpus_root, threshold=-1).search(
+        "cancellation eligibility", k=1, doc_types=["cancellation_policy"])
+    assert result["conflict"] and result["conflict_evidence_exceeds_k"]
+    assert {r["version"] for r in result["results"]} == {"v0", "v1"}
+
+
+def test_general_conflict_validation_uses_supplied_version_references():
+    from capstone_agent.retrieval.grounded_answer import validate_grounding
+    evidence = [{"source_id": "doc:cancellation_policy", "section": "eligibility",
+                 "record_version": version, "text": "Requires review."} for version in ["v0", "v1"]]
+    refs = {(e["source_id"], e["section"], e["record_version"]) for e in evidence}
+    payload = {"intents": ["cancellation"], "status": "escalation_required", "plan_summary": [],
+               "response": "Conflicting versions require human review; no ticket created.",
+               "citations": [{k:e[k] for k in ['source_id','section','record_version']} for e in evidence],
+               "requested_action": "none", "action_executed": False, "uncertainty": "Versions conflict."}
+    assert validate_grounding(json.dumps(payload), evidence, conflict=True, required_conflict_refs=refs)
+    payload["citations"].pop()
+    with pytest.raises(ValueError, match="both_sources"):
+        validate_grounding(json.dumps(payload), evidence, conflict=True, required_conflict_refs=refs)
+
+
+def test_changed_query_profile_requires_recalibration(corpus_root):
+    from capstone_agent.retrieval.chroma_store import PolicySearch, ingest
+    wrapper = embeddings(); ingest(wrapper, root=corpus_root)
+    (corpus_root / "config").mkdir()
+    (corpus_root / "config/retrieval.json").write_text(json.dumps({"index_version": "v1", "threshold": .4,
+        "query_profile": "obsolete", "query_expansion_sha256": "wrong"}))
+    with pytest.raises(ValueError, match="CALIBRATION_MISMATCH"):
+        PolicySearch(wrapper, root=corpus_root)

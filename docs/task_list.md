@@ -6,9 +6,9 @@ Authority: [Architecture revision 3.1](architecture_and_plan.md). This is the cu
 
 **P0** = protects correctness, safety or a required delivery gate. **P1** = required capability or evaluation work. Dependencies are task IDs, not permission requests. Task counts do not represent a completion percentage because effort differs substantially.
 
-**Inventory:** 85 initial-product tasks — 28 done, 19 needing updates, 38 not started. 8 areas are deferred.
+**Inventory:** 85 initial-product tasks — 30 done, 17 needing updates, 38 not started. 8 areas are deferred.
 
-**Immediate sequence:** R10 coverage diagnosis → S01/S02/G02 foundations and T01 registry → tools/guards/specialists → core demos → memory/adaptation → final observability/evaluation. Retrieval follow-through and tool foundations can progress independently where dependencies allow.
+**Immediate sequence:** S01/S02/G02 foundations and T01 registry → tools/guards/specialists → core demos → memory/adaptation → final observability/evaluation. Retrieval follow-through and tool foundations can progress independently where dependencies allow.
 
 No author/student name or new repository is required. Optional later inputs are hosted LangSmith configuration and human calibration of final judged outputs; neither blocks the next local work.
 
@@ -19,7 +19,7 @@ No author/student name or new repository is required. Optional later inputs are 
 | D01 | DONE | P0 | Adopt final v3 scope | Architecture 3.1: three specialists, six tools, escalation-only write; earlier plans archived. | — |
 | D02 | DONE | P0 | Record current implementation and evidence | project_progress.md, implementation_status.md and evaluation_report.md distinguish measured work from targets. | D01 |
 | D03 | DONE | P0 | Complete Phase 3 comparison documentation | Ten representative cases, 195-output appendix, A/B/C failure breakdown and C development selection. | B08 |
-| D04 | DONE | P1 | Document Phase 4 implementation and gaps | retrieval_design.md records 28 chunks, measured metrics, RAG results and the 80% retained-source recall gap. | R07 |
+| D04 | DONE | P1 | Document Phase 4 implementation and gaps | retrieval_design.md records 28 chunks, initial 80% versus improved 100% retained recall, and preserved RAG/wording failures. | R07 |
 | D05 | DONE | P1 | Remove identity and new-repository requirements | No author/student name or new GitHub repository is needed; continue using the existing repository. | D01 |
 | D06 | UPDATE | P1 | Keep architecture and status synchronized | Update statuses from artifacts as tools, guards, memory and evaluation land; never promote a planned path without evidence. | G10,M05,A04,E10 |
 | D07 | UPDATE | P1 | Finalize submission framing and justification | Existing concise documents need final-build results, trade-offs and limits; retain framing within the required 1–2 pages. | E10 |
@@ -52,10 +52,10 @@ No author/student name or new repository is required. Optional later inputs are 
 | R05 | DONE | P0 | Reject incompatible or tampered index/source state | Tests cover revision mismatch, changed corpus, index content tampering, rule drift and superseded/future evidence. | R04 |
 | R06 | DONE | P1 | Prepare labels and untouched holdout | 20 retrieval development labels and ten separately frozen holdout cases; holdout not used for tuning. | B01 |
 | R07 | DONE | P1 | Measure retrieval and calibrate initial threshold | Candidate Recall@5=100%, MRR=.90, threshold=.464133; retained recall=80%, 5/5 unanswerable abstentions and two answerable full rejections. | R04,R06 |
-| R08 | DONE | P1 | Run ten-case RAG on/off experiment | 20 outputs preserved: RAG 10 valid/9 cited, no-RAG 9 valid/0 cited/1 rejected. No records or tickets in this probe. | R07,B07 |
-| R09 | DONE | P1 | Measure initial DeepEval faithfulness | Nine context-bearing outputs scored 1.0; eleven no-context outputs skipped; same-model judging, no human calibration. | R08 |
-| R10 | UPDATE | P0 | Improve retained evidence coverage | Diagnose TrailRunner paraphrase/exception misses and lost governing passages. Recalibrate or improve representation; preserve abstention behavior and report both recall measures. | R07 |
-| R11 | UPDATE | P0 | Broaden conflict correctness tests | Declared FAQ conflict works; verify general overlapping-version handling, source authority, supersession and nonconflicting topics in final tool use. | R02,R05,T04 |
+| R08 | DONE | P1 | Run ten-case RAG on/off experiment | Initial and improved 20-output runs preserved; improved RAG 10 valid/10 cited, no-RAG 10 valid/0 cited. Targeted prompt-v2 8 outputs also retained. No records/tickets in probes. | R07,B07 |
+| R09 | DONE | P1 | Measure initial DeepEval faithfulness | Initial nine outputs self-scored 1.0; fresh ten-case run flags R02 at .667; targeted prompt-v2 four outputs self-score 1.0. Missing context skipped; human calibration still pending. | R08 |
+| R10 | DONE | P0 | Improve retained evidence coverage | Improved public-catalog/topic query profile retains 100% of labeled sources, MRR .90, 0/15 answerable rejections and 5/5 unknown abstentions on development labels; generalization remains untested. | R07 |
+| R11 | DONE | P0 | Broaden conflict correctness tests | Tests preserve both sides under filters/k=1 and overlapping versions; future/superseded sources excluded; generic conflict references validate. Final registered-tool integration remains T04/G09. | R02,R05,T04 |
 | R12 | UPDATE | P1 | Complete structured category handling | Current category argument is a conflict-topic hint; add/document actual applicability/filtering needed by the registered policy tool. | T04,T05 |
 | R13 | UPDATE | P0 | Integrate retrieval into the final agent path | Existing search/grounded helper is a single-agent experiment. Specialists must retrieve current-turn evidence and the composer must retain resolvable citations. | T04,G06,G08 |
 
@@ -138,7 +138,7 @@ No author/student name or new repository is required. Optional later inputs are 
 | E07 | NOT STARTED | P0 | Prove RCA before/after fixes | R05 conflict trigger disabled/enabled with repeats and holdout; unsupported-policy before/after; permanent regressions and residual risks. | E02,E04,G09 |
 | E08 | UPDATE | P1 | Report final latency, token and error measurements | Per-path p50/p95 versus v3 targets; stage latency, retry/repair overhead and error categories. Current measurements are only baseline/experiments. | O06,E02 |
 | E09 | UPDATE | P1 | Complete final evaluation/governance report | Populate all metrics or explain absence; include human calibration, safety review, limitations, failed cases, RCA and roadmap. Current register is preliminary. | E03,E04,E05,E06,E07,E08 |
-| E10 | NOT STARTED | P0 | Run final acceptance and demo gate | All protected demos and hard safety gates evidenced; review quality misses explicitly. Prompt choice and 98 tests alone do not satisfy this gate. | E09,G10,M05,A04,O09 |
+| E10 | NOT STARTED | P0 | Run final acceptance and demo gate | All protected demos and hard safety gates evidenced; review quality misses explicitly. Prompt choice and 104 tests alone do not satisfy this gate. | E09,G10,M05,A04,O09 |
 | E11 | DONE | P0 | Prepare first scanned history-free snapshot | Local source ZIP excludes .git, credentials, model weights and vector DB. Existing repository retained; snapshot requires refresh after changes. | D05 |
 | E12 | UPDATE | P0 | Refresh and validate final submission package | Source, final docs/tests/evidence, setup/rebuild commands and refreshed scanned archive; no new repository/name requirement. | E10,D07,D08 |
 

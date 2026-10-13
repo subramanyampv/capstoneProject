@@ -1,5 +1,6 @@
 """Local, version-checked Chroma index and source-bearing policy search."""
 
+import hashlib
 import json
 import os
 import re
@@ -8,6 +9,7 @@ from pathlib import Path
 
 from capstone_agent.retrieval.corpus import check_rule_consistency, load_corpus
 from capstone_agent.retrieval.embeddings_voyage import DIMENSION, MODEL_ID, REVISION, ROOT
+from capstone_agent.retrieval.query_expansion import PROFILE, expand_query
 
 SCENARIO_DATE = date(2026, 10, 12)
 
@@ -63,7 +65,13 @@ class PolicySearch:
     def __init__(self, embeddings, *, root=ROOT, version="v1", threshold=None):
         if threshold is None:
             config_path = root / "config/retrieval.json"
-            threshold = json.loads(config_path.read_text())["threshold"] if config_path.exists() else .4
+            settings = json.loads(config_path.read_text()) if config_path.exists() else None
+            if settings is not None:
+                profile_hash = hashlib.sha256(Path(__file__).with_name("query_expansion.py").read_bytes()).hexdigest()
+                if (settings.get("query_profile") != PROFILE or settings.get("query_expansion_sha256") != profile_hash
+                        or settings.get("index_version") != version):
+                    raise ValueError("RETRIEVAL_CALIBRATION_MISMATCH")
+            threshold = settings["threshold"] if settings is not None else .4
         if not re.fullmatch(r"v[0-9]+", version) or not -1 <= threshold <= 1:
             raise ValueError("Invalid retrieval configuration.")
         path = root / "knowledge/index" / f"chroma_{version}"
@@ -91,6 +99,8 @@ class PolicySearch:
             if identifier not in expected or document != expected[identifier]["text"] or metadata != expected[identifier]["metadata"]:
                 raise ValueError("MANIFEST_MISMATCH")
         self.chunks, self.manifest, self.threshold = chunks, manifest, threshold
+        catalog_path = root / "data/product_catalog.json"
+        self.catalog = json.loads(catalog_path.read_text())["products"] if catalog_path.exists() else []
 
     def search(self, query: str, *, k=5, doc_types=None, category=None, today=SCENARIO_DATE):
         if not query.strip() or len(query) > 2000 or not 1 <= k <= 10:
@@ -99,7 +109,8 @@ class PolicySearch:
         if doc_types is not None and (not doc_types or any(d not in {c['metadata']['doc_id'] for c in self.chunks} for d in doc_types)):
             raise ValueError("INVALID_ARGUMENT")
         # Fetch extra candidates so future/superseded sources cannot crowd out applicable evidence.
-        matches = self.store.similarity_search_with_score(query, k=self.manifest["chunk_count"], filter=where)
+        expanded, hints = expand_query(query, self.catalog, category=category)
+        matches = self.store.similarity_search_with_score(expanded, k=self.manifest["chunk_count"], filter=where)
         candidates = []
         for document, distance in matches:
             meta = document.metadata
@@ -112,24 +123,40 @@ class PolicySearch:
         # Prefer policy over FAQ for very similar scores, never dropping version metadata.
         candidates.sort(key=lambda c: (-round(c["score"], 2), c["authority"] != "policy", -c["score"]))
         results = [c for c in candidates if c["score"] >= self.threshold][:k]
-        conflicts = []
-        groups = {}
-        for c in results:
-            groups.setdefault((c["doc_id"], c["section_id"]), []).append(c)
-        for key, group in groups.items():
-            if len({c["version"] for c in group}) > 1:
-                conflicts.append({"kind": "overlapping_versions", "sources": [c["chunk_id"] for c in group]})
+        conflicts, required_sources = [], {}
+        applicable = [c for c in self.chunks if date.fromisoformat(c["metadata"]["effective_date"]) <= today
+                      and not (c["metadata"].get("superseded_on") and date.fromisoformat(c["metadata"]["superseded_on"]) <= today)]
+        scores = {c["chunk_id"]: c["score"] for c in candidates}
+
+        def source_record(chunk):
+            return {**chunk["metadata"], "chunk_id": chunk["id"], "text": chunk["text"],
+                    "score": scores.get(chunk["id"]), "selection_reason": "mandatory_conflict_evidence"}
+
+        # Check all applicable versions of any retained section, not just the
+        # versions that happen to fit within k or the similarity threshold.
+        for key in {(c["doc_id"], c["section_id"]) for c in results}:
+            group = [c for c in applicable if (c["metadata"]["doc_id"], c["metadata"]["section_id"]) == key]
+            if len({c["metadata"]["version"] for c in group}) > 1:
+                conflicts.append({"kind": "overlapping_versions", "sources": [c["id"] for c in group]})
+                required_sources.update({c["id"]: source_record(c) for c in group})
         # R05's explicitly authored cross-authority discrepancy is a deterministic
         # topic check. Inject both sources so a vector miss cannot suppress a mandatory flag.
-        electronics = bool(re.search(r"\b(electronics?|speaker)\b", query, re.I)) or category == "electronics"
+        electronics = bool(re.search(r"\b(electronics?|speaker)\b", expanded, re.I)) or category == "electronics"
         if electronics and re.search(r"return|window|faq", query, re.I):
-            pair = [c for c in candidates if (c["doc_id"], c["section_id"]) in
+            pair = [c for c in applicable if (c["metadata"]["doc_id"], c["metadata"]["section_id"]) in
                     {("faq", "electronics-returns"), ("return_policy", "window")}]
-            if len(pair) == 2 and any(c["evaluation_conflict"] == "electronics_return_window" for c in pair):
-                conflicts.append({"kind": "declared_faq_policy_conflict", "sources": [c["chunk_id"] for c in pair]})
-                results = pair + [c for c in results if c["chunk_id"] not in {p["chunk_id"] for p in pair}]
-                results = results[:max(2, k)]
+            if len(pair) >= 2 and any(c["metadata"]["evaluation_conflict"] == "electronics_return_window" for c in pair):
+                conflicts.append({"kind": "declared_faq_policy_conflict", "sources": [c["id"] for c in pair]})
+                required_sources.update({c["id"]: source_record(c) for c in pair})
+        if len(required_sources) > 20:
+            raise ValueError("TOO_MANY_CONFLICTING_SOURCES")
+        if required_sources:
+            results = list(required_sources.values()) + [c for c in results if c["chunk_id"] not in required_sources]
+            # Both sides are mandatory, so conflict evidence may exceed the
+            # requested k. Disclose that exception instead of hiding a source.
+            results = results[:max(k, len(required_sources))]
         return {"results": results, "below_threshold": not results,
                 "conflict": bool(conflicts), "conflict_details": conflicts or None,
                 "threshold": self.threshold, "index_version": self.manifest["index_version"],
-                "raw_vector_top_k": candidates[:k]}
+                "raw_vector_top_k": candidates[:k], "query_profile": PROFILE, "query_hints": hints,
+                "conflict_evidence_exceeds_k": len(required_sources) > k}

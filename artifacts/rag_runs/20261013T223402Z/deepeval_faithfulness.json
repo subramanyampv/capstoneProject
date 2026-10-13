@@ -1,0 +1,171 @@
+{
+  "library": "deepeval",
+  "metric": "Faithfulness",
+  "threshold": 0.9,
+  "judge_model": "qwen3.7-max",
+  "same_as_generation": true,
+  "source_sha256": "928c8d7e0f9bae58a4936b2209ffa19fe9882ee44b2c228eb9ea5d3783854735",
+  "limits": "Same-model indicative judging; human calibration not performed. Empty context skipped, never passed. Safety gates remain deterministic.",
+  "results": [
+    {
+      "case_id": "R01",
+      "retrieval_enabled": false,
+      "score": null,
+      "pass": null,
+      "status": "skipped",
+      "reason": "No validated answer with retrieval context."
+    },
+    {
+      "case_id": "R01",
+      "retrieval_enabled": true,
+      "score": 1.0,
+      "pass": true,
+      "status": "measured",
+      "reason": "The score is 1.00 because there are no contradictions, indicating the actual output is perfectly faithful to the retrieval context. Great job!"
+    },
+    {
+      "case_id": "R02",
+      "retrieval_enabled": false,
+      "score": null,
+      "pass": null,
+      "status": "skipped",
+      "reason": "No validated answer with retrieval context."
+    },
+    {
+      "case_id": "R02",
+      "retrieval_enabled": true,
+      "score": 0.6666666666666666,
+      "pass": false,
+      "status": "measured",
+      "reason": "The score is 0.67 because the actual output incorrectly claims the refund deadline kicks in 'after' 30 days have passed, contradicting the retrieval context which specifies that the final day of the return window is inclusive and the deadline is on the 30th day."
+    },
+    {
+      "case_id": "R05",
+      "retrieval_enabled": false,
+      "score": null,
+      "pass": null,
+      "status": "skipped",
+      "reason": "No validated answer with retrieval context."
+    },
+    {
+      "case_id": "R05",
+      "retrieval_enabled": true,
+      "score": 1.0,
+      "pass": true,
+      "status": "measured",
+      "reason": "The score is 1.00 because there are no contradictions, indicating the actual output is perfectly faithful to the retrieval context. Great job!"
+    },
+    {
+      "case_id": "R07",
+      "retrieval_enabled": false,
+      "score": null,
+      "pass": null,
+      "status": "skipped",
+      "reason": "No validated answer with retrieval context."
+    },
+    {
+      "case_id": "R07",
+      "retrieval_enabled": true,
+      "score": 1.0,
+      "pass": true,
+      "status": "measured",
+      "reason": "The score is 1.00 because there are no contradictions, indicating the actual output is perfectly faithful to the retrieval context. Great job!"
+    },
+    {
+      "case_id": "R08",
+      "retrieval_enabled": false,
+      "score": null,
+      "pass": null,
+      "status": "skipped",
+      "reason": "No validated answer with retrieval context."
+    },
+    {
+      "case_id": "R08",
+      "retrieval_enabled": true,
+      "score": 1.0,
+      "pass": true,
+      "status": "measured",
+      "reason": "The score is 1.00 because there are no contradictions; the actual output is perfectly faithful to the retrieval context. Great job maintaining accuracy!"
+    },
+    {
+      "case_id": "R09",
+      "retrieval_enabled": false,
+      "score": null,
+      "pass": null,
+      "status": "skipped",
+      "reason": "No validated answer with retrieval context."
+    },
+    {
+      "case_id": "R09",
+      "retrieval_enabled": true,
+      "score": 1.0,
+      "pass": true,
+      "status": "measured",
+      "reason": "The score is 1.00 because there are no contradictions, indicating the actual output is perfectly faithful to the retrieval context. Great job!"
+    },
+    {
+      "case_id": "R10",
+      "retrieval_enabled": false,
+      "score": null,
+      "pass": null,
+      "status": "skipped",
+      "reason": "No validated answer with retrieval context."
+    },
+    {
+      "case_id": "R10",
+      "retrieval_enabled": true,
+      "score": 1.0,
+      "pass": true,
+      "status": "measured",
+      "reason": "The score is 1.00 because there are no contradictions, indicating the actual output is perfectly faithful to the retrieval context. Great job!"
+    },
+    {
+      "case_id": "R12",
+      "retrieval_enabled": false,
+      "score": null,
+      "pass": null,
+      "status": "skipped",
+      "reason": "No validated answer with retrieval context."
+    },
+    {
+      "case_id": "R12",
+      "retrieval_enabled": true,
+      "score": 1.0,
+      "pass": true,
+      "status": "measured",
+      "reason": "The score is 1.00 because there are no contradictions, indicating the actual output is perfectly faithful to the retrieval context. Great job!"
+    },
+    {
+      "case_id": "R13",
+      "retrieval_enabled": false,
+      "score": null,
+      "pass": null,
+      "status": "skipped",
+      "reason": "No validated answer with retrieval context."
+    },
+    {
+      "case_id": "R13",
+      "retrieval_enabled": true,
+      "score": 1.0,
+      "pass": true,
+      "status": "measured",
+      "reason": "The score is 1.00 because there are no contradictions, indicating the actual output is perfectly faithful to the retrieval context. Great job!"
+    },
+    {
+      "case_id": "R15",
+      "retrieval_enabled": false,
+      "score": null,
+      "pass": null,
+      "status": "skipped",
+      "reason": "No validated answer with retrieval context."
+    },
+    {
+      "case_id": "R15",
+      "retrieval_enabled": true,
+      "score": 1.0,
+      "pass": true,
+      "status": "measured",
+      "reason": "The score is 1.00 because there are no contradictions, indicating the actual output is perfectly faithful to the retrieval context. Great job!"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "case_ids": [
+    "R01",
+    "R02",
+    "R05",
+    "R08"
+  ],
+  "dataset_sha256": "b3838a055e756d445934df6796de70b6ae69cd9fc0261e91932ec44d23d9aa94",
+  "prompt_version": "phase4-rag-v2",
+  "prompt_sha256": "e7e5bdcdd6e51a02c0b50c8c051400470b5d8f859df04414914a294c91f48661",
+  "settings": {
+    "provider": "openai_compatible",
+    "model": "qwen3.7-max",
+    "timeout_seconds": 20.0,
+    "max_retries": 1,
+    "response_format": "json_object",
+    "temperature": 0.0,
+    "max_completion_tokens": 1200,
+    "enable_thinking": false
+  },
+  "index_version": "v1",
+  "threshold": 0.464133,
+  "query_profile": "policy-context-v1",
+  "query_expansion_sha256": "fedb13abaf57f7daffaf9c7c7753c25e15876d0fae56507de1ef89431f5b751b",
+  "results": {
+    "no_rag": {
+      "validated": 4,
+      "errors": 0,
+      "cited_outputs": 0,
+      "success_status": 0,
+      "escalation_classification": 0,
+      "output_validation": "Citation resolution and syntactic numeric grounding; not semantic faithfulness or final safety acceptance."
+    },
+    "rag": {
+      "validated": 4,
+      "errors": 0,
+      "cited_outputs": 4,
+      "success_status": 2,
+      "escalation_classification": 1,
+      "output_validation": "Citation resolution and syntactic numeric grounding; not semantic faithfulness or final safety acceptance."
+    }
+  },
+  "limits": "Single-agent Phase 4 experiment, not final multi-agent workflow. No records/tools/tickets. Guard failures are errors, not fabricated-claim passes. DeepEval faithfulness and human calibration pending."
+}

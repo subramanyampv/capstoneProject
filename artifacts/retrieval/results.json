@@ -5,16 +5,19 @@
     "answerable": true,
     "recall_at_5": 1.0,
     "reciprocal_rank": 0.5,
-    "post_threshold_recall_at_5": 0.0,
-    "below_threshold": true,
+    "post_threshold_recall_at_5": 1.0,
+    "below_threshold": false,
     "abstention_correct": null,
-    "top_score": 0.441003,
+    "top_score": 0.611955,
+    "query_hints": [
+      "Product category: footwear."
+    ],
     "top_5": [
       "faq:v1:shoes-returns:0",
       "return_policy:v1:window:0",
       "faq:v1:electronics-returns:0",
       "refund_policy:v1:delayed-shipments:0",
-      "cancellation_policy:v1:human-action:0"
+      "return_policy:v1:exceptions:0"
     ]
   },
   {
@@ -27,6 +30,7 @@
     "below_threshold": false,
     "abstention_correct": null,
     "top_score": 0.592542,
+    "query_hints": [],
     "top_5": [
       "faq:v1:shoes-returns:0",
       "return_policy:v1:window:0",
@@ -45,6 +49,7 @@
     "below_threshold": false,
     "abstention_correct": null,
     "top_score": 0.524576,
+    "query_hints": [],
     "top_5": [
       "return_policy:v1:window:0",
       "faq:v1:shoes-returns:0",
@@ -63,6 +68,7 @@
     "below_threshold": false,
     "abstention_correct": null,
     "top_score": 0.730083,
+    "query_hints": [],
     "top_5": [
       "faq:v1:electronics-returns:0",
       "return_policy:v1:window:0",
@@ -80,7 +86,10 @@
     "post_threshold_recall_at_5": 1.0,
     "below_threshold": false,
     "abstention_correct": null,
-    "top_score": 0.681347,
+    "top_score": 0.741455,
+    "query_hints": [
+      "Product category: perishable_grocery."
+    ],
     "top_5": [
       "return_policy:v1:exclusions:0",
       "faq:v1:shoes-returns:0",
@@ -99,6 +108,7 @@
     "below_threshold": false,
     "abstention_correct": null,
     "top_score": 0.627346,
+    "query_hints": [],
     "top_5": [
       "return_policy:v1:window:0",
       "faq:v1:shoes-returns:0",
@@ -117,6 +127,7 @@
     "below_threshold": false,
     "abstention_correct": null,
     "top_score": 0.548456,
+    "query_hints": [],
     "top_5": [
       "refund_policy:v1:review-threshold:0",
       "faq:v1:refunds:0",
@@ -135,6 +146,7 @@
     "below_threshold": false,
     "abstention_correct": null,
     "top_score": 0.68859,
+    "query_hints": [],
     "top_5": [
       "shipping_policy:v1:transit-estimates:0",
       "shipping_policy:v1:guarantees:0",
@@ -153,6 +165,7 @@
     "below_threshold": false,
     "abstention_correct": null,
     "top_score": 0.561424,
+    "query_hints": [],
     "top_5": [
       "shipping_policy:v1:guarantees:0",
       "faq:v1:shipping:0",
@@ -171,6 +184,7 @@
     "below_threshold": false,
     "abstention_correct": null,
     "top_score": 0.590248,
+    "query_hints": [],
     "top_5": [
       "cancellation_policy:v1:eligibility:0",
       "cancellation_policy:v1:human-action:0",
@@ -189,6 +203,7 @@
     "below_threshold": false,
     "abstention_correct": null,
     "top_score": 0.639203,
+    "query_hints": [],
     "top_5": [
       "warranty_policy:v1:durations:0",
       "faq:v1:warranty:0",
@@ -207,6 +222,7 @@
     "below_threshold": false,
     "abstention_correct": null,
     "top_score": 0.706695,
+    "query_hints": [],
     "top_5": [
       "return_policy:v1:restocking:0",
       "faq:v1:electronics-returns:0",
@@ -225,6 +241,7 @@
     "below_threshold": false,
     "abstention_correct": null,
     "top_score": 0.531328,
+    "query_hints": [],
     "top_5": [
       "escalation_guidelines:v1:safety:0",
       "return_policy:v1:exceptions:0",
@@ -239,16 +256,19 @@
     "answerable": true,
     "recall_at_5": 1.0,
     "reciprocal_rank": 0.5,
-    "post_threshold_recall_at_5": 0.0,
+    "post_threshold_recall_at_5": 1.0,
     "below_threshold": false,
     "abstention_correct": null,
-    "top_score": 0.50255,
+    "top_score": 0.552928,
+    "query_hints": [
+      "Escalation guidelines human requests."
+    ],
     "top_5": [
       "cancellation_policy:v1:human-action:0",
       "escalation_guidelines:v1:human-requests:0",
-      "warranty_policy:v1:claims:0",
       "return_policy:v1:exceptions:0",
-      "return_policy:v1:condition:0"
+      "warranty_policy:v1:claims:0",
+      "escalation_guidelines:v1:safety:0"
     ]
   },
   {
@@ -257,16 +277,19 @@
     "answerable": true,
     "recall_at_5": 1.0,
     "reciprocal_rank": 1.0,
-    "post_threshold_recall_at_5": 0.0,
-    "below_threshold": true,
+    "post_threshold_recall_at_5": 1.0,
+    "below_threshold": false,
     "abstention_correct": null,
-    "top_score": 0.381854,
+    "top_score": 0.548306,
+    "query_hints": [
+      "Return policy exception, ineligible returns human review."
+    ],
     "top_5": [
-      "escalation_guidelines:v1:exceptions:0",
       "return_policy:v1:exceptions:0",
-      "return_policy:v1:window:0",
+      "escalation_guidelines:v1:exceptions:0",
+      "faq:v1:shoes-returns:0",
       "cancellation_policy:v1:human-action:0",
-      "escalation_guidelines:v1:unresolved:0"
+      "faq:v1:refunds:0"
     ]
   },
   {
@@ -279,6 +302,7 @@
     "below_threshold": true,
     "abstention_correct": true,
     "top_score": 0.457534,
+    "query_hints": [],
     "top_5": [
       "return_policy:v1:exclusions:0",
       "faq:v1:shoes-returns:0",
@@ -297,6 +321,7 @@
     "below_threshold": true,
     "abstention_correct": true,
     "top_score": 0.464132,
+    "query_hints": [],
     "top_5": [
       "faq:v1:shoes-returns:0",
       "faq:v1:electronics-returns:0",
@@ -315,6 +340,7 @@
     "below_threshold": true,
     "abstention_correct": true,
     "top_score": 0.302195,
+    "query_hints": [],
     "top_5": [
       "shipping_policy:v1:guarantees:0",
       "shipping_policy:v1:transit-estimates:0",
@@ -333,6 +359,7 @@
     "below_threshold": true,
     "abstention_correct": true,
     "top_score": 0.260192,
+    "query_hints": [],
     "top_5": [
       "return_policy:v1:condition:0",
       "shipping_policy:v1:guarantees:0",
@@ -351,6 +378,7 @@
     "below_threshold": true,
     "abstention_correct": true,
     "top_score": 0.287257,
+    "query_hints": [],
     "top_5": [
       "shipping_policy:v1:guarantees:0",
       "faq:v1:shipping:0",

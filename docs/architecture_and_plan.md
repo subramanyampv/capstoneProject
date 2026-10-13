@@ -39,9 +39,9 @@
 **Where we are.**
 - Phases 1–2 are complete with exit evidence.
 - Phase 3 is complete: the written ten-case comparison, per-prompt failure breakdown and development selection are recorded. The frozen experiment produced 195/195 schema-valid outputs (**MEASURED**). Prompt C is the development default; this does not establish final safety acceptance (Section 14.5).
-- Phase 4 has seven authored documents, 28 indexed sections, pinned local Voyage-4-nano/Chroma, 20 retrieval labels and a live ten-case RAG on/off comparison (**IMPLEMENTED / MEASURED**). Thresholded coverage remains open (Section 9.7).
+- Phase 4 has seven authored documents, 28 indexed sections, pinned local Voyage-4-nano/Chroma, 20 retrieval labels and a live ten-case RAG on/off comparison (**IMPLEMENTED / MEASURED**). The development coverage gap is corrected by the follow-through in Section 9.8; held-out generalization and final tool integration remain open.
 - Phases 5–9 remain **PLANNED**. The target submission date stays 2026-10-18; schedule dates are targets, not delivery guarantees.
-- Latest offline regression: 98 tests passed in 5.60s. [Detailed progress and remaining work](project_progress.md) records the evidence and next steps.
+- Latest offline regression: 104 tests passed in 9.90s. [Detailed progress and remaining work](project_progress.md) records the evidence and next steps.
 - Author/student name and a new GitHub repository are not required. Continue in the existing repository; use the scanned history-free source snapshot for packaging.
 
 **Key design stance.** The rubric evaluates "engineering judgment, reliability, explainability, safety-first design, and practical usefulness… not unnecessary complexity." The architecture is therefore deliberately minimal:
@@ -744,7 +744,7 @@ class VoyageNanoEmbeddings(Embeddings):
 | Limitation | τ is calibrated on a small label set; disclosed in the report |
 
 
-### 9.7 Current Phase 4 implementation and measured results — 2026-10-13
+### 9.7 Initial Phase 4 implementation and measured baseline — 2026-10-13
 
 | Item | Implemented/measured result |
 |---|---|
@@ -760,9 +760,24 @@ class VoyageNanoEmbeddings(Embeddings):
 | RAG comparison | Ten same frozen cases per mode: RAG 10 validated/9 cited; no-RAG 9 validated/0 cited/1 rejected output |
 | DeepEval faithfulness | Nine context-bearing outputs scored 1.0 each; eleven no-context outputs skipped; no judge errors; same-model indicative judging |
 
-The thresholded 80% recall is an open coverage defect, not a completed final retrieval gate. Improve coverage using development labels, keep the holdout untouched, and report abstention trade-offs. Doc-type filtering is implemented; category is presently a topic hint for the electronics conflict check rather than full category metadata filtering. The Phase 4 answer experiment is single-agent and has no order tools, write actions, memory or escalation tickets. Citation resolution and numeric screening do not establish semantic entailment or final zero-fabrication acceptance.
+The initial thresholded 80% recall was a coverage defect. Section 9.8 records its development-set correction; the original results remain preserved. Keep the holdout untouched and do not infer final safety from these measurements. Doc-type filtering is implemented; category is presently a topic hint for the electronics conflict check rather than full category metadata filtering. The Phase 4 answer experiment is single-agent and has no order tools, write actions, memory or escalation tickets. Citation resolution and numeric screening do not establish semantic entailment or final zero-fabrication acceptance.
 
 Evidence: [retrieval design](retrieval_design.md), [retrieval summary](../artifacts/retrieval/summary.json), [RAG comparison](../artifacts/rag_runs/20261013T203731Z/summary.json), [DeepEval faithfulness](../artifacts/rag_runs/20261013T203731Z/deepeval_faithfulness.json), and [validation record](../artifacts/phase4_validation.md).
+
+
+### 9.8 Phase 4 coverage and conflict follow-through — 2026-10-13
+
+A small deterministic query profile adds public catalog category hints for policy queries, exception-topic hints and explicit representative-request hints. It adds no policy facts or identity authority. Injury review is kept separate from general human requests. No knowledge graph or extra model call is introduced.
+
+On the same unchanged twenty development labels: candidate Recall@5 100%, retained-source Recall@5 100% (initially 80%), MRR 0.90, zero fully rejected answerable queries and five of five unanswerable abstentions. The calibrated threshold remains 0.464133. Profile name and source hash are tied to calibration; a changed profile fails default startup until recalibrated. These are development results, not held-out generalization.
+
+Conflict checks now inspect all applicable versions of retained sections and retain both sides under metadata filters or k=1. Mandatory evidence can exceed k with an explicit flag and a twenty-source cap; a source injected outside the vector filter has a null score rather than a fabricated similarity. Citation validation uses the actual conflicting references and versions.
+
+The fresh ten-case RAG comparison has ten validated and cited RAG outputs and ten validated non-RAG outputs without citations. Same-model DeepEval flags R02's refund-deadline wording at 0.667 while the other nine RAG outputs score 1.0. Preserve this issue: citations/numeric matching are not semantic proof. Prompt `phase4-rag-v2` distinguishes an inclusive return window from an undefined refund deadline and avoids individual eligibility from unverified delivery claims; the targeted R01/R02/R05/R08 rerun validates/cites all four RAG outputs and each self-scores 1.0; four no-context outputs are skipped. This does not replace full final evaluation. Human calibration remains planned.
+
+[Targeted prompt-v2 evidence](../artifacts/rag_runs/20261013T224043Z/summary.json) and [faithfulness results](../artifacts/rag_runs/20261013T224043Z/deepeval_faithfulness.json) are preserved separately; no human calibration or final-system acceptance is claimed.
+
+Evidence: [before/after retrieval](../artifacts/retrieval/summary.json), [initial baseline](../artifacts/retrieval/baseline_20261013/summary.json), [fresh RAG run](../artifacts/rag_runs/20261013T223402Z/summary.json), and [current retrieval design](retrieval_design.md). The [market desk comparison](market_comparison.md) is analysis only and does not change the initial-product scope.
 
 ---
 
@@ -1138,7 +1153,7 @@ The [detailed task checklist](task_list.md) tracks completed, update-needed and 
 | **1 Problem & success** | Personas, workflow, scope, metrics, failure cases, frozen dataset | **Done** (exit evidence exists) | Condense to the 1–2 page deliverable; add business value section | `problem_framing.md` | Framing (10) |
 | **2 Baseline** | Rule-based Python CLI with documented limitations | **Done** | Reference in the capability ladder | Baseline logs, limitations | Baseline (5) |
 | **3 LLM & prompts** | LLM integration; A/B/C comparison; default selection | **Done for development.** Comparison and C selection recorded; 195 valid outputs | Final safety defects carried into guarded build; not a prompt-only safety pass | `prompt_comparison.md`, `artifacts/phase3_selection.json` | LLM & Prompt (15) |
-| **4 Knowledge & retrieval** | Corpus, Voyage-nano + Chroma, `search_policy`, retrieval evaluation | **Initial build IMPLEMENTED / MEASURED** | Improve 80% post-threshold coverage; integration into Phase 5; later human calibration | `retrieval_design.md`, retrieval/RAG artifacts | RAG (10) |
+| **4 Knowledge & retrieval** | Corpus, Voyage-nano + Chroma, `search_policy`, retrieval evaluation | **Initial build IMPLEMENTED / MEASURED** | Development coverage and targeted wording check recorded; category handling and Phase 5 tool integration; later human calibration | `retrieval_design.md`, retrieval/RAG artifacts | RAG (10) |
 | **5 Tools & multi-agent** | 6 tools, registry, 3 specialists, supervisor, guards, budgets | PLANNED (Days 2–3) | Sections 5, 7, 8 | Tool correctness, failed-call traces, routing traces | Tools (15), Architecture (15) |
 | **6 Planning, memory & context** | Plans, checkpointer memory, TTL, reset | PLANNED (Day 3) | Section 11 | Memory on/off results, reset demo | Architecture/Memory (15) |
 | **7 Adaptive behaviour** | Feedback signals, style adaptation | PLANNED (Day 3) | Section 12 | Before/after logs, limits | Adaptive (5) |
@@ -1301,7 +1316,7 @@ These were explored or considered and deliberately excluded from evaluated scope
 - **Latency:** sequential multi-agent LLM calls make tool paths slower than a single prompt.
 - **Small evaluation sets:** strata of 15 cases mean coarse percentages (each case ≈6.7 points). Results are reported as counts and percentages.
 - **Self-judging:** the nine measured Phase 4 faithfulness scores use the generation model. Human calibration of twenty final judged outputs is PLANNED, not completed. An independent judge is optional.
-- **Retrieval threshold:** τ is calibrated on 20 development labels. Candidate recall is 100%, but retained evidence recall is 80%; two answerable paraphrases are fully rejected.
+- **Retrieval threshold:** τ is calibrated on twenty development labels. Retained recall improved 80% → 100% with zero answerable full rejections; held-out and final integrated behavior are not yet measured.
 - **Memory (PLANNED):** in-process only, lost on restart; reset/TTL and exclusion of intermediate tool/evidence checkpoint payloads must be tested. No session memory is implemented yet.
 - **Adaptation (PLANNED):** style only, per customer, from small signal counts; no adaptive preference mechanism is implemented yet.
 - **Rule-based safety detection:** lexicon rules can miss novel phrasings (mitigated by OR-ing with LLM flags) and can over-trigger (accepted, since the cost is an unnecessary escalation).
