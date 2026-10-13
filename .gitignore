@@ -14,6 +14,8 @@ dist/
 .pytest_cache/
 .mypy_cache/
 .ruff_cache/
+.deepeval/
+.deepeval*
 
 # Generated knowledge artifacts (rebuilt by scripts/; keep the folder markers)
 knowledge/index/*

@@ -52,6 +52,7 @@ def test_invalid_configuration(changes):
 
 
 def test_dotenv_precedence_and_no_shell_evaluation(tmp_path, monkeypatch):
+    monkeypatch.delenv("LLM_API_KEY", raising=False)
     env = tmp_path / ".env"
     env.write_text('CAPSTONE_LLM_PROVIDER=openai_compatible\nLLM_BASE_URL=http://localhost:1234/v1\n'
                    'LLM_MODEL="file-model" # comment\nLLM_API_KEY=$(secret)\n')

@@ -10,6 +10,10 @@ readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
     "pydantic>=2.7",
+    "langchain==1.4.5",
+    "langchain-openai==1.7.1",
+    "langgraph==1.2.15",
+    "langsmith==0.14.8",
 ]
 
 [project.optional-dependencies]
@@ -21,6 +25,8 @@ dev = [
     "pytest>=8",
     "pytest-timeout>=2.3",
 ]
+eval = ["deepeval==4.2.8"]
+ui = ["streamlit==1.65.0"]
 
 [project.scripts]
 capstone-agent = "capstone_agent.main:main"
@@ -29,6 +35,7 @@ capstone-agent = "capstone_agent.main:main"
 where = ["src"]
 
 [tool.pytest.ini_options]
+addopts = "-p no:deepeval -p no:rerunfailures"
 testpaths = ["tests"]
 pythonpath = ["src"]
 timeout = 60

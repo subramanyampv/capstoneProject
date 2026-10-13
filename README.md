@@ -24,6 +24,10 @@ The planned transaction layer will use simulated writes. Synthetic data only.
 
 Blueprint: [Architecture plan](docs/capstone_architecture_plan.pdf)
 
+Updated blueprint: [Architecture plan v2](docs/capstone_architecture_plan_v2.pdf)
+([editable source](docs/architecture_plan_v2.md)).
+Frameworks and demo UI: [integration notes](docs/framework_integration.md).
+
 Continuation notes: [Documentation review](docs/documentation_review.md).
 
 ## Layout
@@ -56,12 +60,12 @@ Requires Python 3.10+ (developed against 3.12). Run commands from this directory
 Use the approved project-local `.venv`; if absent, obtain approval before creating one.
 
 ```bash
-.venv/bin/python -m pip install -c constraints-dev.txt -e ".[dev]"
+.venv/bin/python -m pip install -c constraints-dev.txt -e ".[dev,eval,ui]"
 
 .venv/bin/capstone-agent status
 .venv/bin/capstone-agent ask "Can I return order O-1001?" --today 2026-10-12
 bash scripts/run_baseline.sh                 # overwrites baseline evidence; run intentionally
-.venv/bin/python -m pytest -q
+.venv/bin/python -m pytest -q --tb=no
 cp .env.example .env                         # configure local provider; keep credentials local
 ```
 
@@ -94,6 +98,20 @@ settings, start a new run; an in-progress comparison keeps its original configur
 See [Phase 3 evidence and limits](docs/prompt_evaluation.md).
 Measured run: [live comparison results](docs/phase3_live_results.md).
 Phase 4 candidate: [embedding recommendation](docs/embedding_strategy.md).
+
+## Python UI and evaluation
+
+```bash
+bash scripts/run_ui.sh     # Streamlit on http://127.0.0.1:8501
+.venv/bin/capstone-agent evaluate artifacts/prompt_runs/20261013T030651Z-b48a462e
+```
+
+The UI offers chat, recorded evaluations, provenance graph exploration and a
+rule-based delivery estimate. ETA inputs are manual demo facts unless the public API
+checkbox is selected. [External tool options](docs/external_tool_options.md) document
+the distance/weather sources and future product/order integrations.
+LangSmith tracing is disabled until a key/project is configured in ignored `.env`.
+DeepEval judge scoring is optional and separate from deterministic safety checks.
 
 ## Target architecture invariants
 

@@ -1,0 +1,10 @@
+{
+  "version": "demo-eta-v1",
+  "scope": "User-defined synthetic demo rules, not a retailer or carrier guarantee",
+  "miles_per_transit_block": 1000,
+  "days_per_transit_block": 3,
+  "minimum_transit_days": 1,
+  "disruption_delay_days": 2,
+  "upper_buffer_days": 2,
+  "day_basis": "calendar"
+}

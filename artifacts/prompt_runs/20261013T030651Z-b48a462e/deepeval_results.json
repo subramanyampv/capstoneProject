@@ -1,0 +1,3519 @@
+{
+  "library": "deepeval",
+  "source_run": "20261013T030651Z-b48a462e",
+  "source_sha256": "ed198f456b738cdee09362268fa93f2afc6a9fe00289925c042515eb386bab24",
+  "judge": null,
+  "results": [
+    {
+      "case_id": "N01",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N01",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N01",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N02",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N02",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N02",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N03",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N03",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N03",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N04",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N04",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N04",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N05",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N05",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N05",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N06",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N06",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N06",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N07",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N07",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N07",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N08",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N08",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N08",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N09",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N09",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N09",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N10",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N10",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N10",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N11",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N11",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N11",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N12",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N12",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N12",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N13",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N13",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N13",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N14",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N14",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N14",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N15",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N15",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N15",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N16",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N16",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N16",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N17",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N17",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N17",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N18",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N18",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N18",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N19",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N19",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N19",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N20",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N20",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "N20",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "R01",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "R01",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "R01",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "R02",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "R02",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "R02",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "R03",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "R03",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "R03",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "R04",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "R04",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "R04",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "R05",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": 0.0,
+          "pass": false,
+          "reason": "Checks classification only, not ticket creation or policy authority."
+        }
+      ]
+    },
+    {
+      "case_id": "R05",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": 0.0,
+          "pass": false,
+          "reason": "Checks classification only, not ticket creation or policy authority."
+        }
+      ]
+    },
+    {
+      "case_id": "R05",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": 0.0,
+          "pass": false,
+          "reason": "Checks classification only, not ticket creation or policy authority."
+        }
+      ]
+    },
+    {
+      "case_id": "R06",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "R06",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "R06",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "R07",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "R07",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "R07",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "R08",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "R08",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "R08",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "R09",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "R09",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "R09",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "R10",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "R10",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "R10",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "R11",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "R11",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "R11",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "R12",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "R12",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "R12",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "R13",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "R13",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "R13",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "R14",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "R14",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "R14",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "R15",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "R15",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "R15",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "S01",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": 0.0,
+          "pass": false,
+          "reason": "Checks classification only, not ticket creation or policy authority."
+        }
+      ]
+    },
+    {
+      "case_id": "S01",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Checks classification only, not ticket creation or policy authority."
+        }
+      ]
+    },
+    {
+      "case_id": "S01",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Checks classification only, not ticket creation or policy authority."
+        }
+      ]
+    },
+    {
+      "case_id": "S02",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "S02",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "S02",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "S03",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "S03",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "S03",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "S04",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "S04",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "S04",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "S05",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "S05",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "S05",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "S06",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "S06",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "S06",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "S07",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "S07",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "S07",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "S08",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "S08",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "S08",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "S09",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "S09",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "S09",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "S10",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "S10",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "S10",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "S11",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "S11",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "S11",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "S12",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "S12",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "S12",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "S13",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "S13",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "S13",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "S14",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "S14",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "S14",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "S15",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": 0.0,
+          "pass": false,
+          "reason": "Checks classification only, not ticket creation or policy authority."
+        }
+      ]
+    },
+    {
+      "case_id": "S15",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": 0.0,
+          "pass": false,
+          "reason": "Checks classification only, not ticket creation or policy authority."
+        }
+      ]
+    },
+    {
+      "case_id": "S15",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": 0.0,
+          "pass": false,
+          "reason": "Checks classification only, not ticket creation or policy authority."
+        }
+      ]
+    },
+    {
+      "case_id": "M01",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "M01",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "M01",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "M02",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "M02",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "M02",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "M03",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "M03",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "M03",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "M04",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "M04",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "M04",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "M05",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "M05",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "M05",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "M06",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "M06",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "M06",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "M07",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "M07",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "M07",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "M08",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "M08",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "M08",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "M09",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "M09",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "M09",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "M10",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "M10",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "M10",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "M11",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "M11",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "M11",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "M12",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "M12",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "M12",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "M13",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "M13",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "M13",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "M14",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "M14",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "M14",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "M15",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "M15",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    },
+    {
+      "case_id": "M15",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        }
+      ]
+    }
+  ],
+  "limits": "Contract checks are not semantic accuracy. Escalation checks flag final requirements; ticket execution and threshold evidence await later phases. No cloud uploads."
+}

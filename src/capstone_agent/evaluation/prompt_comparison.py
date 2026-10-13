@@ -30,7 +30,8 @@ def load_cases(path: Path):
 
 def run_comparison(client: ModelClient, config: LLMConfig, *, dataset: Path,
                    output_root: Path, today: date, case_ids: list[str] | None = None,
-                   dry_run: bool = False, progress=None, workers: int = 1, client_factory=None) -> Path:
+                   dry_run: bool = False, progress=None, workers: int = 1, client_factory=None,
+                   observability=None) -> Path:
     if not 1 <= workers <= 4:
         raise ValueError("workers must be between 1 and 4.")
     if workers > 1 and client_factory is None:
@@ -57,8 +58,10 @@ def run_comparison(client: ModelClient, config: LLMConfig, *, dataset: Path,
         "scheduled_requests": len(cases) * len(STRATEGIES),
         "max_http_attempts": len(cases) * len(STRATEGIES) * 2 * (config.max_retries + 1),
         "default_prompt": None, "quality_review_status": "pending",
+        "workflow": "langgraph", "model_client": type(client).__name__,
+        "langsmith_tracing": bool(observability and observability.enabled),
     }
-    secrets = (config.api_key,)
+    secrets = (config.api_key, observability.api_key if observability else "")
     (output / "manifest.json").write_text(json.dumps(sanitize_data(manifest, secrets), indent=2) + "\n")
     (output / "prompts.json").write_text(json.dumps({
         v: system_prompt(v)
@@ -80,7 +83,12 @@ def run_comparison(client: ModelClient, config: LLMConfig, *, dataset: Path,
         def evaluate(task):
             case, variant = task
             worker_client = client_factory() if client_factory else client
-            result = respond(case["input"], worker_client, variant=variant, today=today, secrets=secrets)
+            try:
+                result = respond(case["input"], worker_client, variant=variant, today=today, secrets=secrets,
+                                 observability=observability)
+            finally:
+                if client_factory and hasattr(worker_client, "close"):
+                    worker_client.close()
             return case, variant, result
 
         with ThreadPoolExecutor(max_workers=workers) as executor:

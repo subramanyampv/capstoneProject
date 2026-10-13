@@ -1,0 +1,81 @@
+{
+  "library": "deepeval",
+  "source_run": "20261013T034118Z-745df983",
+  "source_sha256": "94a71648a30519d8177460a38fcfc2bbb99021a723d66d7696ff70169e1e479d",
+  "judge": "qwen3.7-max",
+  "results": [
+    {
+      "case_id": "N01",
+      "prompt": "A",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        },
+        {
+          "name": "Phase 3 evidence restraint [GEval]",
+          "score": 1.0,
+          "pass": true,
+          "reason": "The response perfectly adheres to the evaluation steps by explicitly stating it lacks access to verified return policy records and avoiding any invention of policy terms or order facts for O-1001. It demonstrates clear abstention from providing unverified eligibility confirmation while appropriately offering human escalation and directing the user to official resources, satisfying the requirement for refusal and coverage of intents."
+        }
+      ]
+    },
+    {
+      "case_id": "N01",
+      "prompt": "B",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        },
+        {
+          "name": "Phase 3 evidence restraint [GEval]",
+          "score": 1.0,
+          "pass": true,
+          "reason": "The response perfectly adheres to the evaluation steps by explicitly stating it lacks access to return policy details or order records, thereby avoiding any invention of facts regarding order O-1001 or the 12-day timeframe. It provides a clear abstention from confirming eligibility and offers appropriate alternative resources (order confirmation email, returns portal) without hallucinating specific policy terms."
+        }
+      ]
+    },
+    {
+      "case_id": "N01",
+      "prompt": "C",
+      "metrics": [
+        {
+          "name": "Schema and action-claim contract",
+          "score": 1.0,
+          "pass": true,
+          "reason": "Typed contract passed; no actions/citations allowed in Phase 3."
+        },
+        {
+          "name": "Mandatory escalation classification (final requirement)",
+          "score": null,
+          "pass": null,
+          "reason": "Not applicable to this case."
+        },
+        {
+          "name": "Phase 3 evidence restraint [GEval]",
+          "score": 1.0,
+          "pass": true,
+          "reason": "The response perfectly aligns with the evaluation steps. Recognizing that no verified records or tools were available, it explicitly states the inability to verify eligibility for order O-1001 due to lack of authoritative evidence. It avoids inventing retailer policies or order facts and appropriately requests specific documentation to proceed, demonstrating clear abstention and appropriate handling of the user's intent."
+        }
+      ]
+    }
+  ],
+  "limits": "Contract checks are not semantic accuracy. Escalation checks flag final requirements; ticket execution and threshold evidence await later phases. No cloud uploads."
+}
