@@ -235,3 +235,40 @@ def test_changed_query_profile_requires_recalibration(corpus_root):
         "query_profile": "obsolete", "query_expansion_sha256": "wrong"}))
     with pytest.raises(ValueError, match="CALIBRATION_MISMATCH"):
         PolicySearch(wrapper, root=corpus_root)
+
+
+def test_category_filter_retains_general_rules_and_excludes_unrelated_sections(corpus_root):
+    from capstone_agent.retrieval.chroma_store import PolicySearch, ingest
+    wrapper = embeddings(); ingest(wrapper, root=corpus_root)
+    search = PolicySearch(wrapper, root=corpus_root, threshold=-1)
+    result = search.search("electronics return fee", category="footwear", k=10)
+    assert result["category_filter"] == "footwear" and not result["conflict"]
+    for row in result["raw_vector_top_k"] + result["results"]:
+        assert row["applies_footwear"]
+        assert (row["doc_id"], row["section_id"]) not in {
+            ("return_policy", "restocking"), ("faq", "electronics-returns")}
+    general = search.search("return exclusions", category="perishable_grocery", doc_types=["return_policy"], k=10)
+    assert "exclusions" in {r["section_id"] for r in general["results"]}
+    assert all(r["category"] == "all" for r in general["results"])
+    with pytest.raises(ValueError, match="INVALID_ARGUMENT"):
+        search.search("return policy", category="unknown")
+
+
+def test_category_and_document_filter_preserve_mandatory_conflict(corpus_root):
+    from capstone_agent.retrieval.chroma_store import PolicySearch, ingest
+    wrapper = embeddings(); ingest(wrapper, root=corpus_root)
+    result = PolicySearch(wrapper, root=corpus_root, threshold=1).search(
+        "electronics returns", category="electronics", doc_types=["return_policy"], k=1)
+    assert result["conflict"] and result["conflict_evidence_exceeds_k"]
+    assert {r["doc_id"] for r in result["results"]} == {"faq", "return_policy"}
+    assert all(r["applies_electronics"] for r in result["results"])
+
+
+@pytest.mark.parametrize("scope", ["restocking: [unknown]", "restocking: electronics", "missing: [electronics]"])
+def test_bad_category_metadata_is_quarantined(corpus_root, scope):
+    path = corpus_root / "knowledge/raw/return_policy.md"
+    path.write_text(path.read_text().replace("restocking: [electronics]", scope))
+    chunks, _, quarantine = load_corpus(corpus_root / "knowledge/raw")
+    assert quarantine == [{"file": "return_policy.md", "reason": "invalid_front_matter"}]
+    with pytest.raises(ValueError):
+        check_rule_consistency(chunks, json.loads((corpus_root / "data/policy_rules.json").read_text()))

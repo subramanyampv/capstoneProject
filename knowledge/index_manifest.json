@@ -4,20 +4,21 @@
   "dimension": 2048,
   "normalized": true,
   "distance": "cosine",
-  "collection": "policies_v1",
+  "collection": "policies_v2",
   "document_sha256": {
     "cancellation_policy.md": "2967fc5a035b77c36fe809d83561129e2eb05ebc7165ec7974e15665ab03c5f8",
     "escalation_guidelines.md": "716eb03aea6cafc534e4218167db411c3ff5d45d2ab06005f06676cb472dad6a",
-    "faq.md": "603a1ebd103b4487e76b81e90e7a77afedb19a92d779aa24b7896321817520ec",
+    "faq.md": "050e68b2e08690ea7f7bf13d2f244e7841fed845abededbd077418960a0d5274",
     "refund_policy.md": "38311d56e49138c4179d44fdc5b17b99152703e3456557ce13f059dde434ae00",
-    "return_policy.md": "e55983a9579de3fbd4ab1ffe274b682e43309d19cd28cd5cab01e34689d94001",
+    "return_policy.md": "7c837441121fded9e1a863b5da79928515dd9192a0311a41736759cb9156ebf0",
     "shipping_policy.md": "9233b2e3348710830914c8d4824b40fda87d6e96779be59f7a4be90b8b77f7ad",
     "warranty_policy.md": "546ade98062265bc77470fd517c8752662ff399b61eb0dba840299cedaaa0f21"
   },
   "chunking": "authored-heading-sections-max-2400-bytes-v1",
+  "metadata_profile": "section-category-applicability-v1",
   "rule_version": "2026-10-01",
-  "index_version": "v1",
+  "index_version": "v2",
   "chunk_count": 28,
-  "built_at": "2026-10-13T20:36:35.572143+00:00",
+  "built_at": "2026-10-14T01:27:43.536409+00:00",
   "quarantined": []
 }

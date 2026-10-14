@@ -6,7 +6,7 @@ Authority: [Architecture revision 3.1](architecture_and_plan.md). This is the cu
 
 **P0** = protects correctness, safety or a required delivery gate. **P1** = required capability or evaluation work. Dependencies are task IDs, not permission requests. Task counts do not represent a completion percentage because effort differs substantially.
 
-**Inventory:** 85 initial-product tasks — 30 done, 17 needing updates, 38 not started. 8 areas are deferred.
+**Inventory:** 85 initial-product tasks — 31 done, 16 needing updates, 38 not started. 8 areas are deferred.
 
 **Immediate sequence:** S01/S02/G02 foundations and T01 registry → tools/guards/specialists → core demos → memory/adaptation → final observability/evaluation. Retrieval follow-through and tool foundations can progress independently where dependencies allow.
 
@@ -56,7 +56,7 @@ No author/student name or new repository is required. Optional later inputs are 
 | R09 | DONE | P1 | Measure initial DeepEval faithfulness | Initial nine outputs self-scored 1.0; fresh ten-case run flags R02 at .667; targeted prompt-v2 four outputs self-score 1.0. Missing context skipped; human calibration still pending. | R08 |
 | R10 | DONE | P0 | Improve retained evidence coverage | Improved public-catalog/topic query profile retains 100% of labeled sources, MRR .90, 0/15 answerable rejections and 5/5 unknown abstentions on development labels; generalization remains untested. | R07 |
 | R11 | DONE | P0 | Broaden conflict correctness tests | Tests preserve both sides under filters/k=1 and overlapping versions; future/superseded sources excluded; generic conflict references validate. Final registered-tool integration remains T04/G09. | R02,R05,T04 |
-| R12 | UPDATE | P1 | Complete structured category handling | Current category argument is a conflict-topic hint; add/document actual applicability/filtering needed by the registered policy tool. | T04,T05 |
+| R12 | DONE | P1 | Complete structured category handling | Authored section applicability, general-policy inclusion, five category filters and invalid-scope quarantine; v2 real-embedding checks preserve exclusions and k=1 conflicts. Tool registration remains T04. | R02,R04 |
 | R13 | UPDATE | P0 | Integrate retrieval into the final agent path | Existing search/grounded helper is a single-agent experiment. Specialists must retrieve current-turn evidence and the composer must retain resolvable citations. | T04,G06,G08 |
 
 ## Phase 5: domain services and six tools
@@ -138,7 +138,7 @@ No author/student name or new repository is required. Optional later inputs are 
 | E07 | NOT STARTED | P0 | Prove RCA before/after fixes | R05 conflict trigger disabled/enabled with repeats and holdout; unsupported-policy before/after; permanent regressions and residual risks. | E02,E04,G09 |
 | E08 | UPDATE | P1 | Report final latency, token and error measurements | Per-path p50/p95 versus v3 targets; stage latency, retry/repair overhead and error categories. Current measurements are only baseline/experiments. | O06,E02 |
 | E09 | UPDATE | P1 | Complete final evaluation/governance report | Populate all metrics or explain absence; include human calibration, safety review, limitations, failed cases, RCA and roadmap. Current register is preliminary. | E03,E04,E05,E06,E07,E08 |
-| E10 | NOT STARTED | P0 | Run final acceptance and demo gate | All protected demos and hard safety gates evidenced; review quality misses explicitly. Prompt choice and 104 tests alone do not satisfy this gate. | E09,G10,M05,A04,O09 |
+| E10 | NOT STARTED | P0 | Run final acceptance and demo gate | All protected demos and hard safety gates evidenced; review quality misses explicitly. Prompt choice and component tests alone do not satisfy this gate. | E09,G10,M05,A04,O09 |
 | E11 | DONE | P0 | Prepare first scanned history-free snapshot | Local source ZIP excludes .git, credentials, model weights and vector DB. Existing repository retained; snapshot requires refresh after changes. | D05 |
 | E12 | UPDATE | P0 | Refresh and validate final submission package | Source, final docs/tests/evidence, setup/rebuild commands and refreshed scanned archive; no new repository/name requirement. | E10,D07,D08 |
 

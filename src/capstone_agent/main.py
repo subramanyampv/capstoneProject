@@ -116,7 +116,7 @@ def cmd_search_policy(args):
     from capstone_agent.retrieval.chroma_store import PolicySearch
     from capstone_agent.safety.redaction import sanitize_data
     result = PolicySearch(VoyageNanoEmbeddings(), version=args.index_version,
-                          threshold=args.threshold).search(args.query)
+                          threshold=args.threshold).search(args.query, category=args.category, doc_types=args.doc_type, k=args.k)
     print(json.dumps(sanitize_data(result), indent=2))
     return 0
 
@@ -151,11 +151,14 @@ def build_parser() -> argparse.ArgumentParser:
     evaluate.add_argument("--case", action="append")
     evaluate.set_defaults(func=cmd_evaluate)
     ingest_p = sub.add_parser("ingest", help="Build the pinned local Voyage/Chroma policy index")
-    ingest_p.add_argument("--index-version", default="v1")
+    ingest_p.add_argument("--index-version", default="v2")
     ingest_p.set_defaults(func=cmd_ingest)
     search = sub.add_parser("search-policy", help="Retrieve cited policy passages locally")
     search.add_argument("query")
-    search.add_argument("--index-version", default="v1")
+    search.add_argument("--index-version", help="Default: calibrated configured index")
+    search.add_argument("--category", choices=["footwear", "apparel", "home", "electronics", "perishable_grocery"])
+    search.add_argument("--doc-type", action="append", help="Repeat to filter document IDs")
+    search.add_argument("--k", type=int, default=5)
     search.add_argument("--threshold", type=float, help="Override the calibrated local threshold")
     search.set_defaults(func=cmd_search_policy)
     return parser

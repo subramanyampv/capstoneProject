@@ -10,6 +10,8 @@ import yaml
 REQUIRED_DOCS = {"return_policy", "refund_policy", "shipping_policy", "cancellation_policy",
                  "warranty_policy", "faq", "escalation_guidelines"}
 REQUIRED_META = {"doc_id", "title", "version", "effective_date", "authority", "owner"}
+CATEGORIES = ("footwear", "apparel", "home", "electronics", "perishable_grocery")
+METADATA_PROFILE = "section-category-applicability-v1"
 
 
 def load_corpus(directory: Path):
@@ -29,6 +31,17 @@ def load_corpus(directory: Path):
             date.fromisoformat(meta["effective_date"])
             if meta["authority"] not in {"policy", "faq"}:
                 raise ValueError("invalid_authority")
+            scopes = meta.get("section_categories", {})
+            if not isinstance(scopes, dict) or any(
+                not isinstance(section, str) or not isinstance(values, list) or not values
+                or any(not isinstance(value, str) or value not in CATEGORIES for value in values)
+                or len(values) != len(set(values)) for section, values in scopes.items()
+            ):
+                raise ValueError("invalid_category_scope")
+            headings = {re.sub(r"[^a-z0-9]+", "-", heading.lower()).strip("-")
+                        for heading in re.findall(r"^##\s+(.+)$", parts[2], flags=re.M)}
+            if not set(scopes) <= headings:
+                raise ValueError("unknown_category_section")
             key = (meta["doc_id"], meta["version"])
             if key in seen:
                 raise ValueError("duplicate_document_version")
@@ -54,6 +67,9 @@ def load_corpus(directory: Path):
                       "evaluation_conflict": str(meta.get("evaluation_conflict", "")),
                       "content_hash": hashlib.sha256(content.encode()).hexdigest(),
                       "instruction_flag": bool(re.search(r"ignore (?:previous|all) instructions", content, re.I))}
+            categories = scopes.get(section, list(CATEGORIES))
+            record["category"] = "all" if set(categories) == set(CATEGORIES) else ",".join(sorted(categories))
+            record.update({f"applies_{category}": category in categories for category in CATEGORIES})
             if meta.get("superseded_on"):
                 record["superseded_on"] = date.fromisoformat(str(meta["superseded_on"])).isoformat()
             chunks.append({"id": f"{meta['doc_id']}:{meta['version']}:{section}:0",

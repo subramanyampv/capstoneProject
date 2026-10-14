@@ -44,7 +44,7 @@ Knowledge graph, external distance/weather ETA, external commerce APIs, extended
 - Authored return, refund, shipping, cancellation, warranty, escalation and FAQ documents with IDs, versions, effective dates, authority and owners.
 - Checked policy values against the frozen rules. R05's deliberately contradictory FAQ/policy electronics window is explicitly labeled and retained for conflict evaluation.
 - Downloaded and pinned local Voyage-4-nano, inspected its custom architecture, and verified separate document/query modes, 2048 dimensions, finite values and normalization on CPU.
-- Built 28 heading-based sections in the persisted cosine Chroma collection `policies_v1`. Telemetry is off; caches and the vector database are ignored by Git.
+- Built 28 heading-based sections in the persisted cosine Chroma collection `policies_v2` (original v1 build preserved historically). Telemetry is off; caches and the vector database are ignored by Git.
 - Added deterministic IDs, source/metadata hashes, dimension/revision manifests, idempotent reuse and fail-closed checks for changed, incompatible or tampered sources/index data.
 - Saved 20 development retrieval labels and a separate ten-case holdout; the holdout has not been used for tuning.
 - Candidate Recall@5 was 100% and MRR 0.90. The calibrated threshold 0.464133 rejected all five unanswerable queries but fully rejected two answerable paraphrases and removed some additional useful sections. **That initial 80% retained-source recall improved to 100% after the query-profile follow-through; candidate MRR remains .90.**
@@ -58,14 +58,14 @@ Knowledge graph, external distance/weather ETA, external commerce APIs, extended
 - Local DeepEval execution has dotenv autoload and telemetry disabled; no results were uploaded to DeepEval. Missing context/judge failures are not passes.
 - LangSmith's optional wrapper hides inputs and filters safe scalar output metadata. Hosted ingestion and final hierarchical agent/tool traces are not verified.
 - Pinned app/dev/eval/UI/RAG installation succeeds in the existing local venv; dependency checks pass. No global Python installation is used.
-- Latest suite: **104 tests passed in 9.90 seconds**, including corpus drift, index tampering, revision mismatch, superseded evidence, invalid citations/numbers, credential redaction and bounded failures.
+- Latest suite: **109 tests passed in 6.46 seconds**, including corpus drift, index tampering, revision mismatch, superseded evidence, invalid citations/numbers, credential redaction and bounded failures.
 - Current and historically revoked keys were checked against staged source/evidence and were absent. The ignored `.env` was not exported. A scanned ZIP source snapshot without Git history is available locally; it must be refreshed after subsequent changes.
 
 ## 4. Remaining work, in delivery order
 
 ### Phase 4 follow-through — development coverage corrected
 
-The public-catalog/topic query profile now retains 100% of labeled sources with MRR .90, no answerable full rejections and five of five unknown abstentions. Both the initial 80% result and new measurements are retained. Conflict checks also cover small k, filters and overlapping versions. Generalization, category filtering and final registered-tool integration remain open. R02 semantic wording was flagged in the fresh judged run; the targeted prompt-v2 R01/R02/R05/R08 outputs are valid/cited and self-score 1.0; do not equate a schema pass with faithfulness.
+The public-catalog/topic query profile now retains 100% of labeled sources with MRR .90, no answerable full rejections and five of five unknown abstentions. Both the initial 80% result and new measurements are retained. Conflict checks also cover small k, filters and overlapping versions. Structured category filtering is now implemented and checked against the real v2 index. Generalization and final registered-tool integration remain open. R02 semantic wording was flagged in the fresh judged run; the targeted prompt-v2 R01/R02/R05/R08 outputs are valid/cited and self-score 1.0; do not equate a schema pass with faithfulness.
 
 ### Phase 5 — genuine tool-using multi-agent resolution
 
@@ -97,7 +97,7 @@ Run the capability ladder, memory on/off, adaptation before/after, RAG compariso
 
 Complete five forced demo packets and the final framing, evaluation, engineering justification and deployment instructions. Refresh/scan the history-free source package. The existing GitHub repository remains in use; a separate repository is optional, not a requirement.
 
-The [market comparison](market_comparison.md) contrasts implemented/planned capabilities with Intercom Fin, Zendesk AI agents and Salesforce Agentforce using official documentation. No vendor trial or scope expansion was performed.
+The [Memory Pad](memory_pad.md) adds an ecommerce feature comparison with Gorgias and nineteen stable core/extension idea IDs. The [market comparison](market_comparison.md) contrasts implemented/planned capabilities with Intercom Fin, Zendesk AI agents and Salesforce Agentforce using official documentation. No vendor trial or scope expansion was performed.
 
 ## 5. Inputs from the user
 

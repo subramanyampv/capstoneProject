@@ -1,6 +1,7 @@
 """Calibrate on development labels, then record measured retrieval and abstention."""
 
 import csv
+import argparse
 import hashlib
 import json
 from datetime import datetime, timezone
@@ -14,9 +15,13 @@ ROOT = Path(__file__).resolve().parents[1]
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--index-version", default="v2")
+    parser.add_argument("--output", default="artifacts/retrieval/category_v2_20261013")
+    arguments = parser.parse_args()
     label_path = ROOT / "data/retrieval_labels.json"
     labels = json.loads(label_path.read_text())["labels"]
-    search = PolicySearch(VoyageNanoEmbeddings(), threshold=-1)
+    search = PolicySearch(VoyageNanoEmbeddings(), version=arguments.index_version, threshold=-1)
     raw = [(label, search.search(label["query"])) for label in labels]
     thresholds = sorted({0., 1., *(round(c["score"] + delta, 6) for _, result in raw
                                   for c in result["raw_vector_top_k"] for delta in (0, .000001))})
@@ -63,8 +68,8 @@ def main():
                "unanswerable_abstention_correct": sum(r["abstention_correct"] for r in unknown),
                "r05_conflict_detected": conflict["conflict"], "r05_sources": conflict["conflict_details"],
                "limits": "Small assistant-authored calibration set; declared R05 conflict handling is deterministic and not part of raw vector Recall@5. Final safety/ticket creation not measured."}
-    artifacts = ROOT / "artifacts/retrieval"
-    artifacts.mkdir(exist_ok=True)
+    artifacts = ROOT / arguments.output
+    artifacts.mkdir(parents=True, exist_ok=True)
     (artifacts / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")
     (artifacts / "results.json").write_text(json.dumps(records, indent=2) + "\n")
     with (artifacts / "retrieval_eval.csv").open("w", newline="") as stream:
@@ -81,7 +86,7 @@ def main():
         examples.append({"query": label["query"], "expected": label["expected"], "top_3": hits})
     (artifacts / "relevance_examples.json").write_text(json.dumps(examples, indent=2) + "\n")
     (ROOT / "config").mkdir(exist_ok=True)
-    (ROOT / "config/retrieval.json").write_text(json.dumps({"index_version": "v1", "threshold": threshold,
+    (ROOT / "config/retrieval.json").write_text(json.dumps({"index_version": search.manifest["index_version"], "threshold": threshold,
                   "dimension": search.manifest["dimension"], "top_k": 5, "query_profile": PROFILE,
                   "query_expansion_sha256": summary["query_expansion_sha256"]}, indent=2) + "\n")
     print(json.dumps(summary, indent=2))

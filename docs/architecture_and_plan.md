@@ -781,6 +781,16 @@ Evidence: [before/after retrieval](../artifacts/retrieval/summary.json), [initia
 
 ---
 
+### 9.9 Category applicability and Phase 4 handoff — 2026-10-13
+
+The v2 index adds validated, authored section-category applicability. Electronics-only restocking/FAQ sections and the footwear FAQ are scoped explicitly; general return windows, exclusions, warranty tables and safety guidance remain applicable to every catalog category. Chroma combines scalar applicability and doc-type filters. Unknown categories fail validation; malformed scope metadata is quarantined. This is evidence filtering, not identity authority or eligibility approval. Phase 5 must resolve category from product data; ambiguous/mixed-category requests must not trust a model-selected filter as business authority. Filtering preserves general candidates without bypassing the threshold: the broad unlabelled window/fee probe abstains for four non-electronics categories, while the specific perishable-exclusion probe retains its governing section.
+
+Recalibration on the unchanged twenty development labels retains Recall@5=1.0 before/after threshold, MRR=.90, threshold=.464133, zero answerable abstentions and five of five unknown abstentions. [Separate v2 measurements](../artifacts/retrieval/category_v2_20261013/summary.json) preserve earlier artifacts. [Real-index applicability checks](../artifacts/retrieval/category_v2_20261013/category_checks.json) cover all five categories, perishable exclusions and electronics conflict evidence despite doc filtering and k=1. The offline suite passes 109 tests in 6.46s.
+
+Phase 4's retrieval layer is ready for Phase 5 integration. Registered tool permissions/timeouts, current-turn specialist evidence and composer citation preservation remain T04/R13/G06/G08 work; the final multi-agent product is not accepted. Human calibration and untouched holdout evaluation remain later gates. The [Memory Pad](memory_pad.md) stores market comparisons and candidate extensions without modifying approved scope; knowledge graph work remains deferred.
+
+---
+
 ## 10. Safety and Privacy Design
 
 ### 10.1 Refusal rules
@@ -1153,7 +1163,7 @@ The [detailed task checklist](task_list.md) tracks completed, update-needed and 
 | **1 Problem & success** | Personas, workflow, scope, metrics, failure cases, frozen dataset | **Done** (exit evidence exists) | Condense to the 1–2 page deliverable; add business value section | `problem_framing.md` | Framing (10) |
 | **2 Baseline** | Rule-based Python CLI with documented limitations | **Done** | Reference in the capability ladder | Baseline logs, limitations | Baseline (5) |
 | **3 LLM & prompts** | LLM integration; A/B/C comparison; default selection | **Done for development.** Comparison and C selection recorded; 195 valid outputs | Final safety defects carried into guarded build; not a prompt-only safety pass | `prompt_comparison.md`, `artifacts/phase3_selection.json` | LLM & Prompt (15) |
-| **4 Knowledge & retrieval** | Corpus, Voyage-nano + Chroma, `search_policy`, retrieval evaluation | **Initial build IMPLEMENTED / MEASURED** | Development coverage and targeted wording check recorded; category handling and Phase 5 tool integration; later human calibration | `retrieval_design.md`, retrieval/RAG artifacts | RAG (10) |
+| **4 Knowledge & retrieval** | Corpus, Voyage-nano + Chroma, `search_policy`, retrieval evaluation | **Initial build IMPLEMENTED / MEASURED** | Development coverage and targeted wording check recorded; Category handling completed in Section 9.9; Phase 5 tool integration and later human calibration | `retrieval_design.md`, retrieval/RAG artifacts | RAG (10) |
 | **5 Tools & multi-agent** | 6 tools, registry, 3 specialists, supervisor, guards, budgets | PLANNED (Days 2–3) | Sections 5, 7, 8 | Tool correctness, failed-call traces, routing traces | Tools (15), Architecture (15) |
 | **6 Planning, memory & context** | Plans, checkpointer memory, TTL, reset | PLANNED (Day 3) | Section 11 | Memory on/off results, reset demo | Architecture/Memory (15) |
 | **7 Adaptive behaviour** | Feedback signals, style adaptation | PLANNED (Day 3) | Section 12 | Before/after logs, limits | Adaptive (5) |
@@ -1162,7 +1172,7 @@ The [detailed task checklist](task_list.md) tracks completed, update-needed and 
 
 ### 16.2 Delivery schedule (targets; current status takes precedence)
 
-The original Day 1 implementation tasks were substantially completed on 2026-10-13. Next work is Phase 4 coverage improvement and Phase 5 tools/guards. The daily blocks below are planning targets, not claims of completion or guaranteed dates. No author/student identity or new repository is a dependency.
+The original Day 1 implementation tasks were substantially completed on 2026-10-13. Phase 4 coverage and category follow-through are measured. Next work is Phase 5 tools/guards and final retrieval integration. The daily blocks below are planning targets, not claims of completion or guaranteed dates. No author/student identity or new repository is a dependency.
 
 **Day 0: Tuesday 2026-10-13 (evening, ~1.5 h)**
 - Freeze scope. Add feature flags for deferred components and hide deferred UI tabs.

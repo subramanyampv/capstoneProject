@@ -8,8 +8,9 @@ Authority: [Architecture and Plan v3](architecture_and_plan.md), section 14. Fin
 | Phase 3 A/B/C | 195 schema-valid outputs; seven mandatory classification failures (A=3/B=2/C=2); C selected by v3 | Empty evidence; no tools/tickets; assistant qualitative review of ten cases |
 | Framework smoke | Nine LangChain/LangGraph outputs validated; bounded repair tests | Single-agent graph, not final supervisor/specialists |
 | Phase 4 retrieval | Candidate/retained Recall@5=100%, MRR=.90; initial retained recall was 80%; five unanswerable abstentions, zero answerable full abstentions | Twenty development labels, not held-out validation; deterministic R05 source insertion disclosed |
+| Phase 4 category applicability | Five structural category filters, general exclusions and filtered k=1 conflict checked with real v2 embeddings | Broad unlabelled window/fee probe abstains for four non-electronics categories at the unchanged threshold; applicability does not force admission |
 | Phase 4 RAG on/off | RAG 10/10 validated and 9 cited; no-RAG 9/10 validated and zero cited | No order verification or ticket; one rejected no-evidence output preserved |
-| Offline regression | 104 tests passed in 9.90s | Before final agents/tools/memory are implemented |
+| Offline regression | 109 tests passed in 6.46s | Before final agents/tools/memory are implemented |
 | Packaging | Pinned app/dev/eval/ui/rag install in existing venv succeeded; pip dependency check passed | Fresh clean-venv verification remains Phase 8 work |
 | UI | Three default tabs and explicit deferred-tab flag verified by AppTest | Final synthetic identity/chat workflow remains Phase 5+ |
 

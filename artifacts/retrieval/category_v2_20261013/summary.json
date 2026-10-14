@@ -1,0 +1,28 @@
+{
+  "recorded_at": "2026-10-14T01:28:17.453416+00:00",
+  "index_version": "v2",
+  "query_profile": "policy-context-v1",
+  "query_expansion_sha256": "fedb13abaf57f7daffaf9c7c7753c25e15876d0fae56507de1ef89431f5b751b",
+  "labels_sha256": "61dc1db116824dde97b4f48d838ccff0ef3a12f956bf1025c8c1e0edc11c66e2",
+  "queries": 20,
+  "answerable": 15,
+  "unanswerable": 5,
+  "threshold": 0.464133,
+  "threshold_selection": "Maximize balanced answerability accuracy on the same development label set; not held-out validation.",
+  "raw_vector_recall_at_5": 1.0,
+  "raw_vector_mrr": 0.9,
+  "post_threshold_recall_at_5": 1.0,
+  "answerable_abstentions": 0,
+  "unanswerable_abstention_correct": 5,
+  "r05_conflict_detected": true,
+  "r05_sources": [
+    {
+      "kind": "declared_faq_policy_conflict",
+      "sources": [
+        "faq:v1:electronics-returns:0",
+        "return_policy:v1:window:0"
+      ]
+    }
+  ],
+  "limits": "Small assistant-authored calibration set; declared R05 conflict handling is deterministic and not part of raw vector Recall@5. Final safety/ticket creation not measured."
+}

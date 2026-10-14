@@ -6,6 +6,8 @@ effective_date: '2026-10-01'
 owner: Synthetic Customer Policy Team
 authority: policy
 rule_version: '2026-10-01'
+section_categories:
+  restocking: [electronics]
 ---
 
 # Return Policy

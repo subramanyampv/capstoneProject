@@ -4,6 +4,7 @@
 
 | Document | Purpose |
 |---|---|
+| [Memory Pad](memory_pad.md) | Ecommerce agent feature comparison and evolving extension backlog; ideas do not alter approved scope |
 | [Market comparison](market_comparison.md) | Official-source desk comparison with Fin, Zendesk and Agentforce; analysis only |
 | [Task checklist](task_list.md) | Done / update / not-started ledger with priorities, dependencies and completion criteria |
 | [Detailed progress](project_progress.md) | Completed work, evidence, limitations and remaining delivery steps |

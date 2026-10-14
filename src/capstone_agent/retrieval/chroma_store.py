@@ -7,7 +7,7 @@ import re
 from datetime import date, datetime, timezone
 from pathlib import Path
 
-from capstone_agent.retrieval.corpus import check_rule_consistency, load_corpus
+from capstone_agent.retrieval.corpus import CATEGORIES, METADATA_PROFILE, check_rule_consistency, load_corpus
 from capstone_agent.retrieval.embeddings_voyage import DIMENSION, MODEL_ID, REVISION, ROOT
 from capstone_agent.retrieval.query_expansion import PROFILE, expand_query
 
@@ -40,6 +40,7 @@ def ingest(embeddings, *, root=ROOT, version="v1"):
                 "dimension": embeddings.dimension, "normalized": True, "distance": "cosine",
                 "collection": f"policies_{version}", "document_sha256": hashes,
                 "chunking": "authored-heading-sections-max-2400-bytes-v1",
+                "metadata_profile": METADATA_PROFILE,
                 "rule_version": rules["version"]}
     if manifest_path.exists():
         old = json.loads(manifest_path.read_text())
@@ -62,10 +63,11 @@ def ingest(embeddings, *, root=ROOT, version="v1"):
 
 
 class PolicySearch:
-    def __init__(self, embeddings, *, root=ROOT, version="v1", threshold=None):
+    def __init__(self, embeddings, *, root=ROOT, version=None, threshold=None):
+        config_path = root / "config/retrieval.json"
+        settings = json.loads(config_path.read_text()) if config_path.exists() else None
+        version = version or (settings["index_version"] if settings else "v1")
         if threshold is None:
-            config_path = root / "config/retrieval.json"
-            settings = json.loads(config_path.read_text()) if config_path.exists() else None
             if settings is not None:
                 profile_hash = hashlib.sha256(Path(__file__).with_name("query_expansion.py").read_bytes()).hexdigest()
                 if (settings.get("query_profile") != PROFILE or settings.get("query_expansion_sha256") != profile_hash
@@ -87,6 +89,7 @@ class PolicySearch:
         required = {"model_id": MODEL_ID, "model_revision": REVISION,
                     "dimension": embeddings.dimension, "normalized": True, "distance": "cosine",
                     "collection": f"policies_{version}", "document_sha256": hashes,
+                    "metadata_profile": METADATA_PROFILE,
                     "rule_version": json.loads((root / "data/policy_rules.json").read_text())["version"]}
         if any(manifest.get(key) != value for key, value in required.items()) or quarantined:
             raise ValueError("MANIFEST_MISMATCH")
@@ -105,9 +108,14 @@ class PolicySearch:
     def search(self, query: str, *, k=5, doc_types=None, category=None, today=SCENARIO_DATE):
         if not query.strip() or len(query) > 2000 or not 1 <= k <= 10:
             raise ValueError("INVALID_ARGUMENT")
+        if category is not None and category not in CATEGORIES:
+            raise ValueError("INVALID_ARGUMENT")
         where = {"doc_id": {"$in": doc_types}} if doc_types else None
         if doc_types is not None and (not doc_types or any(d not in {c['metadata']['doc_id'] for c in self.chunks} for d in doc_types)):
             raise ValueError("INVALID_ARGUMENT")
+        if category is not None:
+            category_filter = {f"applies_{category}": True}
+            where = {"$and": [where, category_filter]} if where else category_filter
         # Fetch extra candidates so future/superseded sources cannot crowd out applicable evidence.
         expanded, hints = expand_query(query, self.catalog, category=category)
         matches = self.store.similarity_search_with_score(expanded, k=self.manifest["chunk_count"], filter=where)
@@ -125,6 +133,7 @@ class PolicySearch:
         results = [c for c in candidates if c["score"] >= self.threshold][:k]
         conflicts, required_sources = [], {}
         applicable = [c for c in self.chunks if date.fromisoformat(c["metadata"]["effective_date"]) <= today
+                      and (category is None or c["metadata"][f"applies_{category}"])
                       and not (c["metadata"].get("superseded_on") and date.fromisoformat(c["metadata"]["superseded_on"]) <= today)]
         scores = {c["chunk_id"]: c["score"] for c in candidates}
 
@@ -159,4 +168,5 @@ class PolicySearch:
                 "conflict": bool(conflicts), "conflict_details": conflicts or None,
                 "threshold": self.threshold, "index_version": self.manifest["index_version"],
                 "raw_vector_top_k": candidates[:k], "query_profile": PROFILE, "query_hints": hints,
+                "category_filter": category, "metadata_profile": METADATA_PROFILE,
                 "conflict_evidence_exceeds_k": len(required_sources) > k}

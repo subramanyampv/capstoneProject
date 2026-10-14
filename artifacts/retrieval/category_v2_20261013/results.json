@@ -1,0 +1,390 @@
+[
+  {
+    "id": "L01",
+    "query": "Got my TrailRunners two weeks ago, can I send them back?",
+    "answerable": true,
+    "recall_at_5": 1.0,
+    "reciprocal_rank": 0.5,
+    "post_threshold_recall_at_5": 1.0,
+    "below_threshold": false,
+    "abstention_correct": null,
+    "top_score": 0.611955,
+    "query_hints": [
+      "Product category: footwear."
+    ],
+    "top_5": [
+      "faq:v1:shoes-returns:0",
+      "return_policy:v1:window:0",
+      "faq:v1:electronics-returns:0",
+      "refund_policy:v1:delayed-shipments:0",
+      "return_policy:v1:exceptions:0"
+    ]
+  },
+  {
+    "id": "L02",
+    "query": "How many days before the refund deadline kicks in for footwear?",
+    "answerable": true,
+    "recall_at_5": 1.0,
+    "reciprocal_rank": 0.5,
+    "post_threshold_recall_at_5": 1.0,
+    "below_threshold": false,
+    "abstention_correct": null,
+    "top_score": 0.592542,
+    "query_hints": [],
+    "top_5": [
+      "faq:v1:shoes-returns:0",
+      "return_policy:v1:window:0",
+      "warranty_policy:v1:durations:0",
+      "faq:v1:electronics-returns:0",
+      "refund_policy:v1:methods:0"
+    ]
+  },
+  {
+    "id": "L03",
+    "query": "What is the standard return window?",
+    "answerable": true,
+    "recall_at_5": 1.0,
+    "reciprocal_rank": 1.0,
+    "post_threshold_recall_at_5": 1.0,
+    "below_threshold": false,
+    "abstention_correct": null,
+    "top_score": 0.524576,
+    "query_hints": [],
+    "top_5": [
+      "return_policy:v1:window:0",
+      "faq:v1:shoes-returns:0",
+      "faq:v1:electronics-returns:0",
+      "refund_policy:v1:review-threshold:0",
+      "escalation_guidelines:v1:threshold:0"
+    ]
+  },
+  {
+    "id": "L04",
+    "query": "FAQ says 30 days and return policy says 15 days for my electronics speaker. Which applies?",
+    "answerable": true,
+    "recall_at_5": 1.0,
+    "reciprocal_rank": 1.0,
+    "post_threshold_recall_at_5": 1.0,
+    "below_threshold": false,
+    "abstention_correct": null,
+    "top_score": 0.730083,
+    "query_hints": [],
+    "top_5": [
+      "faq:v1:electronics-returns:0",
+      "return_policy:v1:window:0",
+      "faq:v1:shoes-returns:0",
+      "warranty_policy:v1:durations:0",
+      "return_policy:v1:restocking:0"
+    ]
+  },
+  {
+    "id": "L05",
+    "query": "Can I return a Gourmet Cheese Box?",
+    "answerable": true,
+    "recall_at_5": 1.0,
+    "reciprocal_rank": 1.0,
+    "post_threshold_recall_at_5": 1.0,
+    "below_threshold": false,
+    "abstention_correct": null,
+    "top_score": 0.741455,
+    "query_hints": [
+      "Product category: perishable_grocery."
+    ],
+    "top_5": [
+      "return_policy:v1:exclusions:0",
+      "faq:v1:shoes-returns:0",
+      "return_policy:v1:window:0",
+      "faq:v1:electronics-returns:0",
+      "return_policy:v1:exceptions:0"
+    ]
+  },
+  {
+    "id": "L06",
+    "query": "Can I return something exactly 30 days after delivery?",
+    "answerable": true,
+    "recall_at_5": 1.0,
+    "reciprocal_rank": 1.0,
+    "post_threshold_recall_at_5": 1.0,
+    "below_threshold": false,
+    "abstention_correct": null,
+    "top_score": 0.627346,
+    "query_hints": [],
+    "top_5": [
+      "return_policy:v1:window:0",
+      "faq:v1:shoes-returns:0",
+      "faq:v1:electronics-returns:0",
+      "return_policy:v1:exclusions:0",
+      "warranty_policy:v1:durations:0"
+    ]
+  },
+  {
+    "id": "L07",
+    "query": "Largest refund amount without human review?",
+    "answerable": true,
+    "recall_at_5": 1.0,
+    "reciprocal_rank": 1.0,
+    "post_threshold_recall_at_5": 1.0,
+    "below_threshold": false,
+    "abstention_correct": null,
+    "top_score": 0.548456,
+    "query_hints": [],
+    "top_5": [
+      "refund_policy:v1:review-threshold:0",
+      "faq:v1:refunds:0",
+      "escalation_guidelines:v1:threshold:0",
+      "refund_policy:v1:methods:0",
+      "return_policy:v1:exceptions:0"
+    ]
+  },
+  {
+    "id": "L08",
+    "query": "How long is standard shipping estimated to take?",
+    "answerable": true,
+    "recall_at_5": 1.0,
+    "reciprocal_rank": 1.0,
+    "post_threshold_recall_at_5": 1.0,
+    "below_threshold": false,
+    "abstention_correct": null,
+    "top_score": 0.68859,
+    "query_hints": [],
+    "top_5": [
+      "shipping_policy:v1:transit-estimates:0",
+      "shipping_policy:v1:guarantees:0",
+      "faq:v1:shipping:0",
+      "shipping_policy:v1:dispatch:0",
+      "refund_policy:v1:delayed-shipments:0"
+    ]
+  },
+  {
+    "id": "L09",
+    "query": "Is delivery guaranteed?",
+    "answerable": true,
+    "recall_at_5": 1.0,
+    "reciprocal_rank": 1.0,
+    "post_threshold_recall_at_5": 1.0,
+    "below_threshold": false,
+    "abstention_correct": null,
+    "top_score": 0.561424,
+    "query_hints": [],
+    "top_5": [
+      "shipping_policy:v1:guarantees:0",
+      "faq:v1:shipping:0",
+      "refund_policy:v1:delayed-shipments:0",
+      "shipping_policy:v1:dispatch:0",
+      "shipping_policy:v1:transit-estimates:0"
+    ]
+  },
+  {
+    "id": "L10",
+    "query": "When is an order eligible for cancellation?",
+    "answerable": true,
+    "recall_at_5": 1.0,
+    "reciprocal_rank": 1.0,
+    "post_threshold_recall_at_5": 1.0,
+    "below_threshold": false,
+    "abstention_correct": null,
+    "top_score": 0.590248,
+    "query_hints": [],
+    "top_5": [
+      "cancellation_policy:v1:eligibility:0",
+      "cancellation_policy:v1:human-action:0",
+      "shipping_policy:v1:dispatch:0",
+      "faq:v1:cancellation:0",
+      "return_policy:v1:condition:0"
+    ]
+  },
+  {
+    "id": "L11",
+    "query": "How long is the warranty on electronics?",
+    "answerable": true,
+    "recall_at_5": 1.0,
+    "reciprocal_rank": 1.0,
+    "post_threshold_recall_at_5": 1.0,
+    "below_threshold": false,
+    "abstention_correct": null,
+    "top_score": 0.639203,
+    "query_hints": [],
+    "top_5": [
+      "warranty_policy:v1:durations:0",
+      "faq:v1:warranty:0",
+      "faq:v1:electronics-returns:0",
+      "return_policy:v1:window:0",
+      "return_policy:v1:restocking:0"
+    ]
+  },
+  {
+    "id": "L12",
+    "query": "Is there an opened electronics restocking fee?",
+    "answerable": true,
+    "recall_at_5": 1.0,
+    "reciprocal_rank": 1.0,
+    "post_threshold_recall_at_5": 1.0,
+    "below_threshold": false,
+    "abstention_correct": null,
+    "top_score": 0.706695,
+    "query_hints": [],
+    "top_5": [
+      "return_policy:v1:restocking:0",
+      "faq:v1:electronics-returns:0",
+      "return_policy:v1:window:0",
+      "faq:v1:shoes-returns:0",
+      "faq:v1:refunds:0"
+    ]
+  },
+  {
+    "id": "L13",
+    "query": "A product burned me. Does a safety incident need human review?",
+    "answerable": true,
+    "recall_at_5": 1.0,
+    "reciprocal_rank": 1.0,
+    "post_threshold_recall_at_5": 1.0,
+    "below_threshold": false,
+    "abstention_correct": null,
+    "top_score": 0.531328,
+    "query_hints": [],
+    "top_5": [
+      "escalation_guidelines:v1:safety:0",
+      "return_policy:v1:exceptions:0",
+      "warranty_policy:v1:claims:0",
+      "faq:v1:warranty:0",
+      "escalation_guidelines:v1:exceptions:0"
+    ]
+  },
+  {
+    "id": "L14",
+    "query": "I want a human representative to help with my order",
+    "answerable": true,
+    "recall_at_5": 1.0,
+    "reciprocal_rank": 0.5,
+    "post_threshold_recall_at_5": 1.0,
+    "below_threshold": false,
+    "abstention_correct": null,
+    "top_score": 0.552928,
+    "query_hints": [
+      "Escalation guidelines human requests."
+    ],
+    "top_5": [
+      "cancellation_policy:v1:human-action:0",
+      "escalation_guidelines:v1:human-requests:0",
+      "return_policy:v1:exceptions:0",
+      "warranty_policy:v1:claims:0",
+      "escalation_guidelines:v1:safety:0"
+    ]
+  },
+  {
+    "id": "L15",
+    "query": "Who handles an exception after the return window ends?",
+    "answerable": true,
+    "recall_at_5": 1.0,
+    "reciprocal_rank": 1.0,
+    "post_threshold_recall_at_5": 1.0,
+    "below_threshold": false,
+    "abstention_correct": null,
+    "top_score": 0.548306,
+    "query_hints": [
+      "Return policy exception, ineligible returns human review."
+    ],
+    "top_5": [
+      "return_policy:v1:exceptions:0",
+      "escalation_guidelines:v1:exceptions:0",
+      "faq:v1:shoes-returns:0",
+      "cancellation_policy:v1:human-action:0",
+      "faq:v1:refunds:0"
+    ]
+  },
+  {
+    "id": "L16",
+    "query": "What is the return policy for live goldfish?",
+    "answerable": false,
+    "recall_at_5": null,
+    "reciprocal_rank": null,
+    "post_threshold_recall_at_5": null,
+    "below_threshold": true,
+    "abstention_correct": true,
+    "top_score": 0.457534,
+    "query_hints": [],
+    "top_5": [
+      "return_policy:v1:exclusions:0",
+      "faq:v1:shoes-returns:0",
+      "return_policy:v1:window:0",
+      "faq:v1:electronics-returns:0",
+      "cancellation_policy:v1:human-action:0"
+    ]
+  },
+  {
+    "id": "L17",
+    "query": "Can I return a kayak I bought two years ago?",
+    "answerable": false,
+    "recall_at_5": null,
+    "reciprocal_rank": null,
+    "post_threshold_recall_at_5": null,
+    "below_threshold": true,
+    "abstention_correct": true,
+    "top_score": 0.464132,
+    "query_hints": [],
+    "top_5": [
+      "faq:v1:shoes-returns:0",
+      "faq:v1:electronics-returns:0",
+      "return_policy:v1:window:0",
+      "return_policy:v1:exclusions:0",
+      "cancellation_policy:v1:human-action:0"
+    ]
+  },
+  {
+    "id": "L18",
+    "query": "What will the weather be this weekend?",
+    "answerable": false,
+    "recall_at_5": null,
+    "reciprocal_rank": null,
+    "post_threshold_recall_at_5": null,
+    "below_threshold": true,
+    "abstention_correct": true,
+    "top_score": 0.302195,
+    "query_hints": [],
+    "top_5": [
+      "shipping_policy:v1:guarantees:0",
+      "shipping_policy:v1:transit-estimates:0",
+      "faq:v1:shoes-returns:0",
+      "escalation_guidelines:v1:exceptions:0",
+      "shipping_policy:v1:dispatch:0"
+    ]
+  },
+  {
+    "id": "L19",
+    "query": "What coupon code gives a discount today?",
+    "answerable": false,
+    "recall_at_5": null,
+    "reciprocal_rank": null,
+    "post_threshold_recall_at_5": null,
+    "below_threshold": true,
+    "abstention_correct": true,
+    "top_score": 0.260192,
+    "query_hints": [],
+    "top_5": [
+      "return_policy:v1:condition:0",
+      "shipping_policy:v1:guarantees:0",
+      "faq:v1:shoes-returns:0",
+      "warranty_policy:v1:durations:0",
+      "return_policy:v1:restocking:0"
+    ]
+  },
+  {
+    "id": "L20",
+    "query": "Maximum soil weight supported by the Ceramic Plant Pot Set?",
+    "answerable": false,
+    "recall_at_5": null,
+    "reciprocal_rank": null,
+    "post_threshold_recall_at_5": null,
+    "below_threshold": true,
+    "abstention_correct": true,
+    "top_score": 0.287257,
+    "query_hints": [],
+    "top_5": [
+      "shipping_policy:v1:guarantees:0",
+      "faq:v1:shipping:0",
+      "faq:v1:warranty:0",
+      "refund_policy:v1:review-threshold:0",
+      "warranty_policy:v1:durations:0"
+    ]
+  }
+]

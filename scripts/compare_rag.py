@@ -23,8 +23,7 @@ def main():
     parser.add_argument("--case", action="append", choices=CASES, help="Optional targeted frozen-case subset")
     arguments = parser.parse_args()
     selected = list(dict.fromkeys(arguments.case)) if arguments.case else CASES
-    configuration = json.loads((ROOT / "config/retrieval.json").read_text())
-    search = PolicySearch(VoyageNanoEmbeddings(), threshold=configuration["threshold"])
+    search = PolicySearch(VoyageNanoEmbeddings())
     config = LLMConfig.from_env(ROOT / ".env")
     cases = json.loads((ROOT / "data/evaluation_cases.json").read_text())["cases"]
     directory = ROOT / "artifacts/rag_runs" / datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")

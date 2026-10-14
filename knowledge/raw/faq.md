@@ -7,6 +7,9 @@ owner: Synthetic Customer Policy Team
 authority: faq
 rule_version: '2026-10-01'
 evaluation_conflict: electronics_return_window
+section_categories:
+  electronics-returns: [electronics]
+  shoes-returns: [footwear]
 ---
 
 # Frequently Asked Questions
