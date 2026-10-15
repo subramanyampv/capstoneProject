@@ -21,6 +21,7 @@ class ToolContext:
     today: date = SCENARIO_DATE
     secrets: tuple[str,...] = ()
     calls: int = 0
+    allowed_order_ids: set[str] | None = None
     triggers: set[str] = field(default_factory=set)
     legal: bool = False
     categories: set[str] = field(default_factory=set)
@@ -98,6 +99,8 @@ class Registry:
             if not isinstance(arguments,dict): raise ToolFailure('INVALID_ARGUMENT')
             arguments={k:v for k,v in arguments.items() if k not in {'customer_id','customer_ref','session_id'}}
             args=inputs.model_validate(arguments)
+            if name in {'lookup_order','get_tracking_events','check_return_eligibility'} and self.ctx.allowed_order_ids is not None and args.order_id not in self.ctx.allowed_order_ids:
+                raise ToolFailure('UNEXPECTED_ORDER')
             fault=self.ctx.faults.get(name)
             if fault: raise ToolFailure(fault)
             method=getattr(self.services,name)

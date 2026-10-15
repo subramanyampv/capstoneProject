@@ -36,14 +36,17 @@ with chat:
             variant = st.selectbox("Experimental prompt", ["C", "B", "A"], help="v3 selects C for development; final safety gates remain open.")
     if mode == "Support agent":
         from capstone_agent.support.registry import SessionIdentity
+        from capstone_agent.support.runtime import MEMORY
         customer = st.selectbox("Synthetic account", ["C-100", "C-101", "C-102", "C-103"])
-        st.caption("Test records only · demo date 12 Oct 2026. Handoffs create local mock tickets; refunds, returns and cancellations are not executed. Each question currently starts without conversation memory.")
+        st.caption("Test records only · demo date 12 Oct 2026. Handoffs create local mock tickets; refunds, returns and cancellations are not executed. Session context expires after 30 minutes of inactivity. Records are checked again for every answer.")
         if ("support_identity" not in st.session_state or st.session_state.support_identity.customer_id != customer):
+            if 'support_identity' in st.session_state:MEMORY.reset(st.session_state.support_identity)
             st.session_state.support_identity = SessionIdentity(customer)
         if st.button("New support session"):
+            MEMORY.reset(st.session_state.support_identity)
             st.session_state.support_identity = SessionIdentity(customer)
             st.info("New session started.")
-    with st.form("question_form"):
+    with st.form("question_form", clear_on_submit=True):
         message = st.text_area("How can we help?", placeholder="Can I return order O-1001?", max_chars=2000)
         submitted = st.form_submit_button("Get answer", type="primary")
     if submitted and message.strip():
@@ -63,7 +66,7 @@ with chat:
                     search.search('return policy')
                     return search
                 with st.spinner("Checking records and policy evidence…"):
-                    result = run_support(message, identity=st.session_state.support_identity, search=local_policy_search())
+                    result = run_support(message, identity=st.session_state.support_identity, search=None if message.strip()=="/reset" else local_policy_search())
                 draft = result["response"]
                 st.write(draft["answer"])
                 if draft["why"]:

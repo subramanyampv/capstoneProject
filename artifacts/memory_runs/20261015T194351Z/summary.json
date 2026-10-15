@@ -1,0 +1,42 @@
+{
+  "recorded_at": "2026-10-15T19:47:23.218782+00:00",
+  "source_sha256": {
+    "__init__.py": "beb0f323dd24341fb2bdfc3d5905fadc80fab5695e9fb52ca5da3c969ce63eac",
+    "contracts.py": "f032a7150d2603aa72673ad002289ce38535a133700dfdb5f250cc6ba1fc33ea",
+    "graph.py": "a0509c1e3cc10f07e8241f8aece1f4bee81fdaff1b41f043f696f660a39d37f1",
+    "guards.py": "0dd1e20d79b717e2c5be0dd4486b4282d7b78996885bd41abaf6b82736649d6f",
+    "memory.py": "cc5f6578fc56c803da72ef76da7156811f2cea2e63d04edb869708d3a0e0e935",
+    "model.py": "d915478dce1ba6905e7f080fcfd12f12a9e5d78391e16c3d1fa04509d6df9b57",
+    "privacy.py": "8e65a217b001da4e7eede571610092e4e2519ac762f0b075df156c7f36ec67be",
+    "registry.py": "2bf8fe91f0b9c0c48b4772fb0bbdb3f916dd46e34734b4e5d36d874ca88adcac",
+    "runtime.py": "46cba2d462e61d29d8a311cdae86dac56ad785ae0626d5beed3d3c1165cb3539",
+    "services.py": "627594b46d099b636936ee719500200dbfedbfd470feced05e3e732a3b81dcb0"
+  },
+  "settings": {
+    "provider": "openai_compatible",
+    "model": "qwen3.7-max",
+    "timeout_seconds": 20.0,
+    "max_retries": 1,
+    "response_format": "json_object",
+    "temperature": 0.0,
+    "max_completion_tokens": 1200,
+    "enable_thinking": false
+  },
+  "results": {
+    "off": {
+      "conversations": 5,
+      "expected_behavior_passes": 5,
+      "followups_answered_with_expected_tool": 0,
+      "positive_followups": 4,
+      "clarifications": 5
+    },
+    "on": {
+      "conversations": 5,
+      "expected_behavior_passes": 5,
+      "followups_answered_with_expected_tool": 4,
+      "positive_followups": 4,
+      "clarifications": 1
+    }
+  },
+  "limits": "Five authored development conversations, not frozen/holdout or semantic faithfulness. Reset remains a clarification in both modes. Public-index startup excluded."
+}

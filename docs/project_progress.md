@@ -1,6 +1,6 @@
 # Project progress and remaining work — 2026-10-13
 
-The project has a tested baseline, a completed LLM prompt comparison, framework integration and a working local policy-retrieval layer and a smoke-verified bounded multi-agent support core. The **complete initial product is still pending** memory, adaptation and final verification. Architecture revision 3.1 records this distinction. The initial v3/Phase 4 implementation was recorded in `1fe4976`; later commits contain the documented follow-through; the existing GitHub repository remains the working repository.
+The project has a tested baseline, a completed LLM prompt comparison, framework integration and a working local policy-retrieval layer and a smoke-verified bounded multi-agent support core. The **complete initial product is still pending** adaptation and final verification. Architecture revision 3.1 records this distinction. The initial v3/Phase 4 implementation was recorded in `1fe4976`; later commits contain the documented follow-through; the existing GitHub repository remains the working repository.
 
 The [detailed task checklist](task_list.md) translates this summary into tracked work items with done/update/not-started states.
 
@@ -58,7 +58,7 @@ Knowledge graph, external distance/weather ETA, external commerce APIs, extended
 - Local DeepEval execution has dotenv autoload and telemetry disabled; no results were uploaded to DeepEval. Missing context/judge failures are not passes.
 - LangSmith's optional wrapper hides inputs and filters safe scalar output metadata. Hosted ingestion and final hierarchical agent/tool traces are not verified.
 - Pinned app/dev/eval/UI/RAG installation succeeds in the existing local venv; dependency checks pass. No global Python installation is used.
-- Latest suite: **151 tests passed in 9.17 seconds**, including corpus drift, index tampering, revision mismatch, superseded evidence, invalid citations/numbers, credential redaction and bounded failures.
+- Latest suite: **174 tests passed in 16.53 seconds**, including corpus drift, index tampering, revision mismatch, superseded evidence, invalid citations/numbers, credential redaction and bounded failures.
 - Current and historically revoked keys were checked against staged source/evidence and were absent. The ignored `.env` was not exported. A scanned ZIP source snapshot without Git history is available locally; it must be refreshed after subsequent changes.
 
 ## 4. Remaining work, in delivery order
@@ -75,9 +75,13 @@ A LangGraph supervisor dispatches three LangChain tool-calling specialists and a
 
 The first live run had unnecessary escalation and citation defects. Those outputs remain preserved. Repairs tightened specialist JSON, supplied canonical references and removed unretrieved rule pointers from the final citation allowlist. A later return case is ANSWERED with three tools/seven model calls; injury/conflict/refund-review cases create verified mock tickets, and injected write failure discloses unconfirmed handoff. See [Phase 5 details](phase5_tools_and_graph.md) and dated artifacts for remaining quality misses and follow-through. These are initial synthetic checks, not final acceptance.
 
-### Phase 6 — planning, memory and context
+### Phase 6 — bounded memory implemented; five-conversation comparison measured
 
-Bounded ordered plans/dependencies and one replan are implemented. Next add in-process session memory, entity slots, six-message window and thirty-minute inactivity expiry. Re-fetch order/tracking facts every turn. Test reset, ambiguous follow-ups and stale-memory behavior. Ensure checkpoint storage excludes intermediate tool/evidence payloads, not merely the final state. Compare memory on/off using the planned conversation scripts. Durable persistence remains deferred.
+The supervisor receives a safe projection of masked customer questions, code outcome markers and verified order/product references. A separate LangGraph/InMemorySaver retains only that projection; the full working graph has no checkpointer. Last-six-message bounds, scoped identity, serialized same-session turns, a 100-session cap, background inactivity cleanup and synchronous snapshot replacement are implemented.
+
+`/reset` works without provider/index configuration and deletes checkpoints, pending writes and blobs. UI new-session/account changes clear prior context; form inputs clear after submission. CLI `support --chat` keeps a process-local session and `/quit` clears it. Memory-off comparisons retain no context. Status/tracking mutation tests verify fresh reads; missing references cannot bypass injury/refusal, and repeated unresolved clarification preserves T5.
+
+The first five-conversation run exposed a missing tracking-only promotion path. A second run fixed that but exposed the supervisor asking again for a code-resolved other-order ID. Both failures remain preserved. Plan validation and requested-order tool scope now enforce the reference contract; the final full comparison passes all ten mode/conversation conditions. See [Phase 6 memory](phase6_memory.md).
 
 ### Phase 7 — adaptation
 
@@ -101,7 +105,7 @@ The [Memory Pad](memory_pad.md) adds an ecommerce feature comparison with Gorgia
 
 ## 5. Inputs from the user
 
-No input is needed to continue Phase 6 memory/privacy implementation. Author/student identity and a new repository name are not requested.
+No input is needed to continue Phase 7 adaptation implementation. Author/student identity and a new repository name are not requested.
 
 For later hosted tracing verification, optionally configure LANGSMITH_API_KEY, LANGSMITH_PROJECT and LANGSMITH_TRACING in the ignored .env and tell us it is ready; never send the key in chat. A separate judge endpoint/model is optional. Human review of the final twenty judged outputs will be requested when that review packet exists.
 
@@ -111,4 +115,6 @@ The components and experiments above are measured, but the final safety-first mu
 
 Evidence links: [architecture](architecture_and_plan.md), [baseline closure](phase2_closure.md), [prompt comparison](prompt_comparison.md), [retrieval design](retrieval_design.md), [validation record](../artifacts/phase4_validation.md), [evaluation register](evaluation_report.md).
 
-Latest Phase 5 closure: [eight-case core validation](../artifacts/phase5_validation.md) preserves initial failures and confirms final expected outcomes, canonical citations and independent local ticket read-back. Phase 6 is next.
+Latest Phase 5 closure: [eight-case core validation](../artifacts/phase5_validation.md) preserves initial failures and confirms final expected outcomes, canonical citations and independent local ticket read-back. Phase 6 is now implemented/measured; Phase 7 is next.
+
+Phase 6 closure: [validation](../artifacts/phase6_validation.md) records all ten expected conversation/mode conditions passing, the four positive follow-up answers versus zero without memory, reset/expiry deletion and preserved failed runs. No user input is needed for Phase 7.

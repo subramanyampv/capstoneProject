@@ -7,7 +7,7 @@ Agent = Literal['order_shipping', 'policy_product', 'escalation']
 Trigger = Literal['T1', 'T2', 'T3', 'T4', 'T5', 'T6']
 Outcome = Literal['ANSWERED', 'CLARIFICATION_REQUESTED', 'INSUFFICIENT_EVIDENCE', 'REFUSED',
                   'ESCALATED', 'ESCALATION_FAILED_DISCLOSED', 'TOOL_ERROR_DISCLOSED',
-                  'BUDGET_EXHAUSTED_ESCALATED']
+                  'BUDGET_EXHAUSTED_ESCALATED','COMMAND_HANDLED']
 
 class Closed(BaseModel):
     model_config = ConfigDict(extra='forbid', strict=True)

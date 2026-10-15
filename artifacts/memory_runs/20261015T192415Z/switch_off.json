@@ -1,0 +1,466 @@
+{
+  "conversation": "switch",
+  "memory_enabled": false,
+  "expected_followup": "clarification",
+  "passed": true,
+  "reference_tool_hit": false,
+  "clarifications": 1,
+  "turns": [
+    {
+      "response": {
+        "answer": "Order ref:6b2d27e6813f395f2e78 was delivered on September 30, 2026, at 10:47 AM in Denver, CO. Tracking shows it shipped from Reno, NV on September 28 and was out for delivery in Denver on September 29 before final delivery.",
+        "why": [
+          "Tracking events confirm the package reached its destination in Denver on September 30."
+        ],
+        "citations": [
+          {
+            "source_id": "order:ref:6b2d27e6813f395f2e78",
+            "section": null,
+            "record_version": "2026-10-12"
+          },
+          {
+            "source_id": "tracking:ref:6b2d27e6813f395f2e78",
+            "section": null,
+            "record_version": "2026-10-12"
+          }
+        ],
+        "next_steps": [],
+        "intents_addressed": [
+          "track_order"
+        ],
+        "outcome_claimed": "ANSWERED"
+      },
+      "outcome": "ANSWERED",
+      "ticket": null,
+      "refusals": [],
+      "triggers": [],
+      "tool_records": [
+        {
+          "evidence_refs": [
+            {
+              "source_id": "order:ref:6b2d27e6813f395f2e78",
+              "section": null,
+              "record_version": "2026-10-12"
+            }
+          ],
+          "exec_id": "2076ead98dbe4006ae4ff0ee26cff9d8",
+          "name": "lookup_order",
+          "status": "ok",
+          "data": {
+            "order_id": "ref:6b2d27e6813f395f2e78",
+            "status": "delivered",
+            "placed_at": "2026-09-25",
+            "dispatched_at": "2026-09-28",
+            "delivered_at": "2026-09-30",
+            "shipping_service": null,
+            "items": [
+              {
+                "sku": "SKU-SHOES-001",
+                "name": "TrailRunner Shoes",
+                "category": "footwear",
+                "price": 89.99
+              }
+            ],
+            "record_version": "2026-10-12"
+          },
+          "error": null,
+          "duration_ms": 1.834
+        },
+        {
+          "evidence_refs": [
+            {
+              "source_id": "tracking:ref:6b2d27e6813f395f2e78",
+              "section": null,
+              "record_version": "2026-10-12"
+            }
+          ],
+          "exec_id": "0d0d7e3ab18f43298cd4d6ff22750fff",
+          "name": "get_tracking_events",
+          "status": "ok",
+          "data": {
+            "events": [
+              {
+                "ts": "2026-09-28T08:12:00Z",
+                "status": "shipped",
+                "city": "Origin facility, Reno NV"
+              },
+              {
+                "ts": "2026-09-29T14:03:00Z",
+                "status": "out_for_delivery",
+                "city": "Denver CO hub"
+              },
+              {
+                "ts": "2026-09-30T10:47:00Z",
+                "status": "delivered",
+                "city": "Denver CO"
+              }
+            ],
+            "latest": {
+              "ts": "2026-09-30T10:47:00Z",
+              "status": "delivered",
+              "city": "Denver CO"
+            },
+            "carrier_estimate": null,
+            "stale": false,
+            "record_version": "2026-10-12"
+          },
+          "error": null,
+          "duration_ms": 2.685
+        }
+      ],
+      "results": [
+        {
+          "agent_name": "order_shipping",
+          "status": "success",
+          "summary": "Order ref:6b2d27e6813f395f2e78 is delivered. Shipped 2026-09-28 from Reno NV, out for delivery 2026-09-29 at Denver CO hub, and delivered 2026-09-30 in Denver CO. No carrier estimate available; tracking data is current.",
+          "evidence": [
+            {
+              "source_id": "order:ref:6b2d27e6813f395f2e78",
+              "section": null,
+              "record_version": "2026-10-12"
+            },
+            {
+              "source_id": "tracking:ref:6b2d27e6813f395f2e78",
+              "section": null,
+              "record_version": "2026-10-12"
+            }
+          ],
+          "facts": {
+            "tools": [
+              {
+                "name": "lookup_order",
+                "args": {
+                  "order_id": "ref:6b2d27e6813f395f2e78"
+                },
+                "data": {
+                  "order_id": "ref:6b2d27e6813f395f2e78",
+                  "status": "delivered",
+                  "placed_at": "2026-09-25",
+                  "dispatched_at": "2026-09-28",
+                  "delivered_at": "2026-09-30",
+                  "shipping_service": null,
+                  "items": [
+                    {
+                      "sku": "SKU-SHOES-001",
+                      "name": "TrailRunner Shoes",
+                      "category": "footwear",
+                      "price": 89.99
+                    }
+                  ],
+                  "record_version": "2026-10-12"
+                }
+              },
+              {
+                "name": "get_tracking_events",
+                "args": {
+                  "order_id": "ref:6b2d27e6813f395f2e78"
+                },
+                "data": {
+                  "events": [
+                    {
+                      "ts": "2026-09-28T08:12:00Z",
+                      "status": "shipped",
+                      "city": "Origin facility, Reno NV"
+                    },
+                    {
+                      "ts": "2026-09-29T14:03:00Z",
+                      "status": "out_for_delivery",
+                      "city": "Denver CO hub"
+                    },
+                    {
+                      "ts": "2026-09-30T10:47:00Z",
+                      "status": "delivered",
+                      "city": "Denver CO"
+                    }
+                  ],
+                  "latest": {
+                    "ts": "2026-09-30T10:47:00Z",
+                    "status": "delivered",
+                    "city": "Denver CO"
+                  },
+                  "carrier_estimate": null,
+                  "stale": false,
+                  "record_version": "2026-10-12"
+                }
+              }
+            ]
+          },
+          "flags": {
+            "conflict": false,
+            "requires_review": false
+          }
+        }
+      ],
+      "stages": [
+        "guard_in",
+        "supervisor_plan",
+        "dispatch",
+        "order_shipping",
+        "collect_result",
+        "dispatch",
+        "composer",
+        "guard_out"
+      ],
+      "errors": [],
+      "model_calls": 5,
+      "tool_calls": 2,
+      "handoffs": 1,
+      "replans": 0,
+      "repairs": 0,
+      "tokens": 6680,
+      "safety_version": "2026-10-15-v2",
+      "latency_ms": 13723.2,
+      "memory": {
+        "enabled": false,
+        "history_messages": 0,
+        "resolved_reference": false,
+        "expired": false,
+        "reset": false
+      }
+    },
+    {
+      "response": {
+        "answer": "Order ref:969b6009fd3109304588 was delivered on September 11, 2026, at 1:05 PM in Austin, TX. The shipment left the origin facility on September 10. No further tracking updates are expected as delivery is confirmed.",
+        "why": [
+          "Tracking events confirm final delivery status and location",
+          "Order record shows completed delivery date matching tracking data"
+        ],
+        "citations": [
+          {
+            "source_id": "order:ref:969b6009fd3109304588",
+            "section": null,
+            "record_version": "2026-10-12"
+          },
+          {
+            "source_id": "tracking:ref:969b6009fd3109304588",
+            "section": null,
+            "record_version": "2026-10-12"
+          }
+        ],
+        "next_steps": [
+          "Contact support if package not received despite delivery confirmation"
+        ],
+        "intents_addressed": [
+          "track_order"
+        ],
+        "outcome_claimed": "ANSWERED"
+      },
+      "outcome": "ANSWERED",
+      "ticket": null,
+      "refusals": [],
+      "triggers": [],
+      "tool_records": [
+        {
+          "evidence_refs": [
+            {
+              "source_id": "order:ref:969b6009fd3109304588",
+              "section": null,
+              "record_version": "2026-10-12"
+            }
+          ],
+          "exec_id": "ca2a9135daf142fa9b1e43b99840aad3",
+          "name": "lookup_order",
+          "status": "ok",
+          "data": {
+            "order_id": "ref:969b6009fd3109304588",
+            "status": "delivered",
+            "placed_at": "2026-09-08",
+            "dispatched_at": "2026-09-10",
+            "delivered_at": "2026-09-11",
+            "shipping_service": null,
+            "items": [
+              {
+                "sku": "SKU-POTS-003",
+                "name": "Ceramic Plant Pot Set",
+                "category": "home",
+                "price": 54.0
+              }
+            ],
+            "record_version": "2026-10-12"
+          },
+          "error": null,
+          "duration_ms": 1.698
+        },
+        {
+          "evidence_refs": [
+            {
+              "source_id": "tracking:ref:969b6009fd3109304588",
+              "section": null,
+              "record_version": "2026-10-12"
+            }
+          ],
+          "exec_id": "e639efd354ea43d28a7522e17e199060",
+          "name": "get_tracking_events",
+          "status": "ok",
+          "data": {
+            "events": [
+              {
+                "ts": "2026-09-10T10:00:00Z",
+                "status": "shipped",
+                "city": "Origin facility"
+              },
+              {
+                "ts": "2026-09-11T13:05:00Z",
+                "status": "delivered",
+                "city": "Austin TX"
+              }
+            ],
+            "latest": {
+              "ts": "2026-09-11T13:05:00Z",
+              "status": "delivered",
+              "city": "Austin TX"
+            },
+            "carrier_estimate": null,
+            "stale": false,
+            "record_version": "2026-10-12"
+          },
+          "error": null,
+          "duration_ms": 2.258
+        }
+      ],
+      "results": [
+        {
+          "agent_name": "order_shipping",
+          "status": "success",
+          "summary": "Order ref:969b6009fd3109304588 is delivered. Shipped 2026-09-10 from Origin facility; delivered 2026-09-11 at 13:05 UTC in Austin, TX. No carrier estimate available; tracking data is current.",
+          "evidence": [
+            {
+              "source_id": "order:ref:969b6009fd3109304588",
+              "section": null,
+              "record_version": "2026-10-12"
+            },
+            {
+              "source_id": "tracking:ref:969b6009fd3109304588",
+              "section": null,
+              "record_version": "2026-10-12"
+            }
+          ],
+          "facts": {
+            "tools": [
+              {
+                "name": "lookup_order",
+                "args": {
+                  "order_id": "ref:969b6009fd3109304588"
+                },
+                "data": {
+                  "order_id": "ref:969b6009fd3109304588",
+                  "status": "delivered",
+                  "placed_at": "2026-09-08",
+                  "dispatched_at": "2026-09-10",
+                  "delivered_at": "2026-09-11",
+                  "shipping_service": null,
+                  "items": [
+                    {
+                      "sku": "SKU-POTS-003",
+                      "name": "Ceramic Plant Pot Set",
+                      "category": "home",
+                      "price": 54.0
+                    }
+                  ],
+                  "record_version": "2026-10-12"
+                }
+              },
+              {
+                "name": "get_tracking_events",
+                "args": {
+                  "order_id": "ref:969b6009fd3109304588"
+                },
+                "data": {
+                  "events": [
+                    {
+                      "ts": "2026-09-10T10:00:00Z",
+                      "status": "shipped",
+                      "city": "Origin facility"
+                    },
+                    {
+                      "ts": "2026-09-11T13:05:00Z",
+                      "status": "delivered",
+                      "city": "Austin TX"
+                    }
+                  ],
+                  "latest": {
+                    "ts": "2026-09-11T13:05:00Z",
+                    "status": "delivered",
+                    "city": "Austin TX"
+                  },
+                  "carrier_estimate": null,
+                  "stale": false,
+                  "record_version": "2026-10-12"
+                }
+              }
+            ]
+          },
+          "flags": {
+            "conflict": false,
+            "requires_review": false
+          }
+        }
+      ],
+      "stages": [
+        "guard_in",
+        "supervisor_plan",
+        "dispatch",
+        "order_shipping",
+        "collect_result",
+        "dispatch",
+        "composer",
+        "guard_out"
+      ],
+      "errors": [],
+      "model_calls": 5,
+      "tool_calls": 2,
+      "handoffs": 1,
+      "replans": 0,
+      "repairs": 0,
+      "tokens": 6598,
+      "safety_version": "2026-10-15-v2",
+      "latency_ms": 14480.071,
+      "memory": {
+        "enabled": false,
+        "history_messages": 0,
+        "resolved_reference": false,
+        "expired": false,
+        "reset": false
+      }
+    },
+    {
+      "response": {
+        "answer": "Which order or product do you mean? Please provide its reference.",
+        "why": [],
+        "citations": [],
+        "next_steps": [],
+        "intents_addressed": [
+          "entity_clarification"
+        ],
+        "outcome_claimed": "CLARIFICATION_REQUESTED"
+      },
+      "outcome": "CLARIFICATION_REQUESTED",
+      "ticket": null,
+      "refusals": [],
+      "triggers": [],
+      "tool_records": [],
+      "results": [],
+      "stages": [
+        "guard_in",
+        "memory_clarification",
+        "guard_out"
+      ],
+      "errors": [],
+      "model_calls": 0,
+      "tool_calls": 0,
+      "handoffs": 0,
+      "replans": 0,
+      "repairs": 0,
+      "tokens": 0,
+      "safety_version": "2026-10-15-v2",
+      "latency_ms": 28.735,
+      "memory": {
+        "enabled": false,
+        "history_messages": 0,
+        "resolved_reference": false,
+        "expired": false,
+        "reset": false
+      }
+    }
+  ]
+}

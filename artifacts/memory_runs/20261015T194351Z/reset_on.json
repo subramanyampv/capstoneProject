@@ -1,0 +1,239 @@
+{
+  "conversation": "reset",
+  "memory_enabled": true,
+  "expected_followup": "clarification",
+  "passed": true,
+  "reference_tool_hit": null,
+  "clarifications": 1,
+  "turns": [
+    {
+      "response": {
+        "answer": "Order ref:6b2d27e6813f395f2e78 was delivered in Denver, CO on September 30, 2026, at 10:47 AM. Prior tracking shows it was out for delivery from the Denver hub on September 29 and originally shipped from Reno, NV on September 28.",
+        "why": [
+          "Tracking records confirm final delivery status and location",
+          "Full event history retrieved to provide complete shipment timeline"
+        ],
+        "citations": [
+          {
+            "source_id": "tracking:ref:6b2d27e6813f395f2e78",
+            "section": null,
+            "record_version": "2026-10-12"
+          }
+        ],
+        "next_steps": [
+          "Contact carrier directly if package not received despite delivered status",
+          "Reach out to retailer support for further delivery investigation"
+        ],
+        "intents_addressed": [
+          "track_order"
+        ],
+        "outcome_claimed": "ANSWERED"
+      },
+      "outcome": "ANSWERED",
+      "ticket": null,
+      "refusals": [],
+      "triggers": [],
+      "tool_records": [
+        {
+          "evidence_refs": [
+            {
+              "source_id": "tracking:ref:6b2d27e6813f395f2e78",
+              "section": null,
+              "record_version": "2026-10-12"
+            }
+          ],
+          "exec_id": "a9c4818d660f4f2eb561e6f1131a044c",
+          "name": "get_tracking_events",
+          "status": "ok",
+          "data": {
+            "events": [
+              {
+                "ts": "2026-09-28T08:12:00Z",
+                "status": "shipped",
+                "city": "Origin facility, Reno NV"
+              },
+              {
+                "ts": "2026-09-29T14:03:00Z",
+                "status": "out_for_delivery",
+                "city": "Denver CO hub"
+              },
+              {
+                "ts": "2026-09-30T10:47:00Z",
+                "status": "delivered",
+                "city": "Denver CO"
+              }
+            ],
+            "latest": {
+              "ts": "2026-09-30T10:47:00Z",
+              "status": "delivered",
+              "city": "Denver CO"
+            },
+            "carrier_estimate": null,
+            "stale": false,
+            "record_version": "2026-10-12"
+          },
+          "error": null,
+          "duration_ms": 1.585
+        }
+      ],
+      "results": [
+        {
+          "agent_name": "order_shipping",
+          "status": "success",
+          "summary": "Order ref:6b2d27e6813f395f2e78 was delivered on 2026-09-30 at 10:47 UTC in Denver, CO. Latest tracking status is delivered; no carrier estimate available and data is not stale.",
+          "evidence": [
+            {
+              "source_id": "tracking:ref:6b2d27e6813f395f2e78",
+              "section": null,
+              "record_version": "2026-10-12"
+            }
+          ],
+          "facts": {
+            "tools": [
+              {
+                "name": "get_tracking_events",
+                "args": {
+                  "order_id": "ref:6b2d27e6813f395f2e78"
+                },
+                "data": {
+                  "events": [
+                    {
+                      "ts": "2026-09-28T08:12:00Z",
+                      "status": "shipped",
+                      "city": "Origin facility, Reno NV"
+                    },
+                    {
+                      "ts": "2026-09-29T14:03:00Z",
+                      "status": "out_for_delivery",
+                      "city": "Denver CO hub"
+                    },
+                    {
+                      "ts": "2026-09-30T10:47:00Z",
+                      "status": "delivered",
+                      "city": "Denver CO"
+                    }
+                  ],
+                  "latest": {
+                    "ts": "2026-09-30T10:47:00Z",
+                    "status": "delivered",
+                    "city": "Denver CO"
+                  },
+                  "carrier_estimate": null,
+                  "stale": false,
+                  "record_version": "2026-10-12"
+                }
+              }
+            ]
+          },
+          "flags": {
+            "conflict": false,
+            "requires_review": false
+          }
+        }
+      ],
+      "stages": [
+        "guard_in",
+        "supervisor_plan",
+        "dispatch",
+        "order_shipping",
+        "collect_result",
+        "dispatch",
+        "composer",
+        "guard_out"
+      ],
+      "errors": [],
+      "model_calls": 4,
+      "tool_calls": 1,
+      "handoffs": 1,
+      "replans": 0,
+      "repairs": 0,
+      "tokens": 4834,
+      "safety_version": "2026-10-15-v2",
+      "latency_ms": 10917.977,
+      "memory": {
+        "enabled": true,
+        "history_messages": 0,
+        "resolved_reference": false,
+        "expired": false,
+        "reset": false
+      }
+    },
+    {
+      "response": {
+        "answer": "Session memory cleared. Which order or product would you like help with?",
+        "why": [],
+        "citations": [],
+        "next_steps": [],
+        "intents_addressed": [
+          "reset"
+        ],
+        "outcome_claimed": "COMMAND_HANDLED"
+      },
+      "outcome": "COMMAND_HANDLED",
+      "ticket": null,
+      "refusals": [],
+      "triggers": [],
+      "tool_records": [],
+      "results": [],
+      "stages": [
+        "command_handler",
+        "memory_reset"
+      ],
+      "errors": [],
+      "model_calls": 0,
+      "tool_calls": 0,
+      "handoffs": 0,
+      "replans": 0,
+      "repairs": 0,
+      "tokens": 0,
+      "safety_version": null,
+      "latency_ms": 0.0,
+      "memory": {
+        "enabled": true,
+        "history_messages": 0,
+        "resolved_reference": false,
+        "expired": false,
+        "reset": true
+      }
+    },
+    {
+      "response": {
+        "answer": "Which order or product do you mean? Please provide its reference.",
+        "why": [],
+        "citations": [],
+        "next_steps": [],
+        "intents_addressed": [
+          "entity_clarification"
+        ],
+        "outcome_claimed": "CLARIFICATION_REQUESTED"
+      },
+      "outcome": "CLARIFICATION_REQUESTED",
+      "ticket": null,
+      "refusals": [],
+      "triggers": [],
+      "tool_records": [],
+      "results": [],
+      "stages": [
+        "guard_in",
+        "memory_clarification",
+        "guard_out"
+      ],
+      "errors": [],
+      "model_calls": 0,
+      "tool_calls": 0,
+      "handoffs": 0,
+      "replans": 0,
+      "repairs": 0,
+      "tokens": 0,
+      "safety_version": "2026-10-15-v2",
+      "latency_ms": 27.235,
+      "memory": {
+        "enabled": true,
+        "history_messages": 0,
+        "resolved_reference": false,
+        "expired": false,
+        "reset": false
+      }
+    }
+  ]
+}

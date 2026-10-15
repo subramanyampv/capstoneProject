@@ -25,7 +25,7 @@
 
 **What we are building.** A multi-agent customer-support resolution agent for a synthetic e-commerce retailer. It answers order, shipping, delivery, return, refund, product, and warranty questions.
 
-**Core workflow.** A bounded supervisor/three-specialist graph, six typed tools, synthetic session identity and deterministic guards are now implemented alongside the baseline and retrieval experiments. Phase 5 live validation records eight expected smoke outcomes and independent local ticket read-back; memory, adaptation, hosted observability and final acceptance remain pending.
+**Core workflow.** A bounded supervisor/three-specialist graph, six typed tools, synthetic session identity and deterministic guards are now implemented alongside the baseline and retrieval experiments. Phase 5 live validation records eight expected smoke outcomes and independent local ticket read-back; bounded projection memory is now implemented and measured. Adaptation, hosted observability and final acceptance remain pending.
 - A LangGraph **supervisor** plans each request and delegates to three **specialist agents**: Order & Shipping, Policy & Product, and Escalation.
 - Each specialist is a bounded LangChain tool-calling agent with its own small tool allowlist.
 - Policy answers come from retrieval-augmented generation (RAG) over a versioned policy corpus. The corpus is embedded with **Voyage-4-nano** (Hugging Face, local) and stored in **Chroma**.
@@ -40,8 +40,8 @@
 - Phases 1–2 are complete with exit evidence.
 - Phase 3 is complete: the written ten-case comparison, per-prompt failure breakdown and development selection are recorded. The frozen experiment produced 195/195 schema-valid outputs (**MEASURED**). Prompt C is the development default; this does not establish final safety acceptance (Section 14.5).
 - Phase 4 has seven authored documents, 28 indexed sections, pinned local Voyage-4-nano/Chroma, 20 retrieval labels and a live ten-case RAG on/off comparison (**IMPLEMENTED / MEASURED**). The development coverage gap is corrected by the follow-through in Section 9.8; category applicability and registered-tool/current-turn citation integration are implemented. Held-out generalization remains open.
-- Phase 5 core tools/control are **IMPLEMENTED**, with live defects and repairs preserved in [the implementation chapter](phase5_tools_and_graph.md). Phases 6–9 remain **PLANNED**; early UI/logging components already exist. The target submission date stays 2026-10-18; schedule dates are targets, not guarantees.
-- Latest offline regression: 151 tests passed in 9.17s. [Detailed progress and remaining work](project_progress.md) records the evidence and next steps.
+- Phase 5 core tools/control are **IMPLEMENTED**, with live defects and repairs preserved in [the implementation chapter](phase5_tools_and_graph.md). Phase 6 projection memory is **IMPLEMENTED** with five-conversation comparison measured. Phases 7–9 remain **PLANNED**; early UI/logging components already exist. The target submission date stays 2026-10-18; schedule dates are targets, not guarantees.
+- Latest offline regression: 174 tests passed in 16.53s. [Detailed progress and remaining work](project_progress.md) records the evidence and next steps.
 - Author/student name and a new GitHub repository are not required. Continue in the existing repository; use the scanned history-free source snapshot for packaging.
 
 **Key design stance.** The rubric evaluates "engineering judgment, reliability, explainability, safety-first design, and practical usefulness… not unnecessary complexity." The architecture is therefore deliberately minimal:
@@ -196,7 +196,7 @@ A single LLM prompt mixes these and fails in two costly ways, both observed in t
 ┌───────────────▼──────────────── LangGraph Control Graph ────────────────────┐
 │ [Guard-In] → [Supervisor: Plan] → [Dispatch] ⇄ {Specialists} → [Composer]   │
 │                                                     → [Guard-Out] → [Finalize]│
-│  State: SupportState (checkpointed per session via LangGraph checkpointer)   │
+│  State: volatile SupportState; retained projection checkpointed separately │
 └───────┬───────────────────┬──────────────────────┬───────────────────────────┘
         │                   │                      │
 ┌───────▼───────┐  ┌────────▼────────┐  ┌──────────▼─────────┐
@@ -229,7 +229,7 @@ A single LLM prompt mixes these and fails in two costly ways, both observed in t
 | Component | Choice | Role | Justification | Status |
 |---|---|---|---|---|
 | LLM access | LangChain `langchain-openai` against an OpenAI-compatible endpoint; model `qwen3.7-max` | All LLM calls | Track A requirement; provider-swappable via base URL and model name; already measured in Phase 3 | IMPLEMENTED |
-| Orchestration | LangGraph `StateGraph` + checkpointer | Control flow, multi-agent routing, session memory | Explicit nodes and conditional edges map to safety gates and terminal outcomes; built-in checkpointed memory | IMPLEMENTED (single-agent workflow); multi-agent PLANNED |
+| Orchestration | LangGraph `StateGraph` + checkpointer | Control flow, multi-agent routing, session memory | Explicit nodes and conditional edges map to safety gates and terminal outcomes; built-in checkpointed memory | IMPLEMENTED: bounded multi-agent core and separate projection memory; final acceptance pending |
 | Specialist agents | LangGraph/LangChain prebuilt tool-calling (ReAct-style) agent per specialist | Bounded tool use | Standard, traceable, step limits supported | PLANNED |
 | Embeddings | `voyageai/voyage-4-nano` (Hugging Face, local, pinned revision) | Document and query embeddings | Local (no document export); retrieval-tuned; query/document input modes | IMPLEMENTED / MEASURED, normalized 2048 dimensions |
 | Vector store | Chroma via `langchain-chroma`, persisted | Similarity search with metadata filters | Named in the rubric; persistence and metadata filtering (version/section/effective date) needed for conflict detection | IMPLEMENTED / MEASURED, policies_v1 with 28 sections |
@@ -262,7 +262,7 @@ class SupportState(TypedDict):
     session_id: str                     # = LangGraph thread_id
     customer_id: str                    # bound at session creation
     versions: dict                      # app, prompt set, index, dataset, model
-    # conversation memory (checkpointed)
+    # conceptual memory view; retained separately from this working state
     messages: Annotated[list, add_messages]
     entities: dict                      # active order_id, sku, product_name (slots)
     user_input: str                     # current turn (never logged raw)
@@ -290,7 +290,7 @@ class SupportState(TypedDict):
 **Design notes:**
 - `refusals`, `must_escalate`, `agent_results`, and `errors` use **append-only reducers**. A node can add entries; no node can remove them. This is how "the LLM can add but never remove a safety outcome" is enforced structurally.
 - `customer_id` is injected from the session. Tools read it from state, never from model-generated arguments, so an LLM cannot query another customer's data.
-- `messages` is the only place raw user text persists. It lives in the in-process checkpointer, is cleared on reset or expiry, and is never written to logs.
+- The current implementation retains only a separate memory projection: masked customer text and assistant outcome markers, never full working state or assistant facts. All projection versions are deleted on reset/expiry/eviction; retained text is never written to logs. The state illustration above is conceptual, not a persistence layout.
 
 ### 5.2 Nodes
 
@@ -663,7 +663,7 @@ class AgentResult(BaseModel):
 
 [Typed tools and bounded graph](phase5_tools_and_graph.md) describe the implemented core. Closed Pydantic schemas are exposed as per-specialist LangChain tools. Synthetic identity is fixed by the application session; ownership checks precede record access, and non-owned records look absent. Category filters need current-turn verified product/order context. Tool results supply canonical evidence refs; the composer may cite policy references only after current-turn retrieval.
 
-The LangGraph controller runs Guard-In, structured supervisor planning, dispatch, three bounded tool-calling specialists, optional one replan, composer/final gate and deterministic fallback. Collection is a code helper inside the specialist node; composer and final gate share a node rather than requiring a separate persisted intermediate checkpoint. Refusal/escalation state accumulates; tools compute eligibility and queue/priority. Eight tool calls (one slot reserved for handoff), four handoffs and twelve model calls are bounded. No checkpoint is installed until Phase 6 privacy tests exist.
+The LangGraph controller runs Guard-In, structured supervisor planning, dispatch, three bounded tool-calling specialists, optional one replan, composer/final gate and deterministic fallback. Collection is a code helper inside the specialist node; composer and final gate share a node rather than requiring a separate persisted intermediate checkpoint. Refusal/escalation state accumulates; tools compute eligibility and queue/priority. Eight tool calls (one slot reserved for handoff), four handoffs and twelve model calls are bounded. The working graph remains uncheckpointed; Phase 6 adds only the separately audited projection checkpointer (Section 11).
 
 The sole write persists a sanitized SQLite mock ticket and verifies it before returning success. Idempotency includes session/customer, sorted server triggers, opaque order ref and computed queue/priority; the priority subtype prevents a later legal threat from replaying a lower-priority general ticket. Read deadlines discard late evidence. Local writes commit/read-back synchronously rather than timing out an abandoned write worker. This is a local mock protocol, not remote transaction reconciliation.
 
@@ -882,21 +882,24 @@ Phase 4's retrieval layer is now integrated with the Phase 5 typed registry and 
 
 ### 11.1 Memory layers
 
+**Phase 6 implementation note (2026-10-15):** the working support graph is deliberately not checkpointed. A separate projection-only LangGraph uses InMemorySaver for retained context. Its inputs, intermediate checkpoints and pending writes contain only the safe projection; reset/expiry delete every retained version. See [memory design and evidence](phase6_memory.md). The conceptual SupportState in Section 5 is not a recommendation to persist the entire graph state.
+
 | Layer | Contents | Storage | Retention | Who reads it |
 |---|---|---|---|---|
 | **Turn state** | Full `SupportState` for the current request | LangGraph state | One turn | All nodes |
-| **Session memory (short-term)** | `messages` (conversation), entity slots (`order_id`, `sku`, `product_name`), last intents, last outcome | LangGraph in-memory checkpointer keyed by `thread_id = session_id` | Until `/reset`, inactivity > 30 min (configurable), or app restart | Supervisor (last 6 messages + slots), Composer (current turn only). **Specialists do not read it.** |
+| **Session memory (short-term)** | Six messages (masked customer questions + assistant outcome markers), verified entity slots (`order_id`, `sku`, `product_name`), allowlisted last intents and last outcome | Separate projection LangGraph/InMemorySaver, keyed by opaque hash of customer + session | Until `/reset`, inactivity ≥30 min, eviction or app restart; idle reaper sweeps at most every 30 s | Supervisor (last 6 messages + slots), Composer (current turn only). **Specialists do not read it.** |
 | **Preference profile (long-term)** | `verbosity ∈ {concise, standard, detailed}`, `format ∈ {prose, bullets, step_by_step}`, `version`, change history (signal counts, timestamps, reasons) | `data/runtime/prefs.json` keyed by synthetic customer ID | Until `/forget-preferences` | Composer |
 
 ### 11.2 Rules
 
 - **Records override memory.** Order and tracking facts are re-fetched every turn. Memory holds only *which* order is being discussed, never its status.
-- **What memory never stores:** tool payloads, retrieved policy text, chain-of-thought, PII beyond what the customer typed in-session (raw messages stay in the in-memory checkpointer only).
+- **What memory never stores:** tool payloads, retrieved policy text, private reasoning, model/tool transcripts, assistant answer facts, credential values, or code safety decisions. Masked customer-origin text can still contain unmatched personal data; it stays only in the bounded in-process window. This is not universal personal-data detection.
+- **Verified reference promotion:** successful order lookup, tracking and eligibility tools all verify ownership internally; only requested/resolved order references from those successful code results may populate slots. A failed/non-owned explicit replacement clears prior context. A changed catalog subject clears an incompatible order association.
 - **Follow-up resolution:**
   - Pronouns and references ("that order," "the shoes") resolve from entity slots.
-  - If a slot is empty (e.g., after reset), the supervisor asks for clarification.
+  - If a required slot is empty (e.g., after reset), code requests clarification before model calls. Two consecutive unresolved clarifications preserve T5 handoff. Safety/refusal triggers take precedence over the missing-reference branch.
 - **Context switching:** a new order ID in the input replaces the slot. The previous one is kept as `previous_order_id` for one turn so "and my other order?" can be resolved.
-- **Durability limitation (disclosed):** memory is in-process and lost on restart. Durable checkpointing would need a separate retention and access design and is listed in the roadmap.
+- **Durability limitation (disclosed):** memory is in-process, capped at 100 sessions and lost on restart. Same-session turns serialize; model calls do not lock other sessions. Durable checkpointing would need a separate retention and access design and is listed in the roadmap.
 
 ### 11.3 Measuring memory's impact on quality
 
@@ -905,6 +908,16 @@ Phase 4's retrieval layer is now integrated with the Phase 5 typed registry and 
 | Multi-turn set (5 conversations, 3 minimum under the cut line) | Same scripts with `MEMORY_ENABLED=true` vs. `false` | Follow-up resolution rate; clarification questions per conversation; turns to resolution |
 | Reset behavior | Follow-up after `/reset` | Must request clarification (no carry-over) |
 | Stale-memory guard | Change tracking fixture between turns (fault flag) | Answer reflects the new tool result, not memory |
+
+---
+
+### 11.4 Phase 6 measured follow-through — 2026-10-15
+
+The projection graph, scoped references, monotonic TTL/background cleanup, provider-independent reset and CLI/Streamlit session controls are implemented. Every turn creates a fresh working graph/tool context. Successful ownership-checked lookup, tracking and eligibility calls can promote only the requested/resolved reference. Current code normalizes order-reference phrases to an explicit planner request, rejects plans asking for that resolved ID again, and rejects tools substituting another order.
+
+[Phase 6 validation](../artifacts/phase6_validation.md) records 174 passing tests and five authored conversations in both memory modes. Four of four positive follow-ups answer using expected fresh tool evidence with memory on, versus zero of four off; clarification responses are one versus five. Reset correctly requests clarification in both modes. The comparison measures reference/tool/outcome behavior, not independent sentence-level faithfulness or held-out generalization. Earlier tracking-promotion and other-order failures remain recorded, including the run that escalated instead of resolving.
+
+[Checkpoint audit](../artifacts/phase6_checkpoint_audit.json) checks intermediate versions, pending writes and blobs. It retains six safe messages/three versions after repeated turns; reset removes held stores, and exact-boundary expiry leaves zero versions, messages, entities, writes and blobs. A bounded disk scan has no configured-key/known-canary findings. Universal PII detection, forensic erasure, hosted tracing and final acceptance remain unclaimed. Phase 7 adaptation is next; durable memory and knowledge graph remain deferred.
 
 ---
 
@@ -1179,14 +1192,14 @@ The [detailed task checklist](task_list.md) tracks completed, update-needed and 
 | **3 LLM & prompts** | LLM integration; A/B/C comparison; default selection | **Done for development.** Comparison and C selection recorded; 195 valid outputs | Final safety defects carried into guarded build; not a prompt-only safety pass | `prompt_comparison.md`, `artifacts/phase3_selection.json` | LLM & Prompt (15) |
 | **4 Knowledge & retrieval** | Corpus, Voyage-nano + Chroma, `search_policy`, retrieval evaluation | **Initial build IMPLEMENTED / MEASURED** | Development coverage and targeted wording check recorded; Category handling and Phase 5 current-turn tool integration implemented; later human calibration | `retrieval_design.md`, retrieval/RAG artifacts | RAG (10) |
 | **5 Tools & multi-agent** | 6 tools, registry, 3 specialists, supervisor, guards, budgets | Core IMPLEMENTED; live validation recorded | Complete final semantic/repeated-case proof in Phase 9 | phase5_tools_and_graph.md; typed tool/graph tests and live smoke artifacts | Tools (15), Architecture (15) |
-| **6 Planning, memory & context** | Plans, checkpointer memory, TTL, reset | PLANNED (Day 3) | Section 11 | Memory on/off results, reset demo | Architecture/Memory (15) |
+| **6 Planning, memory & context** | Plans, projection memory, TTL, reset | IMPLEMENTED; five-conversation comparison measured | Final held-out/semantic and repeated-run proof remain Phase 9 | phase6_memory.md; memory tests and recorded comparisons | Architecture/Memory (15) |
 | **7 Adaptive behaviour** | Feedback signals, style adaptation | PLANNED (Day 3) | Section 12 | Before/after logs, limits | Adaptive (5) |
 | **8 Deployment readiness** | Packaging, logs, tracing, failure handling | PLANNED (Days 3–4) | Section 13 | Clean-venv run, latency/error report, trace samples, canary reports | Deployment (10) |
 | **9 Evaluation & review** | Full evaluation, consistency, RCA, safety review, roadmap | PLANNED (Days 4–5) | Section 14 | `evaluation_report.md` | Safety/Eval (15) |
 
 ### 16.2 Delivery schedule (targets; current status takes precedence)
 
-The original Day 1 implementation tasks were substantially completed on 2026-10-13. Phase 4 coverage and category follow-through are measured. Phase 5 tools/control are implemented and live validation is recorded; next major work is Phase 6 memory with checkpoint privacy tests. The daily blocks below are planning targets, not claims of completion or guaranteed dates. No author/student identity or new repository is a dependency.
+The original Day 1 implementation tasks were substantially completed on 2026-10-13. Phase 4 coverage and category follow-through are measured. Phase 5 tools/control are implemented and live validation is recorded; next major work is Phase 6 bounded memory and checkpoint privacy verification. The daily blocks below are planning targets, not claims of completion or guaranteed dates. No author/student identity or new repository is a dependency.
 
 **Day 0: Tuesday 2026-10-13 (evening, ~1.5 h)**
 - Freeze scope. Add feature flags for deferred components and hide deferred UI tabs.

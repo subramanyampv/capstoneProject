@@ -18,7 +18,7 @@ PHASES = [
     (3, "LLM integration & prompt evaluation — DONE (v3 selects Prompt C; final safety open)"),
     (4, "knowledge & retrieval (RAG) — DONE (development scope; final holdout open)"),
     (5, "tools & multi-agent orchestration — DONE (core; final acceptance open)"),
-    (6, "planning, memory, context"),
+    (6, "planning, memory, context — DONE (bounded session scope; final evaluation open)"),
     (7, "adaptive behavior"),
     (8, "deployment readiness"),
     (9, "evaluation & engineering review"),
@@ -29,7 +29,7 @@ def cmd_status(_: argparse.Namespace) -> int:
     print("capstone-agent — multi-agent e-commerce support agent")
     print("Phases:")
     for num, name in PHASES:
-        active = num == 6
+        active = num == 7
         print(f"  {'>' if active else ' '} phase {num}: {name}")
     print("\nTry:  capstone-agent ask \"Can I return order O-1001?\" --today 2026-10-12")
     print("Baseline evidence run:  scripts/run_baseline.sh")
@@ -123,19 +123,33 @@ def cmd_search_policy(args):
 
 def cmd_support(args):
     import json
-    from capstone_agent.retrieval.embeddings_voyage import VoyageNanoEmbeddings
-    from capstone_agent.retrieval.chroma_store import PolicySearch
-    from capstone_agent.support.runtime import run_support
+    from capstone_agent.support.runtime import run_support,MEMORY
+    from capstone_agent.support.registry import SessionIdentity
     faults={}
-    if args.fault_tracking_timeout: faults['get_tracking_events']='TIMEOUT'
-    if args.fault_escalation_fail: faults['create_escalation']='FAILED'
-    if args.fault_model: faults['supervisor']='FAILED'
-    search=PolicySearch(VoyageNanoEmbeddings())
-    search.search('return policy')  # startup warmup, not a customer tool call
-    result=run_support(args.message,args.customer,search=search,faults=faults)
-    print(json.dumps({'response':result['response'],'outcome':result['outcome'],'ticket':result['ticket'],
-        'triggers':result['triggers'],'refusals':result['refusals'],
-        'model_calls':result['model_calls'],'tool_calls':result['tool_calls']},indent=2))
+    if args.fault_tracking_timeout:faults['get_tracking_events']='TIMEOUT'
+    if args.fault_escalation_fail:faults['create_escalation']='FAILED'
+    if args.fault_model:faults['supervisor']='FAILED'
+    if not args.chat and not args.message.strip():raise ValueError('A question or --chat is required.')
+    identity=SessionIdentity(args.customer);search=None
+    def ask(message):
+        nonlocal search
+        if message.strip()!='/reset' and search is None:
+            from capstone_agent.retrieval.embeddings_voyage import VoyageNanoEmbeddings
+            from capstone_agent.retrieval.chroma_store import PolicySearch
+            search=PolicySearch(VoyageNanoEmbeddings());search.search('return policy')
+        result=run_support(message,identity=identity,search=search,faults=faults,
+                           memory_enabled=False if args.no_memory else None)
+        print(json.dumps({k:result[k] for k in ['response','outcome','ticket','triggers','refusals','model_calls','tool_calls','memory']},indent=2))
+    if not args.chat:
+        ask(args.message);return 0
+    print('Synthetic support chat. /reset clears session context; /quit exits. Memory is lost on restart.')
+    try:
+        while True:
+            try:message=input('You: ')
+            except EOFError:break
+            if message.strip() in {'/quit','/exit'}:break
+            if message.strip():ask(message)
+    finally:MEMORY.reset(identity)
     return 0
 
 
@@ -180,7 +194,9 @@ def build_parser() -> argparse.ArgumentParser:
     search.add_argument("--threshold", type=float, help="Override the calibrated local threshold")
     search.set_defaults(func=cmd_search_policy)
     support = sub.add_parser('support', help='Phase 5 multi-agent support; synthetic sessions and mock handoff only')
-    support.add_argument('message')
+    support.add_argument('message',nargs='?',default='')
+    support.add_argument('--chat',action='store_true',help='Keep one synthetic session in this process; /reset and /quit supported')
+    support.add_argument('--no-memory',action='store_true',help='Disable retained context for comparison')
     support.add_argument('--customer',choices=['C-100','C-101','C-102','C-103'],default='C-100',help='Select synthetic account before the request')
     support.add_argument('--fault-tracking-timeout',action='store_true')
     support.add_argument('--fault-escalation-fail',action='store_true')

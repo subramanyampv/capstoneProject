@@ -23,3 +23,13 @@ def test_support_mode_binds_selected_synthetic_identity_and_renders_sources():
         assert runner.call_args.kwargs['identity'].customer_id=='C-103'
         assert any('could not confirm' in m.value for m in ui.markdown)
         assert any('doc:return_policy' in m.value for m in ui.markdown)
+
+def test_new_session_control_deletes_the_previous_memory_scope():
+    from capstone_agent.support.runtime import MEMORY
+    with patch.object(MEMORY,'reset',wraps=MEMORY.reset) as reset:
+        ui=AppTest.from_file(str(ROOT/'streamlit_app.py')).run(timeout=30)
+        ui.radio[0].set_value('Support agent').run()
+        old=ui.session_state['support_identity']
+        next(b for b in ui.button if b.label=='New support session').click().run()
+        assert not ui.exception and ui.session_state['support_identity'].session_id!=old.session_id
+        reset.assert_called_with(old)

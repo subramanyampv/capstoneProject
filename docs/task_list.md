@@ -6,9 +6,9 @@ Authority: [Architecture revision 3.1](architecture_and_plan.md). This is the cu
 
 **P0** = protects correctness, safety or a required delivery gate. **P1** = required capability or evaluation work. Dependencies are task IDs, not permission requests. Task counts do not represent a completion percentage because effort differs substantially.
 
-**Inventory:** 85 initial-product tasks — 54 done, 14 needing updates, 17 not started. 8 areas are deferred.
+**Inventory:** 85 initial-product tasks — 59 done, 14 needing updates, 12 not started. 8 areas are deferred.
 
-**Immediate sequence:** Phase 6 memory/privacy → Phase 7 adaptation → final observability/evaluation. Phase 5 core tools, guards, server identity and bounded graph are implemented with repaired live evidence. Earlier failures remain preserved in phase5_tools_and_graph.md; broad semantic/safety acceptance remains Phase 9.
+**Immediate sequence:** Phase 7 adaptation → final observability/evaluation. Phase 5 core tools, guards, server identity and bounded graph are implemented with repaired live evidence. Earlier failures remain preserved in phase5_tools_and_graph.md; broad semantic/safety acceptance remains Phase 9.
 
 No author/student name or new repository is required. Optional later inputs are hosted LangSmith configuration and human calibration of final judged outputs; neither blocks the next local work.
 
@@ -95,11 +95,11 @@ No author/student name or new repository is required. Optional later inputs are 
 
 | ID | Status | Priority | Task | Evidence / completion criterion | Dependencies |
 |---|---|---|---|---|---|
-| M01 | NOT STARTED | P1 | Implement bounded short-term session memory | In-process LangGraph checkpoint/session mechanism, six-message window and entity slots; separate transient evidence/tool state. | G10,S01 |
-| M02 | NOT STARTED | P0 | Enforce retention and checkpoint privacy | No persisted tool/evidence payloads or private reasoning; prove reset/expiry clears intermediate as well as final retained state. | M01 |
-| M03 | NOT STARTED | P1 | Implement reset, TTL and entity switching | Thirty-minute inactivity boundary; reset clears messages/slots; new order changes active entity; empty slot prompts clarification. | M01,M02 |
-| M04 | NOT STARTED | P0 | Protect against stale remembered facts | Re-fetch order/tracking data each turn; only entity references survive; changed fixtures must override memory. | M01,T02,T03 |
-| M05 | NOT STARTED | P1 | Measure memory on/off and reset | Five planned conversations (three under cut line); follow-up resolution, clarification count and reset behavior saved. | M03,M04 |
+| M01 | DONE | P1 | Implement bounded short-term session memory | Separate projection-only LangGraph/InMemorySaver: six masked customer/outcome messages, verified reference slots, bounded capacity and no full working-state checkpoints. | G10,S01 |
+| M02 | DONE | P0 | Enforce retention and checkpoint privacy | Tests inspect all checkpoint versions, pending writes and blobs: no tool/evidence/assistant facts; reset, exact-boundary expiry, background cleanup and eviction delete retained stores. | M01 |
+| M03 | DONE | P1 | Implement reset, TTL and entity switching | Thirty-minute monotonic TTL, background cleanup, provider-independent /reset, scoped account/session handling, one-turn other-order slot; missing refs clarify without model calls. | M01,M02 |
+| M04 | DONE | P0 | Protect against stale remembered facts | Fresh owned order/tracking reads each turn; tests mutate status/events between turns, deny substituted order IDs and clear invalid/rebound references. | M01,T02,T03 |
+| M05 | DONE | P1 | Measure memory on/off and reset | Five live conversations in both modes: 4/4 reference-dependent follow-ups answered on versus 0/4 off; clarification counts 1 versus 5, reset clarifies in both; preserved earlier failures and source snapshots. | M03,M04 |
 
 ## Phase 7: style feedback and adaptation
 

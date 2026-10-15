@@ -13,3 +13,5 @@ Authority: [Architecture and Plan v3](architecture_and_plan.md), section 15. The
 Use actual frozen O-* fixture IDs, not illustrative `1045`. Evidence packets contain case and version identifiers, sanitized stages/tool results, final output, expected/actual outcome, pass/fail and reviewer notes. Add unknown-tool, tracking-timeout and budget-exhaustion evidence separately. Screenshots illustrate; logs and tests establish correctness.
 
 Phase 5 evidence update (2026-10-15): initial core packets now exist in `artifacts/phase5_runs/`; [Phase 5 implementation](phase5_tools_and_graph.md) preserves failures and repaired results. Return/track+refund/refusal/injury and failed-handoff examples are implemented. Final screenshots, memory/reset/style demonstrations and full acceptance packaging still require later phases.
+
+Phase 6 update (2026-10-15): memory/follow-up/reset evidence is measured in [Phase 6 validation](../artifacts/phase6_validation.md). Demo 5 still needs Phase 7 style adaptation and final screenshot/evaluation packaging; memory/reset alone is not the complete protected demo.

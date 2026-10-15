@@ -1,0 +1,485 @@
+{
+  "conversation": "switch",
+  "memory_enabled": true,
+  "expected_followup": "fresh_verified_answer",
+  "passed": false,
+  "reference_tool_hit": false,
+  "clarifications": 0,
+  "turns": [
+    {
+      "response": {
+        "answer": "Order ref:6b2d27e6813f395f2e78 was delivered on September 30, 2026, at 10:47 AM in Denver, CO. Tracking shows it shipped from Reno, NV on September 28 and was out for delivery in Denver on September 29 before final delivery.",
+        "why": [
+          "Tracking events confirm the package reached its destination in Denver on September 30",
+          "Order records show delivered status matching the latest tracking update"
+        ],
+        "citations": [
+          {
+            "source_id": "order:ref:6b2d27e6813f395f2e78",
+            "section": null,
+            "record_version": "2026-10-12"
+          },
+          {
+            "source_id": "tracking:ref:6b2d27e6813f395f2e78",
+            "section": null,
+            "record_version": "2026-10-12"
+          }
+        ],
+        "next_steps": [
+          "Contact support if you have not received the package despite the delivered status",
+          "Check with household members or neighbors who may have accepted the delivery"
+        ],
+        "intents_addressed": [
+          "track_order"
+        ],
+        "outcome_claimed": "ANSWERED"
+      },
+      "outcome": "ANSWERED",
+      "ticket": null,
+      "refusals": [],
+      "triggers": [],
+      "tool_records": [
+        {
+          "evidence_refs": [
+            {
+              "source_id": "order:ref:6b2d27e6813f395f2e78",
+              "section": null,
+              "record_version": "2026-10-12"
+            }
+          ],
+          "exec_id": "34df2dfcc2e8493ea2651950ead2218a",
+          "name": "lookup_order",
+          "status": "ok",
+          "data": {
+            "order_id": "ref:6b2d27e6813f395f2e78",
+            "status": "delivered",
+            "placed_at": "2026-09-25",
+            "dispatched_at": "2026-09-28",
+            "delivered_at": "2026-09-30",
+            "shipping_service": null,
+            "items": [
+              {
+                "sku": "SKU-SHOES-001",
+                "name": "TrailRunner Shoes",
+                "category": "footwear",
+                "price": 89.99
+              }
+            ],
+            "record_version": "2026-10-12"
+          },
+          "error": null,
+          "duration_ms": 1.885
+        },
+        {
+          "evidence_refs": [
+            {
+              "source_id": "tracking:ref:6b2d27e6813f395f2e78",
+              "section": null,
+              "record_version": "2026-10-12"
+            }
+          ],
+          "exec_id": "bbc4ec4e94454caf88807f88c7696388",
+          "name": "get_tracking_events",
+          "status": "ok",
+          "data": {
+            "events": [
+              {
+                "ts": "2026-09-28T08:12:00Z",
+                "status": "shipped",
+                "city": "Origin facility, Reno NV"
+              },
+              {
+                "ts": "2026-09-29T14:03:00Z",
+                "status": "out_for_delivery",
+                "city": "Denver CO hub"
+              },
+              {
+                "ts": "2026-09-30T10:47:00Z",
+                "status": "delivered",
+                "city": "Denver CO"
+              }
+            ],
+            "latest": {
+              "ts": "2026-09-30T10:47:00Z",
+              "status": "delivered",
+              "city": "Denver CO"
+            },
+            "carrier_estimate": null,
+            "stale": false,
+            "record_version": "2026-10-12"
+          },
+          "error": null,
+          "duration_ms": 1.722
+        }
+      ],
+      "results": [
+        {
+          "agent_name": "order_shipping",
+          "status": "success",
+          "summary": "Order ref:6b2d27e6813f395f2e78 is delivered. Shipped 2026-09-28 from Reno NV, out for delivery 2026-09-29 at Denver CO hub, and delivered 2026-09-30 in Denver CO. No carrier estimate available; tracking data is current.",
+          "evidence": [
+            {
+              "source_id": "order:ref:6b2d27e6813f395f2e78",
+              "section": null,
+              "record_version": "2026-10-12"
+            },
+            {
+              "source_id": "tracking:ref:6b2d27e6813f395f2e78",
+              "section": null,
+              "record_version": "2026-10-12"
+            }
+          ],
+          "facts": {
+            "tools": [
+              {
+                "name": "lookup_order",
+                "args": {
+                  "order_id": "ref:6b2d27e6813f395f2e78"
+                },
+                "data": {
+                  "order_id": "ref:6b2d27e6813f395f2e78",
+                  "status": "delivered",
+                  "placed_at": "2026-09-25",
+                  "dispatched_at": "2026-09-28",
+                  "delivered_at": "2026-09-30",
+                  "shipping_service": null,
+                  "items": [
+                    {
+                      "sku": "SKU-SHOES-001",
+                      "name": "TrailRunner Shoes",
+                      "category": "footwear",
+                      "price": 89.99
+                    }
+                  ],
+                  "record_version": "2026-10-12"
+                }
+              },
+              {
+                "name": "get_tracking_events",
+                "args": {
+                  "order_id": "ref:6b2d27e6813f395f2e78"
+                },
+                "data": {
+                  "events": [
+                    {
+                      "ts": "2026-09-28T08:12:00Z",
+                      "status": "shipped",
+                      "city": "Origin facility, Reno NV"
+                    },
+                    {
+                      "ts": "2026-09-29T14:03:00Z",
+                      "status": "out_for_delivery",
+                      "city": "Denver CO hub"
+                    },
+                    {
+                      "ts": "2026-09-30T10:47:00Z",
+                      "status": "delivered",
+                      "city": "Denver CO"
+                    }
+                  ],
+                  "latest": {
+                    "ts": "2026-09-30T10:47:00Z",
+                    "status": "delivered",
+                    "city": "Denver CO"
+                  },
+                  "carrier_estimate": null,
+                  "stale": false,
+                  "record_version": "2026-10-12"
+                }
+              }
+            ]
+          },
+          "flags": {
+            "conflict": false,
+            "requires_review": false
+          }
+        }
+      ],
+      "stages": [
+        "guard_in",
+        "supervisor_plan",
+        "dispatch",
+        "order_shipping",
+        "collect_result",
+        "dispatch",
+        "composer",
+        "guard_out"
+      ],
+      "errors": [],
+      "model_calls": 5,
+      "tool_calls": 2,
+      "handoffs": 1,
+      "replans": 0,
+      "repairs": 0,
+      "tokens": 6783,
+      "safety_version": "2026-10-15-v2",
+      "latency_ms": 12533.817,
+      "memory": {
+        "enabled": true,
+        "history_messages": 0,
+        "resolved_reference": false,
+        "expired": false,
+        "reset": false
+      }
+    },
+    {
+      "response": {
+        "answer": "Order ref:969b6009fd3109304588 was delivered in Austin, TX on September 11, 2026, at 1:05 PM. The package previously shipped from the origin facility on September 10.",
+        "why": [
+          "Tracking records confirm final delivery status and location"
+        ],
+        "citations": [
+          {
+            "source_id": "tracking:ref:969b6009fd3109304588",
+            "section": null,
+            "record_version": "2026-10-12"
+          }
+        ],
+        "next_steps": [],
+        "intents_addressed": [
+          "order_tracking"
+        ],
+        "outcome_claimed": "ANSWERED"
+      },
+      "outcome": "ANSWERED",
+      "ticket": null,
+      "refusals": [],
+      "triggers": [],
+      "tool_records": [
+        {
+          "evidence_refs": [
+            {
+              "source_id": "tracking:ref:969b6009fd3109304588",
+              "section": null,
+              "record_version": "2026-10-12"
+            }
+          ],
+          "exec_id": "babfc90cfbd84758839ec8b179ee74d9",
+          "name": "get_tracking_events",
+          "status": "ok",
+          "data": {
+            "events": [
+              {
+                "ts": "2026-09-10T10:00:00Z",
+                "status": "shipped",
+                "city": "Origin facility"
+              },
+              {
+                "ts": "2026-09-11T13:05:00Z",
+                "status": "delivered",
+                "city": "Austin TX"
+              }
+            ],
+            "latest": {
+              "ts": "2026-09-11T13:05:00Z",
+              "status": "delivered",
+              "city": "Austin TX"
+            },
+            "carrier_estimate": null,
+            "stale": false,
+            "record_version": "2026-10-12"
+          },
+          "error": null,
+          "duration_ms": 2.737
+        }
+      ],
+      "results": [
+        {
+          "agent_name": "order_shipping",
+          "status": "success",
+          "summary": "Order ref:969b6009fd3109304588 tracking shows delivered status as of 2026-09-11T13:05:00Z in Austin TX. No carrier estimate available; data is not stale.",
+          "evidence": [
+            {
+              "source_id": "tracking:ref:969b6009fd3109304588",
+              "section": null,
+              "record_version": "2026-10-12"
+            }
+          ],
+          "facts": {
+            "tools": [
+              {
+                "name": "get_tracking_events",
+                "args": {
+                  "order_id": "ref:969b6009fd3109304588"
+                },
+                "data": {
+                  "events": [
+                    {
+                      "ts": "2026-09-10T10:00:00Z",
+                      "status": "shipped",
+                      "city": "Origin facility"
+                    },
+                    {
+                      "ts": "2026-09-11T13:05:00Z",
+                      "status": "delivered",
+                      "city": "Austin TX"
+                    }
+                  ],
+                  "latest": {
+                    "ts": "2026-09-11T13:05:00Z",
+                    "status": "delivered",
+                    "city": "Austin TX"
+                  },
+                  "carrier_estimate": null,
+                  "stale": false,
+                  "record_version": "2026-10-12"
+                }
+              }
+            ]
+          },
+          "flags": {
+            "conflict": false,
+            "requires_review": false
+          }
+        }
+      ],
+      "stages": [
+        "guard_in",
+        "supervisor_plan",
+        "dispatch",
+        "order_shipping",
+        "collect_result",
+        "dispatch",
+        "composer",
+        "guard_out"
+      ],
+      "errors": [],
+      "model_calls": 4,
+      "tool_calls": 1,
+      "handoffs": 1,
+      "replans": 0,
+      "repairs": 0,
+      "tokens": 4778,
+      "safety_version": "2026-10-15-v2",
+      "latency_ms": 11178.637,
+      "memory": {
+        "enabled": true,
+        "history_messages": 2,
+        "resolved_reference": false,
+        "expired": false,
+        "reset": false
+      }
+    },
+    {
+      "response": {
+        "answer": "I have created a local mock handoff for your request to track another order. Ticket MOCK-843678c22d8b has been opened in the general queue. I could not retrieve specific tracking details as no order information was available to verify.",
+        "why": [
+          "A mandatory escalation was triggered because the necessary order details were missing from the request.",
+          "This ensures your inquiry is reviewed manually since automated tracking requires specific identifiers."
+        ],
+        "citations": [],
+        "next_steps": [
+          "Please provide the specific order number if you need further assistance.",
+          "Monitor ticket MOCK-843678c22d8b for updates regarding this local mock handoff."
+        ],
+        "intents_addressed": [
+          "support_request"
+        ],
+        "outcome_claimed": "ESCALATED"
+      },
+      "outcome": "ESCALATED",
+      "ticket": {
+        "ticket_id": "MOCK-843678c22d8b",
+        "status": "created",
+        "queue": "general",
+        "priority": "normal",
+        "triggers": [
+          "T5"
+        ],
+        "summary_hash": "0433a08ff756ec2a4e00808d753b42ec60dc28d9bd290ae387d2adbac10fd28f",
+        "idempotent_replay": false
+      },
+      "refusals": [],
+      "triggers": [
+        "T5"
+      ],
+      "tool_records": [
+        {
+          "evidence_refs": [],
+          "exec_id": "f09817d715574e2bbf6ad9920d17c66e",
+          "name": "create_escalation",
+          "status": "ok",
+          "data": {
+            "ticket_id": "MOCK-843678c22d8b",
+            "status": "created",
+            "queue": "general",
+            "priority": "normal",
+            "triggers": [
+              "T5"
+            ],
+            "summary_hash": "0433a08ff756ec2a4e00808d753b42ec60dc28d9bd290ae387d2adbac10fd28f",
+            "idempotent_replay": false
+          },
+          "error": null,
+          "duration_ms": 13.056
+        }
+      ],
+      "results": [
+        {
+          "agent_name": "escalation",
+          "status": "success",
+          "summary": "Mandatory verified mock handoff created with T5 trigger. No order or SKU provided; no evidence refs available. Handoff sanitized and local-only.",
+          "evidence": [],
+          "facts": {
+            "tools": [
+              {
+                "name": "create_escalation",
+                "args": {
+                  "triggers": [
+                    "T5"
+                  ],
+                  "summary": "Mandatory verified mock handoff created per task specification with T5 trigger. No order or SKU entities provided; no evidence references available. Handoff sanitized and local-only.",
+                  "evidence_refs": [],
+                  "order_ref": null
+                },
+                "data": {
+                  "ticket_id": "MOCK-843678c22d8b",
+                  "status": "created",
+                  "queue": "general",
+                  "priority": "normal",
+                  "triggers": [
+                    "T5"
+                  ],
+                  "summary_hash": "0433a08ff756ec2a4e00808d753b42ec60dc28d9bd290ae387d2adbac10fd28f",
+                  "idempotent_replay": false
+                }
+              }
+            ]
+          },
+          "flags": {
+            "conflict": false,
+            "requires_review": false
+          }
+        }
+      ],
+      "stages": [
+        "guard_in",
+        "supervisor_plan",
+        "dispatch",
+        "escalation",
+        "collect_result",
+        "dispatch",
+        "composer",
+        "guard_out"
+      ],
+      "errors": [
+        "SUPERVISOR_FAILED"
+      ],
+      "model_calls": 5,
+      "tool_calls": 1,
+      "handoffs": 1,
+      "replans": 0,
+      "repairs": 0,
+      "tokens": 6184,
+      "safety_version": "2026-10-15-v2",
+      "latency_ms": 13780.698,
+      "memory": {
+        "enabled": true,
+        "history_messages": 4,
+        "resolved_reference": true,
+        "expired": false,
+        "reset": false
+      }
+    }
+  ]
+}

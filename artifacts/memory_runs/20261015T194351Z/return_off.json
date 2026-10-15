@@ -1,0 +1,187 @@
+{
+  "conversation": "return",
+  "memory_enabled": false,
+  "expected_followup": "clarification",
+  "passed": true,
+  "reference_tool_hit": false,
+  "clarifications": 1,
+  "turns": [
+    {
+      "response": {
+        "answer": "Order ref:969b6009fd3109304588 was delivered in Austin, TX on September 11, 2026, at 1:05 PM. The package previously shipped from the origin facility on September 10.",
+        "why": [
+          "Tracking records confirm final delivery status and location"
+        ],
+        "citations": [
+          {
+            "source_id": "tracking:ref:969b6009fd3109304588",
+            "section": null,
+            "record_version": "2026-10-12"
+          }
+        ],
+        "next_steps": [],
+        "intents_addressed": [
+          "track_order"
+        ],
+        "outcome_claimed": "ANSWERED"
+      },
+      "outcome": "ANSWERED",
+      "ticket": null,
+      "refusals": [],
+      "triggers": [],
+      "tool_records": [
+        {
+          "evidence_refs": [
+            {
+              "source_id": "tracking:ref:969b6009fd3109304588",
+              "section": null,
+              "record_version": "2026-10-12"
+            }
+          ],
+          "exec_id": "8b87437392804bd889dc7ab39eb9cf4b",
+          "name": "get_tracking_events",
+          "status": "ok",
+          "data": {
+            "events": [
+              {
+                "ts": "2026-09-10T10:00:00Z",
+                "status": "shipped",
+                "city": "Origin facility"
+              },
+              {
+                "ts": "2026-09-11T13:05:00Z",
+                "status": "delivered",
+                "city": "Austin TX"
+              }
+            ],
+            "latest": {
+              "ts": "2026-09-11T13:05:00Z",
+              "status": "delivered",
+              "city": "Austin TX"
+            },
+            "carrier_estimate": null,
+            "stale": false,
+            "record_version": "2026-10-12"
+          },
+          "error": null,
+          "duration_ms": 2.44
+        }
+      ],
+      "results": [
+        {
+          "agent_name": "order_shipping",
+          "status": "success",
+          "summary": "Order ref:969b6009fd3109304588 latest tracking status is delivered as of 2026-09-11T13:05:00Z in Austin TX. No carrier estimate available; data is not stale.",
+          "evidence": [
+            {
+              "source_id": "tracking:ref:969b6009fd3109304588",
+              "section": null,
+              "record_version": "2026-10-12"
+            }
+          ],
+          "facts": {
+            "tools": [
+              {
+                "name": "get_tracking_events",
+                "args": {
+                  "order_id": "ref:969b6009fd3109304588"
+                },
+                "data": {
+                  "events": [
+                    {
+                      "ts": "2026-09-10T10:00:00Z",
+                      "status": "shipped",
+                      "city": "Origin facility"
+                    },
+                    {
+                      "ts": "2026-09-11T13:05:00Z",
+                      "status": "delivered",
+                      "city": "Austin TX"
+                    }
+                  ],
+                  "latest": {
+                    "ts": "2026-09-11T13:05:00Z",
+                    "status": "delivered",
+                    "city": "Austin TX"
+                  },
+                  "carrier_estimate": null,
+                  "stale": false,
+                  "record_version": "2026-10-12"
+                }
+              }
+            ]
+          },
+          "flags": {
+            "conflict": false,
+            "requires_review": false
+          }
+        }
+      ],
+      "stages": [
+        "guard_in",
+        "supervisor_plan",
+        "dispatch",
+        "order_shipping",
+        "collect_result",
+        "dispatch",
+        "composer",
+        "guard_out"
+      ],
+      "errors": [],
+      "model_calls": 4,
+      "tool_calls": 1,
+      "handoffs": 1,
+      "replans": 0,
+      "repairs": 0,
+      "tokens": 4736,
+      "safety_version": "2026-10-15-v2",
+      "latency_ms": 9111.276,
+      "memory": {
+        "enabled": false,
+        "history_messages": 0,
+        "resolved_reference": false,
+        "expired": false,
+        "reset": false
+      }
+    },
+    {
+      "response": {
+        "answer": "Which order or product do you mean? Please provide its reference.",
+        "why": [],
+        "citations": [],
+        "next_steps": [],
+        "intents_addressed": [
+          "entity_clarification"
+        ],
+        "outcome_claimed": "CLARIFICATION_REQUESTED"
+      },
+      "outcome": "CLARIFICATION_REQUESTED",
+      "ticket": null,
+      "refusals": [],
+      "triggers": [],
+      "tool_records": [],
+      "results": [],
+      "stages": [
+        "guard_in",
+        "memory_clarification",
+        "guard_out"
+      ],
+      "errors": [],
+      "model_calls": 0,
+      "tool_calls": 0,
+      "handoffs": 0,
+      "replans": 0,
+      "repairs": 0,
+      "tokens": 0,
+      "safety_version": "2026-10-15-v2",
+      "latency_ms": 26.605,
+      "memory": {
+        "enabled": false,
+        "history_messages": 0,
+        "resolved_reference": false,
+        "expired": false,
+        "reset": false
+      }
+    }
+  ]
+}

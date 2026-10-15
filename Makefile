@@ -1,4 +1,4 @@
-.PHONY: setup test ingest ui cli eval eval-retrieval verify-category compare-rag smoke-support scan-support
+.PHONY: setup test ingest ui cli eval eval-retrieval verify-category compare-rag smoke-support scan-support compare-memory scan-memory
 setup:
 	test -x .venv/bin/python
 	.venv/bin/python -m pip install -c constraints-dev.txt -e '.[dev,eval,ui,rag]'
@@ -24,3 +24,9 @@ smoke-support:
 
 scan-support:
 	.venv/bin/python scripts/scan_support.py
+
+compare-memory:
+	.venv/bin/python scripts/compare_memory.py
+
+scan-memory:
+	.venv/bin/python scripts/scan_memory.py

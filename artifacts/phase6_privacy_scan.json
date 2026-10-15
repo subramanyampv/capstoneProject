@@ -1,0 +1,6 @@
+{
+  "passed": true,
+  "files_scanned": 103,
+  "findings": [],
+  "limits": "Known canaries/configured credentials in Phase 6 artifacts and runtime only. Checkpoint contents/deletion are tested separately in process. No cloud/universal PII guarantee."
+}

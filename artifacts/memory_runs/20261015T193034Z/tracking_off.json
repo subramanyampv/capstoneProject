@@ -1,0 +1,262 @@
+{
+  "conversation": "tracking",
+  "memory_enabled": false,
+  "expected_followup": "clarification",
+  "passed": true,
+  "reference_tool_hit": false,
+  "clarifications": 1,
+  "turns": [
+    {
+      "response": {
+        "answer": "Order ref:6b2d27e6813f395f2e78 was delivered on September 30, 2026, in Denver, CO. Tracking shows it shipped from Reno, NV on September 28 and was out for delivery the following day before final delivery.",
+        "why": [
+          "Tracking events confirm delivery date and location",
+          "Order record matches delivered status"
+        ],
+        "citations": [
+          {
+            "source_id": "order:ref:6b2d27e6813f395f2e78",
+            "section": null,
+            "record_version": "2026-10-12"
+          },
+          {
+            "source_id": "tracking:ref:6b2d27e6813f395f2e78",
+            "section": null,
+            "record_version": "2026-10-12"
+          }
+        ],
+        "next_steps": [],
+        "intents_addressed": [
+          "track_order"
+        ],
+        "outcome_claimed": "ANSWERED"
+      },
+      "outcome": "ANSWERED",
+      "ticket": null,
+      "refusals": [],
+      "triggers": [],
+      "tool_records": [
+        {
+          "evidence_refs": [
+            {
+              "source_id": "order:ref:6b2d27e6813f395f2e78",
+              "section": null,
+              "record_version": "2026-10-12"
+            }
+          ],
+          "exec_id": "3647874ef7454591a68740d41d7d41a9",
+          "name": "lookup_order",
+          "status": "ok",
+          "data": {
+            "order_id": "ref:6b2d27e6813f395f2e78",
+            "status": "delivered",
+            "placed_at": "2026-09-25",
+            "dispatched_at": "2026-09-28",
+            "delivered_at": "2026-09-30",
+            "shipping_service": null,
+            "items": [
+              {
+                "sku": "SKU-SHOES-001",
+                "name": "TrailRunner Shoes",
+                "category": "footwear",
+                "price": 89.99
+              }
+            ],
+            "record_version": "2026-10-12"
+          },
+          "error": null,
+          "duration_ms": 2.382
+        },
+        {
+          "evidence_refs": [
+            {
+              "source_id": "tracking:ref:6b2d27e6813f395f2e78",
+              "section": null,
+              "record_version": "2026-10-12"
+            }
+          ],
+          "exec_id": "8e018165c226466ab9236277c710a02e",
+          "name": "get_tracking_events",
+          "status": "ok",
+          "data": {
+            "events": [
+              {
+                "ts": "2026-09-28T08:12:00Z",
+                "status": "shipped",
+                "city": "Origin facility, Reno NV"
+              },
+              {
+                "ts": "2026-09-29T14:03:00Z",
+                "status": "out_for_delivery",
+                "city": "Denver CO hub"
+              },
+              {
+                "ts": "2026-09-30T10:47:00Z",
+                "status": "delivered",
+                "city": "Denver CO"
+              }
+            ],
+            "latest": {
+              "ts": "2026-09-30T10:47:00Z",
+              "status": "delivered",
+              "city": "Denver CO"
+            },
+            "carrier_estimate": null,
+            "stale": false,
+            "record_version": "2026-10-12"
+          },
+          "error": null,
+          "duration_ms": 3.434
+        }
+      ],
+      "results": [
+        {
+          "agent_name": "order_shipping",
+          "status": "success",
+          "summary": "Order ref:6b2d27e6813f395f2e78 is delivered. Shipped 2026-09-28 from Reno NV, out for delivery 2026-09-29 at Denver CO hub, and delivered 2026-09-30 in Denver CO. No carrier estimate available; tracking data is current.",
+          "evidence": [
+            {
+              "source_id": "order:ref:6b2d27e6813f395f2e78",
+              "section": null,
+              "record_version": "2026-10-12"
+            },
+            {
+              "source_id": "tracking:ref:6b2d27e6813f395f2e78",
+              "section": null,
+              "record_version": "2026-10-12"
+            }
+          ],
+          "facts": {
+            "tools": [
+              {
+                "name": "lookup_order",
+                "args": {
+                  "order_id": "ref:6b2d27e6813f395f2e78"
+                },
+                "data": {
+                  "order_id": "ref:6b2d27e6813f395f2e78",
+                  "status": "delivered",
+                  "placed_at": "2026-09-25",
+                  "dispatched_at": "2026-09-28",
+                  "delivered_at": "2026-09-30",
+                  "shipping_service": null,
+                  "items": [
+                    {
+                      "sku": "SKU-SHOES-001",
+                      "name": "TrailRunner Shoes",
+                      "category": "footwear",
+                      "price": 89.99
+                    }
+                  ],
+                  "record_version": "2026-10-12"
+                }
+              },
+              {
+                "name": "get_tracking_events",
+                "args": {
+                  "order_id": "ref:6b2d27e6813f395f2e78"
+                },
+                "data": {
+                  "events": [
+                    {
+                      "ts": "2026-09-28T08:12:00Z",
+                      "status": "shipped",
+                      "city": "Origin facility, Reno NV"
+                    },
+                    {
+                      "ts": "2026-09-29T14:03:00Z",
+                      "status": "out_for_delivery",
+                      "city": "Denver CO hub"
+                    },
+                    {
+                      "ts": "2026-09-30T10:47:00Z",
+                      "status": "delivered",
+                      "city": "Denver CO"
+                    }
+                  ],
+                  "latest": {
+                    "ts": "2026-09-30T10:47:00Z",
+                    "status": "delivered",
+                    "city": "Denver CO"
+                  },
+                  "carrier_estimate": null,
+                  "stale": false,
+                  "record_version": "2026-10-12"
+                }
+              }
+            ]
+          },
+          "flags": {
+            "conflict": false,
+            "requires_review": false
+          }
+        }
+      ],
+      "stages": [
+        "guard_in",
+        "supervisor_plan",
+        "dispatch",
+        "order_shipping",
+        "collect_result",
+        "dispatch",
+        "composer",
+        "guard_out"
+      ],
+      "errors": [],
+      "model_calls": 5,
+      "tool_calls": 2,
+      "handoffs": 1,
+      "replans": 0,
+      "repairs": 0,
+      "tokens": 6697,
+      "safety_version": "2026-10-15-v2",
+      "latency_ms": 13809.415,
+      "memory": {
+        "enabled": false,
+        "history_messages": 0,
+        "resolved_reference": false,
+        "expired": false,
+        "reset": false
+      }
+    },
+    {
+      "response": {
+        "answer": "Which order or product do you mean? Please provide its reference.",
+        "why": [],
+        "citations": [],
+        "next_steps": [],
+        "intents_addressed": [
+          "entity_clarification"
+        ],
+        "outcome_claimed": "CLARIFICATION_REQUESTED"
+      },
+      "outcome": "CLARIFICATION_REQUESTED",
+      "ticket": null,
+      "refusals": [],
+      "triggers": [],
+      "tool_records": [],
+      "results": [],
+      "stages": [
+        "guard_in",
+        "memory_clarification",
+        "guard_out"
+      ],
+      "errors": [],
+      "model_calls": 0,
+      "tool_calls": 0,
+      "handoffs": 0,
+      "replans": 0,
+      "repairs": 0,
+      "tokens": 0,
+      "safety_version": "2026-10-15-v2",
+      "latency_ms": 157.927,
+      "memory": {
+        "enabled": false,
+        "history_messages": 0,
+        "resolved_reference": false,
+        "expired": false,
+        "reset": false
+      }
+    }
+  ]
+}

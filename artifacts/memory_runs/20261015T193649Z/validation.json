@@ -1,0 +1,114 @@
+{
+  "passed": false,
+  "checks": [
+    {
+      "conversation": "tracking",
+      "memory_enabled": false,
+      "expected_behavior_passed": true,
+      "final_outcome": "CLARIFICATION_REQUESTED",
+      "fresh_reference_tool_hit": false,
+      "turns_to_followup_resolution": null,
+      "clarifications": 1
+    },
+    {
+      "conversation": "return",
+      "memory_enabled": false,
+      "expected_behavior_passed": true,
+      "final_outcome": "CLARIFICATION_REQUESTED",
+      "fresh_reference_tool_hit": false,
+      "turns_to_followup_resolution": null,
+      "clarifications": 1
+    },
+    {
+      "conversation": "product",
+      "memory_enabled": false,
+      "expected_behavior_passed": true,
+      "final_outcome": "CLARIFICATION_REQUESTED",
+      "fresh_reference_tool_hit": false,
+      "turns_to_followup_resolution": null,
+      "clarifications": 1
+    },
+    {
+      "conversation": "switch",
+      "memory_enabled": false,
+      "expected_behavior_passed": true,
+      "final_outcome": "CLARIFICATION_REQUESTED",
+      "fresh_reference_tool_hit": false,
+      "turns_to_followup_resolution": null,
+      "clarifications": 1
+    },
+    {
+      "conversation": "reset",
+      "memory_enabled": false,
+      "expected_behavior_passed": true,
+      "final_outcome": "CLARIFICATION_REQUESTED",
+      "fresh_reference_tool_hit": null,
+      "turns_to_followup_resolution": null,
+      "clarifications": 1
+    },
+    {
+      "conversation": "tracking",
+      "memory_enabled": true,
+      "expected_behavior_passed": true,
+      "final_outcome": "ANSWERED",
+      "fresh_reference_tool_hit": true,
+      "turns_to_followup_resolution": 2,
+      "clarifications": 0
+    },
+    {
+      "conversation": "return",
+      "memory_enabled": true,
+      "expected_behavior_passed": true,
+      "final_outcome": "ANSWERED",
+      "fresh_reference_tool_hit": true,
+      "turns_to_followup_resolution": 2,
+      "clarifications": 0
+    },
+    {
+      "conversation": "product",
+      "memory_enabled": true,
+      "expected_behavior_passed": true,
+      "final_outcome": "ANSWERED",
+      "fresh_reference_tool_hit": true,
+      "turns_to_followup_resolution": 2,
+      "clarifications": 0
+    },
+    {
+      "conversation": "switch",
+      "memory_enabled": true,
+      "expected_behavior_passed": false,
+      "final_outcome": "ESCALATED",
+      "fresh_reference_tool_hit": false,
+      "turns_to_followup_resolution": null,
+      "clarifications": 0
+    },
+    {
+      "conversation": "reset",
+      "memory_enabled": true,
+      "expected_behavior_passed": true,
+      "final_outcome": "CLARIFICATION_REQUESTED",
+      "fresh_reference_tool_hit": null,
+      "turns_to_followup_resolution": null,
+      "clarifications": 1
+    }
+  ],
+  "metrics": {
+    "off": {
+      "conversations": 5,
+      "expected_behavior_passes": 5,
+      "positive_followups_answered": 0,
+      "positive_followups": 4,
+      "clarifications": 5,
+      "unresolved_positive_followups": 4
+    },
+    "on": {
+      "conversations": 5,
+      "expected_behavior_passes": 4,
+      "positive_followups_answered": 3,
+      "positive_followups": 4,
+      "clarifications": 1,
+      "unresolved_positive_followups": 1
+    }
+  },
+  "limits": "Fixed development scripts: turn count is the scripted turn where the follow-up received an answer plus expected fresh tool evidence. Off-mode unresolved counts are not zero-turn resolution. No semantic/human grade or held-out generalization is claimed."
+}

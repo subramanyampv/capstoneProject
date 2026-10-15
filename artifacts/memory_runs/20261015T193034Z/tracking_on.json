@@ -1,0 +1,370 @@
+{
+  "conversation": "tracking",
+  "memory_enabled": true,
+  "expected_followup": "fresh_verified_answer",
+  "passed": true,
+  "reference_tool_hit": true,
+  "clarifications": 0,
+  "turns": [
+    {
+      "response": {
+        "answer": "Order ref:6b2d27e6813f395f2e78 was delivered in Denver, CO on September 30, 2026, at 10:47 AM. Prior tracking shows it was out for delivery from the Denver hub on September 29 and originally shipped from Reno, NV on September 28.",
+        "why": [
+          "Tracking events confirm final delivery status and location with timestamp."
+        ],
+        "citations": [
+          {
+            "source_id": "tracking:ref:6b2d27e6813f395f2e78",
+            "section": null,
+            "record_version": "2026-10-12"
+          }
+        ],
+        "next_steps": [],
+        "intents_addressed": [
+          "track_order"
+        ],
+        "outcome_claimed": "ANSWERED"
+      },
+      "outcome": "ANSWERED",
+      "ticket": null,
+      "refusals": [],
+      "triggers": [],
+      "tool_records": [
+        {
+          "evidence_refs": [
+            {
+              "source_id": "tracking:ref:6b2d27e6813f395f2e78",
+              "section": null,
+              "record_version": "2026-10-12"
+            }
+          ],
+          "exec_id": "d3de2d58603946ffbb17c268f2f1bcbb",
+          "name": "get_tracking_events",
+          "status": "ok",
+          "data": {
+            "events": [
+              {
+                "ts": "2026-09-28T08:12:00Z",
+                "status": "shipped",
+                "city": "Origin facility, Reno NV"
+              },
+              {
+                "ts": "2026-09-29T14:03:00Z",
+                "status": "out_for_delivery",
+                "city": "Denver CO hub"
+              },
+              {
+                "ts": "2026-09-30T10:47:00Z",
+                "status": "delivered",
+                "city": "Denver CO"
+              }
+            ],
+            "latest": {
+              "ts": "2026-09-30T10:47:00Z",
+              "status": "delivered",
+              "city": "Denver CO"
+            },
+            "carrier_estimate": null,
+            "stale": false,
+            "record_version": "2026-10-12"
+          },
+          "error": null,
+          "duration_ms": 2.587
+        }
+      ],
+      "results": [
+        {
+          "agent_name": "order_shipping",
+          "status": "success",
+          "summary": "Order ref:6b2d27e6813f395f2e78 was delivered on 2026-09-30 at 10:47 UTC in Denver, CO. Latest tracking status is delivered; no carrier estimate available and data is not stale.",
+          "evidence": [
+            {
+              "source_id": "tracking:ref:6b2d27e6813f395f2e78",
+              "section": null,
+              "record_version": "2026-10-12"
+            }
+          ],
+          "facts": {
+            "tools": [
+              {
+                "name": "get_tracking_events",
+                "args": {
+                  "order_id": "ref:6b2d27e6813f395f2e78"
+                },
+                "data": {
+                  "events": [
+                    {
+                      "ts": "2026-09-28T08:12:00Z",
+                      "status": "shipped",
+                      "city": "Origin facility, Reno NV"
+                    },
+                    {
+                      "ts": "2026-09-29T14:03:00Z",
+                      "status": "out_for_delivery",
+                      "city": "Denver CO hub"
+                    },
+                    {
+                      "ts": "2026-09-30T10:47:00Z",
+                      "status": "delivered",
+                      "city": "Denver CO"
+                    }
+                  ],
+                  "latest": {
+                    "ts": "2026-09-30T10:47:00Z",
+                    "status": "delivered",
+                    "city": "Denver CO"
+                  },
+                  "carrier_estimate": null,
+                  "stale": false,
+                  "record_version": "2026-10-12"
+                }
+              }
+            ]
+          },
+          "flags": {
+            "conflict": false,
+            "requires_review": false
+          }
+        }
+      ],
+      "stages": [
+        "guard_in",
+        "supervisor_plan",
+        "dispatch",
+        "order_shipping",
+        "collect_result",
+        "dispatch",
+        "composer",
+        "guard_out"
+      ],
+      "errors": [],
+      "model_calls": 4,
+      "tool_calls": 1,
+      "handoffs": 1,
+      "replans": 0,
+      "repairs": 0,
+      "tokens": 4765,
+      "safety_version": "2026-10-15-v2",
+      "latency_ms": 10731.818,
+      "memory": {
+        "enabled": true,
+        "history_messages": 0,
+        "resolved_reference": false,
+        "expired": false,
+        "reset": false
+      }
+    },
+    {
+      "response": {
+        "answer": "Order ref:6b2d27e6813f395f2e78 was delivered on September 30, 2026, at 10:47 AM in Denver, CO. Tracking shows it shipped from Reno, NV on September 28 and was out for delivery in Denver on September 29 before final delivery.",
+        "why": [
+          "Tracking events confirm the package reached its destination in Denver on September 30."
+        ],
+        "citations": [
+          {
+            "source_id": "order:ref:6b2d27e6813f395f2e78",
+            "section": null,
+            "record_version": "2026-10-12"
+          },
+          {
+            "source_id": "tracking:ref:6b2d27e6813f395f2e78",
+            "section": null,
+            "record_version": "2026-10-12"
+          }
+        ],
+        "next_steps": [],
+        "intents_addressed": [
+          "order_tracking"
+        ],
+        "outcome_claimed": "ANSWERED"
+      },
+      "outcome": "ANSWERED",
+      "ticket": null,
+      "refusals": [],
+      "triggers": [],
+      "tool_records": [
+        {
+          "evidence_refs": [
+            {
+              "source_id": "order:ref:6b2d27e6813f395f2e78",
+              "section": null,
+              "record_version": "2026-10-12"
+            }
+          ],
+          "exec_id": "9091a77b51b8424787a3196f43b086d2",
+          "name": "lookup_order",
+          "status": "ok",
+          "data": {
+            "order_id": "ref:6b2d27e6813f395f2e78",
+            "status": "delivered",
+            "placed_at": "2026-09-25",
+            "dispatched_at": "2026-09-28",
+            "delivered_at": "2026-09-30",
+            "shipping_service": null,
+            "items": [
+              {
+                "sku": "SKU-SHOES-001",
+                "name": "TrailRunner Shoes",
+                "category": "footwear",
+                "price": 89.99
+              }
+            ],
+            "record_version": "2026-10-12"
+          },
+          "error": null,
+          "duration_ms": 3.384
+        },
+        {
+          "evidence_refs": [
+            {
+              "source_id": "tracking:ref:6b2d27e6813f395f2e78",
+              "section": null,
+              "record_version": "2026-10-12"
+            }
+          ],
+          "exec_id": "0cd3ea32e54e44029e1e5a6baeeedd1e",
+          "name": "get_tracking_events",
+          "status": "ok",
+          "data": {
+            "events": [
+              {
+                "ts": "2026-09-28T08:12:00Z",
+                "status": "shipped",
+                "city": "Origin facility, Reno NV"
+              },
+              {
+                "ts": "2026-09-29T14:03:00Z",
+                "status": "out_for_delivery",
+                "city": "Denver CO hub"
+              },
+              {
+                "ts": "2026-09-30T10:47:00Z",
+                "status": "delivered",
+                "city": "Denver CO"
+              }
+            ],
+            "latest": {
+              "ts": "2026-09-30T10:47:00Z",
+              "status": "delivered",
+              "city": "Denver CO"
+            },
+            "carrier_estimate": null,
+            "stale": false,
+            "record_version": "2026-10-12"
+          },
+          "error": null,
+          "duration_ms": 7.447
+        }
+      ],
+      "results": [
+        {
+          "agent_name": "order_shipping",
+          "status": "success",
+          "summary": "Order ref:6b2d27e6813f395f2e78 is delivered. Shipped 2026-09-28 from Reno NV, out for delivery 2026-09-29 at Denver CO hub, and delivered 2026-09-30 in Denver CO. No carrier estimate available; tracking data is current.",
+          "evidence": [
+            {
+              "source_id": "order:ref:6b2d27e6813f395f2e78",
+              "section": null,
+              "record_version": "2026-10-12"
+            },
+            {
+              "source_id": "tracking:ref:6b2d27e6813f395f2e78",
+              "section": null,
+              "record_version": "2026-10-12"
+            }
+          ],
+          "facts": {
+            "tools": [
+              {
+                "name": "lookup_order",
+                "args": {
+                  "order_id": "ref:6b2d27e6813f395f2e78"
+                },
+                "data": {
+                  "order_id": "ref:6b2d27e6813f395f2e78",
+                  "status": "delivered",
+                  "placed_at": "2026-09-25",
+                  "dispatched_at": "2026-09-28",
+                  "delivered_at": "2026-09-30",
+                  "shipping_service": null,
+                  "items": [
+                    {
+                      "sku": "SKU-SHOES-001",
+                      "name": "TrailRunner Shoes",
+                      "category": "footwear",
+                      "price": 89.99
+                    }
+                  ],
+                  "record_version": "2026-10-12"
+                }
+              },
+              {
+                "name": "get_tracking_events",
+                "args": {
+                  "order_id": "ref:6b2d27e6813f395f2e78"
+                },
+                "data": {
+                  "events": [
+                    {
+                      "ts": "2026-09-28T08:12:00Z",
+                      "status": "shipped",
+                      "city": "Origin facility, Reno NV"
+                    },
+                    {
+                      "ts": "2026-09-29T14:03:00Z",
+                      "status": "out_for_delivery",
+                      "city": "Denver CO hub"
+                    },
+                    {
+                      "ts": "2026-09-30T10:47:00Z",
+                      "status": "delivered",
+                      "city": "Denver CO"
+                    }
+                  ],
+                  "latest": {
+                    "ts": "2026-09-30T10:47:00Z",
+                    "status": "delivered",
+                    "city": "Denver CO"
+                  },
+                  "carrier_estimate": null,
+                  "stale": false,
+                  "record_version": "2026-10-12"
+                }
+              }
+            ]
+          },
+          "flags": {
+            "conflict": false,
+            "requires_review": false
+          }
+        }
+      ],
+      "stages": [
+        "guard_in",
+        "supervisor_plan",
+        "dispatch",
+        "order_shipping",
+        "collect_result",
+        "dispatch",
+        "composer",
+        "guard_out"
+      ],
+      "errors": [],
+      "model_calls": 5,
+      "tool_calls": 2,
+      "handoffs": 1,
+      "replans": 0,
+      "repairs": 0,
+      "tokens": 6749,
+      "safety_version": "2026-10-15-v2",
+      "latency_ms": 13207.603,
+      "memory": {
+        "enabled": true,
+        "history_messages": 2,
+        "resolved_reference": true,
+        "expired": false,
+        "reset": false
+      }
+    }
+  ]
+}

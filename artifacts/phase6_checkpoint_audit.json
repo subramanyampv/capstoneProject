@@ -1,0 +1,22 @@
+{
+  "passed": true,
+  "before_reset": {
+    "messages": 6,
+    "checkpoint_versions": 3,
+    "forbidden_payload_found": false
+  },
+  "after_reset": {
+    "storage": 0,
+    "writes": 0,
+    "blobs": 0
+  },
+  "at_1800_second_expiry": {
+    "checkpoint_versions": 0,
+    "pending_writes": 0,
+    "blobs": 0,
+    "messages": 0,
+    "entities": 0
+  },
+  "method": "Actual projection LangGraph/InMemorySaver and support graph with scripted model plus temporary synthetic domain files. No remote model calls.",
+  "limits": "Inspects held checkpoint/writes/blob payloads, not forensic memory erasure or cloud retention. Empty reads may create an empty opaque-key bucket without retained values. Background expiry/concurrency are unit-tested."
+}

@@ -16,3 +16,5 @@ Implementation cautions to resolve before the relevant phase:
 8. **Submission history.** Use the existing GitHub repository and the prepared scanned history-free source archive. A new repository/name and student/author name are not required. Do not rewrite the existing repository.
 
 The plan quotes an earlier 75-test run. The later Phase 2 closure has 85 tests; current status records subsequent counts. The supplied original is retained in the archive; revision 3.1 explicitly updates current implementation status to the recorded 98-test result. Submission target remains 2026-10-18; planned schedule entries are not automatic completion claims.
+
+Phase 6 checkpoint follow-through (2026-10-15): [projection memory](phase6_memory.md) resolves the full-state retention hazard by keeping the working graph uncheckpointed and saving only an allowlisted projection in a separate graph. Tests inspect intermediate checkpoints/writes/blobs and prove reset, TTL and eviction remove retained versions. General semantic/canary and hosted trace acceptance remain later gates.
