@@ -90,3 +90,5 @@ Sources: [LangChain model integration](https://docs.langchain.com/oss/python/int
 [LangGraph API](https://docs.langchain.com/oss/python/langgraph/graph-api),
 [LangSmith masking](https://docs.langchain.com/langsmith/mask-inputs-outputs),
 [DeepEval custom judges](https://deepeval.com/guides/guides-using-custom-llms).
+
+Phase 5 update (2026-10-15): [tools and bounded graph](phase5_tools_and_graph.md) now run the three LangChain specialists under LangGraph control. Current proof is in [Phase 5 validation](../artifacts/phase5_validation.md); historical counts above remain dated evidence. Final masked hosted traces and full-system DeepEval evaluation remain later work.

@@ -1,0 +1,48 @@
+{
+  "live_run": "20261015T190233Z",
+  "live_safety_version": "2026-10-15-v1",
+  "current_safety_version": "2026-10-15-v2",
+  "live_config_sha256": "026c5b72420ca89ab95fbf58abf6c8042211672156af51d5a3b0e621a8ba5248",
+  "current_config_sha256": "f95333c25258e308f1ceb7ea093895237d9e9ed04875fc834a69086387c88f3c",
+  "eight_smoke_guard_labels_unchanged": [
+    {
+      "case": "eligibility",
+      "guard_labels_unchanged": true
+    },
+    {
+      "case": "multi_intent",
+      "guard_labels_unchanged": true
+    },
+    {
+      "case": "conflict",
+      "guard_labels_unchanged": true
+    },
+    {
+      "case": "refusal",
+      "guard_labels_unchanged": true
+    },
+    {
+      "case": "injury",
+      "guard_labels_unchanged": true
+    },
+    {
+      "case": "injury_failure",
+      "guard_labels_unchanged": true
+    },
+    {
+      "case": "tracking_timeout",
+      "guard_labels_unchanged": true
+    },
+    {
+      "case": "model_timeout",
+      "guard_labels_unchanged": true
+    }
+  ],
+  "r09_followthrough": {
+    "old_triggers": [
+      "T6"
+    ],
+    "current_triggers": []
+  },
+  "limits": "v2 request-pattern refinement is offline-tested, not a new eight-case model rerun. All original smoke inputs have identical guard labels; original v1 results/snapshots remain unchanged."
+}

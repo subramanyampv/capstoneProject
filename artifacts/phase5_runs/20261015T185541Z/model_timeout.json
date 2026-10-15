@@ -1,0 +1,123 @@
+{
+  "case": "model_timeout",
+  "faults": {
+    "supervisor": "FAILED"
+  },
+  "result": {
+    "response": {
+      "answer": "I have created a local mock handoff for your request under ticket ID MOCK-f67d0b74ebb7 in the general queue. This escalation was triggered because no order or SKU entities were provided and no evidence references are available to process your support request directly. Please note that this is a local mock handoff and not a real retailer delivery or resolution. As no conversation memory or style profile exists yet, any feedback or follow-ups regarding this interaction will need to be addressed in future phases.",
+      "why": [
+        "The system triggered T5 requiring a mandatory verified mock handoff due to lack of order/SKU entities and evidence references.",
+        "Ticket MOCK-f67d0b74ebb7 was successfully created in the general queue as a local mock handoff per task specification.",
+        "No allowed citations were available to reference policy or eligibility facts.",
+        "System limitations prevent conversation memory or style profiling, necessitating disclosure that follow-ups require future phases."
+      ],
+      "citations": [],
+      "next_steps": [
+        "Retain ticket ID MOCK-f67d0b74ebb7 for your records regarding this local mock handoff.",
+        "Provide specific order or SKU details in a future interaction if you require direct assistance beyond this escalation.",
+        "Note that feedback or follow-up on this response cannot be processed in the current session due to system limitations."
+      ],
+      "intents_addressed": [
+        "support_request"
+      ],
+      "outcome_claimed": "ESCALATED"
+    },
+    "outcome": "ESCALATED",
+    "ticket": {
+      "ticket_id": "MOCK-f67d0b74ebb7",
+      "status": "created",
+      "queue": "general",
+      "priority": "normal",
+      "triggers": [
+        "T5"
+      ],
+      "summary_hash": "4bcf52cfade13c42dfca[REDACTED-PII]b4ee231e21da391e84bb14e8e5200ea",
+      "idempotent_replay": false
+    },
+    "refusals": [],
+    "triggers": [
+      "T5"
+    ],
+    "tool_records": [
+      {
+        "evidence_refs": [],
+        "exec_id": "0dd1a47cb50d4034b48aa2ab7f0363f8",
+        "name": "create_escalation",
+        "status": "ok",
+        "data": {
+          "ticket_id": "MOCK-f67d0b74ebb7",
+          "status": "created",
+          "queue": "general",
+          "priority": "normal",
+          "triggers": [
+            "T5"
+          ],
+          "summary_hash": "4bcf52cfade13c42dfca[REDACTED-PII]b4ee231e21da391e84bb14e8e5200ea",
+          "idempotent_replay": false
+        },
+        "error": null,
+        "duration_ms": 3.49
+      }
+    ],
+    "results": [
+      {
+        "agent_name": "escalation",
+        "status": "success",
+        "summary": "Mandatory verified mock handoff created with T5 trigger. No order or SKU provided; no evidence references available.",
+        "evidence": [],
+        "facts": {
+          "tools": [
+            {
+              "name": "create_escalation",
+              "args": {
+                "triggers": [
+                  "T5"
+                ],
+                "summary": "Mandatory verified mock handoff created per task specification with T5 trigger. No order or SKU entities provided; no evidence references available.",
+                "evidence_refs": [],
+                "order_ref": null
+              },
+              "data": {
+                "ticket_id": "MOCK-f67d0b74ebb7",
+                "status": "created",
+                "queue": "general",
+                "priority": "normal",
+                "triggers": [
+                  "T5"
+                ],
+                "summary_hash": "4bcf52cfade13c42dfca[REDACTED-PII]b4ee231e21da391e84bb14e8e5200ea",
+                "idempotent_replay": false
+              }
+            }
+          ]
+        },
+        "flags": {
+          "conflict": false,
+          "requires_review": false
+        }
+      }
+    ],
+    "stages": [
+      "guard_in",
+      "supervisor_plan",
+      "dispatch",
+      "escalation",
+      "collect_result",
+      "dispatch",
+      "composer",
+      "guard_out"
+    ],
+    "errors": [
+      "SUPERVISOR_FAILED"
+    ],
+    "model_calls": 3,
+    "tool_calls": 1,
+    "handoffs": 1,
+    "replans": 0,
+    "repairs": 0,
+    "tokens": 4130,
+    "safety_version": "2026-10-15-v1",
+    "latency_ms": 10856.962
+  }
+}

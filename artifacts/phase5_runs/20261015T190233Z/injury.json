@@ -1,0 +1,120 @@
+{
+  "case": "injury",
+  "faults": {},
+  "result": {
+    "response": {
+      "answer": "I cannot approve this refund immediately. Due to the reported hand injury, I have created a local mock handoff ticket MOCK-59f711b300aa in the safety queue for mandatory review. I also need your order ID (format O-XXXX) to document the incident and check eligibility accurately. Please provide this so the team can proceed.",
+      "why": [
+        "Reported injury triggers mandatory safety escalation requiring human review",
+        "Order ID is missing, preventing eligibility verification or accurate incident documentation"
+      ],
+      "citations": [],
+      "next_steps": [
+        "Provide order ID in format O-XXXX",
+        "Await contact from the safety team regarding ticket MOCK-59f711b300aa"
+      ],
+      "intents_addressed": [
+        "refund_request_outside_window",
+        "safety_injury_report",
+        "policy_eligibility_check"
+      ],
+      "outcome_claimed": "ESCALATED"
+    },
+    "outcome": "ESCALATED",
+    "ticket": {
+      "ticket_id": "MOCK-59f711b300aa",
+      "status": "created",
+      "queue": "safety",
+      "priority": "high",
+      "triggers": [
+        "T1"
+      ],
+      "summary_hash": "bd85cdde2bf3ce2869b8258033573c8a6d9fffcbdec59caf3c677726203825fc",
+      "idempotent_replay": false
+    },
+    "refusals": [
+      "R3"
+    ],
+    "triggers": [
+      "T1"
+    ],
+    "tool_records": [
+      {
+        "evidence_refs": [],
+        "exec_id": "9b07ed546a0c46969a5c7ed01a4e2eac",
+        "name": "create_escalation",
+        "status": "ok",
+        "data": {
+          "ticket_id": "MOCK-59f711b300aa",
+          "status": "created",
+          "queue": "safety",
+          "priority": "high",
+          "triggers": [
+            "T1"
+          ],
+          "summary_hash": "bd85cdde2bf3ce2869b8258033573c8a6d9fffcbdec59caf3c677726203825fc",
+          "idempotent_replay": false
+        },
+        "error": null,
+        "duration_ms": 4.008
+      }
+    ],
+    "results": [
+      {
+        "agent_name": "escalation",
+        "status": "success",
+        "summary": "Safety escalation ticket created for hand injury and out-of-window refund request. Trigger T1 applied; R3 not in allowlist. No order or SKU available. Ticket routed to safety queue with high priority.",
+        "evidence": [],
+        "facts": {
+          "tools": [
+            {
+              "name": "create_escalation",
+              "args": {
+                "triggers": [
+                  "T1"
+                ],
+                "summary": "Safety escalation for reported hand injury and refund request outside return window. Trigger T1 flagged. No order ID or SKU provided; evidence refs unavailable. Requires review for safety protocol and policy exception handling.",
+                "evidence_refs": [],
+                "order_ref": null
+              },
+              "data": {
+                "ticket_id": "MOCK-59f711b300aa",
+                "status": "created",
+                "queue": "safety",
+                "priority": "high",
+                "triggers": [
+                  "T1"
+                ],
+                "summary_hash": "bd85cdde2bf3ce2869b8258033573c8a6d9fffcbdec59caf3c677726203825fc",
+                "idempotent_replay": false
+              }
+            }
+          ]
+        },
+        "flags": {
+          "conflict": false,
+          "requires_review": false
+        }
+      }
+    ],
+    "stages": [
+      "guard_in",
+      "supervisor_plan",
+      "dispatch",
+      "escalation",
+      "collect_result",
+      "dispatch",
+      "composer",
+      "guard_out"
+    ],
+    "errors": [],
+    "model_calls": 4,
+    "tool_calls": 1,
+    "handoffs": 1,
+    "replans": 0,
+    "repairs": 0,
+    "tokens": 5049,
+    "safety_version": "2026-10-15-v1",
+    "latency_ms": 12329.022
+  }
+}

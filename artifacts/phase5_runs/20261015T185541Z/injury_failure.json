@@ -1,0 +1,93 @@
+{
+  "case": "injury_failure",
+  "faults": {
+    "create_escalation": "FAILED"
+  },
+  "result": {
+    "response": {
+      "answer": "I\u2019m sorry you were hurt. For your safety, please seek medical attention if needed. To document this incident, please provide the order ID (format O-####) and product name/SKU if available. I attempted to escalate this safety report for human review, but I could not confirm the handoff. Please contact retailer support directly to ensure this injury is documented and addressed. I do not yet have conversation memory or a style profile; feedback and follow-ups will need future phases.",
+      "why": [
+        "User reported a product-related injury requiring safety documentation.",
+        "No code_facts or allowed_citations were retrieved to verify eligibility or policy.",
+        "Escalation tool returned status 'tool_error', preventing automated handoff.",
+        "Ticket creation failed; unable to generate MOCK ID or queue assignment.",
+        "Mandatory disclosure required when escalation/handoff cannot be confirmed."
+      ],
+      "citations": [],
+      "next_steps": [
+        "Seek medical attention if needed.",
+        "Provide order ID (O-####) and product name/SKU to document the incident.",
+        "Contact retailer support directly to report the injury and request assistance.",
+        "Retain the product and any packaging for potential inspection."
+      ],
+      "intents_addressed": [
+        "safety_report",
+        "product_injury_feedback"
+      ],
+      "outcome_claimed": "ESCALATION_FAILED_DISCLOSED"
+    },
+    "outcome": "ESCALATION_FAILED_DISCLOSED",
+    "ticket": {
+      "status": "failed"
+    },
+    "refusals": [],
+    "triggers": [
+      "T1",
+      "T5"
+    ],
+    "tool_records": [
+      {
+        "evidence_refs": [],
+        "exec_id": "55cece80c5d74184945beffba3ddd564",
+        "name": "create_escalation",
+        "status": "error",
+        "data": null,
+        "error": "FAILED",
+        "duration_ms": 0.192
+      },
+      {
+        "evidence_refs": [],
+        "exec_id": "1ea54d7ed1f64800bb020782ccd9c5ed",
+        "name": "create_escalation",
+        "status": "error",
+        "data": null,
+        "error": "FAILED",
+        "duration_ms": 0.291
+      }
+    ],
+    "results": [
+      {
+        "agent_name": "escalation",
+        "status": "tool_error",
+        "summary": "Failed to create local mock escalation ticket for product injury safety report (burn) with T1 trigger. Tool returned error; no refund or return execution performed.",
+        "evidence": [],
+        "facts": {
+          "tools": []
+        },
+        "flags": {
+          "conflict": false,
+          "requires_review": false
+        }
+      }
+    ],
+    "stages": [
+      "guard_in",
+      "supervisor_plan",
+      "dispatch",
+      "escalation",
+      "collect_result",
+      "dispatch",
+      "composer",
+      "guard_out"
+    ],
+    "errors": [],
+    "model_calls": 4,
+    "tool_calls": 2,
+    "handoffs": 1,
+    "replans": 0,
+    "repairs": 0,
+    "tokens": 4649,
+    "safety_version": "2026-10-15-v1",
+    "latency_ms": 14759.594
+  }
+}

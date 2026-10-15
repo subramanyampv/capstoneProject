@@ -1,0 +1,88 @@
+{
+  "case": "injury_failure",
+  "faults": {
+    "create_escalation": "FAILED"
+  },
+  "result": {
+    "response": {
+      "answer": "I am sorry to hear about your injury. I could not confirm the handoff to our safety team due to a system error. Please contact retailer support directly to report this incident. To help document this accurately when you reach them, please provide the order ID and product SKU.",
+      "why": [
+        "Safety reports require mandatory escalation which failed due to a tool error",
+        "Clarification regarding order ID and SKU is needed to document the incident accurately"
+      ],
+      "citations": [],
+      "next_steps": [
+        "Contact retailer support directly to report the injury",
+        "Provide order ID and product SKU to retailer support"
+      ],
+      "intents_addressed": [
+        "safety_report",
+        "product_injury_feedback"
+      ],
+      "outcome_claimed": "ESCALATION_FAILED_DISCLOSED"
+    },
+    "outcome": "ESCALATION_FAILED_DISCLOSED",
+    "ticket": {
+      "status": "failed"
+    },
+    "refusals": [],
+    "triggers": [
+      "T1",
+      "T5"
+    ],
+    "tool_records": [
+      {
+        "evidence_refs": [],
+        "exec_id": "e3cbbeb6e52a44f892ea627fd0365f3b",
+        "name": "create_escalation",
+        "status": "error",
+        "data": null,
+        "error": "FAILED",
+        "duration_ms": 0.36
+      },
+      {
+        "evidence_refs": [],
+        "exec_id": "cff3c5d58e904d69ae8df8bbbb9e0fcb",
+        "name": "create_escalation",
+        "status": "error",
+        "data": null,
+        "error": "FAILED",
+        "duration_ms": 0.096
+      }
+    ],
+    "results": [
+      {
+        "agent_name": "escalation",
+        "status": "tool_error",
+        "summary": "Failed to create verified local mock ticket for product injury safety report (burn) with T1 trigger. Tool returned error; no escalation created.",
+        "evidence": [],
+        "facts": {
+          "tools": []
+        },
+        "flags": {
+          "conflict": false,
+          "requires_review": false
+        }
+      }
+    ],
+    "stages": [
+      "guard_in",
+      "supervisor_plan",
+      "dispatch",
+      "escalation",
+      "collect_result",
+      "dispatch",
+      "composer",
+      "guard_out"
+    ],
+    "errors": [],
+    "model_calls": 4,
+    "tool_calls": 2,
+    "handoffs": 1,
+    "replans": 0,
+    "repairs": 0,
+    "tokens": 4514,
+    "safety_version": "2026-10-15-v1",
+    "latency_ms": 11548.991
+  }
+}

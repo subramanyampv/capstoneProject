@@ -29,11 +29,20 @@ if deferred:
     from capstone_agent.tools.external_facts import route_distance, weather_alerts
 
 with chat:
-    mode = st.radio("Answer mode", ["Rule baseline", "LLM experiment"], horizontal=True)
+    mode = st.radio("Answer mode", ["Rule baseline", "LLM experiment", "Support agent"], horizontal=True)
     variant = "C"
     if mode == "LLM experiment":
         with st.expander("Experiment settings"):
             variant = st.selectbox("Experimental prompt", ["C", "B", "A"], help="v3 selects C for development; final safety gates remain open.")
+    if mode == "Support agent":
+        from capstone_agent.support.registry import SessionIdentity
+        customer = st.selectbox("Synthetic account", ["C-100", "C-101", "C-102", "C-103"])
+        st.caption("Test records only · demo date 12 Oct 2026. Handoffs create local mock tickets; refunds, returns and cancellations are not executed. Each question currently starts without conversation memory.")
+        if ("support_identity" not in st.session_state or st.session_state.support_identity.customer_id != customer):
+            st.session_state.support_identity = SessionIdentity(customer)
+        if st.button("New support session"):
+            st.session_state.support_identity = SessionIdentity(customer)
+            st.info("New session started.")
     with st.form("question_form"):
         message = st.text_area("How can we help?", placeholder="Can I return order O-1001?", max_chars=2000)
         submitted = st.form_submit_button("Get answer", type="primary")
@@ -44,6 +53,28 @@ with chat:
                 # Minimize before rendering; no transcript persistence or caching.
                 st.write(sanitize(result.response))
                 st.caption(f"{result.intent} · {result.latency_ms} ms")
+            elif mode == "Support agent":
+                from capstone_agent.retrieval.embeddings_voyage import VoyageNanoEmbeddings
+                from capstone_agent.retrieval.chroma_store import PolicySearch
+                from capstone_agent.support.runtime import run_support
+                @st.cache_resource
+                def local_policy_search():
+                    search = PolicySearch(VoyageNanoEmbeddings())
+                    search.search('return policy')
+                    return search
+                with st.spinner("Checking records and policy evidence…"):
+                    result = run_support(message, identity=st.session_state.support_identity, search=local_policy_search())
+                draft = result["response"]
+                st.write(draft["answer"])
+                if draft["why"]:
+                    with st.expander("Why this answer?"):
+                        for reason in draft["why"]: st.write(reason)
+                if draft["citations"]:
+                    with st.expander("Sources"):
+                        for ref in draft["citations"]:
+                            st.write(f"{ref['source_id']} · {ref.get('section') or ''} · {ref.get('record_version') or ''}")
+                for step in draft["next_steps"]: st.write(step)
+                st.caption(result["outcome"].replace("_", " ").capitalize())
             else:
                 config = LLMConfig.from_env(ROOT / ".env")
                 obs = ObservabilityConfig.from_env(ROOT / ".env")
@@ -62,7 +93,7 @@ with chat:
                 else:
                     st.error("The answer could not be verified. Please try again later.")
         except Exception:
-            st.error("Configuration or service unavailable. Check the local settings; no action was performed.")
+            st.error("The answer could not be confirmed. Check the local settings or contact retailer support directly.")
 
 with evaluation:
     st.subheader("Recorded experiments")
@@ -83,7 +114,14 @@ with evaluation:
 
 with traces:
     st.subheader("Recorded request traces")
-    st.caption("Phase 3 has a single-agent workflow. v3 supervisor/specialist/tool traces arrive in Phase 5.")
+    st.caption("Phase 3 experiment traces are below. Support-agent records contain only stages, counters and tool status; hosted masked traces remain pending.")
+    support_log = ROOT / "data/runtime/requests.jsonl"
+    if support_log.exists():
+        try:
+            support_records = [json.loads(line) for line in support_log.read_text().splitlines()[-30:]]
+            st.dataframe([{k: row.get(k) for k in ["request_ref", "outcome", "model_calls", "tool_calls", "latency_ms", "ticket_id"]} for row in support_records], width="stretch")
+        except (OSError, ValueError):
+            st.info("Local support records are unavailable.")
     if runs and (selected / "outputs.jsonl").exists():
         records = [json.loads(line) for line in (selected / "outputs.jsonl").read_text().splitlines()]
         st.dataframe([{"request_id": row["request_id"], "case": row["case_id"],

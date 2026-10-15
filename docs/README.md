@@ -4,6 +4,7 @@
 
 | Document | Purpose |
 |---|---|
+| [Phase 5 tools and graph](phase5_tools_and_graph.md) | Typed tool, session identity, safety and multi-agent implementation with live failure history |
 | [Memory Pad](memory_pad.md) | Ecommerce agent feature comparison and evolving extension backlog; ideas do not alter approved scope |
 | [Market comparison](market_comparison.md) | Official-source desk comparison with Fin, Zendesk and Agentforce; analysis only |
 | [Task checklist](task_list.md) | Done / update / not-started ledger with priorities, dependencies and completion criteria |

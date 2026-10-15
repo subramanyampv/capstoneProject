@@ -1,6 +1,6 @@
 # Project progress and remaining work — 2026-10-13
 
-The project has a tested baseline, a completed LLM prompt comparison, framework integration and a working local policy-retrieval experiment. It is **not yet the final multi-agent support resolution product**. Architecture revision 3.1 records this distinction. The initial v3/Phase 4 implementation was recorded in `1fe4976`; later commits contain the documented follow-through; the existing GitHub repository remains the working repository.
+The project has a tested baseline, a completed LLM prompt comparison, framework integration and a working local policy-retrieval layer and a smoke-verified bounded multi-agent support core. The **complete initial product is still pending** memory, adaptation and final verification. Architecture revision 3.1 records this distinction. The initial v3/Phase 4 implementation was recorded in `1fe4976`; later commits contain the documented follow-through; the existing GitHub repository remains the working repository.
 
 The [detailed task checklist](task_list.md) translates this summary into tracked work items with done/update/not-started states.
 
@@ -58,26 +58,26 @@ Knowledge graph, external distance/weather ETA, external commerce APIs, extended
 - Local DeepEval execution has dotenv autoload and telemetry disabled; no results were uploaded to DeepEval. Missing context/judge failures are not passes.
 - LangSmith's optional wrapper hides inputs and filters safe scalar output metadata. Hosted ingestion and final hierarchical agent/tool traces are not verified.
 - Pinned app/dev/eval/UI/RAG installation succeeds in the existing local venv; dependency checks pass. No global Python installation is used.
-- Latest suite: **109 tests passed in 6.46 seconds**, including corpus drift, index tampering, revision mismatch, superseded evidence, invalid citations/numbers, credential redaction and bounded failures.
+- Latest suite: **151 tests passed in 9.17 seconds**, including corpus drift, index tampering, revision mismatch, superseded evidence, invalid citations/numbers, credential redaction and bounded failures.
 - Current and historically revoked keys were checked against staged source/evidence and were absent. The ignored `.env` was not exported. A scanned ZIP source snapshot without Git history is available locally; it must be refreshed after subsequent changes.
 
 ## 4. Remaining work, in delivery order
 
 ### Phase 4 follow-through — development coverage corrected
 
-The public-catalog/topic query profile now retains 100% of labeled sources with MRR .90, no answerable full rejections and five of five unknown abstentions. Both the initial 80% result and new measurements are retained. Conflict checks also cover small k, filters and overlapping versions. Structured category filtering is now implemented and checked against the real v2 index. Generalization and final registered-tool integration remain open. R02 semantic wording was flagged in the fresh judged run; the targeted prompt-v2 R01/R02/R05/R08 outputs are valid/cited and self-score 1.0; do not equate a schema pass with faithfulness.
+The public-catalog/topic query profile now retains 100% of labeled sources with MRR .90, no answerable full rejections and five of five unknown abstentions. Both the initial 80% result and new measurements are retained. Conflict checks also cover small k, filters and overlapping versions. Structured category filtering is now implemented and checked against the real v2 index. Generalization remains open; the typed tool and current-turn composer integration are now implemented. R02 semantic wording was flagged in the fresh judged run; the targeted prompt-v2 R01/R02/R05/R08 outputs are valid/cited and self-score 1.0; do not equate a schema pass with faithfulness.
 
-### Phase 5 — genuine tool-using multi-agent resolution
+### Phase 5 — typed tool and graph core implemented
 
-Build the registry and six production contracts: lookup_order, get_tracking_events, search_policy, get_product_details, check_return_eligibility and create_escalation. Existing retrieval helpers are not yet registered per-specialist tools.
+Six typed tools, per-specialist permissions, server-bound synthetic identity and ownership checks are implemented. Domain code computes windows/exclusions/refund review/cancellation eligibility. The only write is a sanitized idempotent SQLite mock ticket, read back before success. Read deadlines, eight tool slots with handoff reserve, four handoffs, twelve model calls and bounded repair/replan paths are enforced.
 
-Bind synthetic identity server-side, enforce ownership, validate inputs/results, restrict allowlists and record call IDs/status/timing. Implement timeouts, finite tool/model/handoff/replan budgets and fault injection. Eligibility must fetch its own verified order data; the model cannot supply favorable dates or thresholds.
+A LangGraph supervisor dispatches three LangChain tool-calling specialists and a composer/final gate. Tool results supply exact evidence refs; current-turn retrieval is required for policy citations. CLI `support` and Streamlit Support agent mode expose synthetic account selection, sources and ticket/failure display. Local records omit input/tool payloads; hosted native tracing is suppressed until masked verification.
 
-Implement the supervisor, three bounded tool-calling specialists, result collector, dispatch and composer. Add Guard-In R1–R4, append-only escalation triggers T1–T6 and Guard-Out G1–G8. Preserve refusals/escalations through clarification and budget branches. Create verified, sanitized, idempotent mock tickets; disclose failed handoffs honestly. Prove R05, S01 and S15 escalation, multi-intent coverage, refusal, ownership and safe tool failures.
+The first live run had unnecessary escalation and citation defects. Those outputs remain preserved. Repairs tightened specialist JSON, supplied canonical references and removed unretrieved rule pointers from the final citation allowlist. A later return case is ANSWERED with three tools/seven model calls; injury/conflict/refund-review cases create verified mock tickets, and injected write failure discloses unconfirmed handoff. See [Phase 5 details](phase5_tools_and_graph.md) and dated artifacts for remaining quality misses and follow-through. These are initial synthetic checks, not final acceptance.
 
 ### Phase 6 — planning, memory and context
 
-Implement bounded ordered plans with dependencies; in-process session memory, entity slots, six-message window and thirty-minute inactivity expiry. Re-fetch order/tracking facts every turn. Test reset, ambiguous follow-ups and stale-memory behavior. Ensure checkpoint storage excludes intermediate tool/evidence payloads, not merely the final state. Compare memory on/off using the planned conversation scripts. Durable persistence remains deferred.
+Bounded ordered plans/dependencies and one replan are implemented. Next add in-process session memory, entity slots, six-message window and thirty-minute inactivity expiry. Re-fetch order/tracking facts every turn. Test reset, ambiguous follow-ups and stale-memory behavior. Ensure checkpoint storage excludes intermediate tool/evidence payloads, not merely the final state. Compare memory on/off using the planned conversation scripts. Durable persistence remains deferred.
 
 ### Phase 7 — adaptation
 
@@ -101,7 +101,7 @@ The [Memory Pad](memory_pad.md) adds an ecommerce feature comparison with Gorgia
 
 ## 5. Inputs from the user
 
-No input is needed to continue retrieval improvements or Phase 5 implementation. Author/student identity and a new repository name are not requested.
+No input is needed to continue Phase 6 memory/privacy implementation. Author/student identity and a new repository name are not requested.
 
 For later hosted tracing verification, optionally configure LANGSMITH_API_KEY, LANGSMITH_PROJECT and LANGSMITH_TRACING in the ignored .env and tell us it is ready; never send the key in chat. A separate judge endpoint/model is optional. Human review of the final twenty judged outputs will be requested when that review packet exists.
 
@@ -110,3 +110,5 @@ For later hosted tracing verification, optionally configure LANGSMITH_API_KEY, L
 The components and experiments above are measured, but the final safety-first multi-agent system is not built or accepted. Prompt C is a development choice; a schema-valid output or a self-judge score does not prove grounded policy, authorization, coverage or a completed ticket. The submission target remains 2026-10-18, subject to the remaining implementation and evidence work.
 
 Evidence links: [architecture](architecture_and_plan.md), [baseline closure](phase2_closure.md), [prompt comparison](prompt_comparison.md), [retrieval design](retrieval_design.md), [validation record](../artifacts/phase4_validation.md), [evaluation register](evaluation_report.md).
+
+Latest Phase 5 closure: [eight-case core validation](../artifacts/phase5_validation.md) preserves initial failures and confirms final expected outcomes, canonical citations and independent local ticket read-back. Phase 6 is next.

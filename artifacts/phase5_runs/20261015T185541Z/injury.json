@@ -1,0 +1,123 @@
+{
+  "case": "injury",
+  "faults": {},
+  "result": {
+    "response": {
+      "answer": "I cannot approve a refund at this time. Your report of a hand injury has triggered a mandatory safety escalation. A ticket (MOCK-5c8c6cbca175) has been created in the safety queue for high-priority review; this is a local mock handoff and not a real retailer delivery. I could not check return eligibility because no order ID was provided, and I have no allowed citations to reference regarding refund policies outside the return window. Please note that no conversation memory or style profile exists yet; feedback or follow-ups will need future phases.",
+      "why": [
+        "Safety injury report triggered mandatory escalation T1.",
+        "Refund approval requires eligibility check which could not be performed without an order ID.",
+        "No allowed_citations were available to validate policy statements regarding refunds outside the return window.",
+        "Ticket MOCK-5c8c6cbca175 was successfully created in the safety queue as a local mock handoff."
+      ],
+      "citations": [],
+      "next_steps": [
+        "Provide the order ID (format O-####) to allow eligibility verification.",
+        "Await contact from the safety team regarding ticket MOCK-5c8c6cbca175.",
+        "Contact retailer support directly if immediate assistance is required beyond this escalation."
+      ],
+      "intents_addressed": [
+        "refund_request_outside_window",
+        "safety_injury_report",
+        "policy_eligibility_check"
+      ],
+      "outcome_claimed": "ESCALATED"
+    },
+    "outcome": "ESCALATED",
+    "ticket": {
+      "ticket_id": "MOCK-5c8c6cbca175",
+      "status": "created",
+      "queue": "safety",
+      "priority": "high",
+      "triggers": [
+        "T1"
+      ],
+      "summary_hash": "cca2d243ccaf9431608a5b952f097ba30c38f81882dcb6e031c28e53623d6995",
+      "idempotent_replay": false
+    },
+    "refusals": [
+      "R3"
+    ],
+    "triggers": [
+      "T1"
+    ],
+    "tool_records": [
+      {
+        "evidence_refs": [],
+        "exec_id": "4decf1f13a664e0793cc0800accc8228",
+        "name": "create_escalation",
+        "status": "ok",
+        "data": {
+          "ticket_id": "MOCK-5c8c6cbca175",
+          "status": "created",
+          "queue": "safety",
+          "priority": "high",
+          "triggers": [
+            "T1"
+          ],
+          "summary_hash": "cca2d243ccaf9431608a5b952f097ba30c38f81882dcb6e031c28e53623d6995",
+          "idempotent_replay": false
+        },
+        "error": null,
+        "duration_ms": 4.319
+      }
+    ],
+    "results": [
+      {
+        "agent_name": "escalation",
+        "status": "success",
+        "summary": "Safety escalation ticket created for reported hand injury and refund demand outside return window. T1 trigger applied; R3 not in allowlist. Ticket routed to safety queue with high priority.",
+        "evidence": [],
+        "facts": {
+          "tools": [
+            {
+              "name": "create_escalation",
+              "args": {
+                "triggers": [
+                  "T1"
+                ],
+                "summary": "Safety escalation for reported hand injury and refund demand outside return window. Trigger T1 flagged. No order ID or SKU provided; R3 trigger not in allowlist. Requires review of safety protocol and refund eligibility.",
+                "evidence_refs": [],
+                "order_ref": null
+              },
+              "data": {
+                "ticket_id": "MOCK-5c8c6cbca175",
+                "status": "created",
+                "queue": "safety",
+                "priority": "high",
+                "triggers": [
+                  "T1"
+                ],
+                "summary_hash": "cca2d243ccaf9431608a5b952f097ba30c38f81882dcb6e031c28e53623d6995",
+                "idempotent_replay": false
+              }
+            }
+          ]
+        },
+        "flags": {
+          "conflict": false,
+          "requires_review": false
+        }
+      }
+    ],
+    "stages": [
+      "guard_in",
+      "supervisor_plan",
+      "dispatch",
+      "escalation",
+      "collect_result",
+      "dispatch",
+      "composer",
+      "guard_out"
+    ],
+    "errors": [],
+    "model_calls": 4,
+    "tool_calls": 1,
+    "handoffs": 1,
+    "replans": 0,
+    "repairs": 0,
+    "tokens": 5127,
+    "safety_version": "2026-10-15-v1",
+    "latency_ms": 15438.98
+  }
+}

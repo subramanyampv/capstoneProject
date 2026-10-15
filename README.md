@@ -2,14 +2,15 @@
 
 The authoritative [Architecture and Plan v3.1](docs/architecture_and_plan.md) supersedes all earlier designs. See the [document index](docs/README.md), [implementation status](docs/implementation_status.md), and [detailed progress summary](docs/project_progress.md), and [task checklist](docs/task_list.md). The [Memory Pad](docs/memory_pad.md) compares ecommerce agents and tracks possible extensions; the earlier [market comparison](docs/market_comparison.md) remains available.
 
-The initial product targets a LangGraph supervisor, three LangChain specialists and six typed tools. Policy retrieval uses local Voyage-4-nano and Chroma. Deterministic guards decide safety, eligibility and verified mock escalation. Return/refund/cancellation writes, the knowledge graph and external API ETA are deferred until the initial product succeeds. Synthetic data only.
+The core now implements a LangGraph supervisor, three LangChain specialists and six typed tools. Policy retrieval uses local Voyage-4-nano and Chroma. Deterministic guards decide safety, eligibility and verified mock escalation. Return/refund/cancellation writes, the knowledge graph and external API ETA are deferred until the initial product succeeds. Synthetic data only.
 
 | Phase | Status |
 |---|---|
 | 1–2 | Complete; baseline closure reverified 2026-10-13 |
 | 3 | Complete under v3; Prompt C development default; final safety gates remain open |
 | 4 | Local retrieval measured; retained development recall improved 80% → 100%; category-aware v2 index verified; final tool integration tracked separately |
-| 5–9 | Planned: tools/guards, memory/adaptation, deployment and final evaluation |
+| 5 | Typed tools, server identity and bounded multi-agent core implemented; core live smoke verified; final acceptance pending |
+| 6–9 | Pending: memory/adaptation, deployment verification and final evaluation |
 
 ## Local setup
 
@@ -24,7 +25,7 @@ bash scripts/run_baseline.sh
 bash scripts/run_ui.sh
 ```
 
-The UI binds to http://127.0.0.1:8501 with Chat, Evaluation and Traces. It currently exposes baseline/LLM experiment behavior, not the planned final multi-agent product. `UI_SHOW_DEFERRED=true` explicitly restores the historical Knowledge and Delivery-estimate demonstrations; they are excluded from initial-product evaluation.
+The UI binds to http://127.0.0.1:8501 with Chat, Evaluation and Traces. It exposes baseline/LLM experiments and a Support agent mode with synthetic account selection, current-turn tools, citations and verified local mock handoffs. Memory and adaptation remain pending. `UI_SHOW_DEFERRED=true` explicitly restores the historical Knowledge and Delivery-estimate demonstrations; they are excluded from initial-product evaluation.
 
 ## Model configuration and experiments
 
@@ -39,6 +40,8 @@ bash scripts/run_prompt_comparison.sh --case N01 --case R01
 ```
 
 A/B/C still use their original versioned prompts and independent case contexts. Saved run manifests are immutable historical records and retain their original null selection. The [completed comparison](docs/prompt_comparison.md) records the v3 decision separately. DeepEval exits nonzero for the seven known mandatory-classification failures; that is expected, not an installation error. Optional same-model judging is disclosed as self-evaluation, not independent validation.
+
+Phase 5: `.venv/bin/capstone-agent support "Can I return TrailRunner Shoes order O-1001?" --customer C-100`. See [tools, safety and graph details](docs/phase5_tools_and_graph.md), including preserved live failures and current limits.
 
 Local retrieval commands: `make ingest`, `make eval-retrieval`, and `.venv/bin/capstone-agent search-policy "footwear return window"`. [Retrieval design and results](docs/retrieval_design.md) record measured coverage and limitations.
 

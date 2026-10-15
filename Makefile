@@ -1,4 +1,4 @@
-.PHONY: setup test ingest ui cli eval eval-retrieval verify-category compare-rag
+.PHONY: setup test ingest ui cli eval eval-retrieval verify-category compare-rag smoke-support scan-support
 setup:
 	test -x .venv/bin/python
 	.venv/bin/python -m pip install -c constraints-dev.txt -e '.[dev,eval,ui,rag]'
@@ -18,3 +18,9 @@ verify-category:
 	.venv/bin/python scripts/verify_category_retrieval.py
 compare-rag:
 	.venv/bin/python scripts/compare_rag.py
+
+smoke-support:
+	.venv/bin/python scripts/run_phase5_smoke.py
+
+scan-support:
+	.venv/bin/python scripts/scan_support.py

@@ -1,0 +1,392 @@
+{
+  "case": "eligibility",
+  "faults": {},
+  "result": {
+    "response": {
+      "answer": "Your TrailRunner Shoes (Order ref:6b2d27e6813f395f2e78) are eligible for return. You are 12 days into the 30-day window, which uses calendar days from delivery. This eligibility check requires human review to proceed; I cannot create the return or issue a refund directly. Please contact support to complete this request.",
+      "why": [
+        "Eligibility tool returned decision 'eligible' with reason code WITHIN_WINDOW",
+        "Policy states footwear returns use a 30-day calendar day window from verified delivery",
+        "Return exceptions policy requires human review and clarifies agents do not create returns"
+      ],
+      "citations": [
+        {
+          "source_id": "order:ref:6b2d27e6813f395f2e78",
+          "section": null,
+          "record_version": "2026-10-12"
+        },
+        {
+          "source_id": "doc:return_policy",
+          "section": "window",
+          "record_version": "v1"
+        },
+        {
+          "source_id": "doc:return_policy",
+          "section": "exceptions",
+          "record_version": "v1"
+        }
+      ],
+      "next_steps": [
+        "Contact retailer support to initiate the return for Order ref:6b2d27e6813f395f2e78",
+        "Reference eligibility decision WITHIN_WINDOW when requesting assistance"
+      ],
+      "intents_addressed": [
+        "order_lookup",
+        "return_eligibility"
+      ],
+      "outcome_claimed": "ANSWERED"
+    },
+    "outcome": "ANSWERED",
+    "ticket": null,
+    "refusals": [],
+    "triggers": [],
+    "tool_records": [
+      {
+        "evidence_refs": [
+          {
+            "source_id": "order:ref:6b2d27e6813f395f2e78",
+            "section": null,
+            "record_version": "2026-10-12"
+          }
+        ],
+        "exec_id": "fff71d2136e74548bd29044e100bcf12",
+        "name": "lookup_order",
+        "status": "ok",
+        "data": {
+          "order_id": "ref:6b2d27e6813f395f2e78",
+          "status": "delivered",
+          "placed_at": "2026-09-25",
+          "dispatched_at": "2026-09-28",
+          "delivered_at": "2026-09-30",
+          "shipping_service": null,
+          "items": [
+            {
+              "sku": "SKU-SHOES-001",
+              "name": "TrailRunner Shoes",
+              "category": "footwear",
+              "price": 89.99
+            }
+          ],
+          "record_version": "2026-10-12"
+        },
+        "error": null,
+        "duration_ms": 1.475
+      },
+      {
+        "evidence_refs": [
+          {
+            "source_id": "doc:return_policy",
+            "section": "window",
+            "record_version": "v1"
+          }
+        ],
+        "exec_id": "2049fa2695264366bc03eca8f425ed04",
+        "name": "check_return_eligibility",
+        "status": "ok",
+        "data": {
+          "decision": "eligible",
+          "reason_codes": [
+            "WITHIN_WINDOW"
+          ],
+          "window_days": 30,
+          "days_since_delivery": 12,
+          "refund_amount": null,
+          "threshold": 100.0,
+          "rule_version": "2026-10-01",
+          "policy_refs": [
+            {
+              "source_id": "doc:return_policy",
+              "section": "window",
+              "record_version": "v1"
+            }
+          ],
+          "action_executed": false,
+          "human_action_required": true
+        },
+        "error": null,
+        "duration_ms": 6.817
+      },
+      {
+        "evidence_refs": [
+          {
+            "source_id": "doc:faq",
+            "section": "shoes-returns",
+            "record_version": "v1"
+          },
+          {
+            "source_id": "doc:return_policy",
+            "section": "window",
+            "record_version": "v1"
+          },
+          {
+            "source_id": "doc:return_policy",
+            "section": "exceptions",
+            "record_version": "v1"
+          },
+          {
+            "source_id": "doc:warranty_policy",
+            "section": "durations",
+            "record_version": "v1"
+          }
+        ],
+        "exec_id": "20d10bed76464808a361ff11cc21c42d",
+        "name": "search_policy",
+        "status": "ok",
+        "data": {
+          "results": [
+            {
+              "chunk_id": "faq:v1:shoes-returns:0",
+              "doc_id": "faq",
+              "section_id": "shoes-returns",
+              "version": "v1",
+              "effective_date": "2026-10-01",
+              "authority": "faq",
+              "text": "Shoes returns\nFor footwear return windows and inclusive date counting, see return_policy section window. Eligibility requires a verified order and configured rules.",
+              "score": 0.7238,
+              "category": "footwear"
+            },
+            {
+              "chunk_id": "return_policy:v1:window:0",
+              "doc_id": "return_policy",
+              "section_id": "window",
+              "version": "v1",
+              "effective_date": "2026-10-01",
+              "authority": "policy",
+              "text": "Window\nReturns use calendar days from verified delivery, inclusive on the final day. The default return window is 30 days. Footwear and apparel have 30-day windows, home products have 30 days, and electronics have 15 days. An undelivered order has not started its return window. The earlier reported 60-day window is not current; use this version and disclose the discrepancy.",
+              "score": 0.561695,
+              "category": "all"
+            },
+            {
+              "chunk_id": "return_policy:v1:exceptions:0",
+              "doc_id": "return_policy",
+              "section_id": "exceptions",
+              "version": "v1",
+              "effective_date": "2026-10-01",
+              "authority": "policy",
+              "text": "Exceptions\nRequests for an exception on an ineligible item require human review. Product injury or safety complaints always require safety escalation. This agent provides eligibility information; it does not create returns or issue refunds.",
+              "score": 0.491851,
+              "category": "all"
+            },
+            {
+              "chunk_id": "warranty_policy:v1:durations:0",
+              "doc_id": "warranty_policy",
+              "section_id": "durations",
+              "version": "v1",
+              "effective_date": "2026-10-01",
+              "authority": "policy",
+              "text": "Durations\nFootwear and apparel carry a 90-day warranty, electronics 365 days, and home products 30 days. Perishable grocery products carry no warranty (0 days). Durations are configured in policy_rules.json. Do not convert a missing specification into a coverage promise.",
+              "score": 0.48672,
+              "category": "all"
+            }
+          ],
+          "below_threshold": false,
+          "conflict": false,
+          "conflict_details": null,
+          "index_version": "v2",
+          "category_filter": "footwear",
+          "conflict_evidence_exceeds_k": false
+        },
+        "error": null,
+        "duration_ms": 725.699
+      }
+    ],
+    "results": [
+      {
+        "agent_name": "order_shipping",
+        "status": "success",
+        "summary": "Order ref:6b2d27e6813f395f2e78 retrieved: status delivered on 2026-09-30, SKU SKU-SHOES-001 (TrailRunner Shoes, footwear). Data ready for return eligibility assessment.",
+        "evidence": [
+          {
+            "source_id": "order:ref:6b2d27e6813f395f2e78",
+            "section": null,
+            "record_version": "2026-10-12"
+          }
+        ],
+        "facts": {
+          "tools": [
+            {
+              "name": "lookup_order",
+              "args": {
+                "order_id": "ref:6b2d27e6813f395f2e78"
+              },
+              "data": {
+                "order_id": "ref:6b2d27e6813f395f2e78",
+                "status": "delivered",
+                "placed_at": "2026-09-25",
+                "dispatched_at": "2026-09-28",
+                "delivered_at": "2026-09-30",
+                "shipping_service": null,
+                "items": [
+                  {
+                    "sku": "SKU-SHOES-001",
+                    "name": "TrailRunner Shoes",
+                    "category": "footwear",
+                    "price": 89.99
+                  }
+                ],
+                "record_version": "2026-10-12"
+              }
+            }
+          ]
+        },
+        "flags": {
+          "conflict": false,
+          "requires_review": false
+        }
+      },
+      {
+        "agent_name": "policy_product",
+        "status": "success",
+        "summary": "TrailRunner Shoes (SKU-SHOES-001) in order ref:6b2d27e6813f395f2e78 are eligible for return. Delivery was 12 days ago, within the 30-day footwear return window. Human action is required to execute the return; this agent provides eligibility information only.",
+        "evidence": [
+          {
+            "source_id": "order:ref:6b2d27e6813f395f2e78",
+            "section": null,
+            "record_version": "2026-10-12"
+          },
+          {
+            "source_id": "doc:warranty_policy",
+            "section": "durations",
+            "record_version": "v1"
+          },
+          {
+            "source_id": "doc:return_policy",
+            "section": "exceptions",
+            "record_version": "v1"
+          },
+          {
+            "source_id": "doc:faq",
+            "section": "shoes-returns",
+            "record_version": "v1"
+          },
+          {
+            "source_id": "doc:return_policy",
+            "section": "window",
+            "record_version": "v1"
+          }
+        ],
+        "facts": {
+          "tools": [
+            {
+              "name": "check_return_eligibility",
+              "args": {
+                "order_id": "ref:6b2d27e6813f395f2e78",
+                "sku": "SKU-SHOES-001",
+                "request_type": "return"
+              },
+              "data": {
+                "decision": "eligible",
+                "reason_codes": [
+                  "WITHIN_WINDOW"
+                ],
+                "window_days": 30,
+                "days_since_delivery": 12,
+                "refund_amount": null,
+                "threshold": 100.0,
+                "rule_version": "2026-10-01",
+                "policy_refs": [
+                  {
+                    "source_id": "doc:return_policy",
+                    "section": "window",
+                    "record_version": "v1"
+                  }
+                ],
+                "action_executed": false,
+                "human_action_required": true
+              }
+            },
+            {
+              "name": "search_policy",
+              "args": {
+                "query": "TrailRunner Shoes footwear return eligibility window",
+                "doc_types": null,
+                "category": "footwear",
+                "k": 5
+              },
+              "data": {
+                "results": [
+                  {
+                    "chunk_id": "faq:v1:shoes-returns:0",
+                    "doc_id": "faq",
+                    "section_id": "shoes-returns",
+                    "version": "v1",
+                    "effective_date": "2026-10-01",
+                    "authority": "faq",
+                    "text": "Shoes returns\nFor footwear return windows and inclusive date counting, see return_policy section window. Eligibility requires a verified order and configured rules.",
+                    "score": 0.7238,
+                    "category": "footwear"
+                  },
+                  {
+                    "chunk_id": "return_policy:v1:window:0",
+                    "doc_id": "return_policy",
+                    "section_id": "window",
+                    "version": "v1",
+                    "effective_date": "2026-10-01",
+                    "authority": "policy",
+                    "text": "Window\nReturns use calendar days from verified delivery, inclusive on the final day. The default return window is 30 days. Footwear and apparel have 30-day windows, home products have 30 days, and electronics have 15 days. An undelivered order has not started its return window. The earlier reported 60-day window is not current; use this version and disclose the discrepancy.",
+                    "score": 0.561695,
+                    "category": "all"
+                  },
+                  {
+                    "chunk_id": "return_policy:v1:exceptions:0",
+                    "doc_id": "return_policy",
+                    "section_id": "exceptions",
+                    "version": "v1",
+                    "effective_date": "2026-10-01",
+                    "authority": "policy",
+                    "text": "Exceptions\nRequests for an exception on an ineligible item require human review. Product injury or safety complaints always require safety escalation. This agent provides eligibility information; it does not create returns or issue refunds.",
+                    "score": 0.491851,
+                    "category": "all"
+                  },
+                  {
+                    "chunk_id": "warranty_policy:v1:durations:0",
+                    "doc_id": "warranty_policy",
+                    "section_id": "durations",
+                    "version": "v1",
+                    "effective_date": "2026-10-01",
+                    "authority": "policy",
+                    "text": "Durations\nFootwear and apparel carry a 90-day warranty, electronics 365 days, and home products 30 days. Perishable grocery products carry no warranty (0 days). Durations are configured in policy_rules.json. Do not convert a missing specification into a coverage promise.",
+                    "score": 0.48672,
+                    "category": "all"
+                  }
+                ],
+                "below_threshold": false,
+                "conflict": false,
+                "conflict_details": null,
+                "index_version": "v2",
+                "category_filter": "footwear",
+                "conflict_evidence_exceeds_k": false
+              }
+            }
+          ]
+        },
+        "flags": {
+          "conflict": false,
+          "requires_review": false
+        }
+      }
+    ],
+    "stages": [
+      "guard_in",
+      "supervisor_plan",
+      "dispatch",
+      "order_shipping",
+      "collect_result",
+      "dispatch",
+      "policy_product",
+      "collect_result",
+      "dispatch",
+      "composer",
+      "guard_out"
+    ],
+    "errors": [],
+    "model_calls": 7,
+    "tool_calls": 3,
+    "handoffs": 2,
+    "replans": 0,
+    "repairs": 0,
+    "tokens": 11995,
+    "safety_version": "2026-10-15-v1",
+    "latency_ms": 23420.257
+  }
+}

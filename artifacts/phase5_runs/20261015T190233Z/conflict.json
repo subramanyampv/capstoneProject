@@ -1,0 +1,378 @@
+{
+  "case": "conflict",
+  "faults": {},
+  "result": {
+    "response": {
+      "answer": "Our FAQ states electronics can be returned within 30 days, while the return policy specifies a 15-day window for electronics. Because these sources conflict, I cannot confirm which rule currently applies. I have created ticket MOCK-ac749838630d in the policy queue for local mock handoff to resolve this discrepancy.",
+      "why": [
+        "The FAQ and return policy contain conflicting return windows for electronics.",
+        "Policy guidelines require human review when sources conflict rather than selecting one rule."
+      ],
+      "citations": [
+        {
+          "source_id": "doc:faq",
+          "section": "electronics-returns",
+          "record_version": "v1"
+        },
+        {
+          "source_id": "doc:return_policy",
+          "section": "window",
+          "record_version": "v1"
+        }
+      ],
+      "next_steps": [
+        "Await resolution from the policy team regarding the conflicting return windows.",
+        "Contact retailer support if you need immediate assistance before the review is complete."
+      ],
+      "intents_addressed": [
+        "policy_clarification_electronics_return_window"
+      ],
+      "outcome_claimed": "ESCALATED"
+    },
+    "outcome": "ESCALATED",
+    "ticket": {
+      "ticket_id": "MOCK-ac749838630d",
+      "status": "created",
+      "queue": "policy",
+      "priority": "normal",
+      "triggers": [
+        "T3"
+      ],
+      "summary_hash": "133377063e13f4d587c9b838d14912a1e305854ebd143ce07c018d61252f5608",
+      "idempotent_replay": false
+    },
+    "refusals": [],
+    "triggers": [
+      "T3"
+    ],
+    "tool_records": [
+      {
+        "evidence_refs": [],
+        "exec_id": "8705ded9401e48f5a35ccb573072ea25",
+        "name": "search_policy",
+        "status": "error",
+        "data": null,
+        "error": "UNVERIFIED_CATEGORY",
+        "duration_ms": 1.073
+      },
+      {
+        "evidence_refs": [
+          {
+            "source_id": "doc:faq",
+            "section": "electronics-returns",
+            "record_version": "v1"
+          },
+          {
+            "source_id": "doc:return_policy",
+            "section": "window",
+            "record_version": "v1"
+          },
+          {
+            "source_id": "doc:faq",
+            "section": "shoes-returns",
+            "record_version": "v1"
+          },
+          {
+            "source_id": "doc:warranty_policy",
+            "section": "durations",
+            "record_version": "v1"
+          }
+        ],
+        "exec_id": "af0742391b8c491ebf2c0ba96ae56fc5",
+        "name": "search_policy",
+        "status": "ok",
+        "data": {
+          "results": [
+            {
+              "chunk_id": "faq:v1:electronics-returns:0",
+              "doc_id": "faq",
+              "section_id": "electronics-returns",
+              "version": "v1",
+              "effective_date": "2026-10-01",
+              "authority": "faq",
+              "text": "Electronics returns\nLegacy FAQ wording says electronics, including the Bluetooth Speaker, can be returned within 30 days. This deliberately inconsistent FAQ passage is retained for conflict evaluation: return_policy v1 section window says 15 days. Both sources are applicable in the scenario and the discrepancy is unresolved. Do not use this FAQ to override policy; surface both references and escalate per escalation_guidelines section conflicts.",
+              "score": 0.728335,
+              "category": "electronics"
+            },
+            {
+              "chunk_id": "return_policy:v1:window:0",
+              "doc_id": "return_policy",
+              "section_id": "window",
+              "version": "v1",
+              "effective_date": "2026-10-01",
+              "authority": "policy",
+              "text": "Window\nReturns use calendar days from verified delivery, inclusive on the final day. The default return window is 30 days. Footwear and apparel have 30-day windows, home products have 30 days, and electronics have 15 days. An undelivered order has not started its return window. The earlier reported 60-day window is not current; use this version and disclose the discrepancy.",
+              "score": 0.67604,
+              "category": "all"
+            },
+            {
+              "chunk_id": "faq:v1:shoes-returns:0",
+              "doc_id": "faq",
+              "section_id": "shoes-returns",
+              "version": "v1",
+              "effective_date": "2026-10-01",
+              "authority": "faq",
+              "text": "Shoes returns\nFor footwear return windows and inclusive date counting, see return_policy section window. Eligibility requires a verified order and configured rules.",
+              "score": 0.608388,
+              "category": "footwear"
+            },
+            {
+              "chunk_id": "warranty_policy:v1:durations:0",
+              "doc_id": "warranty_policy",
+              "section_id": "durations",
+              "version": "v1",
+              "effective_date": "2026-10-01",
+              "authority": "policy",
+              "text": "Durations\nFootwear and apparel carry a 90-day warranty, electronics 365 days, and home products 30 days. Perishable grocery products carry no warranty (0 days). Durations are configured in policy_rules.json. Do not convert a missing specification into a coverage promise.",
+              "score": 0.478099,
+              "category": "all"
+            }
+          ],
+          "below_threshold": false,
+          "conflict": true,
+          "conflict_details": [
+            {
+              "kind": "declared_faq_policy_conflict",
+              "sources": [
+                "faq:v1:electronics-returns:0",
+                "return_policy:v1:window:0"
+              ]
+            }
+          ],
+          "index_version": "v2",
+          "category_filter": null,
+          "conflict_evidence_exceeds_k": false
+        },
+        "error": null,
+        "duration_ms": 687.07
+      },
+      {
+        "evidence_refs": [],
+        "exec_id": "25f5f8f08a534b2db6a23001a4c29f99",
+        "name": "create_escalation",
+        "status": "ok",
+        "data": {
+          "ticket_id": "MOCK-ac749838630d",
+          "status": "created",
+          "queue": "policy",
+          "priority": "normal",
+          "triggers": [
+            "T3"
+          ],
+          "summary_hash": "133377063e13f4d587c9b838d14912a1e305854ebd143ce07c018d61252f5608",
+          "idempotent_replay": false
+        },
+        "error": null,
+        "duration_ms": 16.239
+      }
+    ],
+    "results": [
+      {
+        "agent_name": "policy_product",
+        "status": "escalation_required",
+        "summary": "Conflict detected for electronics return window: FAQ states 30 days while return_policy states 15 days. Both sources are applicable and discrepancy is unresolved per policy guidance. Escalation required to determine authoritative rule.",
+        "evidence": [
+          {
+            "source_id": "doc:warranty_policy",
+            "section": "durations",
+            "record_version": "v1"
+          },
+          {
+            "source_id": "doc:faq",
+            "section": "electronics-returns",
+            "record_version": "v1"
+          },
+          {
+            "source_id": "doc:faq",
+            "section": "shoes-returns",
+            "record_version": "v1"
+          },
+          {
+            "source_id": "doc:return_policy",
+            "section": "window",
+            "record_version": "v1"
+          }
+        ],
+        "facts": {
+          "tools": [
+            {
+              "name": "search_policy",
+              "args": {
+                "query": "electronics return window days FAQ 30 return policy 15 conflict",
+                "doc_types": null,
+                "category": null,
+                "k": 10
+              },
+              "data": {
+                "results": [
+                  {
+                    "chunk_id": "faq:v1:electronics-returns:0",
+                    "doc_id": "faq",
+                    "section_id": "electronics-returns",
+                    "version": "v1",
+                    "effective_date": "2026-10-01",
+                    "authority": "faq",
+                    "text": "Electronics returns\nLegacy FAQ wording says electronics, including the Bluetooth Speaker, can be returned within 30 days. This deliberately inconsistent FAQ passage is retained for conflict evaluation: return_policy v1 section window says 15 days. Both sources are applicable in the scenario and the discrepancy is unresolved. Do not use this FAQ to override policy; surface both references and escalate per escalation_guidelines section conflicts.",
+                    "score": 0.728335,
+                    "category": "electronics"
+                  },
+                  {
+                    "chunk_id": "return_policy:v1:window:0",
+                    "doc_id": "return_policy",
+                    "section_id": "window",
+                    "version": "v1",
+                    "effective_date": "2026-10-01",
+                    "authority": "policy",
+                    "text": "Window\nReturns use calendar days from verified delivery, inclusive on the final day. The default return window is 30 days. Footwear and apparel have 30-day windows, home products have 30 days, and electronics have 15 days. An undelivered order has not started its return window. The earlier reported 60-day window is not current; use this version and disclose the discrepancy.",
+                    "score": 0.67604,
+                    "category": "all"
+                  },
+                  {
+                    "chunk_id": "faq:v1:shoes-returns:0",
+                    "doc_id": "faq",
+                    "section_id": "shoes-returns",
+                    "version": "v1",
+                    "effective_date": "2026-10-01",
+                    "authority": "faq",
+                    "text": "Shoes returns\nFor footwear return windows and inclusive date counting, see return_policy section window. Eligibility requires a verified order and configured rules.",
+                    "score": 0.608388,
+                    "category": "footwear"
+                  },
+                  {
+                    "chunk_id": "warranty_policy:v1:durations:0",
+                    "doc_id": "warranty_policy",
+                    "section_id": "durations",
+                    "version": "v1",
+                    "effective_date": "2026-10-01",
+                    "authority": "policy",
+                    "text": "Durations\nFootwear and apparel carry a 90-day warranty, electronics 365 days, and home products 30 days. Perishable grocery products carry no warranty (0 days). Durations are configured in policy_rules.json. Do not convert a missing specification into a coverage promise.",
+                    "score": 0.478099,
+                    "category": "all"
+                  }
+                ],
+                "below_threshold": false,
+                "conflict": true,
+                "conflict_details": [
+                  {
+                    "kind": "declared_faq_policy_conflict",
+                    "sources": [
+                      "faq:v1:electronics-returns:0",
+                      "return_policy:v1:window:0"
+                    ]
+                  }
+                ],
+                "index_version": "v2",
+                "category_filter": null,
+                "conflict_evidence_exceeds_k": false
+              }
+            }
+          ]
+        },
+        "flags": {
+          "conflict": true,
+          "requires_review": false
+        }
+      },
+      {
+        "agent_name": "escalation",
+        "status": "success",
+        "summary": "Mandatory verified mock handoff created with T3 trigger. Ticket MOCK-ac749838630d assigned to policy queue at normal priority. No order or SKU context; evidence refs validated from warranty, FAQ, and return policy sources.",
+        "evidence": [
+          {
+            "source_id": "doc:warranty_policy",
+            "section": "durations",
+            "record_version": "v1"
+          },
+          {
+            "source_id": "doc:faq",
+            "section": "electronics-returns",
+            "record_version": "v1"
+          },
+          {
+            "source_id": "doc:faq",
+            "section": "shoes-returns",
+            "record_version": "v1"
+          },
+          {
+            "source_id": "doc:return_policy",
+            "section": "window",
+            "record_version": "v1"
+          }
+        ],
+        "facts": {
+          "tools": [
+            {
+              "name": "create_escalation",
+              "args": {
+                "triggers": [
+                  "T3"
+                ],
+                "summary": "Mandatory verified mock handoff created per task specification with T3 trigger. No order or SKU entities provided; dependency facts empty. Evidence references attached from warranty policy, FAQ electronics and shoes returns sections, and return policy window section for validation.",
+                "evidence_refs": [
+                  {
+                    "source_id": "doc:warranty_policy",
+                    "section": "durations",
+                    "record_version": "v1"
+                  },
+                  {
+                    "source_id": "doc:faq",
+                    "section": "electronics-returns",
+                    "record_version": "v1"
+                  },
+                  {
+                    "source_id": "doc:faq",
+                    "section": "shoes-returns",
+                    "record_version": "v1"
+                  },
+                  {
+                    "source_id": "doc:return_policy",
+                    "section": "window",
+                    "record_version": "v1"
+                  }
+                ],
+                "order_ref": null
+              },
+              "data": {
+                "ticket_id": "MOCK-ac749838630d",
+                "status": "created",
+                "queue": "policy",
+                "priority": "normal",
+                "triggers": [
+                  "T3"
+                ],
+                "summary_hash": "133377063e13f4d587c9b838d14912a1e305854ebd143ce07c018d61252f5608",
+                "idempotent_replay": false
+              }
+            }
+          ]
+        },
+        "flags": {
+          "conflict": true,
+          "requires_review": false
+        }
+      }
+    ],
+    "stages": [
+      "guard_in",
+      "supervisor_plan",
+      "dispatch",
+      "policy_product",
+      "collect_result",
+      "dispatch",
+      "escalation",
+      "collect_result",
+      "dispatch",
+      "composer",
+      "guard_out"
+    ],
+    "errors": [],
+    "model_calls": 7,
+    "tool_calls": 3,
+    "handoffs": 2,
+    "replans": 0,
+    "repairs": 0,
+    "tokens": 12080,
+    "safety_version": "2026-10-15-v1",
+    "latency_ms": 22515.435
+  }
+}

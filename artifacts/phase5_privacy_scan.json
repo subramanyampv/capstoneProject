@@ -1,0 +1,6 @@
+{
+  "files_scanned": 89,
+  "findings": [],
+  "passed": true,
+  "limits": "Known canaries and configured credentials in Phase 5 stores/artifacts only; not universal PII detection or hosted tracing verification."
+}

@@ -1,0 +1,16 @@
+{
+  "version": "2026-10-15-v1",
+  "refusals": {
+    "R1": ["ignore (?:all |your |the |any |previous |prior )*(?:rules|instructions)", "(?:print|reveal|show|give).{0,40}(?:system prompt|api.?key|password|secret)"],
+    "R2": ["(?:another|someone else|other customer).{0,30}(?:order|account|record)", "(?:all orders|full (?:card|number)|card number|save.{0,20}ssn)"],
+    "R3": ["(?:approve|push through|refund).{0,70}(?:anyway|without.{0,15}(?:review|confirmation)|no review|outside.{0,20}window)", "give me.{0,15}(?:coupon|free laptop)"],
+    "R4": ["(?:medical|legal) advice", "(?:treat|diagnose).{0,30}(?:injury|wound|burn|cut)"]
+  },
+  "triggers": {
+    "T1": ["\\b(?:injur\\w*|burned|burnt|cut my|cut me|bleeding|hurt me|safety complaint|caught fire)\\b"],
+    "T6": ["\\b(?:human|representative|supervisor|manager|chargeback|payment dispute|lawyer|lawsuit|sue)\\b"]
+  },
+  "legal": ["\\b(?:lawyer|lawsuit|sue|legal threat)\\b"],
+  "exception": ["\\bexception\\b", "outside.{0,25}window", "approve.{0,20}(?:anyway|now)"],
+  "limits": {"tool_calls": 8, "handoffs": 4, "llm_calls": 12, "specialist_steps": 4, "escalation_steps": 3, "replans": 1, "structured_repairs": 1}
+}

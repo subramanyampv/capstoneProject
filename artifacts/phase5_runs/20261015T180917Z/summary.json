@@ -1,0 +1,114 @@
+{
+  "recorded_at": "2026-10-15T18:13:27.434688+00:00",
+  "settings": {
+    "provider": "openai_compatible",
+    "model": "qwen3.7-max",
+    "timeout_seconds": 20.0,
+    "max_retries": 1,
+    "response_format": "json_object",
+    "temperature": 0.0,
+    "max_completion_tokens": 1200,
+    "enable_thinking": false
+  },
+  "index_version": "v2",
+  "cases": [
+    {
+      "case": "eligibility",
+      "outcome": "ESCALATED",
+      "triggers": [
+        "T5"
+      ],
+      "model_calls": 12,
+      "tool_calls": 6,
+      "errors": [
+        "SPECIALIST_FAILED",
+        "SPECIALIST_FAILED",
+        "FALSE_TRANSACTION_CLAIM"
+      ]
+    },
+    {
+      "case": "multi_intent",
+      "outcome": "ESCALATED",
+      "triggers": [
+        "T2",
+        "T5"
+      ],
+      "model_calls": 11,
+      "tool_calls": 5,
+      "errors": [
+        "SPECIALIST_FAILED",
+        "G4_POLICY_NOT_RETRIEVED"
+      ]
+    },
+    {
+      "case": "conflict",
+      "outcome": "ESCALATED",
+      "triggers": [
+        "T3",
+        "T5"
+      ],
+      "model_calls": 8,
+      "tool_calls": 3,
+      "errors": [
+        "SPECIALIST_FAILED",
+        "G3_UNSUPPORTED_NUMBER",
+        "G4_UNRESOLVED_CITATION",
+        "G4_CONFLICT_CITATIONS"
+      ]
+    },
+    {
+      "case": "refusal",
+      "outcome": "REFUSED",
+      "triggers": [],
+      "model_calls": 0,
+      "tool_calls": 0,
+      "errors": []
+    },
+    {
+      "case": "injury",
+      "outcome": "ESCALATED",
+      "triggers": [
+        "T1"
+      ],
+      "model_calls": 4,
+      "tool_calls": 1,
+      "errors": []
+    },
+    {
+      "case": "injury_failure",
+      "outcome": "ESCALATION_FAILED_DISCLOSED",
+      "triggers": [
+        "T1",
+        "T5"
+      ],
+      "model_calls": 4,
+      "tool_calls": 2,
+      "errors": []
+    },
+    {
+      "case": "tracking_timeout",
+      "outcome": "ESCALATED",
+      "triggers": [
+        "T5"
+      ],
+      "model_calls": 8,
+      "tool_calls": 4,
+      "errors": [
+        "SPECIALIST_FAILED"
+      ]
+    },
+    {
+      "case": "model_timeout",
+      "outcome": "ESCALATED",
+      "triggers": [
+        "T5"
+      ],
+      "model_calls": 3,
+      "tool_calls": 1,
+      "errors": [
+        "SUPERVISOR_FAILED"
+      ]
+    }
+  ],
+  "limits": "Synthetic core smoke, not full frozen/holdout evaluation, semantic proof, memory, adaptation or final acceptance."
+}

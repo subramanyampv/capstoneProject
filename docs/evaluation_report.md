@@ -10,7 +10,8 @@ Authority: [Architecture and Plan v3](architecture_and_plan.md), section 14. Fin
 | Phase 4 retrieval | Candidate/retained Recall@5=100%, MRR=.90; initial retained recall was 80%; five unanswerable abstentions, zero answerable full abstentions | Twenty development labels, not held-out validation; deterministic R05 source insertion disclosed |
 | Phase 4 category applicability | Five structural category filters, general exclusions and filtered k=1 conflict checked with real v2 embeddings | Broad unlabelled window/fee probe abstains for four non-electronics categories at the unchanged threshold; applicability does not force admission |
 | Phase 4 RAG on/off | RAG 10/10 validated and 9 cited; no-RAG 9/10 validated and zero cited | No order verification or ticket; one rejected no-evidence output preserved |
-| Offline regression | 109 tests passed in 6.46s | Before final agents/tools/memory are implemented |
+| Phase 5 core | Typed six-tool registry, server identity, bounded supervisor/specialists, verified mock tickets and failure disclosure; live return repair recorded | Initial live defects preserved; not complete frozen/holdout evaluation or semantic proof |
+| Offline regression | 151 tests passed in 9.17s | Tools and the bounded graph are implemented; memory/adaptation and final acceptance remain open |
 | Packaging | Pinned app/dev/eval/ui/rag install in existing venv succeeded; pip dependency check passed | Fresh clean-venv verification remains Phase 8 work |
 | UI | Three default tabs and explicit deferred-tab flag verified by AppTest | Final synthetic identity/chat workflow remains Phase 5+ |
 
@@ -29,3 +30,5 @@ DeepEval same-model faithfulness: nine context-bearing outputs scored 1.0 each, 
 65 frozen cases + ten separately frozen holdout cases; routing/tool correctness; refusal and verified mandatory escalation; final canary/failure scans; consistency repeats; memory on/off and reset; adaptation before/after; per-path latency/errors; human review of twenty judged outputs; five forced demo packets; RCA before/after with repeated safety cases; fresh-environment startup and history-free scanned submission.
 
 Primary evidence: [Phase 2 closure](phase2_closure.md), [prompt comparison](prompt_comparison.md), [retrieval design](retrieval_design.md), and dated `artifacts/`. Record unavailable metrics and failures explicitly rather than converting them into passes.
+
+Phase 5 closure: [151-test / eight-case evidence](../artifacts/phase5_validation.md) and [independent local ticket checks](../artifacts/phase5_runs/20261015T190233Z/validation.json) pass for the stated core scope. The current cases use verified ownership context (e.g. C-103 for O-1006); no identity is inferred from model output. The bounded local scan has zero findings. This is not the complete frozen/holdout, semantic, cloud-canary or repeated-run gate.

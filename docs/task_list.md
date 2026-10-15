@@ -1,4 +1,4 @@
-# Detailed project task checklist — 2026-10-13
+# Detailed project task checklist — updated 2026-10-15
 
 Authority: [Architecture revision 3.1](architecture_and_plan.md). This is the current work ledger, supported by the [progress report](project_progress.md) and recorded artifacts. Update a task only after its completion criterion has evidence.
 
@@ -6,9 +6,9 @@ Authority: [Architecture revision 3.1](architecture_and_plan.md). This is the cu
 
 **P0** = protects correctness, safety or a required delivery gate. **P1** = required capability or evaluation work. Dependencies are task IDs, not permission requests. Task counts do not represent a completion percentage because effort differs substantially.
 
-**Inventory:** 85 initial-product tasks — 31 done, 16 needing updates, 38 not started. 8 areas are deferred.
+**Inventory:** 85 initial-product tasks — 54 done, 14 needing updates, 17 not started. 8 areas are deferred.
 
-**Immediate sequence:** S01/S02/G02 foundations and T01 registry → tools/guards/specialists → core demos → memory/adaptation → final observability/evaluation. Retrieval follow-through and tool foundations can progress independently where dependencies allow.
+**Immediate sequence:** Phase 6 memory/privacy → Phase 7 adaptation → final observability/evaluation. Phase 5 core tools, guards, server identity and bounded graph are implemented with repaired live evidence. Earlier failures remain preserved in phase5_tools_and_graph.md; broad semantic/safety acceptance remains Phase 9.
 
 No author/student name or new repository is required. Optional later inputs are hosted LangSmith configuration and human calibration of final judged outputs; neither blocks the next local work.
 
@@ -57,39 +57,39 @@ No author/student name or new repository is required. Optional later inputs are 
 | R10 | DONE | P0 | Improve retained evidence coverage | Improved public-catalog/topic query profile retains 100% of labeled sources, MRR .90, 0/15 answerable rejections and 5/5 unknown abstentions on development labels; generalization remains untested. | R07 |
 | R11 | DONE | P0 | Broaden conflict correctness tests | Tests preserve both sides under filters/k=1 and overlapping versions; future/superseded sources excluded; generic conflict references validate. Final registered-tool integration remains T04/G09. | R02,R05,T04 |
 | R12 | DONE | P1 | Complete structured category handling | Authored section applicability, general-policy inclusion, five category filters and invalid-scope quarantine; v2 real-embedding checks preserve exclusions and k=1 conflicts. Tool registration remains T04. | R02,R04 |
-| R13 | UPDATE | P0 | Integrate retrieval into the final agent path | Existing search/grounded helper is a single-agent experiment. Specialists must retrieve current-turn evidence and the composer must retain resolvable citations. | T04,G06,G08 |
+| R13 | DONE | P0 | Integrate retrieval into the final agent path | The support graph registers current-turn policy search and passes canonical evidence refs through tools/specialists/composer. Live eligible return resolves its citations; broader quality evaluation remains Phase 9. | T04,G06,G08 |
 
 ## Phase 5: domain services and six tools
 
 | ID | Status | Priority | Task | Evidence / completion criterion | Dependencies |
 |---|---|---|---|---|---|
-| T01 | NOT STARTED | P0 | Implement typed tool registry and permissions | Pydantic arguments/results; per-specialist allowlists; exec IDs; timeout/error categories; unknown-tool and bad-argument rejection; no arbitrary code/URLs. | D01 |
-| T02 | NOT STARTED | P0 | Implement lookup_order tool | Server-injected synthetic identity and ownership checks; NOT_FOUND also for non-owned records; model cannot supply customer identity. | T01,S01 |
-| T03 | NOT STARTED | P0 | Implement get_tracking_events tool | Verified latest events, timestamp, staleness, optional carrier estimate, timeout and missing-data behavior. | T02 |
-| T04 | UPDATE | P0 | Register typed search_policy tool | Wrap PolicySearch with declared allowlist, schema, timeout, source metadata and safe index-error contract. | T01,R10 |
-| T05 | NOT STARTED | P1 | Implement get_product_details tool | Resolve SKU/name from catalog; disclose missing specs; return ambiguous candidates or NOT_FOUND. | T01,B02 |
-| T06 | NOT STARTED | P0 | Implement deterministic check_return_eligibility | Fetch order internally, verify ownership, apply configured windows/exclusions/threshold/cancellation state and return typed reasons and policy refs. | T02,T04,T05 |
-| T07 | NOT STARTED | P0 | Implement create_escalation mock tool | Sanitized packet, code-computed queue/priority, persisted ticket, idempotency and explicit failure result; no other write actions. | T01,S02 |
-| T08 | NOT STARTED | P0 | Enforce shared budgets and timeouts | Eight tool calls, four handoffs, bounded agent steps/replan/repair/model calls; reserve or safely disclose handoff on exhaustion. | T01,G02 |
-| T09 | NOT STARTED | P0 | Add fault injection and rejection evidence | Tracking timeout, escalation failure, model-node timeout, unknown tool and malformed args; record recovery without false success. | T03,T07,T08 |
-| T10 | NOT STARTED | P0 | Verify tool/domain boundaries | Unit/integration tests for ownership, amount/window boundaries, excluded categories, permission rejection and idempotency; verified records override user claims. | T02,T03,T04,T05,T06,T07,T09 |
+| T01 | DONE | P0 | Implement typed tool registry and permissions | Closed Pydantic arguments/results, LangChain schemas, per-specialist allowlists, exec IDs, deadline/error contracts, unknown-tool/bad-argument rejection; tests in test_support_tools.py. | D01 |
+| T02 | DONE | P0 | Implement lookup_order tool | Server-injected synthetic identity and ownership checks; NOT_FOUND also for non-owned records; model cannot supply customer identity. | T01,S01 |
+| T03 | DONE | P0 | Implement get_tracking_events tool | Verified latest events, timestamp, staleness, optional carrier estimate, timeout and missing-data behavior. | T02 |
+| T04 | DONE | P0 | Register typed search_policy tool | Wrap PolicySearch with declared allowlist, schema, timeout, source metadata and safe index-error contract. | T01,R10 |
+| T05 | DONE | P1 | Implement get_product_details tool | Resolve SKU/name from catalog; disclose missing specs; return ambiguous candidates or NOT_FOUND. | T01,B02 |
+| T06 | DONE | P0 | Implement deterministic check_return_eligibility | Fetch order internally, verify ownership, apply configured windows/exclusions/threshold/cancellation state and return typed reasons and policy refs. | T02,T04,T05 |
+| T07 | DONE | P0 | Implement create_escalation mock tool | Sanitized packet, code-computed queue/priority, persisted ticket, idempotency and explicit failure result; no other write actions. | T01,S02 |
+| T08 | DONE | P0 | Enforce shared budgets and timeouts | Eight tool calls, four handoffs, bounded agent steps/replan/repair/model calls; reserve or safely disclose handoff on exhaustion. | T01,G02 |
+| T09 | DONE | P0 | Add fault injection and rejection evidence | Tracking timeout, escalation failure, model-node timeout, unknown tool and malformed args; record recovery without false success. | T03,T07,T08 |
+| T10 | DONE | P0 | Verify tool/domain boundaries | Unit/integration tests for ownership, amount/window boundaries, excluded categories, permission rejection and idempotency; verified records override user claims. | T02,T03,T04,T05,T06,T07,T09 |
 
 ## Phase 5: session identity, guards and multi-agent graph
 
 | ID | Status | Priority | Task | Evidence / completion criterion | Dependencies |
 |---|---|---|---|---|---|
-| S01 | NOT STARTED | P0 | Bind synthetic customer/session identity | CLI/UI session establishes customer ID server-side; specialists/tools never accept identity authority from model output. | D01 |
-| S02 | NOT STARTED | P0 | Implement versioned safety rules | R1–R4 refusal patterns and T1–T6 escalation definitions, deterministic queue/priority precedence and startup validation. | D01 |
-| G01 | NOT STARTED | P0 | Implement Guard-In | Input/command validation, refusal/override detection, injury/human/legal/payment escalation triggers and log-safe copy before model calls. | S01,S02 |
-| G02 | NOT STARTED | P0 | Implement turn state and plan contracts | Typed plan/results/errors, append-only safety reducers, counters and code-controlled outcome; validate dependencies and finite plan length. | S01,S02 |
-| G03 | NOT STARTED | P0 | Implement supervisor plan/replan | Understand all intents, choose only allowed specialists, ask for ambiguous entities and preserve guard flags; one bounded replan. | G01,G02 |
-| G04 | NOT STARTED | P0 | Implement dispatch and result collection | Validate specialist evidence/results, retain flags, insert mandatory escalation and enforce budgets; do not drop escalation on clarification/refusal branches. | G02,G03,T08 |
-| G05 | NOT STARTED | P0 | Implement Order & Shipping specialist | Bounded LangChain tool-calling with lookup/tracking allowlist and isolated task context; no policy/transaction claims. | T02,T03,G04 |
-| G06 | NOT STARTED | P0 | Implement Policy & Product specialist | Allowlisted policy/product/eligibility calls; current-turn evidence, conflict/threshold flags and no LLM eligibility authority. | T04,T05,T06,G04 |
-| G07 | NOT STARTED | P0 | Implement Escalation specialist | Bounded sanitized handoff drafting, tool call, verified ticket/failure; no model authority for queue/priority or compensation promises. | T07,G04 |
-| G08 | NOT STARTED | P0 | Implement composer and Guard-Out | Merge all intents, citations, refusals and verified ticket/failure. Enforce G1–G8, bounded repair and safe fallback; code computes outcome. | G05,G06,G07 |
-| G09 | NOT STARTED | P0 | Enforce mandatory escalation and refusal regressions | R05/S01/S15, overrides, cross-account requests, contradictory evidence and mixed refusal+injury must retain code decisions with verified ticket/failure. | G01,G04,G07,G08,T10 |
-| G10 | NOT STARTED | P0 | Complete graph integration and core demos | Grounded eligibility, multi-agent tracking+refund, refusal/privacy and injury with escalation-failure variant; save actual packets. | G09 |
+| S01 | DONE | P0 | Bind synthetic customer/session identity | CLI/UI session establishes customer ID server-side; specialists/tools never accept identity authority from model output. | D01 |
+| S02 | DONE | P0 | Implement versioned safety rules | R1–R4 refusal patterns and T1–T6 escalation definitions, deterministic queue/priority precedence and startup validation. | D01 |
+| G01 | DONE | P0 | Implement Guard-In | Input/command validation, refusal/override detection, injury/human/legal/payment escalation triggers and log-safe copy before model calls. | S01,S02 |
+| G02 | DONE | P0 | Implement turn state and plan contracts | Typed plan/results/errors, append-only safety reducers, counters and code-controlled outcome; validate dependencies and finite plan length. | S01,S02 |
+| G03 | DONE | P0 | Implement supervisor plan/replan | Understand all intents, choose only allowed specialists, ask for ambiguous entities and preserve guard flags; one bounded replan. | G01,G02 |
+| G04 | DONE | P0 | Implement dispatch and result collection | Validate specialist evidence/results, retain flags, insert mandatory escalation and enforce budgets; do not drop escalation on clarification/refusal branches. | G02,G03,T08 |
+| G05 | DONE | P0 | Implement Order & Shipping specialist | Bounded LangChain tool-calling with lookup/tracking allowlist and isolated task context; no policy/transaction claims. | T02,T03,G04 |
+| G06 | DONE | P0 | Implement Policy & Product specialist | Allowlisted policy/product/eligibility calls; current-turn evidence, conflict/threshold flags and no LLM eligibility authority. | T04,T05,T06,G04 |
+| G07 | DONE | P0 | Implement Escalation specialist | Bounded sanitized handoff drafting, tool call, verified ticket/failure; no model authority for queue/priority or compensation promises. | T07,G04 |
+| G08 | DONE | P0 | Implement composer and Guard-Out | Merge all intents, citations, refusals and verified ticket/failure. Enforce G1–G8, bounded repair and safe fallback; code computes outcome. | G05,G06,G07 |
+| G09 | DONE | P0 | Enforce mandatory escalation and refusal regressions | Code-backed R05 conflict, S01 injury, S15 threshold, ownership denial and mixed refusal/injury have component/live smoke proof; frozen repeats/holdout remain E02/E04/E07. | G01,G04,G07,G08,T10 |
+| G10 | DONE | P0 | Complete graph integration and core demos | Grounded return, tracking+refund review, prompt refusal, injury, ticket-write failure and tool/model failures saved under artifacts/phase5_runs; final demo screenshots/Phase 6–7 demos remain D08/O06. | G09 |
 
 ## Phase 6: memory and context
 
@@ -115,7 +115,7 @@ No author/student name or new repository is required. Optional later inputs are 
 | ID | Status | Priority | Task | Evidence / completion criterion | Dependencies |
 |---|---|---|---|---|---|
 | O01 | DONE | P1 | Provide local Streamlit experiment UI | Chat/Evaluation/Traces; baseline and LLM modes; default deferred tabs hidden; AppTest verified. | B07 |
-| O02 | UPDATE | P1 | Connect final CLI/UI workflow | Synthetic customer/session selection, final-agent chat, reset/feedback, policy citations, reasons and ticket/failure rendering. Current chat is experimental. | G10,M03,A03 |
+| O02 | UPDATE | P1 | Connect final CLI/UI workflow | Synthetic customer/session selection, final-agent chat, reset/feedback, policy citations, reasons and ticket/failure rendering. Support-agent mode now binds a synthetic account and renders citations/ticket/failure. Memory/reset/feedback integration remains. | G10,M03,A03 |
 | O03 | DONE | P0 | Provide opt-in metadata-safe LangSmith wrapper | Inputs hidden, scalar output allowlist; tracing off by default. This is not hosted/hierarchical verification. | B07 |
 | O04 | UPDATE | P0 | Complete hosted tracing and failure isolation | Mask final node/tool hierarchy, verify canaries and invalid-key behavior; tracing failure must not change the agent outcome. | O03,G10 |
 | O05 | UPDATE | P0 | Complete request logging and redaction schema | One final record with opaque customer/session/order refs, stages/tools/triggers/outcome/counters. Add phone/address/name coverage and scans; current logs are experiment-specific. | G10,S01 |

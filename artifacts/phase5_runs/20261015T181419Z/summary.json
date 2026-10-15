@@ -1,0 +1,71 @@
+{
+  "recorded_at": "2026-10-15T18:47:58.513427+00:00",
+  "source_sha256": {
+    "__init__.py": "beb0f323dd24341fb2bdfc3d5905fadc80fab5695e9fb52ca5da3c969ce63eac",
+    "contracts.py": "f9def67b8f06447749464743141c909c2a42ba15fcabb39c7f962ebf5aee9319",
+    "graph.py": "b83f038e4677a7f30df957c9acce81badf6da45696ec42cce25818635698aaa6",
+    "guards.py": "0dd1e20d79b717e2c5be0dd4486b4282d7b78996885bd41abaf6b82736649d6f",
+    "model.py": "d915478dce1ba6905e7f080fcfd12f12a9e5d78391e16c3d1fa04509d6df9b57",
+    "privacy.py": "8e65a217b001da4e7eede571610092e4e2519ac762f0b075df156c7f36ec67be",
+    "registry.py": "91f14ebe9ede409f26b6f9e8e5f209ba95a71725cffffc06a453817330cf4b29",
+    "runtime.py": "ea3e770932d7d04b2c5768bed77ba72f170c862016f792df074cb483a9f9cae5",
+    "services.py": "c52fdfad1059673e383774aabc21814c73f10897a207fa8f35c631d3c1f8ca73"
+  },
+  "settings": {
+    "provider": "openai_compatible",
+    "model": "qwen3.7-max",
+    "timeout_seconds": 20.0,
+    "max_retries": 1,
+    "response_format": "json_object",
+    "temperature": 0.0,
+    "max_completion_tokens": 1200,
+    "enable_thinking": false
+  },
+  "index_version": "v2",
+  "cases": [
+    {
+      "case": "eligibility",
+      "outcome": "ESCALATED",
+      "triggers": [
+        "T5"
+      ],
+      "model_calls": 10,
+      "tool_calls": 5,
+      "errors": [
+        "SPECIALIST_FAILED",
+        "COMPOSER_FAILED"
+      ]
+    },
+    {
+      "case": "multi_intent",
+      "outcome": "ESCALATED",
+      "triggers": [
+        "T2",
+        "T5"
+      ],
+      "model_calls": 11,
+      "tool_calls": 5,
+      "errors": [
+        "SPECIALIST_FAILED",
+        "G4_POLICY_NOT_RETRIEVED"
+      ]
+    },
+    {
+      "case": "conflict",
+      "outcome": "ESCALATED",
+      "triggers": [
+        "T3",
+        "T5"
+      ],
+      "model_calls": 9,
+      "tool_calls": 4,
+      "errors": [
+        "SPECIALIST_FAILED",
+        "G3_UNSUPPORTED_NUMBER",
+        "G4_UNRESOLVED_CITATION",
+        "G4_CONFLICT_CITATIONS"
+      ]
+    }
+  ],
+  "limits": "Synthetic core smoke, not full frozen/holdout evaluation, semantic proof, memory, adaptation or final acceptance."
+}

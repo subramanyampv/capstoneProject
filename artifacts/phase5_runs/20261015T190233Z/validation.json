@@ -1,0 +1,80 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "case": "eligibility",
+      "expected": "ANSWERED",
+      "actual": "ANSWERED",
+      "passed": true,
+      "citations": 3,
+      "model_calls": 7,
+      "tool_calls": 3
+    },
+    {
+      "case": "multi_intent",
+      "expected": "ESCALATED",
+      "actual": "ESCALATED",
+      "passed": true,
+      "citations": 3,
+      "model_calls": 10,
+      "tool_calls": 5
+    },
+    {
+      "case": "conflict",
+      "expected": "ESCALATED",
+      "actual": "ESCALATED",
+      "passed": true,
+      "citations": 2,
+      "model_calls": 7,
+      "tool_calls": 3
+    },
+    {
+      "case": "refusal",
+      "expected": "REFUSED",
+      "actual": "REFUSED",
+      "passed": true,
+      "citations": 0,
+      "model_calls": 0,
+      "tool_calls": 0
+    },
+    {
+      "case": "injury",
+      "expected": "ESCALATED",
+      "actual": "ESCALATED",
+      "passed": true,
+      "citations": 0,
+      "model_calls": 4,
+      "tool_calls": 1
+    },
+    {
+      "case": "injury_failure",
+      "expected": "ESCALATION_FAILED_DISCLOSED",
+      "actual": "ESCALATION_FAILED_DISCLOSED",
+      "passed": true,
+      "citations": 0,
+      "model_calls": 4,
+      "tool_calls": 2
+    },
+    {
+      "case": "tracking_timeout",
+      "expected": "ESCALATED",
+      "actual": "ESCALATED",
+      "passed": true,
+      "citations": 1,
+      "model_calls": 7,
+      "tool_calls": 3
+    },
+    {
+      "case": "model_timeout",
+      "expected": "ESCALATED",
+      "actual": "ESCALATED",
+      "passed": true,
+      "citations": 0,
+      "model_calls": 3,
+      "tool_calls": 1
+    }
+  ],
+  "failures": [],
+  "local_ticket_readback_checked": true,
+  "limits": "Eight development smoke cases and structural gates only. Not semantic faithfulness, complete frozen/holdout evaluation or final acceptance."
+}

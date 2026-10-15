@@ -16,8 +16,8 @@ PHASES = [
     (1, "problem framing & success definition — DONE"),
     (2, "rule-based Python baseline — DONE (single agent, deterministic rules)"),
     (3, "LLM integration & prompt evaluation — DONE (v3 selects Prompt C; final safety open)"),
-    (4, "knowledge & retrieval (RAG)"),
-    (5, "tools & multi-agent orchestration"),
+    (4, "knowledge & retrieval (RAG) — DONE (development scope; final holdout open)"),
+    (5, "tools & multi-agent orchestration — DONE (core; final acceptance open)"),
     (6, "planning, memory, context"),
     (7, "adaptive behavior"),
     (8, "deployment readiness"),
@@ -29,7 +29,7 @@ def cmd_status(_: argparse.Namespace) -> int:
     print("capstone-agent — multi-agent e-commerce support agent")
     print("Phases:")
     for num, name in PHASES:
-        active = num == 4
+        active = num == 6
         print(f"  {'>' if active else ' '} phase {num}: {name}")
     print("\nTry:  capstone-agent ask \"Can I return order O-1001?\" --today 2026-10-12")
     print("Baseline evidence run:  scripts/run_baseline.sh")
@@ -121,6 +121,24 @@ def cmd_search_policy(args):
     return 0
 
 
+def cmd_support(args):
+    import json
+    from capstone_agent.retrieval.embeddings_voyage import VoyageNanoEmbeddings
+    from capstone_agent.retrieval.chroma_store import PolicySearch
+    from capstone_agent.support.runtime import run_support
+    faults={}
+    if args.fault_tracking_timeout: faults['get_tracking_events']='TIMEOUT'
+    if args.fault_escalation_fail: faults['create_escalation']='FAILED'
+    if args.fault_model: faults['supervisor']='FAILED'
+    search=PolicySearch(VoyageNanoEmbeddings())
+    search.search('return policy')  # startup warmup, not a customer tool call
+    result=run_support(args.message,args.customer,search=search,faults=faults)
+    print(json.dumps({'response':result['response'],'outcome':result['outcome'],'ticket':result['ticket'],
+        'triggers':result['triggers'],'refusals':result['refusals'],
+        'model_calls':result['model_calls'],'tool_calls':result['tool_calls']},indent=2))
+    return 0
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(prog="capstone-agent")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -161,6 +179,13 @@ def build_parser() -> argparse.ArgumentParser:
     search.add_argument("--k", type=int, default=5)
     search.add_argument("--threshold", type=float, help="Override the calibrated local threshold")
     search.set_defaults(func=cmd_search_policy)
+    support = sub.add_parser('support', help='Phase 5 multi-agent support; synthetic sessions and mock handoff only')
+    support.add_argument('message')
+    support.add_argument('--customer',choices=['C-100','C-101','C-102','C-103'],default='C-100',help='Select synthetic account before the request')
+    support.add_argument('--fault-tracking-timeout',action='store_true')
+    support.add_argument('--fault-escalation-fail',action='store_true')
+    support.add_argument('--fault-model',action='store_true')
+    support.set_defaults(func=cmd_support)
     return parser
 
 

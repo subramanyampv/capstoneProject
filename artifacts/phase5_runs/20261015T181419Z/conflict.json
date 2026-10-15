@@ -1,0 +1,285 @@
+{
+  "case": "conflict",
+  "faults": {},
+  "result": {
+    "response": {
+      "answer": "Local mock handoff verified: MOCK-5d7857fd311d (policy). No refund, return or cancellation was executed.",
+      "why": [
+        "SAFE_FALLBACK"
+      ],
+      "citations": [],
+      "next_steps": [
+        "Contact retailer support if further help is needed."
+      ],
+      "intents_addressed": [
+        "policy_clarification_electronics_return_window"
+      ],
+      "outcome_claimed": "ESCALATED"
+    },
+    "outcome": "ESCALATED",
+    "ticket": {
+      "ticket_id": "MOCK-5d7857fd311d",
+      "status": "created",
+      "queue": "policy",
+      "priority": "normal",
+      "triggers": [
+        "T3",
+        "T5"
+      ],
+      "summary_hash": "38980c3b9bb76cb632d775e01cb9cc5a9d5679d3366d1343238073c9744bace0",
+      "idempotent_replay": false
+    },
+    "refusals": [],
+    "triggers": [
+      "T3",
+      "T5"
+    ],
+    "tool_records": [
+      {
+        "exec_id": "477d98a4a0c84a9d9a3b29330806e7d1",
+        "name": "search_policy",
+        "status": "error",
+        "data": null,
+        "error": "UNVERIFIED_CATEGORY",
+        "duration_ms": 2.305
+      },
+      {
+        "exec_id": "9de008c212224767be584393efd17af0",
+        "name": "search_policy",
+        "status": "error",
+        "data": null,
+        "error": "TIMEOUT",
+        "duration_ms": 5002.057
+      },
+      {
+        "exec_id": "6b0af47f052a4ce0b2f53c5b39b7975c",
+        "name": "search_policy",
+        "status": "ok",
+        "data": {
+          "results": [
+            {
+              "chunk_id": "faq:v1:electronics-returns:0",
+              "doc_id": "faq",
+              "section_id": "electronics-returns",
+              "version": "v1",
+              "effective_date": "2026-10-01",
+              "authority": "faq",
+              "text": "Electronics returns\nLegacy FAQ wording says electronics, including the Bluetooth Speaker, can be returned within 30 days. This deliberately inconsistent FAQ passage is retained for conflict evaluation: return_policy v1 section window says 15 days. Both sources are applicable in the scenario and the discrepancy is unresolved. Do not use this FAQ to override policy; surface both references and escalate per escalation_guidelines section conflicts.",
+              "score": 0.499642,
+              "category": "electronics"
+            },
+            {
+              "chunk_id": "return_policy:v1:window:0",
+              "doc_id": "return_policy",
+              "section_id": "window",
+              "version": "v1",
+              "effective_date": "2026-10-01",
+              "authority": "policy",
+              "text": "Window\nReturns use calendar days from verified delivery, inclusive on the final day. The default return window is 30 days. Footwear and apparel have 30-day windows, home products have 30 days, and electronics have 15 days. An undelivered order has not started its return window. The earlier reported 60-day window is not current; use this version and disclose the discrepancy.",
+              "score": 0.490265,
+              "category": "all"
+            }
+          ],
+          "below_threshold": false,
+          "conflict": true,
+          "conflict_details": [
+            {
+              "kind": "declared_faq_policy_conflict",
+              "sources": [
+                "faq:v1:electronics-returns:0",
+                "return_policy:v1:window:0"
+              ]
+            }
+          ],
+          "index_version": "v2",
+          "category_filter": null,
+          "conflict_evidence_exceeds_k": false
+        },
+        "error": null,
+        "duration_ms": 1102.676
+      },
+      {
+        "exec_id": "416463802f2f42bc93ea4438618c33ec",
+        "name": "create_escalation",
+        "status": "ok",
+        "data": {
+          "ticket_id": "MOCK-5d7857fd311d",
+          "status": "created",
+          "queue": "policy",
+          "priority": "normal",
+          "triggers": [
+            "T3",
+            "T5"
+          ],
+          "summary_hash": "38980c3b9bb76cb632d775e01cb9cc5a9d5679d3366d1343238073c9744bace0",
+          "idempotent_replay": false
+        },
+        "error": null,
+        "duration_ms": 8.098
+      }
+    ],
+    "results": [
+      {
+        "agent_name": "policy_product",
+        "status": "escalation_required",
+        "summary": "Conflict detected for electronics return window: FAQ states 30 days while return_policy states 15 days. Both sources are current and applicable; discrepancy is unresolved per policy guidance. Escalation required to determine authoritative rule.",
+        "evidence": [
+          {
+            "source_id": "doc:faq",
+            "section": "electronics-returns",
+            "record_version": "v1"
+          },
+          {
+            "source_id": "doc:return_policy",
+            "section": "window",
+            "record_version": "v1"
+          }
+        ],
+        "facts": {
+          "tools": [
+            {
+              "name": "search_policy",
+              "args": {
+                "query": "electronics return window",
+                "doc_types": null,
+                "category": null,
+                "k": 10
+              },
+              "data": {
+                "results": [
+                  {
+                    "chunk_id": "faq:v1:electronics-returns:0",
+                    "doc_id": "faq",
+                    "section_id": "electronics-returns",
+                    "version": "v1",
+                    "effective_date": "2026-10-01",
+                    "authority": "faq",
+                    "text": "Electronics returns\nLegacy FAQ wording says electronics, including the Bluetooth Speaker, can be returned within 30 days. This deliberately inconsistent FAQ passage is retained for conflict evaluation: return_policy v1 section window says 15 days. Both sources are applicable in the scenario and the discrepancy is unresolved. Do not use this FAQ to override policy; surface both references and escalate per escalation_guidelines section conflicts.",
+                    "score": 0.499642,
+                    "category": "electronics"
+                  },
+                  {
+                    "chunk_id": "return_policy:v1:window:0",
+                    "doc_id": "return_policy",
+                    "section_id": "window",
+                    "version": "v1",
+                    "effective_date": "2026-10-01",
+                    "authority": "policy",
+                    "text": "Window\nReturns use calendar days from verified delivery, inclusive on the final day. The default return window is 30 days. Footwear and apparel have 30-day windows, home products have 30 days, and electronics have 15 days. An undelivered order has not started its return window. The earlier reported 60-day window is not current; use this version and disclose the discrepancy.",
+                    "score": 0.490265,
+                    "category": "all"
+                  }
+                ],
+                "below_threshold": false,
+                "conflict": true,
+                "conflict_details": [
+                  {
+                    "kind": "declared_faq_policy_conflict",
+                    "sources": [
+                      "faq:v1:electronics-returns:0",
+                      "return_policy:v1:window:0"
+                    ]
+                  }
+                ],
+                "index_version": "v2",
+                "category_filter": null,
+                "conflict_evidence_exceeds_k": false
+              }
+            }
+          ]
+        },
+        "flags": {
+          "conflict": true,
+          "requires_review": false
+        }
+      },
+      {
+        "agent_name": "escalation",
+        "status": "success",
+        "summary": "Mandatory verified mock handoff created with triggers T3 and T5. Evidence references validated for electronics returns and return policy window sections.",
+        "evidence": [
+          {
+            "source_id": "doc:faq",
+            "section": "electronics-returns",
+            "record_version": "v1"
+          },
+          {
+            "source_id": "doc:return_policy",
+            "section": "window",
+            "record_version": "v1"
+          }
+        ],
+        "facts": {
+          "tools": [
+            {
+              "name": "create_escalation",
+              "args": {
+                "triggers": [
+                  "T3",
+                  "T5"
+                ],
+                "summary": "Mandatory verified mock handoff created with triggers T3 and T5. Evidence references validated for electronics returns and return policy window sections. No order or SKU dependencies present.",
+                "evidence_refs": [
+                  {
+                    "source_id": "doc:faq",
+                    "section": "electronics-returns",
+                    "record_version": "v1"
+                  },
+                  {
+                    "source_id": "doc:return_policy",
+                    "section": "window",
+                    "record_version": "v1"
+                  }
+                ],
+                "order_ref": null
+              },
+              "data": {
+                "ticket_id": "MOCK-5d7857fd311d",
+                "status": "created",
+                "queue": "policy",
+                "priority": "normal",
+                "triggers": [
+                  "T3",
+                  "T5"
+                ],
+                "summary_hash": "38980c3b9bb76cb632d775e01cb9cc5a9d5679d3366d1343238073c9744bace0",
+                "idempotent_replay": false
+              }
+            }
+          ]
+        },
+        "flags": {
+          "conflict": true,
+          "requires_review": false
+        }
+      }
+    ],
+    "stages": [
+      "guard_in",
+      "supervisor_plan",
+      "dispatch",
+      "policy_product",
+      "collect_result",
+      "dispatch",
+      "escalation",
+      "collect_result",
+      "dispatch",
+      "composer",
+      "guard_out"
+    ],
+    "errors": [
+      "SPECIALIST_FAILED",
+      "G3_UNSUPPORTED_NUMBER",
+      "G4_UNRESOLVED_CITATION",
+      "G4_CONFLICT_CITATIONS"
+    ],
+    "model_calls": 9,
+    "tool_calls": 4,
+    "handoffs": 2,
+    "replans": 0,
+    "repairs": 1,
+    "tokens": 14884,
+    "safety_version": "2026-10-15-v1",
+    "latency_ms": 40490.022
+  }
+}

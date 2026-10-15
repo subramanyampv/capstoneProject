@@ -1,0 +1,409 @@
+{
+  "case": "multi_intent",
+  "faults": {},
+  "result": {
+    "response": {
+      "answer": "Local mock handoff verified: MOCK-02c915b350c4 (refunds). No refund, return or cancellation was executed.",
+      "why": [
+        "SAFE_FALLBACK"
+      ],
+      "citations": [],
+      "next_steps": [
+        "Contact retailer support if further help is needed."
+      ],
+      "intents_addressed": [
+        "track_order",
+        "refund_eligibility"
+      ],
+      "outcome_claimed": "ESCALATED"
+    },
+    "outcome": "ESCALATED",
+    "ticket": {
+      "ticket_id": "MOCK-02c915b350c4",
+      "status": "created",
+      "queue": "refunds",
+      "priority": "normal",
+      "triggers": [
+        "T2",
+        "T5"
+      ],
+      "summary_hash": "ff67a06222d8dd581c16b25442ec789650eaf1fdbf60b67d6b93712c202a9453",
+      "idempotent_replay": false
+    },
+    "refusals": [],
+    "triggers": [
+      "T2",
+      "T5"
+    ],
+    "tool_records": [
+      {
+        "exec_id": "e81ceff40c9b4d5e97f2e4038f6985fa",
+        "name": "lookup_order",
+        "status": "ok",
+        "data": {
+          "order_id": "ref:c3181ffefc9c0f6c47e7",
+          "status": "delivered",
+          "placed_at": "2026-10-03",
+          "dispatched_at": "2026-10-05",
+          "delivered_at": "2026-10-07",
+          "shipping_service": null,
+          "items": [
+            {
+              "sku": "SKU-KNIFE-005",
+              "name": "Chef Knife Set",
+              "category": "home",
+              "price": 250.0
+            }
+          ],
+          "record_version": "2026-10-12"
+        },
+        "error": null,
+        "duration_ms": 1.376
+      },
+      {
+        "exec_id": "53d4c70cafa8447a8cb2ff4878b23673",
+        "name": "get_tracking_events",
+        "status": "ok",
+        "data": {
+          "events": [
+            {
+              "ts": "2026-10-05T09:40:00Z",
+              "status": "shipped",
+              "city": "Origin facility"
+            },
+            {
+              "ts": "2026-10-07T12:12:00Z",
+              "status": "delivered",
+              "city": "Seattle WA"
+            }
+          ],
+          "latest": {
+            "ts": "2026-10-07T12:12:00Z",
+            "status": "delivered",
+            "city": "Seattle WA"
+          },
+          "carrier_estimate": null,
+          "stale": false,
+          "record_version": "2026-10-12"
+        },
+        "error": null,
+        "duration_ms": 2.797
+      },
+      {
+        "exec_id": "34e72cfea89a4cfca3a274eaca720879",
+        "name": "check_return_eligibility",
+        "status": "ok",
+        "data": {
+          "decision": "requires_review",
+          "reason_codes": [
+            "WITHIN_WINDOW",
+            "REFUND_ABOVE_THRESHOLD"
+          ],
+          "window_days": 30,
+          "days_since_delivery": 5,
+          "refund_amount": 250.0,
+          "threshold": 100.0,
+          "rule_version": "2026-10-01",
+          "policy_refs": [
+            {
+              "source_id": "doc:return_policy",
+              "section": "window",
+              "record_version": "v1"
+            },
+            {
+              "source_id": "doc:refund_policy",
+              "section": "review-threshold",
+              "record_version": "v1"
+            }
+          ],
+          "action_executed": false,
+          "human_action_required": true
+        },
+        "error": null,
+        "duration_ms": 7.153
+      },
+      {
+        "exec_id": "cf3f96517fd3412ba48f60afb4af6772",
+        "name": "create_escalation",
+        "status": "error",
+        "data": null,
+        "error": "PII_REJECTED",
+        "duration_ms": 0.749
+      },
+      {
+        "exec_id": "47c184c3a7774a37ad1129e6f57b714f",
+        "name": "create_escalation",
+        "status": "ok",
+        "data": {
+          "ticket_id": "MOCK-02c915b350c4",
+          "status": "created",
+          "queue": "refunds",
+          "priority": "normal",
+          "triggers": [
+            "T2",
+            "T5"
+          ],
+          "summary_hash": "ff67a06222d8dd581c16b25442ec789650eaf1fdbf60b67d6b93712c202a9453",
+          "idempotent_replay": false
+        },
+        "error": null,
+        "duration_ms": 11.174
+      }
+    ],
+    "results": [
+      {
+        "agent_name": "order_shipping",
+        "status": "tool_error",
+        "summary": "Order ref:c3181ffefc9c0f6c47e7 is delivered as of 2026-10-07T12:12:00Z in Seattle WA. Product SKU is SKU-KNIFE-005 (Chef Knife Set). No carrier estimate available; tracking data is not stale.",
+        "evidence": [
+          {
+            "source_id": "order:ref:c3181ffefc9c0f6c47e7",
+            "section": null,
+            "record_version": "2026-10-12"
+          },
+          {
+            "source_id": "tracking:ref:c3181ffefc9c0f6c47e7",
+            "section": null,
+            "record_version": "2026-10-12"
+          }
+        ],
+        "facts": {
+          "tools": [
+            {
+              "name": "lookup_order",
+              "args": {
+                "order_id": "ref:c3181ffefc9c0f6c47e7"
+              },
+              "data": {
+                "order_id": "ref:c3181ffefc9c0f6c47e7",
+                "status": "delivered",
+                "placed_at": "2026-10-03",
+                "dispatched_at": "2026-10-05",
+                "delivered_at": "2026-10-07",
+                "shipping_service": null,
+                "items": [
+                  {
+                    "sku": "SKU-KNIFE-005",
+                    "name": "Chef Knife Set",
+                    "category": "home",
+                    "price": 250.0
+                  }
+                ],
+                "record_version": "2026-10-12"
+              }
+            },
+            {
+              "name": "get_tracking_events",
+              "args": {
+                "order_id": "ref:c3181ffefc9c0f6c47e7"
+              },
+              "data": {
+                "events": [
+                  {
+                    "ts": "2026-10-05T09:40:00Z",
+                    "status": "shipped",
+                    "city": "Origin facility"
+                  },
+                  {
+                    "ts": "2026-10-07T12:12:00Z",
+                    "status": "delivered",
+                    "city": "Seattle WA"
+                  }
+                ],
+                "latest": {
+                  "ts": "2026-10-07T12:12:00Z",
+                  "status": "delivered",
+                  "city": "Seattle WA"
+                },
+                "carrier_estimate": null,
+                "stale": false,
+                "record_version": "2026-10-12"
+              }
+            }
+          ]
+        },
+        "flags": {
+          "conflict": false,
+          "requires_review": false
+        }
+      },
+      {
+        "agent_name": "policy_product",
+        "status": "escalation_required",
+        "summary": "Refund eligibility for SKU-KNIFE-005 in order ref:c3181ffefc9c0f6c47e7 requires review. The request is within the 30-day return window (5 days since delivery) but the refund amount ($250) exceeds the $100 threshold, triggering manual review per policy.",
+        "evidence": [
+          {
+            "source_id": "order:ref:c3181ffefc9c0f6c47e7",
+            "section": null,
+            "record_version": "2026-10-12"
+          },
+          {
+            "source_id": "tracking:ref:c3181ffefc9c0f6c47e7",
+            "section": null,
+            "record_version": "2026-10-12"
+          },
+          {
+            "source_id": "doc:refund_policy",
+            "section": "review-threshold",
+            "record_version": "v1"
+          },
+          {
+            "source_id": "doc:return_policy",
+            "section": "window",
+            "record_version": "v1"
+          }
+        ],
+        "facts": {
+          "tools": [
+            {
+              "name": "check_return_eligibility",
+              "args": {
+                "order_id": "ref:c3181ffefc9c0f6c47e7",
+                "sku": "SKU-KNIFE-005",
+                "request_type": "refund"
+              },
+              "data": {
+                "decision": "requires_review",
+                "reason_codes": [
+                  "WITHIN_WINDOW",
+                  "REFUND_ABOVE_THRESHOLD"
+                ],
+                "window_days": 30,
+                "days_since_delivery": 5,
+                "refund_amount": 250.0,
+                "threshold": 100.0,
+                "rule_version": "2026-10-01",
+                "policy_refs": [
+                  {
+                    "source_id": "doc:return_policy",
+                    "section": "window",
+                    "record_version": "v1"
+                  },
+                  {
+                    "source_id": "doc:refund_policy",
+                    "section": "review-threshold",
+                    "record_version": "v1"
+                  }
+                ],
+                "action_executed": false,
+                "human_action_required": true
+              }
+            }
+          ]
+        },
+        "flags": {
+          "conflict": false,
+          "requires_review": true
+        }
+      },
+      {
+        "agent_name": "escalation",
+        "status": "success",
+        "summary": "Mandatory verified mock handoff created successfully with triggers T2 and T5. Ticket MOCK-02c915b350c4 assigned to refunds queue at normal priority. Evidence includes order record, tracking data, refund policy review-threshold section, and return policy window section.",
+        "evidence": [
+          {
+            "source_id": "order:ref:c3181ffefc9c0f6c47e7",
+            "section": null,
+            "record_version": "2026-10-12"
+          },
+          {
+            "source_id": "tracking:ref:c3181ffefc9c0f6c47e7",
+            "section": null,
+            "record_version": "2026-10-12"
+          },
+          {
+            "source_id": "doc:refund_policy",
+            "section": "review-threshold",
+            "record_version": "v1"
+          },
+          {
+            "source_id": "doc:return_policy",
+            "section": "window",
+            "record_version": "v1"
+          }
+        ],
+        "facts": {
+          "tools": [
+            {
+              "name": "create_escalation",
+              "args": {
+                "triggers": [
+                  "T2",
+                  "T5"
+                ],
+                "summary": "Mandatory verified mock handoff created with triggers T2 and T5. Evidence includes order record, tracking data, refund policy review-threshold section, and return policy window section. No personal details or unverified claims included.",
+                "evidence_refs": [
+                  {
+                    "source_id": "order:ref:c3181ffefc9c0f6c47e7",
+                    "section": null,
+                    "record_version": "2026-10-12"
+                  },
+                  {
+                    "source_id": "tracking:ref:c3181ffefc9c0f6c47e7",
+                    "section": null,
+                    "record_version": "2026-10-12"
+                  },
+                  {
+                    "source_id": "doc:refund_policy",
+                    "section": "review-threshold",
+                    "record_version": "v1"
+                  },
+                  {
+                    "source_id": "doc:return_policy",
+                    "section": "window",
+                    "record_version": "v1"
+                  }
+                ],
+                "order_ref": null
+              },
+              "data": {
+                "ticket_id": "MOCK-02c915b350c4",
+                "status": "created",
+                "queue": "refunds",
+                "priority": "normal",
+                "triggers": [
+                  "T2",
+                  "T5"
+                ],
+                "summary_hash": "ff67a06222d8dd581c16b25442ec789650eaf1fdbf60b67d6b93712c202a9453",
+                "idempotent_replay": false
+              }
+            }
+          ]
+        },
+        "flags": {
+          "conflict": false,
+          "requires_review": true
+        }
+      }
+    ],
+    "stages": [
+      "guard_in",
+      "supervisor_plan",
+      "dispatch",
+      "order_shipping",
+      "collect_result",
+      "dispatch",
+      "policy_product",
+      "collect_result",
+      "dispatch",
+      "escalation",
+      "collect_result",
+      "dispatch",
+      "composer",
+      "guard_out"
+    ],
+    "errors": [
+      "SPECIALIST_FAILED",
+      "G4_POLICY_NOT_RETRIEVED"
+    ],
+    "model_calls": 11,
+    "tool_calls": 5,
+    "handoffs": 3,
+    "replans": 0,
+    "repairs": 1,
+    "tokens": 19236,
+    "safety_version": "2026-10-15-v1",
+    "latency_ms": 59694.709
+  }
+}

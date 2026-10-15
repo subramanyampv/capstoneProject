@@ -1,0 +1,56 @@
+{
+  "recorded_at": "2026-10-15T19:00:28.424341+00:00",
+  "source_sha256": {
+    "__init__.py": "beb0f323dd24341fb2bdfc3d5905fadc80fab5695e9fb52ca5da3c969ce63eac",
+    "contracts.py": "13f78f5377cf74651354058a1e26e4b3494ffca7dd017f7f39147f74b930a34e",
+    "graph.py": "753f4eceb6d19a0d3c1e262fb114ec0570ee5d17109ac7195cb224d055206aea",
+    "guards.py": "0dd1e20d79b717e2c5be0dd4486b4282d7b78996885bd41abaf6b82736649d6f",
+    "model.py": "d915478dce1ba6905e7f080fcfd12f12a9e5d78391e16c3d1fa04509d6df9b57",
+    "privacy.py": "8e65a217b001da4e7eede571610092e4e2519ac762f0b075df156c7f36ec67be",
+    "registry.py": "5ac1cb219fd2b20f8656bfffbb30ebd3080329f3b8c477cf32cec28260b56281",
+    "runtime.py": "ea3e770932d7d04b2c5768bed77ba72f170c862016f792df074cb483a9f9cae5",
+    "services.py": "627594b46d099b636936ee719500200dbfedbfd470feced05e3e732a3b81dcb0"
+  },
+  "settings": {
+    "provider": "openai_compatible",
+    "model": "qwen3.7-max",
+    "timeout_seconds": 20.0,
+    "max_retries": 1,
+    "response_format": "json_object",
+    "temperature": 0.0,
+    "max_completion_tokens": 1200,
+    "enable_thinking": false
+  },
+  "index_version": "v2",
+  "cases": [
+    {
+      "case": "eligibility",
+      "outcome": "ANSWERED",
+      "triggers": [],
+      "model_calls": 7,
+      "tool_calls": 3,
+      "errors": []
+    },
+    {
+      "case": "multi_intent",
+      "outcome": "ESCALATED",
+      "triggers": [
+        "T2"
+      ],
+      "model_calls": 10,
+      "tool_calls": 5,
+      "errors": []
+    },
+    {
+      "case": "conflict",
+      "outcome": "ESCALATED",
+      "triggers": [
+        "T3"
+      ],
+      "model_calls": 7,
+      "tool_calls": 3,
+      "errors": []
+    }
+  ],
+  "limits": "Synthetic core smoke, not full frozen/holdout evaluation, semantic proof, memory, adaptation or final acceptance."
+}

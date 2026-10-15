@@ -5,7 +5,7 @@
 |---|---|
 | Document | Final Architecture Design & Project Plan |
 | Version | 3.1 — implementation/status update; retains the v3 scope and supersedes prior revisions |
-| Date | 2026-10-13 (America/New_York) |
+| Date | Updated 2026-10-15 (America/New_York); original revision 2026-10-13 |
 | Industry scenario | Scenario 3: Customer Support, AI Support Resolution Agent |
 | Framework track | Track A, framework-based: LangChain (with LangGraph, LangChain's orchestration library) |
 | Submission target | 2026-10-18 |
@@ -25,7 +25,7 @@
 
 **What we are building.** A multi-agent customer-support resolution agent for a synthetic e-commerce retailer. It answers order, shipping, delivery, return, refund, product, and warranty questions.
 
-**Target workflow.** The full supervisor/specialist workflow and deterministic guards below remain **PLANNED**; the baseline, single-agent LangGraph experiment and local policy retrieval are implemented.
+**Core workflow.** A bounded supervisor/three-specialist graph, six typed tools, synthetic session identity and deterministic guards are now implemented alongside the baseline and retrieval experiments. Phase 5 live validation records eight expected smoke outcomes and independent local ticket read-back; memory, adaptation, hosted observability and final acceptance remain pending.
 - A LangGraph **supervisor** plans each request and delegates to three **specialist agents**: Order & Shipping, Policy & Product, and Escalation.
 - Each specialist is a bounded LangChain tool-calling agent with its own small tool allowlist.
 - Policy answers come from retrieval-augmented generation (RAG) over a versioned policy corpus. The corpus is embedded with **Voyage-4-nano** (Hugging Face, local) and stored in **Chroma**.
@@ -39,9 +39,9 @@
 **Where we are.**
 - Phases 1–2 are complete with exit evidence.
 - Phase 3 is complete: the written ten-case comparison, per-prompt failure breakdown and development selection are recorded. The frozen experiment produced 195/195 schema-valid outputs (**MEASURED**). Prompt C is the development default; this does not establish final safety acceptance (Section 14.5).
-- Phase 4 has seven authored documents, 28 indexed sections, pinned local Voyage-4-nano/Chroma, 20 retrieval labels and a live ten-case RAG on/off comparison (**IMPLEMENTED / MEASURED**). The development coverage gap is corrected by the follow-through in Section 9.8; held-out generalization and final tool integration remain open.
-- Phases 5–9 remain **PLANNED**. The target submission date stays 2026-10-18; schedule dates are targets, not delivery guarantees.
-- Latest offline regression: 104 tests passed in 9.90s. [Detailed progress and remaining work](project_progress.md) records the evidence and next steps.
+- Phase 4 has seven authored documents, 28 indexed sections, pinned local Voyage-4-nano/Chroma, 20 retrieval labels and a live ten-case RAG on/off comparison (**IMPLEMENTED / MEASURED**). The development coverage gap is corrected by the follow-through in Section 9.8; category applicability and registered-tool/current-turn citation integration are implemented. Held-out generalization remains open.
+- Phase 5 core tools/control are **IMPLEMENTED**, with live defects and repairs preserved in [the implementation chapter](phase5_tools_and_graph.md). Phases 6–9 remain **PLANNED**; early UI/logging components already exist. The target submission date stays 2026-10-18; schedule dates are targets, not guarantees.
+- Latest offline regression: 151 tests passed in 9.17s. [Detailed progress and remaining work](project_progress.md) records the evidence and next steps.
 - Author/student name and a new GitHub repository are not required. Continue in the existing repository; use the scanned history-free source snapshot for packaging.
 
 **Key design stance.** The rubric evaluates "engineering judgment, reliability, explainability, safety-first design, and practical usefulness… not unnecessary complexity." The architecture is therefore deliberately minimal:
@@ -659,6 +659,20 @@ class AgentResult(BaseModel):
 
 ---
 
+### 8.4 Phase 5 implementation record — 2026-10-15
+
+[Typed tools and bounded graph](phase5_tools_and_graph.md) describe the implemented core. Closed Pydantic schemas are exposed as per-specialist LangChain tools. Synthetic identity is fixed by the application session; ownership checks precede record access, and non-owned records look absent. Category filters need current-turn verified product/order context. Tool results supply canonical evidence refs; the composer may cite policy references only after current-turn retrieval.
+
+The LangGraph controller runs Guard-In, structured supervisor planning, dispatch, three bounded tool-calling specialists, optional one replan, composer/final gate and deterministic fallback. Collection is a code helper inside the specialist node; composer and final gate share a node rather than requiring a separate persisted intermediate checkpoint. Refusal/escalation state accumulates; tools compute eligibility and queue/priority. Eight tool calls (one slot reserved for handoff), four handoffs and twelve model calls are bounded. No checkpoint is installed until Phase 6 privacy tests exist.
+
+The sole write persists a sanitized SQLite mock ticket and verifies it before returning success. Idempotency includes session/customer, sorted server triggers, opaque order ref and computed queue/priority; the priority subtype prevents a later legal threat from replaying a lower-priority general ticket. Read deadlines discard late evidence. Local writes commit/read-back synchronously rather than timing out an abandoned write worker. This is a local mock protocol, not remote transaction reconciliation.
+
+The first live run revealed specialist/reference errors and unnecessary escalation on ordinary eligibility. Later runs add explicit canonical tool evidence, restrict final policy citations to retrieved refs, sanitize handoff summaries before invocation and preserve failed outputs. The eligible return now has current-turn order/eligibility/policy evidence and a supported answer. The [dated validation record](../artifacts/phase5_validation.md) supplies all eight final expected smoke outcomes, independent local ticket read-back, preserved failures, latency and limits. Tests cover ownership, inclusive boundaries, exact threshold, exclusions, code triggers, failures, idempotency, model/read deadlines, bounded replanning and UI identity binding. None of this replaces full frozen/holdout safety evaluation.
+
+CLI `support` and Streamlit **Support agent** expose the current graph. Session memory/TTL/reset commands, feedback adaptation, hosted masked LangSmith hierarchy, complete canary/semantic scans and final evaluation remain open. The synthetic account selector is not production authentication. No return/refund/cancellation writes or knowledge graph are added.
+
+---
+
 ## 9. Knowledge and Retrieval Design
 
 ### 9.1 Corpus (7 baseline documents)
@@ -787,7 +801,7 @@ The v2 index adds validated, authored section-category applicability. Electronic
 
 Recalibration on the unchanged twenty development labels retains Recall@5=1.0 before/after threshold, MRR=.90, threshold=.464133, zero answerable abstentions and five of five unknown abstentions. [Separate v2 measurements](../artifacts/retrieval/category_v2_20261013/summary.json) preserve earlier artifacts. [Real-index applicability checks](../artifacts/retrieval/category_v2_20261013/category_checks.json) cover all five categories, perishable exclusions and electronics conflict evidence despite doc filtering and k=1. The offline suite passes 109 tests in 6.46s.
 
-Phase 4's retrieval layer is ready for Phase 5 integration. Registered tool permissions/timeouts, current-turn specialist evidence and composer citation preservation remain T04/R13/G06/G08 work; the final multi-agent product is not accepted. Human calibration and untouched holdout evaluation remain later gates. The [Memory Pad](memory_pad.md) stores market comparisons and candidate extensions without modifying approved scope; knowledge graph work remains deferred.
+Phase 4's retrieval layer is now integrated with the Phase 5 typed registry and current-turn specialist/composer evidence path. The Phase 5 chapter records live quality defects and repairs; the final product is not accepted. Human calibration and untouched holdout evaluation remain later gates. The [Memory Pad](memory_pad.md) stores market comparisons and candidate extensions without modifying approved scope; knowledge graph work remains deferred.
 
 ---
 
@@ -1163,8 +1177,8 @@ The [detailed task checklist](task_list.md) tracks completed, update-needed and 
 | **1 Problem & success** | Personas, workflow, scope, metrics, failure cases, frozen dataset | **Done** (exit evidence exists) | Condense to the 1–2 page deliverable; add business value section | `problem_framing.md` | Framing (10) |
 | **2 Baseline** | Rule-based Python CLI with documented limitations | **Done** | Reference in the capability ladder | Baseline logs, limitations | Baseline (5) |
 | **3 LLM & prompts** | LLM integration; A/B/C comparison; default selection | **Done for development.** Comparison and C selection recorded; 195 valid outputs | Final safety defects carried into guarded build; not a prompt-only safety pass | `prompt_comparison.md`, `artifacts/phase3_selection.json` | LLM & Prompt (15) |
-| **4 Knowledge & retrieval** | Corpus, Voyage-nano + Chroma, `search_policy`, retrieval evaluation | **Initial build IMPLEMENTED / MEASURED** | Development coverage and targeted wording check recorded; Category handling completed in Section 9.9; Phase 5 tool integration and later human calibration | `retrieval_design.md`, retrieval/RAG artifacts | RAG (10) |
-| **5 Tools & multi-agent** | 6 tools, registry, 3 specialists, supervisor, guards, budgets | PLANNED (Days 2–3) | Sections 5, 7, 8 | Tool correctness, failed-call traces, routing traces | Tools (15), Architecture (15) |
+| **4 Knowledge & retrieval** | Corpus, Voyage-nano + Chroma, `search_policy`, retrieval evaluation | **Initial build IMPLEMENTED / MEASURED** | Development coverage and targeted wording check recorded; Category handling and Phase 5 current-turn tool integration implemented; later human calibration | `retrieval_design.md`, retrieval/RAG artifacts | RAG (10) |
+| **5 Tools & multi-agent** | 6 tools, registry, 3 specialists, supervisor, guards, budgets | Core IMPLEMENTED; live validation recorded | Complete final semantic/repeated-case proof in Phase 9 | phase5_tools_and_graph.md; typed tool/graph tests and live smoke artifacts | Tools (15), Architecture (15) |
 | **6 Planning, memory & context** | Plans, checkpointer memory, TTL, reset | PLANNED (Day 3) | Section 11 | Memory on/off results, reset demo | Architecture/Memory (15) |
 | **7 Adaptive behaviour** | Feedback signals, style adaptation | PLANNED (Day 3) | Section 12 | Before/after logs, limits | Adaptive (5) |
 | **8 Deployment readiness** | Packaging, logs, tracing, failure handling | PLANNED (Days 3–4) | Section 13 | Clean-venv run, latency/error report, trace samples, canary reports | Deployment (10) |
@@ -1172,7 +1186,7 @@ The [detailed task checklist](task_list.md) tracks completed, update-needed and 
 
 ### 16.2 Delivery schedule (targets; current status takes precedence)
 
-The original Day 1 implementation tasks were substantially completed on 2026-10-13. Phase 4 coverage and category follow-through are measured. Next work is Phase 5 tools/guards and final retrieval integration. The daily blocks below are planning targets, not claims of completion or guaranteed dates. No author/student identity or new repository is a dependency.
+The original Day 1 implementation tasks were substantially completed on 2026-10-13. Phase 4 coverage and category follow-through are measured. Phase 5 tools/control are implemented and live validation is recorded; next major work is Phase 6 memory with checkpoint privacy tests. The daily blocks below are planning targets, not claims of completion or guaranteed dates. No author/student identity or new repository is a dependency.
 
 **Day 0: Tuesday 2026-10-13 (evening, ~1.5 h)**
 - Freeze scope. Add feature flags for deferred components and hide deferred UI tabs.

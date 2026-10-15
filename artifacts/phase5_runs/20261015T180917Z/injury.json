@@ -1,0 +1,122 @@
+{
+  "case": "injury",
+  "faults": {},
+  "result": {
+    "response": {
+      "answer": "I cannot approve a refund at this time. A mandatory escalation has been created due to the reported hand injury and the request falling outside the standard return window. Ticket MOCK-47c77d8821d7 has been generated in the safety queue for high-priority review; this is a local mock handoff and not a real retailer delivery. I am unable to confirm eligibility or process any transaction without an order ID. Please provide the order ID (format O-XXXX) associated with this product so we can review your case. Additionally, please note that no conversation memory or style profile exists yet; feedback or follow-ups regarding this interaction will need to be addressed in future phases.",
+      "why": [
+        "Refusal R3 prevents immediate approval of refunds outside the return window without review.",
+        "Trigger T1 mandates escalation for safety incidents involving physical injury.",
+        "Eligibility cannot be determined via check_return_eligibility as no order ID was provided.",
+        "Ticket MOCK-47c77d8821d7 was successfully created in the safety queue as a local mock handoff.",
+        "System lacks conversation memory or style profile, requiring disclosure for future feedback handling."
+      ],
+      "citations": [],
+      "next_steps": [
+        "Provide the order ID in format O-XXXX to enable case review.",
+        "Await contact from the safety team regarding ticket MOCK-47c77d8821d7.",
+        "Seek medical attention if the hand injury requires immediate care."
+      ],
+      "intents_addressed": [
+        "refund_request_outside_window",
+        "safety_incident_report"
+      ],
+      "outcome_claimed": "ESCALATED"
+    },
+    "outcome": "ESCALATED",
+    "ticket": {
+      "ticket_id": "MOCK-47c77d8821d7",
+      "status": "created",
+      "queue": "safety",
+      "priority": "high",
+      "triggers": [
+        "T1"
+      ],
+      "summary_hash": "eb1627780274cb059093210949a96e48292de2b7c0938e12c0bcad5ce8dba8b0",
+      "idempotent_replay": false
+    },
+    "refusals": [
+      "R3"
+    ],
+    "triggers": [
+      "T1"
+    ],
+    "tool_records": [
+      {
+        "exec_id": "081a8d36506e46b9a8ce167c365f814e",
+        "name": "create_escalation",
+        "status": "ok",
+        "data": {
+          "ticket_id": "MOCK-47c77d8821d7",
+          "status": "created",
+          "queue": "safety",
+          "priority": "high",
+          "triggers": [
+            "T1"
+          ],
+          "summary_hash": "eb1627780274cb059093210949a96e48292de2b7c0938e12c0bcad5ce8dba8b0",
+          "idempotent_replay": false
+        },
+        "error": null,
+        "duration_ms": 6.296
+      }
+    ],
+    "results": [
+      {
+        "agent_name": "escalation",
+        "status": "success",
+        "summary": "Safety incident escalation created for reported hand injury and refund request outside return window. T1 trigger applied. Ticket routed to safety queue with high priority. No order ID or SKU available in provided entities; R3 trigger not included as it was not in the validated triggers list.",
+        "evidence": [],
+        "facts": {
+          "tools": [
+            {
+              "name": "create_escalation",
+              "args": {
+                "triggers": [
+                  "T1"
+                ],
+                "summary": "Safety incident reported involving hand injury. Refund requested outside standard return window. T1 trigger flagged for safety review. No order ID or SKU provided in current entities.",
+                "evidence_refs": [],
+                "order_ref": null
+              },
+              "data": {
+                "ticket_id": "MOCK-47c77d8821d7",
+                "status": "created",
+                "queue": "safety",
+                "priority": "high",
+                "triggers": [
+                  "T1"
+                ],
+                "summary_hash": "eb1627780274cb059093210949a96e48292de2b7c0938e12c0bcad5ce8dba8b0",
+                "idempotent_replay": false
+              }
+            }
+          ]
+        },
+        "flags": {
+          "conflict": false,
+          "requires_review": false
+        }
+      }
+    ],
+    "stages": [
+      "guard_in",
+      "supervisor_plan",
+      "dispatch",
+      "escalation",
+      "collect_result",
+      "dispatch",
+      "composer",
+      "guard_out"
+    ],
+    "errors": [],
+    "model_calls": 4,
+    "tool_calls": 1,
+    "handoffs": 1,
+    "replans": 0,
+    "repairs": 0,
+    "tokens": 4928,
+    "safety_version": "2026-10-15-v1",
+    "latency_ms": 17082.556
+  }
+}
