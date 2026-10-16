@@ -12,7 +12,8 @@ Authority: [Architecture and Plan v3](architecture_and_plan.md), section 14. Fin
 | Phase 4 RAG on/off | RAG 10/10 validated and 9 cited; no-RAG 9/10 validated and zero cited | No order verification or ticket; one rejected no-evidence output preserved |
 | Phase 5 core | Typed six-tool registry, server identity, bounded supervisor/specialists, verified mock tickets and failure disclosure; live return repair recorded | Initial live defects preserved; not complete frozen/holdout evaluation or semantic proof |
 | Phase 6 memory | Five conversations × on/off pass expected behavior; four of four dependent follow-ups answered on versus zero off; reset/expiry/checkpoint audit | Development scripts; no independent semantic or held-out multi-turn grade |
-| Offline regression | 174 tests passed in 16.53s | Tools and the bounded graph are implemented; memory is implemented; adaptation and final acceptance remain open |
+| Phase 7 adaptation | Same-question answer 72 → 46 words, version 0 → 1; reset version 2 returns to 72 words; citations retained; four safety cases × two styles preserve outcomes/flags; scoped deletion passes | Authored development cases; original false numeric rejections preserved; style-only adaptation, no semantic/holdout acceptance |
+| Offline regression | 192 tests passed in 12.26s | Tools, memory, terminal/Streamlit adaptation are implemented; final acceptance remains open |
 | Packaging | Pinned app/dev/eval/ui/rag install in existing venv succeeded; pip dependency check passed | Fresh clean-venv verification remains Phase 8 work |
 | UI | Three default tabs and explicit deferred-tab flag verified by AppTest | Final synthetic identity/chat workflow remains Phase 5+ |
 
@@ -35,3 +36,5 @@ Primary evidence: [Phase 2 closure](phase2_closure.md), [prompt comparison](prom
 Phase 5 closure: [151-test / eight-case evidence](../artifacts/phase5_validation.md) and [independent local ticket checks](../artifacts/phase5_runs/20261015T190233Z/validation.json) pass for the stated core scope. The current cases use verified ownership context (e.g. C-103 for O-1006); no identity is inferred from model output. The bounded local scan has zero findings. This is not the complete frozen/holdout, semantic, cloud-canary or repeated-run gate.
 
 Current memory evidence: [Phase 6 validation](../artifacts/phase6_validation.md), [on/off checks](../artifacts/memory_runs/20261015T194351Z/validation.json), [checkpoint deletion audit](../artifacts/phase6_checkpoint_audit.json). Earlier failed comparisons remain preserved; memory/working-state partition is tested rather than inferred from a final state.
+
+Phase 7 details and preserved initial failures: [validation](../artifacts/phase7_validation.md). Numeric duration wording now accepts singular/plural day/month equivalence, while tests reject changed values, changed units and numeric suffix matches. A punctuation-only follow-up is replayed against all eleven recorded final drafts with identical gate results.

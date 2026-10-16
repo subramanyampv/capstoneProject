@@ -8,7 +8,7 @@ The initial product uses a LangGraph supervisor and three specialists: Order & S
 
 Knowledge: seven baseline policy/FAQ documents, local Voyage-4-nano for both document and query embeddings, persisted Chroma. Local JSONL is primary evidence; masked LangSmith is opt-in. DeepEval judged quality never decides safety gates.
 
-Inputs: synthetic requests, ≤2,000 characters, synthetic customer/session, optional reset/feedback commands. Target outputs: answer, reason codes, resolvable citations, next steps and one code-computed terminal outcome; verified ticket only when actually created. The Phase 5 support graph implements these output contracts; bounded memory and /reset are implemented; feedback commands remain Phase 7. Phase 3 retains its frozen experimental response schema.
+Inputs: synthetic requests, ≤2,000 characters, synthetic customer/session, optional reset/feedback commands. Target outputs: answer, reason codes, resolvable citations, next steps and one code-computed terminal outcome; verified ticket only when actually created. The Phase 5 support graph implements these output contracts; bounded memory and /reset are implemented; controlled feedback/reset/delete commands are implemented in Phase 7 for terminal and Streamlit. Phase 3 retains its frozen experimental response schema.
 
 Scenario date: 2026-10-12. Thresholds come from `data/policy_rules.json`. Current fixture filenames remain `sample_orders.json` and `sample_tracking_events.json`; v3's shortened names are conceptual references, not a requirement to duplicate data.
 

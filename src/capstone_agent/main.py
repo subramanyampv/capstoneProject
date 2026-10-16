@@ -19,7 +19,7 @@ PHASES = [
     (4, "knowledge & retrieval (RAG) — DONE (development scope; final holdout open)"),
     (5, "tools & multi-agent orchestration — DONE (core; final acceptance open)"),
     (6, "planning, memory, context — DONE (bounded session scope; final evaluation open)"),
-    (7, "adaptive behavior"),
+    (7, "adaptive behavior — DONE (bounded style; final evaluation open)"),
     (8, "deployment readiness"),
     (9, "evaluation & engineering review"),
 ]
@@ -29,7 +29,7 @@ def cmd_status(_: argparse.Namespace) -> int:
     print("capstone-agent — multi-agent e-commerce support agent")
     print("Phases:")
     for num, name in PHASES:
-        active = num == 7
+        active = num == 8
         print(f"  {'>' if active else ' '} phase {num}: {name}")
     print("\nTry:  capstone-agent ask \"Can I return order O-1001?\" --today 2026-10-12")
     print("Baseline evidence run:  scripts/run_baseline.sh")
@@ -133,16 +133,16 @@ def cmd_support(args):
     identity=SessionIdentity(args.customer);search=None
     def ask(message):
         nonlocal search
-        if message.strip()!='/reset' and search is None:
+        if not message.strip().startswith(('/reset','/feedback','/forget-preferences')) and search is None:
             from capstone_agent.retrieval.embeddings_voyage import VoyageNanoEmbeddings
             from capstone_agent.retrieval.chroma_store import PolicySearch
             search=PolicySearch(VoyageNanoEmbeddings());search.search('return policy')
         result=run_support(message,identity=identity,search=search,faults=faults,
                            memory_enabled=False if args.no_memory else None)
-        print(json.dumps({k:result[k] for k in ['response','outcome','ticket','triggers','refusals','model_calls','tool_calls','memory']},indent=2))
+        print(json.dumps({k:result.get(k) for k in ['response','outcome','ticket','triggers','refusals','model_calls','tool_calls','memory','style']},indent=2))
     if not args.chat:
         ask(args.message);return 0
-    print('Synthetic support chat. /reset clears session context; /quit exits. Memory is lost on restart.')
+    print('Synthetic support chat. /reset clears context; /feedback too_long|too_short|unclear|helpful|not_helpful|enable|disable|reset_style; /forget-preferences deletes style data; /quit exits. Explicit feedback enables style learning; two matching signals adapt style. Preferences persist locally; session memory is lost on restart.')
     try:
         while True:
             try:message=input('You: ')
@@ -193,9 +193,9 @@ def build_parser() -> argparse.ArgumentParser:
     search.add_argument("--k", type=int, default=5)
     search.add_argument("--threshold", type=float, help="Override the calibrated local threshold")
     search.set_defaults(func=cmd_search_policy)
-    support = sub.add_parser('support', help='Phase 5 multi-agent support; synthetic sessions and mock handoff only')
+    support = sub.add_parser('support', help='Multi-agent support with session memory and style feedback; synthetic data/mock handoff only')
     support.add_argument('message',nargs='?',default='')
-    support.add_argument('--chat',action='store_true',help='Keep one synthetic session in this process; /reset and /quit supported')
+    support.add_argument('--chat',action='store_true',help='Keep one synthetic session; /reset, /feedback, /forget-preferences and /quit supported')
     support.add_argument('--no-memory',action='store_true',help='Disable retained context for comparison')
     support.add_argument('--customer',choices=['C-100','C-101','C-102','C-103'],default='C-100',help='Select synthetic account before the request')
     support.add_argument('--fault-tracking-timeout',action='store_true')

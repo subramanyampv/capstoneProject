@@ -1,0 +1,233 @@
+{
+  "case": "tracking_timeout_standard",
+  "result": {
+    "response": {
+      "answer": "Order ref:d45916301dd856974ea6 shows as shipped, but I could not retrieve current tracking details. I have created a local mock handoff ticket MOCK-5dad2baa215d in the general queue for further assistance. This is not a real retailer delivery update. Please contact retailer support directly if you need immediate tracking information.",
+      "why": [
+        "Tracking lookup encountered an error despite order showing shipped status",
+        "Mandatory escalation trigger T5 required verified handoff creation"
+      ],
+      "citations": [
+        {
+          "source_id": "order:ref:d45916301dd856974ea6",
+          "section": null,
+          "record_version": "2026-10-12"
+        }
+      ],
+      "next_steps": [
+        "Contact retailer support for live tracking updates",
+        "Reference ticket MOCK-5dad2baa215d when following up"
+      ],
+      "intents_addressed": [
+        "track_order"
+      ],
+      "outcome_claimed": "ESCALATED"
+    },
+    "outcome": "ESCALATED",
+    "ticket": {
+      "ticket_id": "MOCK-5dad2baa215d",
+      "status": "created",
+      "queue": "general",
+      "priority": "normal",
+      "triggers": [
+        "T5"
+      ],
+      "summary_hash": "7e0b421b9478f26738c80ca9e1a4bbcdad79dd108479aa17438cbab82512bc83",
+      "idempotent_replay": false
+    },
+    "refusals": [],
+    "triggers": [
+      "T5"
+    ],
+    "tool_records": [
+      {
+        "evidence_refs": [
+          {
+            "source_id": "order:ref:d45916301dd856974ea6",
+            "section": null,
+            "record_version": "2026-10-12"
+          }
+        ],
+        "exec_id": "a7a1d0568a23438ba764b3861141150c",
+        "name": "lookup_order",
+        "status": "ok",
+        "data": {
+          "order_id": "ref:d45916301dd856974ea6",
+          "status": "shipped",
+          "placed_at": "2026-09-24",
+          "dispatched_at": "2026-09-28",
+          "delivered_at": null,
+          "shipping_service": null,
+          "items": [
+            {
+              "sku": "SKU-JKT-002",
+              "name": "Alpine Down Jacket",
+              "category": "apparel",
+              "price": 149.0
+            }
+          ],
+          "record_version": "2026-10-12"
+        },
+        "error": null,
+        "duration_ms": 1.29
+      },
+      {
+        "evidence_refs": [],
+        "exec_id": "97f1d45d621048bab4493c91113df369",
+        "name": "get_tracking_events",
+        "status": "error",
+        "data": null,
+        "error": "TIMEOUT",
+        "duration_ms": 0.144
+      },
+      {
+        "evidence_refs": [],
+        "exec_id": "65717536c7fe43f5825bd1740d871e2b",
+        "name": "create_escalation",
+        "status": "ok",
+        "data": {
+          "ticket_id": "MOCK-5dad2baa215d",
+          "status": "created",
+          "queue": "general",
+          "priority": "normal",
+          "triggers": [
+            "T5"
+          ],
+          "summary_hash": "7e0b421b9478f26738c80ca9e1a4bbcdad79dd108479aa17438cbab82512bc83",
+          "idempotent_replay": false
+        },
+        "error": null,
+        "duration_ms": 3.233
+      }
+    ],
+    "results": [
+      {
+        "agent_name": "order_shipping",
+        "status": "tool_error",
+        "summary": "Order ref:d45916301dd856974ea6 is shipped (dispatched 2026-09-28) with Alpine Down Jacket. Tracking events retrieval failed due to timeout; current tracking status unavailable.",
+        "evidence": [
+          {
+            "source_id": "order:ref:d45916301dd856974ea6",
+            "section": null,
+            "record_version": "2026-10-12"
+          }
+        ],
+        "facts": {
+          "tools": [
+            {
+              "name": "lookup_order",
+              "args": {
+                "order_id": "ref:d45916301dd856974ea6"
+              },
+              "data": {
+                "order_id": "ref:d45916301dd856974ea6",
+                "status": "shipped",
+                "placed_at": "2026-09-24",
+                "dispatched_at": "2026-09-28",
+                "delivered_at": null,
+                "shipping_service": null,
+                "items": [
+                  {
+                    "sku": "SKU-JKT-002",
+                    "name": "Alpine Down Jacket",
+                    "category": "apparel",
+                    "price": 149.0
+                  }
+                ],
+                "record_version": "2026-10-12"
+              }
+            }
+          ]
+        },
+        "flags": {
+          "conflict": false,
+          "requires_review": false
+        }
+      },
+      {
+        "agent_name": "escalation",
+        "status": "success",
+        "summary": "Mandatory verified mock handoff created for order ref:d45916301dd856974ea6 with trigger T5. Evidence reference validated from order record version 2026-10-12. No personal data or delivery guarantees included.",
+        "evidence": [
+          {
+            "source_id": "order:ref:d45916301dd856974ea6",
+            "section": null,
+            "record_version": "2026-10-12"
+          }
+        ],
+        "facts": {
+          "tools": [
+            {
+              "name": "create_escalation",
+              "args": {
+                "triggers": [
+                  "T5"
+                ],
+                "summary": "Mandatory verified mock handoff created for order ref:d45916301dd856974ea6 with trigger T5. Evidence reference validated from order record version 2026-10-12. No personal data or delivery guarantees included.",
+                "evidence_refs": [
+                  {
+                    "source_id": "order:ref:d45916301dd856974ea6",
+                    "section": null,
+                    "record_version": "2026-10-12"
+                  }
+                ],
+                "order_ref": "ref:d45916301dd856974ea6"
+              },
+              "data": {
+                "ticket_id": "MOCK-5dad2baa215d",
+                "status": "created",
+                "queue": "general",
+                "priority": "normal",
+                "triggers": [
+                  "T5"
+                ],
+                "summary_hash": "7e0b421b9478f26738c80ca9e1a4bbcdad79dd108479aa17438cbab82512bc83",
+                "idempotent_replay": false
+              }
+            }
+          ]
+        },
+        "flags": {
+          "conflict": false,
+          "requires_review": false
+        }
+      }
+    ],
+    "stages": [
+      "guard_in",
+      "supervisor_plan",
+      "dispatch",
+      "order_shipping",
+      "collect_result",
+      "dispatch",
+      "escalation",
+      "collect_result",
+      "dispatch",
+      "composer",
+      "guard_out"
+    ],
+    "errors": [],
+    "model_calls": 7,
+    "tool_calls": 3,
+    "handoffs": 2,
+    "replans": 0,
+    "repairs": 0,
+    "tokens": 9748,
+    "style": {
+      "verbosity": "standard",
+      "format": "prose",
+      "version": 0,
+      "word_count": 48
+    },
+    "safety_version": "2026-10-15-v2",
+    "latency_ms": 23521.817,
+    "memory": {
+      "enabled": false,
+      "history_messages": 0,
+      "resolved_reference": false,
+      "expired": false,
+      "reset": false
+    },
+    "request_id": "f4ff459eb6634570a52d3a19c5847235"
+  }
+}

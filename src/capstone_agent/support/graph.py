@@ -92,7 +92,10 @@ class SupportAgent:
         self.services,self.gateway=services,gateway
         self.rules=rules or SafetyRules(); self.secrets=secrets
 
-    async def run(self,query,identity:SessionIdentity,*,faults=None,memory_context=None):
+    async def run(self,query,identity:SessionIdentity,*,faults=None,memory_context=None,style=None):
+        from capstone_agent.support.preferences import StyleProfile
+        if style is not None and not isinstance(style,StyleProfile):raise ValueError("INVALID_STYLE_PROFILE")
+        style=style or StyleProfile()
         if not isinstance(query,str) or not query.strip() or len(query)>2000:
             raise ValueError('INVALID_SUPPORT_INPUT')
         try:
@@ -325,7 +328,7 @@ class SupportAgent:
             for attempt in range(2):
                 try:
                     if ctx.faults.get('composer'): raise ValueError('INJECTED_MODEL_FAILURE')
-                    reply=await self.gateway.invoke([SystemMessage(content=SYSTEM_COMPOSE),HumanMessage(content=json.dumps(data))],schema=ResponseDraft)
+                    reply=await self.gateway.invoke([SystemMessage(content=SYSTEM_COMPOSE+"\nStyle preference (presentation only): "+style.instruction()),HumanMessage(content=json.dumps(data))],schema=ResponseDraft)
                     draft=ResponseDraft.model_validate_json(reply.content)
                     # Outcome authority stays in code before other checks.
                     draft.outcome_claimed=computed
@@ -388,4 +391,5 @@ class SupportAgent:
             'tool_records':ctx.records,'results':final.get('results',[]),'stages':final.get('stages',[]),
             'errors':final.get('errors',[]),'model_calls':self.gateway.calls,'tool_calls':ctx.calls,
             'handoffs':final.get('handoffs',0),'replans':final.get('replans',0),'repairs':final.get('repairs',0),'tokens':getattr(self.gateway,'tokens',0),
+            'style':{**style.as_dict(),'word_count':len(final['draft']['answer'].split())},
             'safety_version':self.rules.version,'latency_ms':round((time.perf_counter()-started)*1000,3)}

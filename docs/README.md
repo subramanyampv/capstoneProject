@@ -25,3 +25,5 @@
 | [Archive](archive/v1-v2/) | Superseded designs and earlier assumptions, retained for history |
 
 Existing dated run evidence is preserved. Historical reports describe the code and decisions at that time; they do not override v3.
+
+- [Phase 7 adaptation](phase7_adaptation.md): terminal/Streamlit feedback, consent, style versioning/reset/deletion and measured development evidence.

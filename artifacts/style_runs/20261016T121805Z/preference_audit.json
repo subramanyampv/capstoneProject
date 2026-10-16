@@ -1,0 +1,162 @@
+{
+  "profiles": {
+    "ref:2b653302f18f5225ce7e": {
+      "consent": true,
+      "style": {
+        "verbosity": "concise",
+        "format": "prose",
+        "version": 1
+      },
+      "signals": [
+        {
+          "signal": "too_long",
+          "used": true
+        },
+        {
+          "signal": "too_long",
+          "used": true
+        }
+      ],
+      "history": [
+        {
+          "from": {
+            "verbosity": "standard",
+            "format": "prose",
+            "version": 0
+          },
+          "to": {
+            "verbosity": "concise",
+            "format": "prose",
+            "version": 1
+          },
+          "reason": "too_long",
+          "signals": [
+            "too_long",
+            "too_long"
+          ],
+          "ts": "2026-10-16T12:20:17.329700+00:00"
+        }
+      ]
+    },
+    "ref:059c67cc756660d558de": {
+      "consent": true,
+      "style": {
+        "verbosity": "concise",
+        "format": "prose",
+        "version": 1
+      },
+      "signals": [
+        {
+          "signal": "too_long",
+          "used": true
+        },
+        {
+          "signal": "too_long",
+          "used": true
+        }
+      ],
+      "history": [
+        {
+          "from": {
+            "verbosity": "standard",
+            "format": "prose",
+            "version": 0
+          },
+          "to": {
+            "verbosity": "concise",
+            "format": "prose",
+            "version": 1
+          },
+          "reason": "too_long",
+          "signals": [
+            "too_long",
+            "too_long"
+          ],
+          "ts": "2026-10-16T12:21:05.705765+00:00"
+        }
+      ]
+    },
+    "ref:8fc09c59602f533619c2": {
+      "consent": true,
+      "style": {
+        "verbosity": "concise",
+        "format": "prose",
+        "version": 1
+      },
+      "signals": [
+        {
+          "signal": "too_long",
+          "used": true
+        },
+        {
+          "signal": "too_long",
+          "used": true
+        }
+      ],
+      "history": [
+        {
+          "from": {
+            "verbosity": "standard",
+            "format": "prose",
+            "version": 0
+          },
+          "to": {
+            "verbosity": "concise",
+            "format": "prose",
+            "version": 1
+          },
+          "reason": "too_long",
+          "signals": [
+            "too_long",
+            "too_long"
+          ],
+          "ts": "2026-10-16T12:22:06.303911+00:00"
+        }
+      ]
+    }
+  },
+  "feedback": [
+    {
+      "ts": "2026-10-16T12:20:17.324651+00:00",
+      "customer_ref": "ref:2b653302f18f5225ce7e",
+      "request_id": "6e281bfbae8c43b2ab9c6042c1983c4c",
+      "signal": "too_long",
+      "type": "explicit"
+    },
+    {
+      "ts": "2026-10-16T12:20:17.329700+00:00",
+      "customer_ref": "ref:2b653302f18f5225ce7e",
+      "request_id": "a90fb10d406e4314ad7e8f2eff27d447",
+      "signal": "too_long",
+      "type": "explicit"
+    },
+    {
+      "ts": "2026-10-16T12:21:05.703242+00:00",
+      "customer_ref": "ref:059c67cc756660d558de",
+      "request_id": "b656a3c5e65c411aa337b77cd4df8105",
+      "signal": "too_long",
+      "type": "explicit"
+    },
+    {
+      "ts": "2026-10-16T12:21:05.705765+00:00",
+      "customer_ref": "ref:059c67cc756660d558de",
+      "request_id": "eed7415f98cb498ea141752800d2d9f3",
+      "signal": "too_long",
+      "type": "explicit"
+    },
+    {
+      "ts": "2026-10-16T12:22:06.296333+00:00",
+      "customer_ref": "ref:8fc09c59602f533619c2",
+      "request_id": "7e09f99b3bf147d68f6f918bf100329c",
+      "signal": "too_long",
+      "type": "explicit"
+    },
+    {
+      "ts": "2026-10-16T12:22:06.303911+00:00",
+      "customer_ref": "ref:8fc09c59602f533619c2",
+      "request_id": "a044cdfcffea4aed817f1b6f17be15a6",
+      "signal": "too_long",
+      "type": "explicit"
+    }
+  ]
+}

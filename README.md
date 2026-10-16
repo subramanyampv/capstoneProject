@@ -11,7 +11,8 @@ The core now implements a LangGraph supervisor, three LangChain specialists and 
 | 4 | Local retrieval measured; retained development recall improved 80% → 100%; category-aware v2 index verified; final tool integration tracked separately |
 | 5 | Typed tools, server identity and bounded multi-agent core implemented; core live smoke verified; final acceptance pending |
 | 6 | Bounded projection memory, follow-ups and reset/expiry implemented; five-conversation comparison measured |
-| 7–9 | Pending: adaptation, deployment verification and final evaluation |
+| 7 | Implemented: controlled style feedback, versioning/reset/deletion in terminal and Streamlit; development evidence |
+| 8–9 | Pending: hosted observability, deployment verification and final evaluation |
 
 ## Local setup
 
@@ -26,7 +27,7 @@ bash scripts/run_baseline.sh
 bash scripts/run_ui.sh
 ```
 
-The UI binds to http://127.0.0.1:8501 with Chat, Evaluation and Traces. It exposes baseline/LLM experiments and a Support agent mode with synthetic account selection, current-turn tools, citations and verified local mock handoffs. Bounded session memory and reset/expiry are implemented; adaptation remains pending. `UI_SHOW_DEFERRED=true` explicitly restores the historical Knowledge and Delivery-estimate demonstrations; they are excluded from initial-product evaluation.
+The UI binds to http://127.0.0.1:8501 with Chat, Evaluation and Traces. It exposes baseline/LLM experiments and a Support agent mode with synthetic account selection, current-turn tools, citations and verified local mock handoffs. Bounded session memory and reset/expiry are implemented; controlled style adaptation is implemented. `UI_SHOW_DEFERRED=true` explicitly restores the historical Knowledge and Delivery-estimate demonstrations; they are excluded from initial-product evaluation.
 
 ## Model configuration and experiments
 
@@ -45,6 +46,8 @@ A/B/C still use their original versioned prompts and independent case contexts. 
 Phase 5: `.venv/bin/capstone-agent support "Can I return TrailRunner Shoes order O-1001?" --customer C-100`. See [tools, safety and graph details](docs/phase5_tools_and_graph.md), including preserved live failures and current limits.
 
 Session chat: `.venv/bin/capstone-agent support --chat --customer C-100`; `/reset` clears context, `/quit` exits. Context is process-local; one-shot invocations do not share memory. See [Phase 6 memory](docs/phase6_memory.md).
+
+Style feedback works in terminal and Streamlit: `/feedback too_long`, `/feedback too_short`, `/feedback unclear`, `/feedback helpful`, `/feedback not_helpful`. Two matching signals among the recent ten can change length or format. Explicit feedback enables learning; use `/feedback enable` or `/feedback disable` to control automatic learning, `/feedback reset_style` to restore default style, and `/forget-preferences` to delete saved preferences/feedback. Preferences persist per synthetic customer; `/reset` clears only session memory. Commands work without a provider/index. See [Phase 7 adaptation](docs/phase7_adaptation.md) and [validation](artifacts/phase7_validation.md).
 
 Local retrieval commands: `make ingest`, `make eval-retrieval`, and `.venv/bin/capstone-agent search-policy "footwear return window"`. [Retrieval design and results](docs/retrieval_design.md) record measured coverage and limitations.
 

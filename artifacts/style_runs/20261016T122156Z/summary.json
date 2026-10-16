@@ -1,0 +1,53 @@
+{
+  "recorded_at": "2026-10-16T12:23:50.304215+00:00",
+  "source_sha256": {
+    "__init__.py": "beb0f323dd24341fb2bdfc3d5905fadc80fab5695e9fb52ca5da3c969ce63eac",
+    "contracts.py": "f032a7150d2603aa72673ad002289ce38535a133700dfdb5f250cc6ba1fc33ea",
+    "graph.py": "1fcb82671567c341b41e1ce676d7ccf36cc01a871edd0261c5f8b807bc98b336",
+    "guards.py": "d528d62262d9d124eb59c60fe1832df0deb07254a1f6fd1ed2ebc9c25a011c75",
+    "memory.py": "cc5f6578fc56c803da72ef76da7156811f2cea2e63d04edb869708d3a0e0e935",
+    "model.py": "d915478dce1ba6905e7f080fcfd12f12a9e5d78391e16c3d1fa04509d6df9b57",
+    "preferences.py": "50eb222a678ffcd271820aa3ef326ddb966f72a1b7759fbb9c2bdefeb675a31d",
+    "privacy.py": "8e65a217b001da4e7eede571610092e4e2519ac762f0b075df156c7f36ec67be",
+    "registry.py": "2bf8fe91f0b9c0c48b4772fb0bbdb3f916dd46e34734b4e5d36d874ca88adcac",
+    "runtime.py": "f6f2d647d4997017e6c76065bad25a12ee65b4b192939f4fdda549403f45f6a5",
+    "services.py": "627594b46d099b636936ee719500200dbfedbfd470feced05e3e732a3b81dcb0"
+  },
+  "settings": {
+    "provider": "openai_compatible",
+    "model": "qwen3.7-max",
+    "timeout_seconds": 20.0,
+    "max_retries": 1,
+    "response_format": "json_object",
+    "temperature": 0.0,
+    "max_completion_tokens": 1200,
+    "enable_thinking": false
+  },
+  "before_after": {
+    "before": {
+      "verbosity": "standard",
+      "format": "prose",
+      "version": 0,
+      "word_count": 70
+    },
+    "after": {
+      "verbosity": "concise",
+      "format": "prose",
+      "version": 1,
+      "word_count": 54
+    },
+    "reset": {
+      "verbosity": "standard",
+      "format": "prose",
+      "version": 2,
+      "word_count": 71
+    },
+    "answered": true,
+    "citations_preserved": true,
+    "concise_bullets": true,
+    "concise_within_80_words": true
+  },
+  "safety_subset": [],
+  "deletion_verified": true,
+  "limits": "Development examples only. No frozen/holdout use. Length/format are presentation goals, never truncation rules. No semantic faithfulness claim or final acceptance."
+}

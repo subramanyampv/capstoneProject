@@ -30,3 +30,9 @@ compare-memory:
 
 scan-memory:
 	.venv/bin/python scripts/scan_memory.py
+
+compare-style:
+	.venv/bin/python scripts/compare_style.py
+
+scan-style:
+	.venv/bin/python scripts/scan_style.py

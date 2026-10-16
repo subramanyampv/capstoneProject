@@ -1,0 +1,64 @@
+{
+  "profiles": {
+    "ref:2b653302f18f5225ce7e": {
+      "consent": true,
+      "style": {
+        "verbosity": "standard",
+        "format": "prose",
+        "version": 2
+      },
+      "signals": [],
+      "history": [
+        {
+          "from": {
+            "verbosity": "standard",
+            "format": "prose",
+            "version": 0
+          },
+          "to": {
+            "verbosity": "concise",
+            "format": "prose",
+            "version": 1
+          },
+          "reason": "too_long",
+          "signals": [
+            "too_long",
+            "too_long"
+          ],
+          "ts": "2026-10-16T12:22:42.968601+00:00"
+        },
+        {
+          "from": {
+            "verbosity": "concise",
+            "format": "prose",
+            "version": 1
+          },
+          "to": {
+            "verbosity": "standard",
+            "format": "prose",
+            "version": 2
+          },
+          "reason": "reset_style",
+          "signals": [],
+          "ts": "2026-10-16T12:23:14.146427+00:00"
+        }
+      ]
+    }
+  },
+  "feedback": [
+    {
+      "ts": "2026-10-16T12:22:42.961326+00:00",
+      "customer_ref": "ref:2b653302f18f5225ce7e",
+      "request_id": "e16b6ef80b3c4d91a0354f94b73d9083",
+      "signal": "too_long",
+      "type": "explicit"
+    },
+    {
+      "ts": "2026-10-16T12:22:42.968601+00:00",
+      "customer_ref": "ref:2b653302f18f5225ce7e",
+      "request_id": "9d9830400d524922b3d7c2fbacddc027",
+      "signal": "too_long",
+      "type": "explicit"
+    }
+  ]
+}

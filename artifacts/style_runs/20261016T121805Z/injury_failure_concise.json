@@ -1,0 +1,98 @@
+{
+  "case": "injury_failure_concise",
+  "result": {
+    "response": {
+      "answer": "I\u2019m sorry to hear about your injury. I could not confirm the handoff for this safety report. Please contact retailer support directly for immediate assistance with this incident.",
+      "why": [
+        "The safety escalation attempt failed due to a system error.",
+        "Direct retailer contact is required when automated handoff confirmation fails."
+      ],
+      "citations": [],
+      "next_steps": [
+        "Contact retailer support directly regarding the product injury.",
+        "Seek medical attention if necessary."
+      ],
+      "intents_addressed": [
+        "safety_escalation"
+      ],
+      "outcome_claimed": "ESCALATION_FAILED_DISCLOSED"
+    },
+    "outcome": "ESCALATION_FAILED_DISCLOSED",
+    "ticket": {
+      "status": "failed"
+    },
+    "refusals": [],
+    "triggers": [
+      "T1",
+      "T5"
+    ],
+    "tool_records": [
+      {
+        "evidence_refs": [],
+        "exec_id": "0017be73c4024d13bc65f238cbf6f333",
+        "name": "create_escalation",
+        "status": "error",
+        "data": null,
+        "error": "FAILED",
+        "duration_ms": 0.222
+      },
+      {
+        "evidence_refs": [],
+        "exec_id": "93549a03d47645f69c8487d342b3c68c",
+        "name": "create_escalation",
+        "status": "error",
+        "data": null,
+        "error": "FAILED",
+        "duration_ms": 0.077
+      }
+    ],
+    "results": [
+      {
+        "agent_name": "escalation",
+        "status": "tool_error",
+        "summary": "Failed to create verified local mock ticket for safety incident. Tool returned error during escalation creation with T1 trigger. No evidence refs available.",
+        "evidence": [],
+        "facts": {
+          "tools": []
+        },
+        "flags": {
+          "conflict": false,
+          "requires_review": false
+        }
+      }
+    ],
+    "stages": [
+      "guard_in",
+      "supervisor_plan",
+      "dispatch",
+      "escalation",
+      "collect_result",
+      "dispatch",
+      "composer",
+      "guard_out"
+    ],
+    "errors": [],
+    "model_calls": 4,
+    "tool_calls": 2,
+    "handoffs": 1,
+    "replans": 0,
+    "repairs": 0,
+    "tokens": 4719,
+    "style": {
+      "verbosity": "concise",
+      "format": "prose",
+      "version": 1,
+      "word_count": 28
+    },
+    "safety_version": "2026-10-15-v2",
+    "latency_ms": 12391.614,
+    "memory": {
+      "enabled": false,
+      "history_messages": 0,
+      "resolved_reference": false,
+      "expired": false,
+      "reset": false
+    },
+    "request_id": "ad2225377dae45178850d90e1d3c4752"
+  }
+}

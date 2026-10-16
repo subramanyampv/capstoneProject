@@ -64,6 +64,7 @@ def ingest(embeddings, *, root=ROOT, version="v1"):
 
 class PolicySearch:
     def __init__(self, embeddings, *, root=ROOT, version=None, threshold=None):
+        self.embeddings = embeddings
         config_path = root / "config/retrieval.json"
         settings = json.loads(config_path.read_text()) if config_path.exists() else None
         version = version or (settings["index_version"] if settings else "v1")

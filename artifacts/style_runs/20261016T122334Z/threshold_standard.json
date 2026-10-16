@@ -1,0 +1,532 @@
+{
+  "case": "threshold_standard",
+  "result": {
+    "response": {
+      "answer": "Your refund request for the Chef Knife Set in order ref:c3181ffefc9c0f6c47e7 requires human review because the amount exceeds the automatic approval threshold. I have created a local mock handoff ticket MOCK-a0366f318cfc in the refunds queue for this mandatory review. This is not a real retailer delivery or completed refund. A specialist will evaluate your eligibility based on the return window and refund policies.",
+      "why": [
+        "Refund amount of $250 exceeds the $100 automatic-review threshold, requiring human review per policy",
+        "Order was delivered 5 days ago, which is within the 30-day return window for home products",
+        "System cannot process refunds above threshold automatically; escalation is mandatory"
+      ],
+      "citations": [
+        {
+          "source_id": "order:ref:c3181ffefc9c0f6c47e7",
+          "section": null,
+          "record_version": "2026-10-12"
+        },
+        {
+          "source_id": "doc:refund_policy",
+          "section": "review-threshold",
+          "record_version": "v1"
+        },
+        {
+          "source_id": "doc:return_policy",
+          "section": "window",
+          "record_version": "v1"
+        }
+      ],
+      "next_steps": [
+        "Wait for specialist review via ticket MOCK-a0366f318cfc",
+        "Contact retailer support directly if you need immediate assistance"
+      ],
+      "intents_addressed": [
+        "refund_eligibility"
+      ],
+      "outcome_claimed": "ESCALATED"
+    },
+    "outcome": "ESCALATED",
+    "ticket": {
+      "ticket_id": "MOCK-a0366f318cfc",
+      "status": "created",
+      "queue": "refunds",
+      "priority": "normal",
+      "triggers": [
+        "T2"
+      ],
+      "summary_hash": "62570b4bada661950052c023a6df331c0d8e23a158fefad546e8eba7580b63fe",
+      "idempotent_replay": false
+    },
+    "refusals": [],
+    "triggers": [
+      "T2"
+    ],
+    "tool_records": [
+      {
+        "evidence_refs": [
+          {
+            "source_id": "order:ref:c3181ffefc9c0f6c47e7",
+            "section": null,
+            "record_version": "2026-10-12"
+          }
+        ],
+        "exec_id": "6085d400e38247998769f4be327f5247",
+        "name": "lookup_order",
+        "status": "ok",
+        "data": {
+          "order_id": "ref:c3181ffefc9c0f6c47e7",
+          "status": "delivered",
+          "placed_at": "2026-10-03",
+          "dispatched_at": "2026-10-05",
+          "delivered_at": "2026-10-07",
+          "shipping_service": null,
+          "items": [
+            {
+              "sku": "SKU-KNIFE-005",
+              "name": "Chef Knife Set",
+              "category": "home",
+              "price": 250.0
+            }
+          ],
+          "record_version": "2026-10-12"
+        },
+        "error": null,
+        "duration_ms": 2.382
+      },
+      {
+        "evidence_refs": [
+          {
+            "source_id": "doc:return_policy",
+            "section": "window",
+            "record_version": "v1"
+          },
+          {
+            "source_id": "doc:refund_policy",
+            "section": "review-threshold",
+            "record_version": "v1"
+          }
+        ],
+        "exec_id": "eb87da00dbab4b5daa9fc085bd805112",
+        "name": "check_return_eligibility",
+        "status": "ok",
+        "data": {
+          "decision": "requires_review",
+          "reason_codes": [
+            "WITHIN_WINDOW",
+            "REFUND_ABOVE_THRESHOLD"
+          ],
+          "window_days": 30,
+          "days_since_delivery": 5,
+          "refund_amount": 250.0,
+          "threshold": 100.0,
+          "rule_version": "2026-10-01",
+          "policy_refs": [
+            {
+              "source_id": "doc:return_policy",
+              "section": "window",
+              "record_version": "v1"
+            },
+            {
+              "source_id": "doc:refund_policy",
+              "section": "review-threshold",
+              "record_version": "v1"
+            }
+          ],
+          "action_executed": false,
+          "human_action_required": true
+        },
+        "error": null,
+        "duration_ms": 2.542
+      },
+      {
+        "evidence_refs": [
+          {
+            "source_id": "doc:refund_policy",
+            "section": "review-threshold",
+            "record_version": "v1"
+          }
+        ],
+        "exec_id": "922b5bd3d5e246168557d80f83155f96",
+        "name": "search_policy",
+        "status": "ok",
+        "data": {
+          "results": [
+            {
+              "chunk_id": "refund_policy:v1:review-threshold:0",
+              "doc_id": "refund_policy",
+              "section_id": "review-threshold",
+              "version": "v1",
+              "effective_date": "2026-10-01",
+              "authority": "policy",
+              "text": "Review threshold\nThe configured automatic-review threshold is $100. Refund amounts above $100 require human review; the agent cannot bypass that threshold. ref:c3181ffefc9c0f6c47e7's $250 knife set therefore requires review. At or below $100, eligibility still requires verified records and all applicable return rules. The evaluated agent issues no refunds at any amount.",
+              "score": 0.621596,
+              "category": "all"
+            }
+          ],
+          "below_threshold": false,
+          "conflict": false,
+          "conflict_details": null,
+          "index_version": "v2",
+          "category_filter": "home",
+          "conflict_evidence_exceeds_k": false
+        },
+        "error": null,
+        "duration_ms": 1295.732
+      },
+      {
+        "evidence_refs": [
+          {
+            "source_id": "doc:return_policy",
+            "section": "window",
+            "record_version": "v1"
+          }
+        ],
+        "exec_id": "fd81c6060b0e4c2db3abaff271d7feb6",
+        "name": "search_policy",
+        "status": "ok",
+        "data": {
+          "results": [
+            {
+              "chunk_id": "return_policy:v1:window:0",
+              "doc_id": "return_policy",
+              "section_id": "window",
+              "version": "v1",
+              "effective_date": "2026-10-01",
+              "authority": "policy",
+              "text": "Window\nReturns use calendar days from verified delivery, inclusive on the final day. The default return window is 30 days. Footwear and apparel have 30-day windows, home products have 30 days, and electronics have 15 days. An undelivered order has not started its return window. The earlier reported 60-day window is not current; use this version and disclose the discrepancy.",
+              "score": 0.544445,
+              "category": "all"
+            }
+          ],
+          "below_threshold": false,
+          "conflict": false,
+          "conflict_details": null,
+          "index_version": "v2",
+          "category_filter": "home",
+          "conflict_evidence_exceeds_k": false
+        },
+        "error": null,
+        "duration_ms": 245.712
+      },
+      {
+        "evidence_refs": [],
+        "exec_id": "bb48eba235f94a7dbf17023b6e4f5403",
+        "name": "create_escalation",
+        "status": "ok",
+        "data": {
+          "ticket_id": "MOCK-a0366f318cfc",
+          "status": "created",
+          "queue": "refunds",
+          "priority": "normal",
+          "triggers": [
+            "T2"
+          ],
+          "summary_hash": "62570b4bada661950052c023a6df331c0d8e23a158fefad546e8eba7580b63fe",
+          "idempotent_replay": false
+        },
+        "error": null,
+        "duration_ms": 12.954
+      }
+    ],
+    "results": [
+      {
+        "agent_name": "order_shipping",
+        "status": "success",
+        "summary": "Retrieved order ref:c3181ffefc9c0f6c47e7 details. Order status is delivered. Line item identified: Chef Knife Set with SKU SKU-KNIFE-005 in home category, priced at 250.0. SKU verified for eligibility check.",
+        "evidence": [
+          {
+            "source_id": "order:ref:c3181ffefc9c0f6c47e7",
+            "section": null,
+            "record_version": "2026-10-12"
+          }
+        ],
+        "facts": {
+          "tools": [
+            {
+              "name": "lookup_order",
+              "args": {
+                "order_id": "ref:c3181ffefc9c0f6c47e7"
+              },
+              "data": {
+                "order_id": "ref:c3181ffefc9c0f6c47e7",
+                "status": "delivered",
+                "placed_at": "2026-10-03",
+                "dispatched_at": "2026-10-05",
+                "delivered_at": "2026-10-07",
+                "shipping_service": null,
+                "items": [
+                  {
+                    "sku": "SKU-KNIFE-005",
+                    "name": "Chef Knife Set",
+                    "category": "home",
+                    "price": 250.0
+                  }
+                ],
+                "record_version": "2026-10-12"
+              }
+            }
+          ]
+        },
+        "flags": {
+          "conflict": false,
+          "requires_review": false
+        }
+      },
+      {
+        "agent_name": "policy_product",
+        "status": "escalation_required",
+        "summary": "Refund for SKU-KNIFE-005 in ref:c3181ffefc9c0f6c47e7 is within the 30-day home return window (5 days since delivery) but the $250 refund exceeds the $100 automatic-review threshold, so eligibility requires human review. No refund executed.",
+        "evidence": [
+          {
+            "source_id": "order:ref:c3181ffefc9c0f6c47e7",
+            "section": null,
+            "record_version": "2026-10-12"
+          },
+          {
+            "source_id": "doc:refund_policy",
+            "section": "review-threshold",
+            "record_version": "v1"
+          },
+          {
+            "source_id": "doc:return_policy",
+            "section": "window",
+            "record_version": "v1"
+          }
+        ],
+        "facts": {
+          "tools": [
+            {
+              "name": "check_return_eligibility",
+              "args": {
+                "order_id": "ref:c3181ffefc9c0f6c47e7",
+                "sku": "SKU-KNIFE-005",
+                "request_type": "refund"
+              },
+              "data": {
+                "decision": "requires_review",
+                "reason_codes": [
+                  "WITHIN_WINDOW",
+                  "REFUND_ABOVE_THRESHOLD"
+                ],
+                "window_days": 30,
+                "days_since_delivery": 5,
+                "refund_amount": 250.0,
+                "threshold": 100.0,
+                "rule_version": "2026-10-01",
+                "policy_refs": [
+                  {
+                    "source_id": "doc:return_policy",
+                    "section": "window",
+                    "record_version": "v1"
+                  },
+                  {
+                    "source_id": "doc:refund_policy",
+                    "section": "review-threshold",
+                    "record_version": "v1"
+                  }
+                ],
+                "action_executed": false,
+                "human_action_required": true
+              }
+            },
+            {
+              "name": "search_policy",
+              "args": {
+                "query": "refund eligibility review threshold home category knife set",
+                "doc_types": null,
+                "category": "home",
+                "k": 5
+              },
+              "data": {
+                "results": [
+                  {
+                    "chunk_id": "refund_policy:v1:review-threshold:0",
+                    "doc_id": "refund_policy",
+                    "section_id": "review-threshold",
+                    "version": "v1",
+                    "effective_date": "2026-10-01",
+                    "authority": "policy",
+                    "text": "Review threshold\nThe configured automatic-review threshold is $100. Refund amounts above $100 require human review; the agent cannot bypass that threshold. ref:c3181ffefc9c0f6c47e7's $250 knife set therefore requires review. At or below $100, eligibility still requires verified records and all applicable return rules. The evaluated agent issues no refunds at any amount.",
+                    "score": 0.621596,
+                    "category": "all"
+                  }
+                ],
+                "below_threshold": false,
+                "conflict": false,
+                "conflict_details": null,
+                "index_version": "v2",
+                "category_filter": "home",
+                "conflict_evidence_exceeds_k": false
+              }
+            },
+            {
+              "name": "search_policy",
+              "args": {
+                "query": "return window days since delivery home category",
+                "doc_types": null,
+                "category": "home",
+                "k": 5
+              },
+              "data": {
+                "results": [
+                  {
+                    "chunk_id": "return_policy:v1:window:0",
+                    "doc_id": "return_policy",
+                    "section_id": "window",
+                    "version": "v1",
+                    "effective_date": "2026-10-01",
+                    "authority": "policy",
+                    "text": "Window\nReturns use calendar days from verified delivery, inclusive on the final day. The default return window is 30 days. Footwear and apparel have 30-day windows, home products have 30 days, and electronics have 15 days. An undelivered order has not started its return window. The earlier reported 60-day window is not current; use this version and disclose the discrepancy.",
+                    "score": 0.544445,
+                    "category": "all"
+                  }
+                ],
+                "below_threshold": false,
+                "conflict": false,
+                "conflict_details": null,
+                "index_version": "v2",
+                "category_filter": "home",
+                "conflict_evidence_exceeds_k": false
+              }
+            }
+          ]
+        },
+        "flags": {
+          "conflict": false,
+          "requires_review": true
+        }
+      },
+      {
+        "agent_name": "escalation",
+        "status": "success",
+        "summary": "Mandatory verified mock handoff created for order ref:c3181ffefc9c0f6c47e7 with T2 trigger. Escalation ticket generated in refunds queue at normal priority. Evidence references validated and included.",
+        "evidence": [
+          {
+            "source_id": "order:ref:c3181ffefc9c0f6c47e7",
+            "section": null,
+            "record_version": "2026-10-12"
+          },
+          {
+            "source_id": "doc:refund_policy",
+            "section": "review-threshold",
+            "record_version": "v1"
+          },
+          {
+            "source_id": "doc:return_policy",
+            "section": "window",
+            "record_version": "v1"
+          }
+        ],
+        "facts": {
+          "tools": [
+            {
+              "name": "create_escalation",
+              "args": {
+                "triggers": [
+                  "T2"
+                ],
+                "summary": "Mandatory verified mock handoff created for order ref:c3181ffefc9c0f6c47e7 with T2 trigger. Evidence references from order and policy documents included per task requirements. No personal data or delivery guarantees asserted.",
+                "evidence_refs": [
+                  {
+                    "source_id": "order:ref:c3181ffefc9c0f6c47e7",
+                    "section": null,
+                    "record_version": "2026-10-12"
+                  },
+                  {
+                    "source_id": "doc:refund_policy",
+                    "section": "review-threshold",
+                    "record_version": "v1"
+                  },
+                  {
+                    "source_id": "doc:return_policy",
+                    "section": "window",
+                    "record_version": "v1"
+                  }
+                ],
+                "order_ref": "ref:c3181ffefc9c0f6c47e7"
+              },
+              "data": {
+                "ticket_id": "MOCK-a0366f318cfc",
+                "status": "created",
+                "queue": "refunds",
+                "priority": "normal",
+                "triggers": [
+                  "T2"
+                ],
+                "summary_hash": "62570b4bada661950052c023a6df331c0d8e23a158fefad546e8eba7580b63fe",
+                "idempotent_replay": false
+              }
+            }
+          ]
+        },
+        "flags": {
+          "conflict": false,
+          "requires_review": true
+        }
+      }
+    ],
+    "stages": [
+      "guard_in",
+      "supervisor_plan",
+      "dispatch",
+      "order_shipping",
+      "collect_result",
+      "dispatch",
+      "policy_product",
+      "collect_result",
+      "dispatch",
+      "escalation",
+      "collect_result",
+      "dispatch",
+      "composer",
+      "guard_out"
+    ],
+    "errors": [],
+    "model_calls": 10,
+    "tool_calls": 5,
+    "handoffs": 3,
+    "replans": 0,
+    "repairs": 0,
+    "tokens": 18197,
+    "style": {
+      "verbosity": "standard",
+      "format": "prose",
+      "version": 0,
+      "word_count": 63
+    },
+    "safety_version": "2026-10-15-v2",
+    "latency_ms": 36480.177,
+    "memory": {
+      "enabled": false,
+      "history_messages": 0,
+      "resolved_reference": false,
+      "expired": false,
+      "reset": false
+    },
+    "request_id": "db1f8aae780543c7bc9952e982fee89c"
+  },
+  "composer_attempts": [
+    {
+      "answer": "Your refund request for the Chef Knife Set in order ref:c3181ffefc9c0f6c47e7 requires human review because the amount exceeds the automatic approval threshold. I have created a local mock handoff ticket MOCK-a0366f318cfc in the refunds queue for this mandatory review. This is not a real retailer delivery or completed refund. A specialist will evaluate your eligibility based on the return window and refund policies.",
+      "why": [
+        "Refund amount of $250 exceeds the $100 automatic-review threshold, requiring human review per policy",
+        "Order was delivered 5 days ago, which is within the 30-day return window for home products",
+        "System cannot process refunds above threshold automatically; escalation is mandatory"
+      ],
+      "citations": [
+        {
+          "source_id": "order:ref:c3181ffefc9c0f6c47e7",
+          "section": null,
+          "record_version": "2026-10-12"
+        },
+        {
+          "source_id": "doc:refund_policy",
+          "section": "review-threshold",
+          "record_version": "v1"
+        },
+        {
+          "source_id": "doc:return_policy",
+          "section": "window",
+          "record_version": "v1"
+        }
+      ],
+      "next_steps": [
+        "Wait for specialist review via ticket MOCK-a0366f318cfc",
+        "Contact retailer support directly if you need immediate assistance"
+      ],
+      "intents_addressed": [
+        "refund_eligibility"
+      ],
+      "outcome_claimed": "ESCALATED"
+    }
+  ]
+}

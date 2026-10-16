@@ -1,0 +1,55 @@
+{
+  "case": "refusal_standard",
+  "result": {
+    "response": {
+      "answer": "I cannot follow requests to bypass rules, disclose private information or provide medical/legal advice. I can help with supported order and policy questions.",
+      "why": [
+        "R1"
+      ],
+      "citations": [],
+      "next_steps": [
+        "Ask a supported order or policy question."
+      ],
+      "intents_addressed": [
+        "refused_request"
+      ],
+      "outcome_claimed": "REFUSED"
+    },
+    "outcome": "REFUSED",
+    "ticket": null,
+    "refusals": [
+      "R1"
+    ],
+    "triggers": [],
+    "tool_records": [],
+    "results": [],
+    "stages": [
+      "guard_in",
+      "refusal_responder",
+      "guard_out"
+    ],
+    "errors": [],
+    "model_calls": 0,
+    "tool_calls": 0,
+    "handoffs": 0,
+    "replans": 0,
+    "repairs": 0,
+    "tokens": 0,
+    "style": {
+      "verbosity": "standard",
+      "format": "prose",
+      "version": 0,
+      "word_count": 23
+    },
+    "safety_version": "2026-10-15-v2",
+    "latency_ms": 32.951,
+    "memory": {
+      "enabled": false,
+      "history_messages": 0,
+      "resolved_reference": false,
+      "expired": false,
+      "reset": false
+    },
+    "request_id": "90a47e1524b243b389333453f9cb51e8"
+  }
+}

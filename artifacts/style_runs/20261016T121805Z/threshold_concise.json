@@ -1,0 +1,519 @@
+{
+  "case": "threshold_concise",
+  "result": {
+    "response": {
+      "answer": "Your refund request for order ref:c3181ffefc9c0f6c47e7 requires human review because the amount exceeds the automatic approval threshold.\n\n*   Ticket MOCK-68c5dde7d2de was created in the refunds queue as a local mock handoff.\n*   I cannot process this refund directly.",
+      "why": [
+        "The $250 refund amount exceeds the configured automatic-review threshold, requiring mandatory human review per policy.",
+        "Eligibility check returned 'requires_review' due to the amount exceeding the threshold, despite being within the return window."
+      ],
+      "citations": [
+        {
+          "source_id": "order:ref:c3181ffefc9c0f6c47e7",
+          "section": null,
+          "record_version": "2026-10-12"
+        },
+        {
+          "source_id": "doc:refund_policy",
+          "section": "review-threshold",
+          "record_version": "v1"
+        },
+        {
+          "source_id": "doc:escalation_guidelines",
+          "section": "threshold",
+          "record_version": "v1"
+        },
+        {
+          "source_id": "doc:faq",
+          "section": "refunds",
+          "record_version": "v1"
+        }
+      ],
+      "next_steps": [
+        "A specialist will review your refund eligibility and contact you regarding ticket MOCK-68c5dde7d2de."
+      ],
+      "intents_addressed": [
+        "refund_eligibility"
+      ],
+      "outcome_claimed": "ESCALATED"
+    },
+    "outcome": "ESCALATED",
+    "ticket": {
+      "ticket_id": "MOCK-68c5dde7d2de",
+      "status": "created",
+      "queue": "refunds",
+      "priority": "normal",
+      "triggers": [
+        "T2"
+      ],
+      "summary_hash": "c0680c9995971be78999d0e56fec3aa8fc70deb587c3e1283f0957906b28467f",
+      "idempotent_replay": false
+    },
+    "refusals": [],
+    "triggers": [
+      "T2"
+    ],
+    "tool_records": [
+      {
+        "evidence_refs": [
+          {
+            "source_id": "order:ref:c3181ffefc9c0f6c47e7",
+            "section": null,
+            "record_version": "2026-10-12"
+          }
+        ],
+        "exec_id": "2f230a997fb040379df7b03e307c723d",
+        "name": "lookup_order",
+        "status": "ok",
+        "data": {
+          "order_id": "ref:c3181ffefc9c0f6c47e7",
+          "status": "delivered",
+          "placed_at": "2026-10-03",
+          "dispatched_at": "2026-10-05",
+          "delivered_at": "2026-10-07",
+          "shipping_service": null,
+          "items": [
+            {
+              "sku": "SKU-KNIFE-005",
+              "name": "Chef Knife Set",
+              "category": "home",
+              "price": 250.0
+            }
+          ],
+          "record_version": "2026-10-12"
+        },
+        "error": null,
+        "duration_ms": 1.498
+      },
+      {
+        "evidence_refs": [
+          {
+            "source_id": "doc:return_policy",
+            "section": "window",
+            "record_version": "v1"
+          },
+          {
+            "source_id": "doc:refund_policy",
+            "section": "review-threshold",
+            "record_version": "v1"
+          }
+        ],
+        "exec_id": "48d3cffd1cdd4107abf919f1a2908e76",
+        "name": "check_return_eligibility",
+        "status": "ok",
+        "data": {
+          "decision": "requires_review",
+          "reason_codes": [
+            "WITHIN_WINDOW",
+            "REFUND_ABOVE_THRESHOLD"
+          ],
+          "window_days": 30,
+          "days_since_delivery": 5,
+          "refund_amount": 250.0,
+          "threshold": 100.0,
+          "rule_version": "2026-10-01",
+          "policy_refs": [
+            {
+              "source_id": "doc:return_policy",
+              "section": "window",
+              "record_version": "v1"
+            },
+            {
+              "source_id": "doc:refund_policy",
+              "section": "review-threshold",
+              "record_version": "v1"
+            }
+          ],
+          "action_executed": false,
+          "human_action_required": true
+        },
+        "error": null,
+        "duration_ms": 2.85
+      },
+      {
+        "evidence_refs": [
+          {
+            "source_id": "doc:refund_policy",
+            "section": "review-threshold",
+            "record_version": "v1"
+          },
+          {
+            "source_id": "doc:escalation_guidelines",
+            "section": "threshold",
+            "record_version": "v1"
+          },
+          {
+            "source_id": "doc:faq",
+            "section": "refunds",
+            "record_version": "v1"
+          }
+        ],
+        "exec_id": "aefe287c385a4e5ea2665ddbf642025f",
+        "name": "search_policy",
+        "status": "ok",
+        "data": {
+          "results": [
+            {
+              "chunk_id": "refund_policy:v1:review-threshold:0",
+              "doc_id": "refund_policy",
+              "section_id": "review-threshold",
+              "version": "v1",
+              "effective_date": "2026-10-01",
+              "authority": "policy",
+              "text": "Review threshold\nThe configured automatic-review threshold is $100. Refund amounts above $100 require human review; the agent cannot bypass that threshold. ref:c3181ffefc9c0f6c47e7's $250 knife set therefore requires review. At or below $100, eligibility still requires verified records and all applicable return rules. The evaluated agent issues no refunds at any amount.",
+              "score": 0.549947,
+              "category": "all"
+            },
+            {
+              "chunk_id": "escalation_guidelines:v1:threshold:0",
+              "doc_id": "escalation_guidelines",
+              "section_id": "threshold",
+              "version": "v1",
+              "effective_date": "2026-10-01",
+              "authority": "policy",
+              "text": "Threshold\nT2_THRESHOLD: refunds above the $100 configured threshold or a deterministic requires_review result use the refunds queue with normal priority. Refusal to allow review cannot remove this trigger.",
+              "score": 0.516809,
+              "category": "all"
+            },
+            {
+              "chunk_id": "faq:v1:refunds:0",
+              "doc_id": "faq",
+              "section_id": "refunds",
+              "version": "v1",
+              "effective_date": "2026-10-01",
+              "authority": "faq",
+              "text": "Refunds\nFor refund review limits, see refund_policy section review-threshold. The agent executes no refund.",
+              "score": 0.476417,
+              "category": "all"
+            }
+          ],
+          "below_threshold": false,
+          "conflict": false,
+          "conflict_details": null,
+          "index_version": "v2",
+          "category_filter": "home",
+          "conflict_evidence_exceeds_k": false
+        },
+        "error": null,
+        "duration_ms": 300.348
+      },
+      {
+        "evidence_refs": [],
+        "exec_id": "b1b54e268e0e47dc9aedc4dcfdca8591",
+        "name": "create_escalation",
+        "status": "ok",
+        "data": {
+          "ticket_id": "MOCK-68c5dde7d2de",
+          "status": "created",
+          "queue": "refunds",
+          "priority": "normal",
+          "triggers": [
+            "T2"
+          ],
+          "summary_hash": "c0680c9995971be78999d0e56fec3aa8fc70deb587c3e1283f0957906b28467f",
+          "idempotent_replay": false
+        },
+        "error": null,
+        "duration_ms": 3.71
+      }
+    ],
+    "results": [
+      {
+        "agent_name": "order_shipping",
+        "status": "success",
+        "summary": "Order ref:c3181ffefc9c0f6c47e7 status is delivered. Line item identifies knife set SKU as SKU-KNIFE-005 (Chef Knife Set). Order placed 2026-10-03, dispatched 2026-10-05, delivered 2026-10-07.",
+        "evidence": [
+          {
+            "source_id": "order:ref:c3181ffefc9c0f6c47e7",
+            "section": null,
+            "record_version": "2026-10-12"
+          }
+        ],
+        "facts": {
+          "tools": [
+            {
+              "name": "lookup_order",
+              "args": {
+                "order_id": "ref:c3181ffefc9c0f6c47e7"
+              },
+              "data": {
+                "order_id": "ref:c3181ffefc9c0f6c47e7",
+                "status": "delivered",
+                "placed_at": "2026-10-03",
+                "dispatched_at": "2026-10-05",
+                "delivered_at": "2026-10-07",
+                "shipping_service": null,
+                "items": [
+                  {
+                    "sku": "SKU-KNIFE-005",
+                    "name": "Chef Knife Set",
+                    "category": "home",
+                    "price": 250.0
+                  }
+                ],
+                "record_version": "2026-10-12"
+              }
+            }
+          ]
+        },
+        "flags": {
+          "conflict": false,
+          "requires_review": false
+        }
+      },
+      {
+        "agent_name": "policy_product",
+        "status": "escalation_required",
+        "summary": "Refund for SKU-KNIFE-005 in order ref:c3181ffefc9c0f6c47e7 requires human review. Delivery was 5 days ago, within the 30-day window, but the $250 refund exceeds the $100 automatic-review threshold. No refund can be executed by the agent; case must enter refunds queue for review.",
+        "evidence": [
+          {
+            "source_id": "order:ref:c3181ffefc9c0f6c47e7",
+            "section": null,
+            "record_version": "2026-10-12"
+          },
+          {
+            "source_id": "doc:faq",
+            "section": "refunds",
+            "record_version": "v1"
+          },
+          {
+            "source_id": "doc:refund_policy",
+            "section": "review-threshold",
+            "record_version": "v1"
+          },
+          {
+            "source_id": "doc:escalation_guidelines",
+            "section": "threshold",
+            "record_version": "v1"
+          },
+          {
+            "source_id": "doc:return_policy",
+            "section": "window",
+            "record_version": "v1"
+          }
+        ],
+        "facts": {
+          "tools": [
+            {
+              "name": "check_return_eligibility",
+              "args": {
+                "order_id": "ref:c3181ffefc9c0f6c47e7",
+                "sku": "SKU-KNIFE-005",
+                "request_type": "refund"
+              },
+              "data": {
+                "decision": "requires_review",
+                "reason_codes": [
+                  "WITHIN_WINDOW",
+                  "REFUND_ABOVE_THRESHOLD"
+                ],
+                "window_days": 30,
+                "days_since_delivery": 5,
+                "refund_amount": 250.0,
+                "threshold": 100.0,
+                "rule_version": "2026-10-01",
+                "policy_refs": [
+                  {
+                    "source_id": "doc:return_policy",
+                    "section": "window",
+                    "record_version": "v1"
+                  },
+                  {
+                    "source_id": "doc:refund_policy",
+                    "section": "review-threshold",
+                    "record_version": "v1"
+                  }
+                ],
+                "action_executed": false,
+                "human_action_required": true
+              }
+            },
+            {
+              "name": "search_policy",
+              "args": {
+                "query": "refund eligibility review threshold home category",
+                "doc_types": null,
+                "category": "home",
+                "k": 5
+              },
+              "data": {
+                "results": [
+                  {
+                    "chunk_id": "refund_policy:v1:review-threshold:0",
+                    "doc_id": "refund_policy",
+                    "section_id": "review-threshold",
+                    "version": "v1",
+                    "effective_date": "2026-10-01",
+                    "authority": "policy",
+                    "text": "Review threshold\nThe configured automatic-review threshold is $100. Refund amounts above $100 require human review; the agent cannot bypass that threshold. ref:c3181ffefc9c0f6c47e7's $250 knife set therefore requires review. At or below $100, eligibility still requires verified records and all applicable return rules. The evaluated agent issues no refunds at any amount.",
+                    "score": 0.549947,
+                    "category": "all"
+                  },
+                  {
+                    "chunk_id": "escalation_guidelines:v1:threshold:0",
+                    "doc_id": "escalation_guidelines",
+                    "section_id": "threshold",
+                    "version": "v1",
+                    "effective_date": "2026-10-01",
+                    "authority": "policy",
+                    "text": "Threshold\nT2_THRESHOLD: refunds above the $100 configured threshold or a deterministic requires_review result use the refunds queue with normal priority. Refusal to allow review cannot remove this trigger.",
+                    "score": 0.516809,
+                    "category": "all"
+                  },
+                  {
+                    "chunk_id": "faq:v1:refunds:0",
+                    "doc_id": "faq",
+                    "section_id": "refunds",
+                    "version": "v1",
+                    "effective_date": "2026-10-01",
+                    "authority": "faq",
+                    "text": "Refunds\nFor refund review limits, see refund_policy section review-threshold. The agent executes no refund.",
+                    "score": 0.476417,
+                    "category": "all"
+                  }
+                ],
+                "below_threshold": false,
+                "conflict": false,
+                "conflict_details": null,
+                "index_version": "v2",
+                "category_filter": "home",
+                "conflict_evidence_exceeds_k": false
+              }
+            }
+          ]
+        },
+        "flags": {
+          "conflict": false,
+          "requires_review": true
+        }
+      },
+      {
+        "agent_name": "escalation",
+        "status": "success",
+        "summary": "Mandatory verified mock handoff created for order ref:c3181ffefc9c0f6c47e7 with T2 trigger. Escalation ticket MOCK-68c5dde7d2de generated in refunds queue at normal priority. All supplied evidence references validated and included.",
+        "evidence": [
+          {
+            "source_id": "order:ref:c3181ffefc9c0f6c47e7",
+            "section": null,
+            "record_version": "2026-10-12"
+          },
+          {
+            "source_id": "doc:faq",
+            "section": "refunds",
+            "record_version": "v1"
+          },
+          {
+            "source_id": "doc:refund_policy",
+            "section": "review-threshold",
+            "record_version": "v1"
+          },
+          {
+            "source_id": "doc:escalation_guidelines",
+            "section": "threshold",
+            "record_version": "v1"
+          },
+          {
+            "source_id": "doc:return_policy",
+            "section": "window",
+            "record_version": "v1"
+          }
+        ],
+        "facts": {
+          "tools": [
+            {
+              "name": "create_escalation",
+              "args": {
+                "triggers": [
+                  "T2"
+                ],
+                "summary": "Mandatory verified mock handoff created for order ref:c3181ffefc9c0f6c47e7 with trigger T2. Evidence references from order record, FAQ refunds section, refund policy review-threshold, escalation guidelines threshold, and return policy window validated. No personal data or delivery guarantees included.",
+                "evidence_refs": [
+                  {
+                    "source_id": "order:ref:c3181ffefc9c0f6c47e7",
+                    "section": null,
+                    "record_version": "2026-10-12"
+                  },
+                  {
+                    "source_id": "doc:faq",
+                    "section": "refunds",
+                    "record_version": "v1"
+                  },
+                  {
+                    "source_id": "doc:refund_policy",
+                    "section": "review-threshold",
+                    "record_version": "v1"
+                  },
+                  {
+                    "source_id": "doc:escalation_guidelines",
+                    "section": "threshold",
+                    "record_version": "v1"
+                  },
+                  {
+                    "source_id": "doc:return_policy",
+                    "section": "window",
+                    "record_version": "v1"
+                  }
+                ],
+                "order_ref": "ref:c3181ffefc9c0f6c47e7"
+              },
+              "data": {
+                "ticket_id": "MOCK-68c5dde7d2de",
+                "status": "created",
+                "queue": "refunds",
+                "priority": "normal",
+                "triggers": [
+                  "T2"
+                ],
+                "summary_hash": "c0680c9995971be78999d0e56fec3aa8fc70deb587c3e1283f0957906b28467f",
+                "idempotent_replay": false
+              }
+            }
+          ]
+        },
+        "flags": {
+          "conflict": false,
+          "requires_review": true
+        }
+      }
+    ],
+    "stages": [
+      "guard_in",
+      "supervisor_plan",
+      "dispatch",
+      "order_shipping",
+      "collect_result",
+      "dispatch",
+      "policy_product",
+      "collect_result",
+      "dispatch",
+      "escalation",
+      "collect_result",
+      "dispatch",
+      "composer",
+      "guard_out"
+    ],
+    "errors": [],
+    "model_calls": 9,
+    "tool_calls": 4,
+    "handoffs": 3,
+    "replans": 0,
+    "repairs": 0,
+    "tokens": 16294,
+    "style": {
+      "verbosity": "concise",
+      "format": "prose",
+      "version": 1,
+      "word_count": 38
+    },
+    "safety_version": "2026-10-15-v2",
+    "latency_ms": 36072.866,
+    "memory": {
+      "enabled": false,
+      "history_messages": 0,
+      "resolved_reference": false,
+      "expired": false,
+      "reset": false
+    },
+    "request_id": "4f66f823f8a64bc8b54d40673516bbd4"
+  }
+}

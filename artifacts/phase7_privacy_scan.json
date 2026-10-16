@@ -1,0 +1,6 @@
+{
+  "passed": true,
+  "files_scanned": 69,
+  "findings": [],
+  "limits": "Known canaries/configured credentials in Phase 7 artifacts and runtime only. Preference deletion is tested separately; this scan does not inspect filesystem remnants. No cloud/universal PII guarantee."
+}

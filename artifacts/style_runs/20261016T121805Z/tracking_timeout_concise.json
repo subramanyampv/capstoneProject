@@ -1,0 +1,154 @@
+{
+  "case": "tracking_timeout_concise",
+  "result": {
+    "response": {
+      "answer": "I could not retrieve tracking for order ref:d45916301dd856974ea6 due to a system error.\n\n*   Local mock handoff ticket MOCK-c2bb3d3af8ae created in the general queue.\n*   Please contact retailer support directly if urgent.",
+      "why": [
+        "Tracking tool returned an error preventing status retrieval",
+        "Mandatory escalation trigger T5 required creating a local mock handoff ticket"
+      ],
+      "citations": [],
+      "next_steps": [
+        "Contact retailer support directly for immediate tracking updates",
+        "Reference ticket MOCK-c2bb3d3af8ae when following up"
+      ],
+      "intents_addressed": [
+        "track_order"
+      ],
+      "outcome_claimed": "ESCALATED"
+    },
+    "outcome": "ESCALATED",
+    "ticket": {
+      "ticket_id": "MOCK-c2bb3d3af8ae",
+      "status": "created",
+      "queue": "general",
+      "priority": "normal",
+      "triggers": [
+        "T5"
+      ],
+      "summary_hash": "247cf967d57ae3c4614cc91902fcf6529c2b80134449eabb8e529ff19a68114e",
+      "idempotent_replay": false
+    },
+    "refusals": [],
+    "triggers": [
+      "T5"
+    ],
+    "tool_records": [
+      {
+        "evidence_refs": [],
+        "exec_id": "87a98b1fed18457ca21b01daedc6555a",
+        "name": "get_tracking_events",
+        "status": "error",
+        "data": null,
+        "error": "TIMEOUT",
+        "duration_ms": 0.158
+      },
+      {
+        "evidence_refs": [],
+        "exec_id": "faef2e4eaa524da989b29706965593d2",
+        "name": "create_escalation",
+        "status": "ok",
+        "data": {
+          "ticket_id": "MOCK-c2bb3d3af8ae",
+          "status": "created",
+          "queue": "general",
+          "priority": "normal",
+          "triggers": [
+            "T5"
+          ],
+          "summary_hash": "247cf967d57ae3c4614cc91902fcf6529c2b80134449eabb8e529ff19a68114e",
+          "idempotent_replay": false
+        },
+        "error": null,
+        "duration_ms": 31.585
+      }
+    ],
+    "results": [
+      {
+        "agent_name": "order_shipping",
+        "status": "tool_error",
+        "summary": "Tracking retrieval for order ref:d45916301dd856974ea6 failed due to a timeout error from the tracking events tool. Unable to provide current status or location.",
+        "evidence": [],
+        "facts": {
+          "tools": []
+        },
+        "flags": {
+          "conflict": false,
+          "requires_review": false
+        }
+      },
+      {
+        "agent_name": "escalation",
+        "status": "success",
+        "summary": "Mandatory verified mock handoff created successfully with trigger T5. Sanitized local mock established per task specification without personal data or order details.",
+        "evidence": [],
+        "facts": {
+          "tools": [
+            {
+              "name": "create_escalation",
+              "args": {
+                "triggers": [
+                  "T5"
+                ],
+                "summary": "Mandatory verified mock handoff created per task specification with trigger T5. No personal data or order details included. Sanitized local mock handoff established as required.",
+                "evidence_refs": [],
+                "order_ref": "ref:d45916301dd856974ea6"
+              },
+              "data": {
+                "ticket_id": "MOCK-c2bb3d3af8ae",
+                "status": "created",
+                "queue": "general",
+                "priority": "normal",
+                "triggers": [
+                  "T5"
+                ],
+                "summary_hash": "247cf967d57ae3c4614cc91902fcf6529c2b80134449eabb8e529ff19a68114e",
+                "idempotent_replay": false
+              }
+            }
+          ]
+        },
+        "flags": {
+          "conflict": false,
+          "requires_review": false
+        }
+      }
+    ],
+    "stages": [
+      "guard_in",
+      "supervisor_plan",
+      "dispatch",
+      "order_shipping",
+      "collect_result",
+      "dispatch",
+      "escalation",
+      "collect_result",
+      "dispatch",
+      "composer",
+      "guard_out"
+    ],
+    "errors": [],
+    "model_calls": 6,
+    "tool_calls": 2,
+    "handoffs": 2,
+    "replans": 0,
+    "repairs": 0,
+    "tokens": 7523,
+    "style": {
+      "verbosity": "concise",
+      "format": "prose",
+      "version": 1,
+      "word_count": 32
+    },
+    "safety_version": "2026-10-15-v2",
+    "latency_ms": 16421.135,
+    "memory": {
+      "enabled": false,
+      "history_messages": 0,
+      "resolved_reference": false,
+      "expired": false,
+      "reset": false
+    },
+    "request_id": "25862081e46c464c9d025ca7ad7d13df"
+  }
+}

@@ -62,9 +62,12 @@ def final_errors(draft, *, refs, facts, refusals, triggers, ticket, intents):
                 if json.dumps(ref,sort_keys=True) in cited: support.append(hit['text'])
         else: support.append(json.dumps(record['data']))
     source=' '.join(support)
-    normalize=lambda x: re.sub(r'[-\s]+',' ',x.lower()).strip()
+    def normalize(value):
+        # Grammar-only equivalence: 90-day and 90 days, never a unit conversion.
+        value=re.sub(r'[-\s]+',' ',value.lower()).strip()
+        return re.sub(r'\b(days|months)\b',lambda m:m.group(1)[:-1],value)
     for claim in POLICY_NUMBER.findall(body):
-        if normalize(claim) not in normalize(source):
+        if not re.search(r'(?<![\d.])'+re.escape(normalize(claim))+r'(?!\w|\.\d)',normalize(source)):
             # A numeric tool field is structured, so validate value/unit pairs explicitly.
             number=re.match(r'\$?(\d+(?:\.\d+)?)',claim).group(1)
             eligible=[r['data'] for r in facts if r['name']=='check_return_eligibility']

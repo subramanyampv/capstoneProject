@@ -1,4 +1,4 @@
-# Detailed project task checklist — updated 2026-10-15
+# Detailed project task checklist — updated 2026-10-16
 
 Authority: [Architecture revision 3.1](architecture_and_plan.md). This is the current work ledger, supported by the [progress report](project_progress.md) and recorded artifacts. Update a task only after its completion criterion has evidence.
 
@@ -6,9 +6,9 @@ Authority: [Architecture revision 3.1](architecture_and_plan.md). This is the cu
 
 **P0** = protects correctness, safety or a required delivery gate. **P1** = required capability or evaluation work. Dependencies are task IDs, not permission requests. Task counts do not represent a completion percentage because effort differs substantially.
 
-**Inventory:** 85 initial-product tasks — 59 done, 14 needing updates, 12 not started. 8 areas are deferred.
+**Inventory:** 85 initial-product tasks — 63 done, 14 needing updates, 8 not started. 8 areas are deferred.
 
-**Immediate sequence:** Phase 7 adaptation → final observability/evaluation. Phase 5 core tools, guards, server identity and bounded graph are implemented with repaired live evidence. Earlier failures remain preserved in phase5_tools_and_graph.md; broad semantic/safety acceptance remains Phase 9.
+**Immediate sequence:** Phase 8 hosted observability/delivery verification → final evaluation. Phase 7 adaptation is implemented with development evidence. Phase 5 core tools, guards, server identity and bounded graph are implemented with repaired live evidence. Earlier failures remain preserved in phase5_tools_and_graph.md; broad semantic/safety acceptance remains Phase 9.
 
 No author/student name or new repository is required. Optional later inputs are hosted LangSmith configuration and human calibration of final judged outputs; neither blocks the next local work.
 
@@ -105,17 +105,17 @@ No author/student name or new repository is required. Optional later inputs are 
 
 | ID | Status | Priority | Task | Evidence / completion criterion | Dependencies |
 |---|---|---|---|---|---|
-| A01 | NOT STARTED | P1 | Collect explicit/implicit feedback safely | Supported commands/buttons plus brevity/detail/repetition signals; store only allowed signal categories and opaque references. | M01,G08 |
-| A02 | NOT STARTED | P1 | Implement versioned style preferences | Two same-direction signals in the recent ten; allowlisted verbosity/format only; consent/retention and bounded history. | A01 |
-| A03 | NOT STARTED | P0 | Implement rollback and preference deletion | Reset style restores defaults; forget-preferences deletes the profile; safety/policy/tool permission fields remain immutable. | A02 |
-| A04 | NOT STARTED | P1 | Prove adaptation without safety regression | Same question before/after, profile versions, format/word counts, then rerun safety subset; preserve memory-reset demo. | A03,G09,M05 |
+| A01 | DONE | P1 | Collect explicit/implicit feedback safely | Terminal/Streamlit commands/buttons; opt-in brevity/detail/repetition with pinned local embeddings; controlled categories/opaque refs only. phase7_adaptation.md and tests. | M01,G08 |
+| A02 | DONE | P1 | Implement versioned style preferences | Two unused matching signals in last ten; validated style only, consent and disable; twenty-entry history, bounded/aged reporting, local atomic writes. | A01 |
+| A03 | DONE | P0 | Implement rollback and preference deletion | Provider-independent versioned reset and scoped profile/history/feedback deletion; concurrent/persistence/isolation tests. Safety authority excluded from profile. | A02 |
+| A04 | DONE | P1 | Prove adaptation without safety regression | Live same-question before/after/reset, versions, answer word counts and format; four safety cases × two styles; initial failures preserved. phase7_validation.md. Final combined screenshot packet remains D08. | A03,G09,M05 |
 
 ## Phase 8: UI, observability and deployment
 
 | ID | Status | Priority | Task | Evidence / completion criterion | Dependencies |
 |---|---|---|---|---|---|
 | O01 | DONE | P1 | Provide local Streamlit experiment UI | Chat/Evaluation/Traces; baseline and LLM modes; default deferred tabs hidden; AppTest verified. | B07 |
-| O02 | UPDATE | P1 | Connect final CLI/UI workflow | Synthetic customer/session selection, final-agent chat, reset/feedback, policy citations, reasons and ticket/failure rendering. Support-agent mode now binds a synthetic account and renders citations/ticket/failure. Memory/reset/feedback integration remains. | G10,M03,A03 |
+| O02 | UPDATE | P1 | Connect final CLI/UI workflow | Synthetic customer/session selection, final-agent chat, reset/feedback, policy citations, reasons and ticket/failure rendering. Support-agent mode now binds a synthetic account and renders citations/ticket/failure. Memory/reset/feedback are now integrated in terminal and Streamlit; final delivery/tracing workflow verification remains. | G10,M03,A03 |
 | O03 | DONE | P0 | Provide opt-in metadata-safe LangSmith wrapper | Inputs hidden, scalar output allowlist; tracing off by default. This is not hosted/hierarchical verification. | B07 |
 | O04 | UPDATE | P0 | Complete hosted tracing and failure isolation | Mask final node/tool hierarchy, verify canaries and invalid-key behavior; tracing failure must not change the agent outcome. | O03,G10 |
 | O05 | UPDATE | P0 | Complete request logging and redaction schema | One final record with opaque customer/session/order refs, stages/tools/triggers/outcome/counters. Add phone/address/name coverage and scans; current logs are experiment-specific. | G10,S01 |

@@ -1,0 +1,26 @@
+{
+  "model": "voyageai/voyage-4-nano",
+  "revision": "67fabc9bef010dabc5f6024aa1b1b6b93410426f",
+  "threshold": 0.98,
+  "results": [
+    {
+      "case": "exact_repeat",
+      "signal": "unclear",
+      "expected_for_probe": "unclear",
+      "matched": true
+    },
+    {
+      "case": "paraphrase",
+      "signal": null,
+      "expected_for_probe": null,
+      "matched": true
+    },
+    {
+      "case": "different_product",
+      "signal": null,
+      "expected_for_probe": null,
+      "matched": true
+    }
+  ],
+  "limits": "Three authored development probes; paraphrase expectation records conservative behavior, not a calibrated positive label. No vector persisted or holdout used."
+}

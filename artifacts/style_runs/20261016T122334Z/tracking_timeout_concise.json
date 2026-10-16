@@ -1,0 +1,172 @@
+{
+  "case": "tracking_timeout_concise",
+  "result": {
+    "response": {
+      "answer": "I could not retrieve tracking for order ref:d45916301dd856974ea6 due to a system error.\n\n*   Local mock handoff ticket MOCK-a53543271507 created in the general queue.\n*   A specialist will review this manually.",
+      "why": [
+        "The tracking tool encountered an error preventing status retrieval.",
+        "Mandatory escalation was triggered to ensure manual review of the order."
+      ],
+      "citations": [],
+      "next_steps": [
+        "Wait for specialist contact regarding ticket MOCK-a53543271507.",
+        "Contact retailer support directly if urgent assistance is needed."
+      ],
+      "intents_addressed": [
+        "track_order"
+      ],
+      "outcome_claimed": "ESCALATED"
+    },
+    "outcome": "ESCALATED",
+    "ticket": {
+      "ticket_id": "MOCK-a53543271507",
+      "status": "created",
+      "queue": "general",
+      "priority": "normal",
+      "triggers": [
+        "T5"
+      ],
+      "summary_hash": "2c0a7f20612560a97e90cc7d5a94b2fa871dce28a4afffb51a9cae73c433010b",
+      "idempotent_replay": false
+    },
+    "refusals": [],
+    "triggers": [
+      "T5"
+    ],
+    "tool_records": [
+      {
+        "evidence_refs": [],
+        "exec_id": "b588c2f0965a4cdba04fae7931b3d239",
+        "name": "get_tracking_events",
+        "status": "error",
+        "data": null,
+        "error": "TIMEOUT",
+        "duration_ms": 0.187
+      },
+      {
+        "evidence_refs": [],
+        "exec_id": "196a269342fb40d6a6140edd634b26c3",
+        "name": "create_escalation",
+        "status": "ok",
+        "data": {
+          "ticket_id": "MOCK-a53543271507",
+          "status": "created",
+          "queue": "general",
+          "priority": "normal",
+          "triggers": [
+            "T5"
+          ],
+          "summary_hash": "2c0a7f20612560a97e90cc7d5a94b2fa871dce28a4afffb51a9cae73c433010b",
+          "idempotent_replay": false
+        },
+        "error": null,
+        "duration_ms": 5.074
+      }
+    ],
+    "results": [
+      {
+        "agent_name": "order_shipping",
+        "status": "tool_error",
+        "summary": "Tracking retrieval for order ref:d45916301dd856974ea6 failed due to a timeout error. Unable to provide current status or location.",
+        "evidence": [],
+        "facts": {
+          "tools": []
+        },
+        "flags": {
+          "conflict": false,
+          "requires_review": false
+        }
+      },
+      {
+        "agent_name": "escalation",
+        "status": "success",
+        "summary": "Mandatory verified mock handoff created for order ref:d45916301dd856974ea6 with trigger T5. Ticket MOCK-a53543271507 assigned to general queue at normal priority.",
+        "evidence": [],
+        "facts": {
+          "tools": [
+            {
+              "name": "create_escalation",
+              "args": {
+                "triggers": [
+                  "T5"
+                ],
+                "summary": "Mandatory verified mock handoff created for order ref:d45916301dd856974ea6 with trigger T5. No additional evidence or dependency facts supplied.",
+                "evidence_refs": [],
+                "order_ref": "ref:d45916301dd856974ea6"
+              },
+              "data": {
+                "ticket_id": "MOCK-a53543271507",
+                "status": "created",
+                "queue": "general",
+                "priority": "normal",
+                "triggers": [
+                  "T5"
+                ],
+                "summary_hash": "2c0a7f20612560a97e90cc7d5a94b2fa871dce28a4afffb51a9cae73c433010b",
+                "idempotent_replay": false
+              }
+            }
+          ]
+        },
+        "flags": {
+          "conflict": false,
+          "requires_review": false
+        }
+      }
+    ],
+    "stages": [
+      "guard_in",
+      "supervisor_plan",
+      "dispatch",
+      "order_shipping",
+      "collect_result",
+      "dispatch",
+      "escalation",
+      "collect_result",
+      "dispatch",
+      "composer",
+      "guard_out"
+    ],
+    "errors": [],
+    "model_calls": 6,
+    "tool_calls": 2,
+    "handoffs": 2,
+    "replans": 0,
+    "repairs": 0,
+    "tokens": 7581,
+    "style": {
+      "verbosity": "concise",
+      "format": "prose",
+      "version": 1,
+      "word_count": 31
+    },
+    "safety_version": "2026-10-15-v2",
+    "latency_ms": 15721.9,
+    "memory": {
+      "enabled": false,
+      "history_messages": 0,
+      "resolved_reference": false,
+      "expired": false,
+      "reset": false
+    },
+    "request_id": "9a341cee9b144eeea69d5535194b81f6"
+  },
+  "composer_attempts": [
+    {
+      "answer": "I could not retrieve tracking for order ref:d45916301dd856974ea6 due to a system error.\n\n*   Local mock handoff ticket MOCK-a53543271507 created in the general queue.\n*   A specialist will review this manually.",
+      "why": [
+        "The tracking tool encountered an error preventing status retrieval.",
+        "Mandatory escalation was triggered to ensure manual review of the order."
+      ],
+      "citations": [],
+      "next_steps": [
+        "Wait for specialist contact regarding ticket MOCK-a53543271507.",
+        "Contact retailer support directly if urgent assistance is needed."
+      ],
+      "intents_addressed": [
+        "track_order"
+      ],
+      "outcome_claimed": "ESCALATED"
+    }
+  ]
+}

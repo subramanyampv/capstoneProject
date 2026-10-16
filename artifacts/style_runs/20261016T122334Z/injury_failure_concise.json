@@ -1,0 +1,118 @@
+{
+  "case": "injury_failure_concise",
+  "result": {
+    "response": {
+      "answer": "I\u2019m sorry to hear about your injury. I could not confirm the handoff for this safety report. Please contact retailer support directly for immediate assistance with this incident.",
+      "why": [
+        "The safety escalation tool encountered an error during processing.",
+        "Ticket creation failed, preventing automated handoff confirmation."
+      ],
+      "citations": [],
+      "next_steps": [
+        "Contact retailer support directly regarding the product injury.",
+        "Seek medical attention if necessary."
+      ],
+      "intents_addressed": [
+        "safety_escalation"
+      ],
+      "outcome_claimed": "ESCALATION_FAILED_DISCLOSED"
+    },
+    "outcome": "ESCALATION_FAILED_DISCLOSED",
+    "ticket": {
+      "status": "failed"
+    },
+    "refusals": [],
+    "triggers": [
+      "T1",
+      "T5"
+    ],
+    "tool_records": [
+      {
+        "evidence_refs": [],
+        "exec_id": "294a8701b6ef470a9cc07b8094952c60",
+        "name": "create_escalation",
+        "status": "error",
+        "data": null,
+        "error": "FAILED",
+        "duration_ms": 0.224
+      },
+      {
+        "evidence_refs": [],
+        "exec_id": "b1dbb09b8b844d52b185dece7e5d83b0",
+        "name": "create_escalation",
+        "status": "error",
+        "data": null,
+        "error": "FAILED",
+        "duration_ms": 10.015
+      }
+    ],
+    "results": [
+      {
+        "agent_name": "escalation",
+        "status": "tool_error",
+        "summary": "Specialist could not complete a verified response.",
+        "evidence": [],
+        "facts": {
+          "tools": []
+        },
+        "flags": {
+          "conflict": false,
+          "requires_review": false
+        }
+      }
+    ],
+    "stages": [
+      "guard_in",
+      "supervisor_plan",
+      "dispatch",
+      "escalation",
+      "collect_result",
+      "dispatch",
+      "composer",
+      "guard_out"
+    ],
+    "errors": [
+      "SPECIALIST_model_unavailable"
+    ],
+    "model_calls": 4,
+    "tool_calls": 2,
+    "handoffs": 1,
+    "replans": 0,
+    "repairs": 0,
+    "tokens": 3302,
+    "style": {
+      "verbosity": "concise",
+      "format": "prose",
+      "version": 1,
+      "word_count": 28
+    },
+    "safety_version": "2026-10-15-v2",
+    "latency_ms": 13596.48,
+    "memory": {
+      "enabled": false,
+      "history_messages": 0,
+      "resolved_reference": false,
+      "expired": false,
+      "reset": false
+    },
+    "request_id": "eb2b64a9ed47469a971079a54e52567e"
+  },
+  "composer_attempts": [
+    {
+      "answer": "I\u2019m sorry to hear about your injury. I could not confirm the handoff for this safety report. Please contact retailer support directly for immediate assistance with this incident.",
+      "why": [
+        "The safety escalation tool encountered an error during processing.",
+        "Ticket creation failed, preventing automated handoff confirmation."
+      ],
+      "citations": [],
+      "next_steps": [
+        "Contact retailer support directly regarding the product injury.",
+        "Seek medical attention if necessary."
+      ],
+      "intents_addressed": [
+        "safety_escalation"
+      ],
+      "outcome_claimed": "ESCALATION_FAILED_DISCLOSED"
+    }
+  ]
+}

@@ -10,7 +10,9 @@ from capstone_agent.support.model import Gateway
 from capstone_agent.support.privacy import minimize,opaque
 from capstone_agent.support.registry import SessionIdentity
 from capstone_agent.support.services import Services,ROOT
-from capstone_agent.support.memory import SessionMemory
+from capstone_agent.support.memory import SessionMemory,command_result
+from capstone_agent.support.preferences import PreferenceStore,StyleProfile,is_preference_command,implicit_signal
+from capstone_agent.support.guards import SafetyRules
 
 MEMORY=SessionMemory(background=True)
 
@@ -24,13 +26,36 @@ def safe_record(result,identity,secrets=()):
         'replans':result['replans'],'repairs':result['repairs'],'tokens':result['tokens'],
         'latency_ms':result['latency_ms'],'safety_version':result['safety_version'],
         'ticket_id':result['ticket'].get('ticket_id') if result['ticket'] else None,
+        'style':result.get('style',{}),
         'memory':{k:v for k,v in result.get('memory',{}).items() if k in {'enabled','history_messages','resolved_reference','expired','reset'}}}
 
-def run_support(query,customer_id='C-100',*,search=None,identity=None,faults=None,root=ROOT,memory=None,memory_enabled=None):
+def run_support(query,customer_id='C-100',*,search=None,identity=None,faults=None,root=ROOT,memory=None,memory_enabled=None,preferences=None):
     identity=identity or SessionIdentity(customer_id)
     manager=memory or MEMORY
     secrets=()
-    if isinstance(query,str) and query.strip()=='/reset':
+    preferences=preferences or PreferenceStore(root)
+    request_id=uuid.uuid4().hex
+    if is_preference_command(query):
+        if identity.customer_id not in Services(root=root).customers():raise ValueError('UNKNOWN_SYNTHETIC_CUSTOMER')
+        command=query.strip()
+        if command=='/forget-preferences':
+            preferences.forget(identity.customer_id)
+            answer='Saved style preferences and feedback deleted. Automatic style learning is off.'
+            profile=StyleProfile()
+        else:
+            parts=command.split()
+            if len(parts)!=2:raise ValueError('Use /feedback with too_long, too_short, unclear, helpful, not_helpful, enable, disable or reset_style.')
+            profile=preferences.apply(identity.customer_id,parts[1],request_id=request_id)
+            answer={'enable':'Style learning enabled for this synthetic customer.',
+                'disable':'Style learning disabled. Default style will be used; /forget-preferences deletes saved data.',
+                'reset_style':'Style reset to standard prose. Session memory is unchanged.'}.get(parts[1],
+                'Feedback saved. Two matching signals in the recent ten can change response style. Sending feedback enables style learning.')
+        result=command_result(memory_enabled is not False)
+        result['response'].update(answer=answer,intents_addressed=['feedback_style'])
+        result['memory']['reset']=False
+        result['stages']=['command_handler','style_preferences']
+        result['style']=profile.as_dict()
+    elif isinstance(query,str) and query.strip()=='/reset':
         # Deletion must remain available even if the provider/config/index is down.
         result=manager.process(query,identity,lambda *_:None,enabled=memory_enabled is not False)
     else:
@@ -42,11 +67,24 @@ def run_support(query,customer_id='C-100',*,search=None,identity=None,faults=Non
             if flag not in {'true','false'}:raise ValueError('INVALID_MEMORY_ENABLED')
             memory_enabled=flag=='true'
         def execute(message,context):
+            profile=StyleProfile()
+            try:
+                refusals,triggers,_=SafetyRules().match(message)
+                if not refusals and not triggers and preferences.consented(identity.customer_id):
+                    from capstone_agent.support.privacy import mask_sensitive
+                    signal=implicit_signal(mask_sensitive(message,secrets),context,embeddings=getattr(search,'embeddings',None))
+                    if signal:preferences.apply(identity.customer_id,signal,kind='implicit',request_id=request_id)
+                profile=preferences.profile(identity.customer_id)
+            except (OSError,ValueError,KeyError,TypeError):
+                # Preference storage is optional; its failure must not interrupt safety handling.
+                pass
             with LangChainChatClient(config) as client:
                 agent=SupportAgent(services,Gateway(client.chat,timeout=config.timeout_seconds+1),secrets=secrets)
-                return asyncio.run(agent.run(message,identity,faults=faults,memory_context=context))
+                return asyncio.run(agent.run(message,identity,faults=faults,memory_context=context,style=profile))
         result=manager.process(query,identity,execute,enabled=memory_enabled,secrets=secrets)
+    result["request_id"]=request_id
     record=safe_record(result,identity,secrets)
+    record["request_ref"]=request_id
     path=root/'data/runtime/requests.jsonl'
     try:
         path.parent.mkdir(parents=True,exist_ok=True)

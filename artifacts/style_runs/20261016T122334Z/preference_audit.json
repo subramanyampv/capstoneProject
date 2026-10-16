@@ -1,0 +1,165 @@
+{
+  "profiles": {
+    "ref:2b653302f18f5225ce7e": {
+      "consent": true,
+      "consent_at": "2026-10-16T12:25:35.545401+00:00",
+      "style": {
+        "verbosity": "concise",
+        "format": "prose",
+        "version": 1
+      },
+      "signals": [
+        {
+          "signal": "too_long",
+          "used": true
+        },
+        {
+          "signal": "too_long",
+          "used": true
+        }
+      ],
+      "history": [
+        {
+          "from": {
+            "verbosity": "standard",
+            "format": "prose",
+            "version": 0
+          },
+          "to": {
+            "verbosity": "concise",
+            "format": "prose",
+            "version": 1
+          },
+          "reason": "too_long",
+          "signals": [
+            "too_long",
+            "too_long"
+          ],
+          "ts": "2026-10-16T12:25:35.545401+00:00"
+        }
+      ]
+    },
+    "ref:059c67cc756660d558de": {
+      "consent": true,
+      "consent_at": "2026-10-16T12:30:36.082201+00:00",
+      "style": {
+        "verbosity": "concise",
+        "format": "prose",
+        "version": 1
+      },
+      "signals": [
+        {
+          "signal": "too_long",
+          "used": true
+        },
+        {
+          "signal": "too_long",
+          "used": true
+        }
+      ],
+      "history": [
+        {
+          "from": {
+            "verbosity": "standard",
+            "format": "prose",
+            "version": 0
+          },
+          "to": {
+            "verbosity": "concise",
+            "format": "prose",
+            "version": 1
+          },
+          "reason": "too_long",
+          "signals": [
+            "too_long",
+            "too_long"
+          ],
+          "ts": "2026-10-16T12:30:36.082201+00:00"
+        }
+      ]
+    },
+    "ref:8fc09c59602f533619c2": {
+      "consent": true,
+      "consent_at": "2026-10-16T12:31:28.780464+00:00",
+      "style": {
+        "verbosity": "concise",
+        "format": "prose",
+        "version": 1
+      },
+      "signals": [
+        {
+          "signal": "too_long",
+          "used": true
+        },
+        {
+          "signal": "too_long",
+          "used": true
+        }
+      ],
+      "history": [
+        {
+          "from": {
+            "verbosity": "standard",
+            "format": "prose",
+            "version": 0
+          },
+          "to": {
+            "verbosity": "concise",
+            "format": "prose",
+            "version": 1
+          },
+          "reason": "too_long",
+          "signals": [
+            "too_long",
+            "too_long"
+          ],
+          "ts": "2026-10-16T12:31:28.780464+00:00"
+        }
+      ]
+    }
+  },
+  "feedback": [
+    {
+      "ts": "2026-10-16T12:25:35.543683+00:00",
+      "customer_ref": "ref:2b653302f18f5225ce7e",
+      "request_id": "ed082e2897894cd6bf3d548d64217bfd",
+      "signal": "too_long",
+      "type": "explicit"
+    },
+    {
+      "ts": "2026-10-16T12:25:35.545401+00:00",
+      "customer_ref": "ref:2b653302f18f5225ce7e",
+      "request_id": "0ad4ff711c554121bfcd5ba443975814",
+      "signal": "too_long",
+      "type": "explicit"
+    },
+    {
+      "ts": "2026-10-16T12:30:36.079131+00:00",
+      "customer_ref": "ref:059c67cc756660d558de",
+      "request_id": "c7e8748883564625b9830d0b3acb97a4",
+      "signal": "too_long",
+      "type": "explicit"
+    },
+    {
+      "ts": "2026-10-16T12:30:36.082201+00:00",
+      "customer_ref": "ref:059c67cc756660d558de",
+      "request_id": "66e3ce3653534d0eb81e270a21851894",
+      "signal": "too_long",
+      "type": "explicit"
+    },
+    {
+      "ts": "2026-10-16T12:31:28.777731+00:00",
+      "customer_ref": "ref:8fc09c59602f533619c2",
+      "request_id": "f6ae924a2b66493b8a5d164ff18f9b63",
+      "signal": "too_long",
+      "type": "explicit"
+    },
+    {
+      "ts": "2026-10-16T12:31:28.780464+00:00",
+      "customer_ref": "ref:8fc09c59602f533619c2",
+      "request_id": "dff53d1f1e8347a5832ab5f22ef35a4c",
+      "signal": "too_long",
+      "type": "explicit"
+    }
+  ]
+}

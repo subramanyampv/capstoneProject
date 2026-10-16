@@ -41,11 +41,25 @@ with chat:
         st.caption("Test records only · demo date 12 Oct 2026. Handoffs create local mock tickets; refunds, returns and cancellations are not executed. Session context expires after 30 minutes of inactivity. Records are checked again for every answer.")
         if ("support_identity" not in st.session_state or st.session_state.support_identity.customer_id != customer):
             if 'support_identity' in st.session_state:MEMORY.reset(st.session_state.support_identity)
+            st.session_state.pop('feedback_customer',None)
             st.session_state.support_identity = SessionIdentity(customer)
         if st.button("New support session"):
             MEMORY.reset(st.session_state.support_identity)
+            st.session_state.pop("feedback_customer",None)
             st.session_state.support_identity = SessionIdentity(customer)
             st.info("New session started.")
+        st.caption("Style learning is off until you enable it or submit feedback. Two matching signals in the recent ten can adjust length or format. Preferences persist locally per synthetic customer. Reset style and clear session memory are separate actions.")
+        from capstone_agent.support.runtime import run_support
+        with st.expander("Response style and feedback"):
+            for label, command in [("Enable style learning", "/feedback enable"),
+                                   ("Disable style learning", "/feedback disable"),
+                                   ("Reset style", "/feedback reset_style"),
+                                   ("Delete preferences", "/forget-preferences")]:
+                if st.button(label):
+                    try:
+                        updated=run_support(command,identity=st.session_state.support_identity)
+                        st.info(updated['response']['answer'])
+                    except Exception:st.error("Style settings could not be updated. Please try again.")
     with st.form("question_form", clear_on_submit=True):
         message = st.text_area("How can we help?", placeholder="Can I return order O-1001?", max_chars=2000)
         submitted = st.form_submit_button("Get answer", type="primary")
@@ -66,18 +80,10 @@ with chat:
                     search.search('return policy')
                     return search
                 with st.spinner("Checking records and policy evidence…"):
-                    result = run_support(message, identity=st.session_state.support_identity, search=None if message.strip()=="/reset" else local_policy_search())
-                draft = result["response"]
-                st.write(draft["answer"])
-                if draft["why"]:
-                    with st.expander("Why this answer?"):
-                        for reason in draft["why"]: st.write(reason)
-                if draft["citations"]:
-                    with st.expander("Sources"):
-                        for ref in draft["citations"]:
-                            st.write(f"{ref['source_id']} · {ref.get('section') or ''} · {ref.get('record_version') or ''}")
-                for step in draft["next_steps"]: st.write(step)
-                st.caption(result["outcome"].replace("_", " ").capitalize())
+                    result = run_support(message, identity=st.session_state.support_identity, search=None if message.strip().startswith(("/reset","/feedback","/forget-preferences")) else local_policy_search())
+                st.session_state.support_last={"session":st.session_state.support_identity.session_id,
+                    "response":result['response'],"outcome":result['outcome'],"style":result.get('style',{})}
+                if result["outcome"]!="COMMAND_HANDLED":st.session_state.feedback_customer=customer
             else:
                 config = LLMConfig.from_env(ROOT / ".env")
                 obs = ObservabilityConfig.from_env(ROOT / ".env")
@@ -97,6 +103,32 @@ with chat:
                     st.error("The answer could not be verified. Please try again later.")
         except Exception:
             st.error("The answer could not be confirmed. Check the local settings or contact retailer support directly.")
+
+    if mode=="Support agent":
+        previous=st.session_state.get('support_last',{})
+        if previous.get('session')==st.session_state.support_identity.session_id:
+            result=previous
+            draft = result["response"]
+            st.write(draft["answer"])
+            if draft["why"]:
+                with st.expander("Why this answer?"):
+                    for reason in draft["why"]: st.write(reason)
+            if draft["citations"]:
+                with st.expander("Sources"):
+                    for ref in draft["citations"]:
+                        st.write(f"{ref['source_id']} · {ref.get('section') or ''} · {ref.get('record_version') or ''}")
+            for step in draft["next_steps"]: st.write(step)
+            st.caption(result["outcome"].replace("_", " ").capitalize())
+            if result.get('style'):
+                st.caption(f"Style version {result['style'].get('version',0)} · {result['style'].get('verbosity','standard')} · {('step_by_step' if result['style'].get('format')=='step_by_step' else 'bullets' if result['style'].get('verbosity')=='concise' else result['style'].get('format','prose'))}")
+    if mode=='Support agent' and st.session_state.get('feedback_customer') == customer:
+        for label, signal in [("Too long", "too_long"), ("Too short", "too_short"),
+                              ("Unclear", "unclear"), ("Helpful", "helpful"), ("Not helpful", "not_helpful")]:
+            if st.button(label):
+                try:
+                    updated=run_support('/feedback '+signal,identity=st.session_state.support_identity)
+                    st.info(updated['response']['answer'])
+                except Exception:st.error("Feedback could not be saved. Please try again.")
 
 with evaluation:
     st.subheader("Recorded experiments")

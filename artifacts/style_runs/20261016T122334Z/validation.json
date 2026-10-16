@@ -1,0 +1,76 @@
+{
+  "passed": true,
+  "changed_since_live_snapshot": [
+    "guards.py"
+  ],
+  "current_guards_sha256": "1795d61fed93c8cdfbfd361b0794fb6d320d886727f6962bc8740556bf9a7dc1",
+  "gate_replay": [
+    {
+      "case": "after",
+      "recorded_gate_errors": [],
+      "current_gate_errors": [],
+      "equal": true
+    },
+    {
+      "case": "before",
+      "recorded_gate_errors": [],
+      "current_gate_errors": [],
+      "equal": true
+    },
+    {
+      "case": "injury_failure_concise",
+      "recorded_gate_errors": [],
+      "current_gate_errors": [],
+      "equal": true
+    },
+    {
+      "case": "injury_failure_standard",
+      "recorded_gate_errors": [],
+      "current_gate_errors": [],
+      "equal": true
+    },
+    {
+      "case": "refusal_concise",
+      "recorded_gate_errors": [],
+      "current_gate_errors": [],
+      "equal": true
+    },
+    {
+      "case": "refusal_standard",
+      "recorded_gate_errors": [],
+      "current_gate_errors": [],
+      "equal": true
+    },
+    {
+      "case": "reset",
+      "recorded_gate_errors": [],
+      "current_gate_errors": [],
+      "equal": true
+    },
+    {
+      "case": "threshold_concise",
+      "recorded_gate_errors": [],
+      "current_gate_errors": [],
+      "equal": true
+    },
+    {
+      "case": "threshold_standard",
+      "recorded_gate_errors": [],
+      "current_gate_errors": [],
+      "equal": true
+    },
+    {
+      "case": "tracking_timeout_concise",
+      "recorded_gate_errors": [],
+      "current_gate_errors": [],
+      "equal": true
+    },
+    {
+      "case": "tracking_timeout_standard",
+      "recorded_gate_errors": [],
+      "current_gate_errors": [],
+      "equal": true
+    }
+  ],
+  "limits": "Replays recorded final drafts with canonical tool refs/facts and recorded safety flags. Coverage uses recorded final intents; planner correctness and semantic faithfulness are not independently graded. The post-run change only permits sentence punctuation after a duration while retaining numeric boundaries."
+}

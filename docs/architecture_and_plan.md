@@ -40,8 +40,8 @@
 - Phases 1–2 are complete with exit evidence.
 - Phase 3 is complete: the written ten-case comparison, per-prompt failure breakdown and development selection are recorded. The frozen experiment produced 195/195 schema-valid outputs (**MEASURED**). Prompt C is the development default; this does not establish final safety acceptance (Section 14.5).
 - Phase 4 has seven authored documents, 28 indexed sections, pinned local Voyage-4-nano/Chroma, 20 retrieval labels and a live ten-case RAG on/off comparison (**IMPLEMENTED / MEASURED**). The development coverage gap is corrected by the follow-through in Section 9.8; category applicability and registered-tool/current-turn citation integration are implemented. Held-out generalization remains open.
-- Phase 5 core tools/control are **IMPLEMENTED**, with live defects and repairs preserved in [the implementation chapter](phase5_tools_and_graph.md). Phase 6 projection memory is **IMPLEMENTED** with five-conversation comparison measured. Phases 7–9 remain **PLANNED**; early UI/logging components already exist. The target submission date stays 2026-10-18; schedule dates are targets, not guarantees.
-- Latest offline regression: 174 tests passed in 16.53s. [Detailed progress and remaining work](project_progress.md) records the evidence and next steps.
+- Phase 5 core tools/control are **IMPLEMENTED**, with live defects and repairs preserved in [the implementation chapter](phase5_tools_and_graph.md). Phase 6 projection memory is **IMPLEMENTED** with five-conversation comparison measured. Phase 7 controlled adaptation is **IMPLEMENTED** with live development validation; Phases 8–9 remain **PLANNED**; early UI/logging components already exist. The target submission date stays 2026-10-18; schedule dates are targets, not guarantees.
+- Latest offline regression is recorded in [Phase 7 validation](../artifacts/phase7_validation.md). [Detailed progress and remaining work](project_progress.md) records the evidence and next steps.
 - Author/student name and a new GitHub repository are not required. Continue in the existing repository; use the scanned history-free source snapshot for packaging.
 
 **Key design stance.** The rubric evaluates "engineering judgment, reliability, explainability, safety-first design, and practical usefulness… not unnecessary complexity." The architecture is therefore deliberately minimal:
@@ -669,7 +669,7 @@ The sole write persists a sanitized SQLite mock ticket and verifies it before re
 
 The first live run revealed specialist/reference errors and unnecessary escalation on ordinary eligibility. Later runs add explicit canonical tool evidence, restrict final policy citations to retrieved refs, sanitize handoff summaries before invocation and preserve failed outputs. The eligible return now has current-turn order/eligibility/policy evidence and a supported answer. The [dated validation record](../artifacts/phase5_validation.md) supplies all eight final expected smoke outcomes, independent local ticket read-back, preserved failures, latency and limits. Tests cover ownership, inclusive boundaries, exact threshold, exclusions, code triggers, failures, idempotency, model/read deadlines, bounded replanning and UI identity binding. None of this replaces full frozen/holdout safety evaluation.
 
-CLI `support` and Streamlit **Support agent** expose the current graph. Session memory/TTL/reset commands, feedback adaptation, hosted masked LangSmith hierarchy, complete canary/semantic scans and final evaluation remain open. The synthetic account selector is not production authentication. No return/refund/cancellation writes or knowledge graph are added.
+CLI `support` and Streamlit **Support agent** expose the current graph. Session memory/TTL/reset and controlled style feedback are implemented (Sections 11–12). Hosted masked LangSmith hierarchy, complete canary/semantic scans and final evaluation remain open. The synthetic account selector is not production authentication. No return/refund/cancellation writes or knowledge graph are added.
 
 ---
 
@@ -917,7 +917,7 @@ The projection graph, scoped references, monotonic TTL/background cleanup, provi
 
 [Phase 6 validation](../artifacts/phase6_validation.md) records 174 passing tests and five authored conversations in both memory modes. Four of four positive follow-ups answer using expected fresh tool evidence with memory on, versus zero of four off; clarification responses are one versus five. Reset correctly requests clarification in both modes. The comparison measures reference/tool/outcome behavior, not independent sentence-level faithfulness or held-out generalization. Earlier tracking-promotion and other-order failures remain recorded, including the run that escalated instead of resolving.
 
-[Checkpoint audit](../artifacts/phase6_checkpoint_audit.json) checks intermediate versions, pending writes and blobs. It retains six safe messages/three versions after repeated turns; reset removes held stores, and exact-boundary expiry leaves zero versions, messages, entities, writes and blobs. A bounded disk scan has no configured-key/known-canary findings. Universal PII detection, forensic erasure, hosted tracing and final acceptance remain unclaimed. Phase 7 adaptation is next; durable memory and knowledge graph remain deferred.
+[Checkpoint audit](../artifacts/phase6_checkpoint_audit.json) checks intermediate versions, pending writes and blobs. It retains six safe messages/three versions after repeated turns; reset removes held stores, and exact-boundary expiry leaves zero versions, messages, entities, writes and blobs. A bounded disk scan has no configured-key/known-canary findings. Universal PII detection, forensic erasure, hosted tracing and final acceptance remain unclaimed. This is the Phase 6 closure record; Phase 7 implementation is described in Section 12.5. Durable conversational memory and knowledge graph remain deferred.
 
 ---
 
@@ -963,6 +963,15 @@ Refusal rules, escalation triggers, thresholds, citations, eligibility logic, Gu
   - Style changes can reduce explanation depth; citations are always retained to mitigate this.
 
 ---
+
+### 12.5 Implemented follow-through — 2026-10-16
+
+[Phase 7 design and commands](phase7_adaptation.md) describes the shared terminal/Streamlit implementation, explicit consent, generated style instructions and failure behavior. Profiles persist locally by opaque customer reference; the last ten signals and twenty version changes are bounded. Pairs are consumed after use, preventing one pair from repeatedly moving the style. Feedback reports retain thirty days/up to 10,000 events; successful deletion removes that customer's profile/history/events. A local process/thread lock and atomic writes protect updates. There is no distributed or forensic-erasure claim.
+
+Automatic learning is opt-in (`/feedback enable` or explicit feedback); `/feedback disable` uses defaults and stops learning, `/feedback reset_style` creates a default-style version, and `/forget-preferences` deletes preferences and consent. These commands work without a configured provider or loaded index. `/reset` continues to clear only conversation memory. Repetition uses transient masked texts and pinned local embeddings at conservative development threshold 0.98, skips changed explicit identifiers, and makes no calibrated recall claim. Style word limits are presentation goals for the answer field; mandatory safety disclosures, citations and intent coverage take priority. No truncation changes safety content.
+
+[Validation](../artifacts/phase7_validation.md) preserves the initial rejected live outputs, subsequent grammar-only numeric grounding correction, before/after/reset measurements, safety subset and deletion/privacy checks. The grounding correction equates singular/plural day/month wording without permitting numeric changes or unit conversion. Frozen/holdout evaluation, semantic faithfulness, human calibration, hosted tracing and final acceptance remain later gates.
+
 
 ## 13. Observability, Deployment and Operations
 
@@ -1193,13 +1202,13 @@ The [detailed task checklist](task_list.md) tracks completed, update-needed and 
 | **4 Knowledge & retrieval** | Corpus, Voyage-nano + Chroma, `search_policy`, retrieval evaluation | **Initial build IMPLEMENTED / MEASURED** | Development coverage and targeted wording check recorded; Category handling and Phase 5 current-turn tool integration implemented; later human calibration | `retrieval_design.md`, retrieval/RAG artifacts | RAG (10) |
 | **5 Tools & multi-agent** | 6 tools, registry, 3 specialists, supervisor, guards, budgets | Core IMPLEMENTED; live validation recorded | Complete final semantic/repeated-case proof in Phase 9 | phase5_tools_and_graph.md; typed tool/graph tests and live smoke artifacts | Tools (15), Architecture (15) |
 | **6 Planning, memory & context** | Plans, projection memory, TTL, reset | IMPLEMENTED; five-conversation comparison measured | Final held-out/semantic and repeated-run proof remain Phase 9 | phase6_memory.md; memory tests and recorded comparisons | Architecture/Memory (15) |
-| **7 Adaptive behaviour** | Feedback signals, style adaptation | PLANNED (Day 3) | Section 12 | Before/after logs, limits | Adaptive (5) |
+| **7 Adaptive behaviour** | Feedback signals, style adaptation | IMPLEMENTED (development scope) | Section 12 | Before/after logs, limits | Adaptive (5) |
 | **8 Deployment readiness** | Packaging, logs, tracing, failure handling | PLANNED (Days 3–4) | Section 13 | Clean-venv run, latency/error report, trace samples, canary reports | Deployment (10) |
 | **9 Evaluation & review** | Full evaluation, consistency, RCA, safety review, roadmap | PLANNED (Days 4–5) | Section 14 | `evaluation_report.md` | Safety/Eval (15) |
 
 ### 16.2 Delivery schedule (targets; current status takes precedence)
 
-The original Day 1 implementation tasks were substantially completed on 2026-10-13. Phase 4 coverage and category follow-through are measured. Phase 5 tools/control are implemented and live validation is recorded; next major work is Phase 6 bounded memory and checkpoint privacy verification. The daily blocks below are planning targets, not claims of completion or guaranteed dates. No author/student identity or new repository is a dependency.
+The original Day 1 implementation tasks were substantially completed on 2026-10-13. Phase 4 coverage and category follow-through are measured. Phase 5 tools/control are implemented and live validation is recorded; Phases 6 and 7 now implement bounded projection memory and controlled style adaptation; next major work is Phase 8 hosted observability and delivery verification. The daily blocks below are planning targets, not claims of completion or guaranteed dates. No author/student identity or new repository is a dependency.
 
 **Day 0: Tuesday 2026-10-13 (evening, ~1.5 h)**
 - Freeze scope. Add feature flags for deferred components and hide deferred UI tabs.

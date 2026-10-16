@@ -23,7 +23,7 @@ A new explicit order reference replaces the active slot; a failed/non-owned expl
 
 Expiry uses elapsed monotonic time, independently of the frozen scenario date. The default inactivity boundary is 1,800 seconds. Requests enforce it exactly; a background reaper deletes idle checkpoint storage within the next 30-second sweep even if no request follows. Constructor parameters support isolated clock/TTL tests. Context is lost on process restart.
 
-`/reset` deletes all retained versions and works even if provider/index configuration is unavailable. It never claims to delete real orders or tickets. New-session and account-switch controls clear the prior UI session's retained context. Unsupported commands still disclose their unavailability; style feedback and `/forget-preferences` remain Phase 7 work.
+`/reset` deletes all retained versions and works even if provider/index configuration is unavailable. It never claims to delete real orders or tickets. New-session and account-switch controls clear the prior UI session's retained context. Unsupported commands still disclose their unavailability; style feedback and `/forget-preferences` are now implemented separately in [Phase 7](phase7_adaptation.md).
 
 ## Interfaces and comparison
 
