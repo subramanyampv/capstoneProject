@@ -1,0 +1,8 @@
+{
+  "passed": true,
+  "source_files": 525,
+  "runtime_files": 6,
+  "phase8_structured_files": 19,
+  "findings": [],
+  "limits": "Configured credentials in nonignored source/evidence and known canaries in final operational stores/Phase 8 metadata. Historical authored input canaries in test source are intentional. Not a Git-history or universal PII/cloud guarantee; hosted read-back is checked separately."
+}

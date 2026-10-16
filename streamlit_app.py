@@ -71,6 +71,8 @@ with chat:
                 st.write(sanitize(result.response))
                 st.caption(f"{result.intent} · {result.latency_ms} ms")
             elif mode == "Support agent":
+                st.session_state.pop("support_last",None)
+                st.session_state.pop("feedback_customer",None)
                 from capstone_agent.retrieval.embeddings_voyage import VoyageNanoEmbeddings
                 from capstone_agent.retrieval.chroma_store import PolicySearch
                 from capstone_agent.support.runtime import run_support
@@ -149,12 +151,23 @@ with evaluation:
 
 with traces:
     st.subheader("Recorded request traces")
-    st.caption("Phase 3 experiment traces are below. Support-agent records contain only stages, counters and tool status; hosted masked traces remain pending.")
+    st.caption("Phase 3 experiment traces are below. Support-agent records contain a content-free node/model/tool hierarchy, counters and tool status. Hosted delivery receipts are shown when tracing is enabled.")
+    export_log=ROOT/'data/runtime/trace_exports.jsonl'
+    if export_log.exists():
+        try:st.dataframe([json.loads(line) for line in export_log.read_text().splitlines()[-10:]],width='stretch')
+        except (OSError,ValueError):st.info('Trace delivery status unavailable.')
     support_log = ROOT / "data/runtime/requests.jsonl"
     if support_log.exists():
         try:
             support_records = [json.loads(line) for line in support_log.read_text().splitlines()[-30:]]
             st.dataframe([{k: row.get(k) for k in ["request_ref", "outcome", "model_calls", "tool_calls", "latency_ms", "ticket_id"]} for row in support_records], width="stretch")
+            with st.expander('Routing timeline (metadata only)'):
+                scoped=[row for row in support_records if row.get('spans')]
+                if scoped:
+                    selected_trace=st.selectbox('Request trace',scoped,format_func=lambda row:row['request_ref'])
+                    st.dataframe([{key:span.get(key) for key in ['name','run_type','id','parent_run_id','start_time','end_time','outputs']}
+                        for span in selected_trace['spans']],width='stretch')
+                else:st.info('No final-agent routing spans recorded yet.')
         except (OSError, ValueError):
             st.info("Local support records are unavailable.")
     if runs and (selected / "outputs.jsonl").exists():

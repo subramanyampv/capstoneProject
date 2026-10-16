@@ -40,7 +40,7 @@
 - Phases 1–2 are complete with exit evidence.
 - Phase 3 is complete: the written ten-case comparison, per-prompt failure breakdown and development selection are recorded. The frozen experiment produced 195/195 schema-valid outputs (**MEASURED**). Prompt C is the development default; this does not establish final safety acceptance (Section 14.5).
 - Phase 4 has seven authored documents, 28 indexed sections, pinned local Voyage-4-nano/Chroma, 20 retrieval labels and a live ten-case RAG on/off comparison (**IMPLEMENTED / MEASURED**). The development coverage gap is corrected by the follow-through in Section 9.8; category applicability and registered-tool/current-turn citation integration are implemented. Held-out generalization remains open.
-- Phase 5 core tools/control are **IMPLEMENTED**, with live defects and repairs preserved in [the implementation chapter](phase5_tools_and_graph.md). Phase 6 projection memory is **IMPLEMENTED** with five-conversation comparison measured. Phase 7 controlled adaptation is **IMPLEMENTED** with live development validation; Phases 8–9 remain **PLANNED**; early UI/logging components already exist. The target submission date stays 2026-10-18; schedule dates are targets, not guarantees.
+- Phase 5 core tools/control are **IMPLEMENTED**, with live defects and repairs preserved in [the implementation chapter](phase5_tools_and_graph.md). Phase 6 projection memory is **IMPLEMENTED** with five-conversation comparison measured. Phase 7 controlled adaptation is **IMPLEMENTED** with live development validation; Phase 8 local deployment and hosted metadata observability are **VERIFIED**; Phase 9 final acceptance remains **PLANNED**. The target submission date stays 2026-10-18; schedule dates are targets, not guarantees.
 - Latest offline regression is recorded in [Phase 7 validation](../artifacts/phase7_validation.md). [Detailed progress and remaining work](project_progress.md) records the evidence and next steps.
 - Author/student name and a new GitHub repository are not required. Continue in the existing repository; use the scanned history-free source snapshot for packaging.
 
@@ -669,7 +669,7 @@ The sole write persists a sanitized SQLite mock ticket and verifies it before re
 
 The first live run revealed specialist/reference errors and unnecessary escalation on ordinary eligibility. Later runs add explicit canonical tool evidence, restrict final policy citations to retrieved refs, sanitize handoff summaries before invocation and preserve failed outputs. The eligible return now has current-turn order/eligibility/policy evidence and a supported answer. The [dated validation record](../artifacts/phase5_validation.md) supplies all eight final expected smoke outcomes, independent local ticket read-back, preserved failures, latency and limits. Tests cover ownership, inclusive boundaries, exact threshold, exclusions, code triggers, failures, idempotency, model/read deadlines, bounded replanning and UI identity binding. None of this replaces full frozen/holdout safety evaluation.
 
-CLI `support` and Streamlit **Support agent** expose the current graph. Session memory/TTL/reset and controlled style feedback are implemented (Sections 11–12). Hosted masked LangSmith hierarchy, complete canary/semantic scans and final evaluation remain open. The synthetic account selector is not production authentication. No return/refund/cancellation writes or knowledge graph are added.
+CLI `support` and Streamlit **Support agent** expose the current graph. Session memory/TTL/reset and controlled style feedback are implemented (Sections 11–12). Hosted metadata-only hierarchy and operational canary/failure checks are now verified in Phase 8. Complete final semantic/consistency evaluation remains open. The synthetic account selector is not production authentication. No return/refund/cancellation writes or knowledge graph are added.
 
 ---
 
@@ -998,17 +998,15 @@ Automatic learning is opt-in (`/feedback enable` or explicit feedback); `/feedba
 
 This record is illustrative of the schema; the values are not measured results.
 
-### 13.2 LangSmith tracing
+### 13.2 LangSmith tracing — implemented and verified
 
-- **Target mode (PLANNED):** masked LangGraph hierarchical tracing, opt-in via `.env`. Default is off. The current wrapper hides inputs and filters outputs to safe scalar metadata; hosted ingestion, agent/tool hierarchy and failure isolation remain unverified.
-- **Masking:** inputs and outputs pass through LangSmith's anonymizer hook using the **same redaction function** as local logs. If the hook is unavailable on the pinned SDK version, inputs and outputs are hidden entirely, and node, tool, timing, and status remain visible.
-- **Verification:** after Demo 3, query the run via the LangSmith client for the canary strings and record `canary_found: false` in `artifacts/langsmith_canary.json`.
-- **Failure isolation:** tracing errors are caught and logged locally. A test run with tracing enabled and an invalid key must produce identical agent behavior.
-- **Evidence:** screenshots of the supervisor → agent → tool trace tree for Demos 1, 2, and 4.
+Explicit content-free spans capture request → actual graph node → model/tool hierarchy, with native content-bearing traces suppressed. Generated IDs, static names, UTC times, numeric counters, code outcomes and boolean failures are exported; prompts, answers, retrieval text, tool payloads, personal names, customer/order identifiers and credentials are excluded. A bounded daemon queue isolates transport failures. `queued` is distinct from a successful delivery receipt; CLI shutdown gives export a bounded five-second drain. Invalid optional tracing configuration does not change support behavior.
+
+[Phase 8 operations](phase8_operations.md) documents the schema, commands and limits. Hosted read-back confirms twelve-run answer and thirteen-run canary/failure trees with matching parents/outputs and empty inputs. Canary strings and current credentials are absent from inspected hosted payloads. An actual invalid-credential/access probe preserves refusal and injury-backstop outcomes and the same verified idempotent ticket. The initial empty-output normalization verifier failure is preserved. Templates remain opt-out; the user enabled tracing in the ignored local `.env` for verification.
 
 ### 13.3 Metrics captured
 
-Per request: latency per stage and total, LLM calls, tokens, tool statuses, outcome, triggers, repairs, error category.
+Per request: span start/end timestamps, graph elapsed latency, LLM calls/token counts, tool statuses, outcome, triggers, repairs and controlled error categories. Local spans exclude all content. Startup, public-index warmup and asynchronous delivery are outside the reported graph elapsed measurement.
 
 Per evaluation run: p50/p95 latency by path, error rate by category, outcome distribution.
 
@@ -1027,9 +1025,9 @@ These are targets. The Evaluation Report states whether they were met. Latency i
 
 | Failure | Detection | Handling | Outcome |
 |---|---|---|---|
-| LLM timeout | Adapter timeout (30 s) | 1 retry; then safe template | `TOOL_ERROR_DISCLOSED` + escalation offer |
+| LLM timeout | Configured model timeout plus bounded gateway deadline | No provider transport retry; structured repair stays within twelve-call budget; T5/code backstop when unresolved | Verified escalation/failure disclosure or safe composition fallback |
 | Invalid structured output | Pydantic validation | 1 repair; then fallback template | Varies; logged |
-| Tool timeout | Registry timeout | Typed `TIMEOUT` to the agent; agent returns `tool_error` | `TOOL_ERROR_DISCLOSED`; T5 if the intent is unservable |
+| Tool timeout | Registry timeout | Typed `TIMEOUT`; code adds T5 and attempts verified handoff | `ESCALATED` or `ESCALATION_FAILED_DISCLOSED` for unresolved intent |
 | Unknown tool / malformed arguments | Registry allowlist / schema | `UNKNOWN_TOOL` / `INVALID_ARGUMENT` returned; logged as incorrect tool call | Agent recovers or reports `tool_error` |
 | Retrieval below threshold | `below_threshold` | Agent returns `insufficient_evidence` | `INSUFFICIENT_EVIDENCE` |
 | Index manifest mismatch | Startup check | Refuse to start retrieval | Startup error message |
@@ -1039,23 +1037,24 @@ These are targets. The Evaluation Report states whether they were met. Latency i
 | LangSmith unavailable | Exception in tracer | Ignore; local log notes it | Unchanged |
 | Missing configuration | Startup validator | Fail fast, naming the missing key (no values printed) | — |
 
-### 13.6 Fault injection flags
+### 13.6 Fault injection controls
 
-| Flag | Effect |
+| Supported control | Effect |
 |---|---|
-| `FAULT_TRACKING_TIMEOUT` | `get_tracking_events` times out |
-| `FAULT_ESCALATION_FAIL` | `create_escalation` returns `FAILED` |
-| `FAULT_LLM_TIMEOUT_NODE` | Named node's LLM call times out |
-| `FAULT_UNKNOWN_TOOL` | The next tool call is rewritten to a nonexistent tool name |
+| CLI `--fault-tracking-timeout` | Registry injects tracking `TIMEOUT` |
+| CLI `--fault-escalation-fail` | Registry injects mock handoff `FAILED` |
+| CLI `--fault-model` | Supervisor failure exercises code backstop |
+| Programmatic `faults` mapping | Development scripts/tests inject registry or supervisor/specialist/composer failures |
+| Scripted adversarial tool call | Unknown names/arguments are rejected by the registry; no nonexistent environment flag is required |
 
 ### 13.7 Packaging and deployment
 
 | Item | Specification |
 |---|---|
 | Deployment target | Local machine (CLI + Streamlit on `127.0.0.1`) |
-| Environment | Pinned Python version and lockfile (`pyproject.toml` + lock); clean virtual environment install tested |
-| Configuration | `.env` (secrets), `config/app.yaml` (budgets, TTL, thresholds, flags), `config/safety_rules.yaml` |
-| Commands | `make setup` · `make ingest` · `make cli` · `make ui` · `make eval` · `make eval-consistency` · `make scan` · `make test` |
+| Environment | Verified Python 3.12.12/macOS arm64; `pyproject.toml` plus 153-package `constraints-dev.txt`; clean local venv install and 204 tests passed |
+| Configuration | Ignored `.env`; `config/safety_rules.json` validated limits/rules and `config/retrieval.json`; closed memory/style retention constants in their modules. No unused YAML configuration is implied. |
+| Commands | `make setup` · `make ingest` · `make cli` · `make ui` · `make eval` · `make evaluate-support` · `make consistency-support` · `make scan-final` · `make support-ready` · `make test` |
 | Startup checks | Required configuration present; model endpoint reachable; embedding model loaded; manifest matches; rule files valid |
 | Assumptions | Network access to the LLM endpoint; CPU sufficient for Voyage-nano inference on a ~50-chunk corpus; Hugging Face model downloaded once |
 | Limitations | Single-process; in-memory sessions; no authentication beyond synthetic customer selection; latency dominated by sequential LLM calls; synthetic data only |
@@ -1071,6 +1070,10 @@ These are targets. The Evaluation Report states whether they were met. Latency i
 The Knowledge and Delivery-estimate tabs are hidden behind `UI_SHOW_DEFERRED=false`.
 
 ---
+
+### 13.8 Phase 8 closure — 2026-10-16
+
+[Validation](../artifacts/phase8/validation.md) records the clean environment/index rebuild, terminal/Streamlit startup and safe routing screenshot, hosted hierarchy/canary read-back, failure isolation and six-request path measurements. Existing and clean environments pass 204 tests. The clean check reused only the pinned model download cache, not Python site-packages or a vector database; real provider/hosted tests are separate from dummy-loopback clean startup. New mock ticket packets store generated reason summaries rather than free-form names. Final evaluation entrypoints/DeepEval code contracts are implemented; reviewed contexts, semantic correctness and frozen/untouched-holdout runs remain Phase 9. LangSmith remains the current backend; Langfuse is recorded as an optional future alternative in the Memory Pad, not a dual-backend scope change.
 
 ## 14. Evaluation Plan
 
@@ -1203,12 +1206,12 @@ The [detailed task checklist](task_list.md) tracks completed, update-needed and 
 | **5 Tools & multi-agent** | 6 tools, registry, 3 specialists, supervisor, guards, budgets | Core IMPLEMENTED; live validation recorded | Complete final semantic/repeated-case proof in Phase 9 | phase5_tools_and_graph.md; typed tool/graph tests and live smoke artifacts | Tools (15), Architecture (15) |
 | **6 Planning, memory & context** | Plans, projection memory, TTL, reset | IMPLEMENTED; five-conversation comparison measured | Final held-out/semantic and repeated-run proof remain Phase 9 | phase6_memory.md; memory tests and recorded comparisons | Architecture/Memory (15) |
 | **7 Adaptive behaviour** | Feedback signals, style adaptation | IMPLEMENTED (development scope) | Section 12 | Before/after logs, limits | Adaptive (5) |
-| **8 Deployment readiness** | Packaging, logs, tracing, failure handling | PLANNED (Days 3–4) | Section 13 | Clean-venv run, latency/error report, trace samples, canary reports | Deployment (10) |
+| **8 Deployment readiness** | Packaging, logs, tracing, failure handling | VERIFIED (local/metadata scope) | Section 13 | Clean-venv run, latency/error report, trace samples, canary reports | Deployment (10) |
 | **9 Evaluation & review** | Full evaluation, consistency, RCA, safety review, roadmap | PLANNED (Days 4–5) | Section 14 | `evaluation_report.md` | Safety/Eval (15) |
 
 ### 16.2 Delivery schedule (targets; current status takes precedence)
 
-The original Day 1 implementation tasks were substantially completed on 2026-10-13. Phase 4 coverage and category follow-through are measured. Phase 5 tools/control are implemented and live validation is recorded; Phases 6 and 7 now implement bounded projection memory and controlled style adaptation; next major work is Phase 8 hosted observability and delivery verification. The daily blocks below are planning targets, not claims of completion or guaranteed dates. No author/student identity or new repository is a dependency.
+The original Day 1 implementation tasks were substantially completed on 2026-10-13. Phase 4 coverage and category follow-through are measured. Phase 5 tools/control are implemented and live validation is recorded; Phases 6 and 7 now implement bounded projection memory and controlled style adaptation; Phase 8 hosted metadata observability and local delivery checks now pass; next major work is Phase 9 final evaluation. The daily blocks below are planning targets, not claims of completion or guaranteed dates. No author/student identity or new repository is a dependency.
 
 **Day 0: Tuesday 2026-10-13 (evening, ~1.5 h)**
 - Freeze scope. Add feature flags for deferred components and hide deferred UI tabs.

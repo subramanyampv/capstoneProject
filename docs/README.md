@@ -27,3 +27,5 @@
 Existing dated run evidence is preserved. Historical reports describe the code and decisions at that time; they do not override v3.
 
 - [Phase 7 adaptation](phase7_adaptation.md): terminal/Streamlit feedback, consent, style versioning/reset/deletion and measured development evidence.
+
+- [Phase 8 operations](phase8_operations.md): safe hierarchy, hosted verification, readiness commands and clean local deployment.

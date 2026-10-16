@@ -1,0 +1,78 @@
+{
+  "passed": true,
+  "cases": [
+    {
+      "case": "refusal",
+      "conditions": [
+        {
+          "outcome": "REFUSED",
+          "triggers": [],
+          "refusals": [
+            "R1"
+          ],
+          "ticket_id": null,
+          "trace": {
+            "trace_id": "c77524f0-bf0c-492e-92e1-dd087420b258",
+            "status": "disabled",
+            "span_count": 3
+          },
+          "model_calls": 0
+        },
+        {
+          "outcome": "REFUSED",
+          "triggers": [],
+          "refusals": [
+            "R1"
+          ],
+          "ticket_id": null,
+          "trace": {
+            "trace_id": "35673f88-75be-4860-96e6-25dc18827999",
+            "status": "queued",
+            "span_count": 3
+          },
+          "model_calls": 0
+        }
+      ],
+      "equivalent": true,
+      "invalid_export_failed_safely": true
+    },
+    {
+      "case": "injury_backstop",
+      "conditions": [
+        {
+          "outcome": "ESCALATED",
+          "triggers": [
+            "T1",
+            "T5"
+          ],
+          "refusals": [],
+          "ticket_id": "MOCK-d31e72696c5e",
+          "trace": {
+            "trace_id": "20511777-8160-483a-b301-3ce9e893be1b",
+            "status": "disabled",
+            "span_count": 8
+          },
+          "model_calls": 0
+        },
+        {
+          "outcome": "ESCALATED",
+          "triggers": [
+            "T1",
+            "T5"
+          ],
+          "refusals": [],
+          "ticket_id": "MOCK-d31e72696c5e",
+          "trace": {
+            "trace_id": "808d5df9-20ae-4de2-9ef6-efc7d8fc1131",
+            "status": "queued",
+            "span_count": 8
+          },
+          "model_calls": 0
+        }
+      ],
+      "equivalent": true,
+      "invalid_export_failed_safely": true
+    }
+  ],
+  "limits": "Deterministic refusal and code-backstop paths; same synthetic identity preserves idempotent ticket. 403 may be API authorization or an access intermediary. Not proof against every exporter failure."
+}

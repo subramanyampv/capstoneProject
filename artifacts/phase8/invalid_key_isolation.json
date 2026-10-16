@@ -1,0 +1,13 @@
+{
+  "completed": true,
+  "receipt": {
+    "trace_id": "2e346478-d787-4714-ad83-a73b8fa866d8",
+    "status": "failed",
+    "error_category": "access_denied",
+    "span_count": 2
+  },
+  "inputs_exported": false,
+  "response_bodies_exported": false,
+  "passed": true,
+  "limits": "Invalid credential/access failure isolation is separate from successful hosted ingestion. A 403 can reflect API authorization or an intermediary access policy."
+}

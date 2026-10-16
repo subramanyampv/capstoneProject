@@ -1,0 +1,318 @@
+[
+  {
+    "request_ref": "1b301834189343e7be9efcf693d6851b",
+    "session_ref": "ref:d4204b7022e0504fc569",
+    "customer_ref": "ref:2b653302f18f5225ce7e",
+    "outcome": "ANSWERED",
+    "stages": [
+      "guard_in",
+      "supervisor_plan",
+      "dispatch",
+      "policy_product",
+      "collect_result",
+      "dispatch",
+      "composer",
+      "guard_out"
+    ],
+    "triggers": [],
+    "refusals": [],
+    "errors": [],
+    "tools": [
+      {
+        "exec_id": "1925c2cc318f45c7ae26e4982593daf1",
+        "name": "get_product_details",
+        "status": "ok",
+        "duration_ms": 47.02,
+        "error": null
+      }
+    ],
+    "model_calls": 4,
+    "tool_calls": 1,
+    "handoffs": 1,
+    "replans": 0,
+    "repairs": 0,
+    "tokens": 5351,
+    "latency_ms": 9999.398,
+    "safety_version": "2026-10-15-v2",
+    "ticket_id": null,
+    "style": {
+      "verbosity": "standard",
+      "format": "prose",
+      "version": 0,
+      "word_count": 23
+    },
+    "memory": {
+      "enabled": true,
+      "history_messages": 0,
+      "resolved_reference": false,
+      "expired": false,
+      "reset": false
+    },
+    "case": "answer",
+    "repeat": 0,
+    "passed": true
+  },
+  {
+    "request_ref": "423ca56bef0f4285a94d72295eb8345d",
+    "session_ref": "ref:da790cd6886989395e27",
+    "customer_ref": "ref:2b653302f18f5225ce7e",
+    "outcome": "ANSWERED",
+    "stages": [
+      "guard_in",
+      "supervisor_plan",
+      "dispatch",
+      "policy_product",
+      "collect_result",
+      "dispatch",
+      "composer",
+      "guard_out"
+    ],
+    "triggers": [],
+    "refusals": [],
+    "errors": [],
+    "tools": [
+      {
+        "exec_id": "ebdcbc0eb6bf48daa1493397fd6e7791",
+        "name": "get_product_details",
+        "status": "ok",
+        "duration_ms": 4.729,
+        "error": null
+      }
+    ],
+    "model_calls": 4,
+    "tool_calls": 1,
+    "handoffs": 1,
+    "replans": 0,
+    "repairs": 0,
+    "tokens": 5345,
+    "latency_ms": 8985.99,
+    "safety_version": "2026-10-15-v2",
+    "ticket_id": null,
+    "style": {
+      "verbosity": "standard",
+      "format": "prose",
+      "version": 0,
+      "word_count": 23
+    },
+    "memory": {
+      "enabled": true,
+      "history_messages": 0,
+      "resolved_reference": false,
+      "expired": false,
+      "reset": false
+    },
+    "case": "answer",
+    "repeat": 1,
+    "passed": true
+  },
+  {
+    "request_ref": "6c9f02080d454ad2a4ecbf162626a4f6",
+    "session_ref": "ref:f60d7e14303f28c65749",
+    "customer_ref": "ref:2b653302f18f5225ce7e",
+    "outcome": "REFUSED",
+    "stages": [
+      "guard_in",
+      "refusal_responder",
+      "guard_out"
+    ],
+    "triggers": [],
+    "refusals": [
+      "R1"
+    ],
+    "errors": [],
+    "tools": [],
+    "model_calls": 0,
+    "tool_calls": 0,
+    "handoffs": 0,
+    "replans": 0,
+    "repairs": 0,
+    "tokens": 0,
+    "latency_ms": 34.95,
+    "safety_version": "2026-10-15-v2",
+    "ticket_id": null,
+    "style": {
+      "verbosity": "standard",
+      "format": "prose",
+      "version": 0,
+      "word_count": 23
+    },
+    "memory": {
+      "enabled": true,
+      "history_messages": 0,
+      "resolved_reference": false,
+      "expired": false,
+      "reset": false
+    },
+    "case": "refusal",
+    "repeat": 0,
+    "passed": true
+  },
+  {
+    "request_ref": "9fb2845724c54a469836acba385caabe",
+    "session_ref": "ref:489912f67db107b0900d",
+    "customer_ref": "ref:2b653302f18f5225ce7e",
+    "outcome": "REFUSED",
+    "stages": [
+      "guard_in",
+      "refusal_responder",
+      "guard_out"
+    ],
+    "triggers": [],
+    "refusals": [
+      "R1"
+    ],
+    "errors": [],
+    "tools": [],
+    "model_calls": 0,
+    "tool_calls": 0,
+    "handoffs": 0,
+    "replans": 0,
+    "repairs": 0,
+    "tokens": 0,
+    "latency_ms": 17.544,
+    "safety_version": "2026-10-15-v2",
+    "ticket_id": null,
+    "style": {
+      "verbosity": "standard",
+      "format": "prose",
+      "version": 0,
+      "word_count": 23
+    },
+    "memory": {
+      "enabled": true,
+      "history_messages": 0,
+      "resolved_reference": false,
+      "expired": false,
+      "reset": false
+    },
+    "case": "refusal",
+    "repeat": 1,
+    "passed": true
+  },
+  {
+    "request_ref": "45b4259b521e4552aee1bcc34bfc268d",
+    "session_ref": "ref:a3b8c96e9e08e61c7ca2",
+    "customer_ref": "ref:2b653302f18f5225ce7e",
+    "outcome": "ESCALATION_FAILED_DISCLOSED",
+    "stages": [
+      "guard_in",
+      "supervisor_plan",
+      "dispatch",
+      "escalation",
+      "collect_result",
+      "dispatch",
+      "composer",
+      "guard_out"
+    ],
+    "triggers": [
+      "T1",
+      "T5"
+    ],
+    "refusals": [],
+    "errors": [],
+    "tools": [
+      {
+        "exec_id": "163dd06215fa49409e5618295e7e024d",
+        "name": "create_escalation",
+        "status": "error",
+        "duration_ms": 1.52,
+        "error": "FAILED"
+      },
+      {
+        "exec_id": "c02827ff6fe3406c892a615937180920",
+        "name": "create_escalation",
+        "status": "error",
+        "duration_ms": 0.287,
+        "error": "FAILED"
+      }
+    ],
+    "model_calls": 4,
+    "tool_calls": 2,
+    "handoffs": 1,
+    "replans": 0,
+    "repairs": 0,
+    "tokens": 4862,
+    "latency_ms": 10360.224,
+    "safety_version": "2026-10-15-v2",
+    "ticket_id": null,
+    "style": {
+      "verbosity": "standard",
+      "format": "prose",
+      "version": 0,
+      "word_count": 35
+    },
+    "memory": {
+      "enabled": true,
+      "history_messages": 0,
+      "resolved_reference": false,
+      "expired": false,
+      "reset": false
+    },
+    "case": "failure",
+    "repeat": 0,
+    "passed": true
+  },
+  {
+    "request_ref": "433ba6ed463d43598ac07aa17bbd7353",
+    "session_ref": "ref:2fabdefb586870834cc3",
+    "customer_ref": "ref:2b653302f18f5225ce7e",
+    "outcome": "ESCALATION_FAILED_DISCLOSED",
+    "stages": [
+      "guard_in",
+      "supervisor_plan",
+      "dispatch",
+      "escalation",
+      "collect_result",
+      "dispatch",
+      "composer",
+      "guard_out"
+    ],
+    "triggers": [
+      "T1",
+      "T5"
+    ],
+    "refusals": [],
+    "errors": [],
+    "tools": [
+      {
+        "exec_id": "ec651b3136fa4b4ea18910e0aec82e15",
+        "name": "create_escalation",
+        "status": "error",
+        "duration_ms": 0.455,
+        "error": "FAILED"
+      },
+      {
+        "exec_id": "0160ba2187d14309883b3b12e2c6b6a1",
+        "name": "create_escalation",
+        "status": "error",
+        "duration_ms": 0.803,
+        "error": "FAILED"
+      }
+    ],
+    "model_calls": 4,
+    "tool_calls": 2,
+    "handoffs": 1,
+    "replans": 0,
+    "repairs": 0,
+    "tokens": 4825,
+    "latency_ms": 11272.647,
+    "safety_version": "2026-10-15-v2",
+    "ticket_id": null,
+    "style": {
+      "verbosity": "standard",
+      "format": "prose",
+      "version": 0,
+      "word_count": 47
+    },
+    "memory": {
+      "enabled": true,
+      "history_messages": 0,
+      "resolved_reference": false,
+      "expired": false,
+      "reset": false
+    },
+    "case": "failure",
+    "repeat": 1,
+    "passed": true
+  }
+]

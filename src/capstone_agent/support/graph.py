@@ -371,15 +371,16 @@ class SupportAgent:
                 why=[],citations=[],next_steps=[],intents_addressed=['entity_clarification'],outcome_claimed='CLARIFICATION_REQUESTED')
             return {'draft':draft.model_dump(),'outcome':'CLARIFICATION_REQUESTED','stages':['memory_clarification','guard_out']}
 
+        from capstone_agent.observability.support_tracing import observed_node
         graph=StateGraph(SupportState)
-        graph.add_node('guard_in',guard_in); graph.add_node('plan',plan); graph.add_node('dispatch',dispatch)
+        graph.add_node('guard_in',observed_node('guard_in',guard_in)); graph.add_node('plan',observed_node('plan',plan)); graph.add_node('dispatch',observed_node('dispatch',dispatch))
         for agent in ['order_shipping','policy_product','escalation']:
             async def node(state,agent=agent): return await specialist(state,agent)
-            graph.add_node(agent,node); graph.add_conditional_edges(agent,after_specialist,{'replan':'replan','dispatch':'dispatch'})
-        graph.add_node('replan',replan); graph.add_edge('replan','dispatch')
-        graph.add_node('compose',compose); graph.add_node('refuse',refuse); graph.add_node('unsupported_command',unsupported_command)
+            graph.add_node(agent,observed_node(agent,node)); graph.add_conditional_edges(agent,after_specialist,{'replan':'replan','dispatch':'dispatch'})
+        graph.add_node('replan',observed_node('replan',replan)); graph.add_edge('replan','dispatch')
+        graph.add_node('compose',observed_node('compose',compose)); graph.add_node('refuse',observed_node('refuse',refuse)); graph.add_node('unsupported_command',observed_node('unsupported_command',unsupported_command))
         graph.add_edge('unsupported_command',END)
-        graph.add_node('missing_reference',missing_reference);graph.add_edge('missing_reference',END)
+        graph.add_node('missing_reference',observed_node('missing_reference',missing_reference));graph.add_edge('missing_reference',END)
         graph.add_edge(START,'guard_in'); graph.add_conditional_edges('guard_in',lambda s:s['route'],{'plan':'plan','refuse':'refuse','unsupported_command':'unsupported_command','missing_reference':'missing_reference'})
         graph.add_edge('plan','dispatch')
         graph.add_conditional_edges('dispatch',lambda s:s['route'],{a:a for a in ['order_shipping','policy_product','escalation','compose']})

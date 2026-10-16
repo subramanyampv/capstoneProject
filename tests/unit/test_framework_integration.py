@@ -135,7 +135,8 @@ def test_deepeval_import_does_not_load_private_environment(tmp_path):
     env.pop("LLM_API_KEY", None)
     (tmp_path / ".env").write_text("LLM_API_KEY=private-canary\n")
     code = "import os; import capstone_agent.evaluation.deepeval_runner; assert 'LLM_API_KEY' not in os.environ"
-    python = str(Path(__file__).resolve().parents[2] / ".venv/bin/python")
+    import sys
+    python = sys.executable  # Use the active local venv, including isolated reproducibility runs.
     result = subprocess.run([python, "-c", code], cwd=tmp_path, env=env, capture_output=True)
     assert result.returncode == 0
 

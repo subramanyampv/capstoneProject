@@ -6,9 +6,9 @@ Authority: [Architecture revision 3.1](architecture_and_plan.md). This is the cu
 
 **P0** = protects correctness, safety or a required delivery gate. **P1** = required capability or evaluation work. Dependencies are task IDs, not permission requests. Task counts do not represent a completion percentage because effort differs substantially.
 
-**Inventory:** 85 initial-product tasks — 63 done, 14 needing updates, 8 not started. 8 areas are deferred.
+**Inventory:** 85 initial-product tasks — 70 done, 9 needing updates, 6 not started. 8 areas are deferred.
 
-**Immediate sequence:** Phase 8 hosted observability/delivery verification → final evaluation. Phase 7 adaptation is implemented with development evidence. Phase 5 core tools, guards, server identity and bounded graph are implemented with repaired live evidence. Earlier failures remain preserved in phase5_tools_and_graph.md; broad semantic/safety acceptance remains Phase 9.
+**Immediate sequence:** Phase 9 reviewed case contexts, frozen/holdout evaluation and final acceptance. Phase 7 adaptation is implemented with development evidence. Phase 5 core tools, guards, server identity and bounded graph are implemented with repaired live evidence. Earlier failures remain preserved in phase5_tools_and_graph.md; broad semantic/safety acceptance remains Phase 9.
 
 No author/student name or new repository is required. Optional later inputs are hosted LangSmith configuration and human calibration of final judged outputs; neither blocks the next local work.
 
@@ -115,21 +115,21 @@ No author/student name or new repository is required. Optional later inputs are 
 | ID | Status | Priority | Task | Evidence / completion criterion | Dependencies |
 |---|---|---|---|---|---|
 | O01 | DONE | P1 | Provide local Streamlit experiment UI | Chat/Evaluation/Traces; baseline and LLM modes; default deferred tabs hidden; AppTest verified. | B07 |
-| O02 | UPDATE | P1 | Connect final CLI/UI workflow | Synthetic customer/session selection, final-agent chat, reset/feedback, policy citations, reasons and ticket/failure rendering. Support-agent mode now binds a synthetic account and renders citations/ticket/failure. Memory/reset/feedback are now integrated in terminal and Streamlit; final delivery/tracing workflow verification remains. | G10,M03,A03 |
+| O02 | DONE | P1 | Connect final CLI/UI workflow | Synthetic customer/session selection, final-agent chat, reset/feedback, policy citations, reasons and ticket/failure rendering. Support-agent mode now binds a synthetic account and renders citations/ticket/failure. Memory/reset/feedback are now integrated in terminal and Streamlit; final local workflow is verified with metadata timeline/delivery receipts and clean startup. phase8_operations.md. | G10,M03,A03 |
 | O03 | DONE | P0 | Provide opt-in metadata-safe LangSmith wrapper | Inputs hidden, scalar output allowlist; tracing off by default. This is not hosted/hierarchical verification. | B07 |
-| O04 | UPDATE | P0 | Complete hosted tracing and failure isolation | Mask final node/tool hierarchy, verify canaries and invalid-key behavior; tracing failure must not change the agent outcome. | O03,G10 |
-| O05 | UPDATE | P0 | Complete request logging and redaction schema | One final record with opaque customer/session/order refs, stages/tools/triggers/outcome/counters. Add phone/address/name coverage and scans; current logs are experiment-specific. | G10,S01 |
-| O06 | NOT STARTED | P1 | Capture routing and operational evidence | Saved final trace screenshots, local stage records, token use, repairs, tool errors and latency p50/p95 by path. | O04,O05 |
+| O04 | DONE | P0 | Complete hosted tracing and failure isolation | Hosted twelve/thirteen-run graph read-back; canaries/credentials absent; invalid-key/access isolation preserves refusal and injury-backstop outcomes. phase8/validation.md. | O03,G10 |
+| O05 | DONE | P0 | Complete request logging and redaction schema | Content-free spans and final records, opaque identity/order refs, controlled errors and rejected-request records. Arbitrary schema names removed; new ticket summaries are code-generated. Known operational names/phones/addresses absent in local and hosted scans. | G10,S01 |
+| O06 | DONE | P1 | Capture routing and operational evidence | Clean Streamlit routing screenshot, local spans, hosted JSON trees and two samples/path p50/p95, tokens/repairs/tool errors. Graph elapsed only; no production tail claim. | O04,O05 |
 | O07 | DONE | P1 | Pin current dependencies and verify existing venv install | 153-package app/dev/eval/ui/rag closure, documented install succeeded and dependency check passed. | R03 |
-| O08 | UPDATE | P0 | Finish configuration/startup validation | Final app/safety config, model/index/rule validation, no secret echoes, required flags and safe startup failures. Current LLM/retrieval checks exist. | G10,O05 |
-| O09 | NOT STARTED | P1 | Verify clean-environment reproducibility | Install and start from documented commands in a clean approved local environment; current existing-venv install is not this proof. | O07,O08 |
-| O10 | UPDATE | P1 | Complete final operational commands | Existing setup/test/ingest/UI/retrieval commands work; add final full evaluation, consistency and canary scan entrypoints. | E01,E04,E05 |
+| O08 | DONE | P0 | Finish configuration/startup validation | doctor/--index validates named checks without values; validated final UI startup; active CLI fault flags documented; safe configuration failure logs tested. | G10,O05 |
+| O09 | DONE | P1 | Verify clean-environment reproducibility | Temporary clean venv/copied source: matching 155 distributions, pip check, 204 tests, fresh index, CLI and loopback UI; pinned model download cache reused. clean_install.json. | O07,O08 |
+| O10 | DONE | P1 | Complete final operational commands | Added readiness/final UI, hosted/fault verification, final scans, final graph/DeepEval recorder and repeats entrypoints. Reviewed frozen/holdout contexts/semantic labels and final runs remain E01–E05. | G10,O05,O08 |
 
 ## Phase 9: evaluation, governance and final delivery
 
 | ID | Status | Priority | Task | Evidence / completion criterion | Dependencies |
 |---|---|---|---|---|---|
-| E01 | UPDATE | P0 | Build final-system evaluation harness | Extend current saved-output DeepEval/experiment harness to call the final graph and assert actual outcomes, tools, citations, tickets and failures. | G10 |
+| E01 | UPDATE | P0 | Build final-system evaluation harness | Phase 8 added a final-graph recorder and DeepEval code-contract metric. Review frozen/holdout identity/setup contexts and add case-specific expected routing/tool/failure assertions and semantic metrics before final scoring. | G10 |
 | E02 | NOT STARTED | P0 | Evaluate frozen cases and untouched holdout | 65 original + ten holdout cases; report separate scores and failures; never use holdout for tuning. | E01,R06 |
 | E03 | UPDATE | P1 | Measure final judged quality and calibrate humans | Faithfulness/relevancy/grounded-support rubric on final outputs; twenty human-reviewed judged samples, agreement and same-model disclosure. Initial RAG scores are not calibration. | E02 |
 | E04 | NOT STARTED | P0 | Measure repeated-run consistency and worst-case safety | Fifteen-case priority subset ×3 (×2 cut line); identical terminal outcomes, mandatory refusal/escalation on every repeat. | E02,G09 |

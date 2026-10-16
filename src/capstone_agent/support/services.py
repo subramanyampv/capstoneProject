@@ -152,7 +152,9 @@ class Services:
         reference=opaque(args.order_ref) if args.order_ref else None
         identity=json.dumps([ctx.session_id,ctx.customer_id,triggers,reference,queue,priority],sort_keys=True)
         key=hashlib.sha256(identity.encode()).hexdigest()
-        packet={'triggers':triggers,'summary':args.summary,'evidence_refs':[
+        # Persist only generated reasons; free-form names cannot evade pattern masking.
+        stored_summary='Human review requested. Verified reason codes: '+', '.join(triggers)+'.'
+        packet={'triggers':triggers,'summary':stored_summary,'evidence_refs':[
             {**ref.model_dump(),'source_id':minimize(ref.source_id)} for ref in args.evidence_refs],
             'order_ref':reference,'customer_ref':opaque(ctx.customer_id),'queue':queue,'priority':priority}
         with self.lock:
@@ -163,7 +165,7 @@ class Services:
                 replay=saved is not None
                 if not saved:
                     result={'ticket_id':'MOCK-'+uuid.uuid4().hex[:12],'status':'created','queue':queue,'priority':priority,
-                        'triggers':triggers,'summary_hash':hashlib.sha256(args.summary.encode()).hexdigest(),'idempotent_replay':False}
+                        'triggers':triggers,'summary_hash':hashlib.sha256(stored_summary.encode()).hexdigest(),'idempotent_replay':False}
                     db.execute('INSERT INTO tickets VALUES (?,?)',(key,json.dumps({'result':result,'packet':packet})))
                     db.commit()
                 saved=db.execute('SELECT payload FROM tickets WHERE key=?',(key,)).fetchone()

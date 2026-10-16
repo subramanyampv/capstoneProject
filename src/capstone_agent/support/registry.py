@@ -86,6 +86,13 @@ class Registry:
         return refs
 
     async def call(self,agent,name,arguments):
+        from capstone_agent.observability.support_tracing import span
+        with span(name,'tool') as output:
+            result=await self._call(agent,name,arguments)
+            output['failed']=result.status=='error'
+            return result
+
+    async def _call(self,agent,name,arguments):
         started=time.perf_counter(); exec_id=uuid.uuid4().hex
         result=None; code=None; data=None; refs=[]
         try:

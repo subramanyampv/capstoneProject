@@ -1,4 +1,4 @@
-"""Bounded LangChain invocations; native traces suppressed pending masked Phase 8 tracing."""
+"""Bounded LangChain invocations; native content-bearing traces suppressed; explicit metadata-only spans used."""
 import asyncio
 from langsmith import tracing_context
 from capstone_agent.model_client import ModelError
@@ -8,6 +8,13 @@ class Gateway:
         self.chat,self.timeout=chat,timeout
         self.calls=0; self.tokens=0
     async def invoke(self,messages,*,tools=None,schema=None):
+        from capstone_agent.observability.support_tracing import span,numbers
+        with span('model','llm') as output:
+            result=await self._invoke(messages,tools=tools,schema=schema)
+            output.update(numbers(result.usage_metadata or {}))
+            return result
+
+    async def _invoke(self,messages,*,tools=None,schema=None):
         if self.calls>=12: raise ModelError('model_budget_exhausted')
         self.calls+=1
         model=self.chat.bind_tools(tools,parallel_tool_calls=False) if tools else self.chat

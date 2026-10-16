@@ -20,16 +20,32 @@ PHASES = [
     (5, "tools & multi-agent orchestration — DONE (core; final acceptance open)"),
     (6, "planning, memory, context — DONE (bounded session scope; final evaluation open)"),
     (7, "adaptive behavior — DONE (bounded style; final evaluation open)"),
-    (8, "deployment readiness"),
+    (8, "deployment readiness — DONE (local deployment and hosted metadata observability)"),
     (9, "evaluation & engineering review"),
 ]
+
+
+def cmd_evaluate_support(args):
+    import json
+    from capstone_agent.evaluation.support_runner import run_evaluation
+    contexts=json.loads(Path(args.contexts).read_text()) if args.contexts else None
+    result=run_evaluation(args.dataset,args.output,contexts=contexts,allow_holdout=args.allow_holdout,
+        repeats=args.repeats,dry_run=args.dry_run)
+    print(json.dumps(result,indent=2));return 0
+
+
+def cmd_doctor(args):
+    import json
+    from capstone_agent.operations import doctor
+    report=doctor(index=args.index)
+    print(json.dumps(report,indent=2));return 0 if report['passed'] else 2
 
 
 def cmd_status(_: argparse.Namespace) -> int:
     print("capstone-agent — multi-agent e-commerce support agent")
     print("Phases:")
     for num, name in PHASES:
-        active = num == 8
+        active = num == 9
         print(f"  {'>' if active else ' '} phase {num}: {name}")
     print("\nTry:  capstone-agent ask \"Can I return order O-1001?\" --today 2026-10-12")
     print("Baseline evidence run:  scripts/run_baseline.sh")
@@ -141,7 +157,10 @@ def cmd_support(args):
                            memory_enabled=False if args.no_memory else None)
         print(json.dumps({k:result.get(k) for k in ['response','outcome','ticket','triggers','refusals','model_calls','tool_calls','memory','style']},indent=2))
     if not args.chat:
-        ask(args.message);return 0
+        ask(args.message)
+        from capstone_agent.observability.support_tracing import EXPORTER
+        EXPORTER.wait(5)
+        return 0
     print('Synthetic support chat. /reset clears context; /feedback too_long|too_short|unclear|helpful|not_helpful|enable|disable|reset_style; /forget-preferences deletes style data; /quit exits. Explicit feedback enables style learning; two matching signals adapt style. Preferences persist locally; session memory is lost on restart.')
     try:
         while True:
@@ -149,7 +168,10 @@ def cmd_support(args):
             except EOFError:break
             if message.strip() in {'/quit','/exit'}:break
             if message.strip():ask(message)
-    finally:MEMORY.reset(identity)
+    finally:
+        MEMORY.reset(identity)
+        from capstone_agent.observability.support_tracing import EXPORTER
+        EXPORTER.wait(5)
     return 0
 
 
@@ -193,6 +215,17 @@ def build_parser() -> argparse.ArgumentParser:
     search.add_argument("--k", type=int, default=5)
     search.add_argument("--threshold", type=float, help="Override the calibrated local threshold")
     search.set_defaults(func=cmd_search_policy)
+    final_eval=sub.add_parser('evaluate-support',help='Record final-agent runs and DeepEval code contracts; semantic grading remains separate')
+    final_eval.add_argument('--dataset',required=True)
+    final_eval.add_argument('--contexts',help='Reviewed case-ID to customer_id/setup_turns mapping')
+    final_eval.add_argument('--output',default='artifacts/final_support_evaluation')
+    final_eval.add_argument('--repeats',type=int,default=1)
+    final_eval.add_argument('--dry-run',action='store_true')
+    final_eval.add_argument('--allow-holdout',action='store_true')
+    final_eval.set_defaults(func=cmd_evaluate_support)
+    doctor = sub.add_parser('doctor',help='Validate configuration and local assets without printing values')
+    doctor.add_argument('--index',action='store_true',help='Also load pinned embeddings and verify the current index')
+    doctor.set_defaults(func=cmd_doctor)
     support = sub.add_parser('support', help='Multi-agent support with session memory and style feedback; synthetic data/mock handoff only')
     support.add_argument('message',nargs='?',default='')
     support.add_argument('--chat',action='store_true',help='Keep one synthetic session; /reset, /feedback, /forget-preferences and /quit supported')

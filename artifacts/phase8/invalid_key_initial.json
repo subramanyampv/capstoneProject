@@ -1,0 +1,12 @@
+{
+  "completed": true,
+  "receipt": {
+    "trace_id": "b0956d78-16bd-43d9-903b-7c8a838ce5fc",
+    "status": "failed",
+    "error_category": "transport_or_service",
+    "span_count": 2
+  },
+  "inputs_exported": false,
+  "response_bodies_exported": false,
+  "passed": false
+}

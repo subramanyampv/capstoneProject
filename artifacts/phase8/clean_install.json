@@ -1,0 +1,47 @@
+{
+  "passed": true,
+  "python": "3.12.12",
+  "platform": "macOS arm64",
+  "installed_distributions": 155,
+  "dependency_check": "No broken requirements found.",
+  "tests": "204 passed in 23.19s",
+  "startup_checks": {
+    "passed": true,
+    "checks": [
+      {
+        "check": "model_configuration",
+        "passed": true
+      },
+      {
+        "check": "safety_rules",
+        "passed": true
+      },
+      {
+        "check": "policy_fixture_consistency",
+        "passed": true
+      },
+      {
+        "check": "runtime_flags",
+        "passed": true
+      },
+      {
+        "check": "observability_configuration",
+        "passed": true
+      },
+      {
+        "check": "pinned_embedding_and_index",
+        "passed": true
+      }
+    ],
+    "limits": "Configuration/local assets only; no provider connectivity, hosted ingestion or final acceptance claim."
+  },
+  "fresh_index_chunks": 28,
+  "cli_command_handled": true,
+  "streamlit_started": true,
+  "initial_failures": [
+    "An initial clean-dependency run had one UI failure while other jobs were running; --tb=no did not preserve the underlying failure detail.",
+    "The first isolated-source run found a test hardcoding project/.venv; changed to active sys.executable."
+  ],
+  "limits": "New temporary venv, copied nonignored source, pinned install, no copied .env or vector DB. Reused the pinned model download cache via symlink, then rebuilt the index. Clean startup used an explicit dummy loopback model configuration; real provider/hosted checks were separate. Supported deployment is source + editable install, not a standalone wheel.",
+  "gitless_source_scan_passed": true
+}

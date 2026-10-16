@@ -1,0 +1,31 @@
+{
+  "paths": {
+    "ANSWERED": {
+      "requests": 2,
+      "latency_ms_p50": 10343.056,
+      "latency_ms_p95": 10470.717,
+      "tokens": 10702,
+      "repairs": 0,
+      "tool_errors": 0
+    },
+    "REFUSED": {
+      "requests": 2,
+      "latency_ms_p50": 23.916,
+      "latency_ms_p95": 29.529,
+      "tokens": 0,
+      "repairs": 0,
+      "tool_errors": 0
+    },
+    "ESCALATION_FAILED_DISCLOSED": {
+      "requests": 2,
+      "latency_ms_p50": 11825.561,
+      "latency_ms_p95": 12197.799,
+      "tokens": 9707,
+      "repairs": 0,
+      "tool_errors": 4
+    }
+  },
+  "limits": "Two authored samples per path; no semantic grading, production SLA, or held-out acceptance.",
+  "expected_outcomes_passed": true,
+  "cases": 6
+}

@@ -103,7 +103,7 @@ Recommendations below are our engineering judgments, informed by the comparisons
 | MP-16 | Streaming/status UI: show useful progress during longer tool paths | **CANDIDATE — after acceptance**, if latency evidence supports it | Measured final-path timings, safe status events | Improve perceived waiting; no partial unsupported answer or premature action-success message |
 | MP-17 | Multilingual support and product photos/invoices | **PARKED**, separate scope decision | Locale policy, translation/image privacy, representative labeled cases | Meaning and safety parity by language; extraction uncertainty; unsupported visual claims abstain |
 | MP-18 | Shopping recommendations, upsells, coupons, abandoned-cart recovery | **PARKED**, separate sales role/product | Inventory/pricing authority, commercial rules, user-consent/channel decisions | Product-fit and inventory correctness; support complaints are not converted into sales pressure |
-| MP-19 | Durable customer preferences across sessions | **DEFERRED**, current plan uses bounded session behavior | Explicit retention/deletion choices, authenticated identity, tenant isolation | Forget/export/reset semantics verified; no private order facts promoted into permanent preferences |
+| MP-19 | Authenticated production preferences across sessions | **DEFERRED**; local synthetic style profiles are implemented in Phase 7 | Explicit retention/deletion choices, authenticated identity, tenant isolation | Forget/export/reset semantics verified; no private order facts promoted into permanent preferences |
 
 For MP-13, the earlier “about 1,000 miles takes three days or more; storm/snow can add a couple of days” discussion is a proposed estimation rule, not a carrier commitment or measured delivery model. The existing prototype can seed a future experiment; adoption requires fresh inputs, rule validation, and clear uncertainty.
 
@@ -148,3 +148,9 @@ Before an optional vendor trial, choose the relevant edition and integration, us
 | 2026-10-15 | Phase 6 implements MP-05 bounded follow-ups with a projection-only checkpointer; raw working state is not retained. | Reset/expiry/version deletion and fresh-record tests run locally; adaptation remains Phase 7. |
 
 | 2026-10-15 | MP-05 measured: four of four reference-dependent follow-ups answered with memory on versus zero off; reset still clarifies. | Five authored development conversations, not vendor/held-out accuracy; see phase6_memory.md. |
+
+## Observability backend decision — 2026-10-16
+
+Keep LangSmith for the initial product: it is already integrated and Phase 8 verifies hosted metadata trees, privacy and failure isolation. Continue using DeepEval for evaluation. LangSmith supports agent tracing and multiple deployment options ([official observability overview](https://www.langchain.com/langsmith/observability)).
+
+**MP-20 — optional Langfuse exporter:** reconsider if open-source self-hosting or a broader OpenTelemetry strategy becomes a concrete requirement. Langfuse supports LangChain/LangGraph integrations ([official integrations](https://langfuse.com/integrations)) and open-source self-hosting ([official deployment guide](https://langfuse.com/self-hosting)). Self-hosting adds infrastructure, upgrades, storage and retention responsibilities; it does not remove the need to exclude sensitive content. Our explicit metadata boundary can be reused, but a Langfuse exporter/read-back/failure test would still need implementation. No dual-backend deployment or migration is authorized by this comparison alone.

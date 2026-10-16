@@ -1,6 +1,6 @@
 # Project progress and remaining work — 2026-10-16
 
-The project has a tested baseline, a completed LLM prompt comparison, framework integration and a working local policy-retrieval layer and a smoke-verified bounded multi-agent support core. The **complete initial product is still pending** hosted observability, delivery verification and final evaluation. Architecture revision 3.1 records this distinction. The initial v3/Phase 4 implementation was recorded in `1fe4976`; later commits contain the documented follow-through; the existing GitHub repository remains the working repository.
+The project has a tested baseline, a completed LLM prompt comparison, framework integration and a working local policy-retrieval layer and a smoke-verified bounded multi-agent support core. The **complete initial product is still pending** final evaluation and acceptance. Architecture revision 3.1 records this distinction. The initial v3/Phase 4 implementation was recorded in `1fe4976`; later commits contain the documented follow-through; the existing GitHub repository remains the working repository.
 
 The [detailed task checklist](task_list.md) translates this summary into tracked work items with done/update/not-started states.
 
@@ -56,7 +56,7 @@ Knowledge graph, external distance/weather ETA, external commerce APIs, extended
 
 - Streamlit defaults to Chat, Evaluation and Traces; Knowledge and API ETA tabs are deferred and require explicit opt-in. The current chat supports baseline/LLM experiments, not the full final agent.
 - Local DeepEval execution has dotenv autoload and telemetry disabled; no results were uploaded to DeepEval. Missing context/judge failures are not passes.
-- LangSmith's optional wrapper hides inputs and filters safe scalar output metadata. Hosted ingestion and final hierarchical agent/tool traces are not verified.
+- LangSmith's optional wrapper hides inputs and filters safe scalar output metadata. Phase 8 now verifies hosted content-free agent/tool hierarchy, privacy canaries and failure isolation.
 - Pinned app/dev/eval/UI/RAG installation succeeds in the existing local venv; dependency checks pass. No global Python installation is used.
 - Current suite: see [Phase 7 validation](../artifacts/phase7_validation.md), including corpus drift, index tampering, revision mismatch, superseded evidence, invalid citations/numbers, credential redaction and bounded failures.
 - Current and historically revoked keys were checked against staged source/evidence and were absent. The ignored `.env` was not exported. A scanned ZIP source snapshot without Git history is available locally; it must be refreshed after subsequent changes.
@@ -89,11 +89,11 @@ The shared terminal/Streamlit path now collects allowlisted explicit feedback an
 
 The first live before/after run preserved false numeric grounding rejections. A regression reproduced singular/plural duration mismatch; grammar-only normalization now accepts equivalent day/month wording while tests reject changed values and units. Live evidence measures answer length, format, citations, rollback and four safety cases in standard/concise style. Full semantic/frozen/holdout acceptance remains Phase 9.
 
-### Phase 8 — operations and deployment readiness
+### Phase 8 — local delivery and hosted metadata observability verified
 
-Integrate the final agent into CLI/Streamlit with synthetic customer/session selection, commands, citations and ticket/failure status. Produce the final redacted per-request logging schema with opaque references, stages, agents, tools, triggers, counters, tokens and errors.
+The final runtime records content-free request/node/model/tool hierarchy, controlled diagnostics, counters and delivery receipts. LangSmith hosted read-back verifies twelve-run answer and thirteen-run canary/failure trees. Inputs are empty; safe outputs/parents match; current keys and tested personal-data canaries are absent. Invalid credentials/access preserve deterministic refusal and injury-backstop outcomes. Free-form schema field names and ticket summaries no longer enter new persisted operational packets.
 
-Verify opt-in hosted LangSmith masking, canaries and failure isolation; produce hierarchical routing evidence. Complete configuration validation, startup checks, error handling, final operational commands and clean-environment installation/startup evidence. The current successful install in the existing venv is not a clean-environment proof.
+A clean temporary venv with copied source installed matching dependencies, passed pip check and 204 tests, rebuilt the 28-chunk index using the existing pinned model download cache, and started CLI/loopback Streamlit. `doctor --index`, final UI startup, final-graph DeepEval recorder/repeats and canary scans are available. [Phase 8 operations](phase8_operations.md) records commands and limits; [validation](../artifacts/phase8/validation.md) records evidence. Final semantic/held-out acceptance remains Phase 9.
 
 ### Phase 9 — final evaluation and submission
 
@@ -107,7 +107,7 @@ The [Memory Pad](memory_pad.md) adds an ecommerce feature comparison with Gorgia
 
 ## 5. Inputs from the user
 
-No input is needed for remaining local Phase 8 work. Hosted LangSmith verification needs configured credentials in the ignored `.env`; do not paste credentials into chat. Author/student identity and a new repository name are not requested.
+LangSmith credentials were supplied locally and hosted verification passed. No additional credentials are needed for the next evaluation work; later human calibration of final outputs remains required. Author/student identity and a new repository name are not requested.
 
 For later hosted tracing verification, optionally configure LANGSMITH_API_KEY, LANGSMITH_PROJECT and LANGSMITH_TRACING in the ignored .env and tell us it is ready; never send the key in chat. A separate judge endpoint/model is optional. Human review of the final twenty judged outputs will be requested when that review packet exists.
 
@@ -117,6 +117,6 @@ The components and experiments above are measured, but the final safety-first mu
 
 Evidence links: [architecture](architecture_and_plan.md), [baseline closure](phase2_closure.md), [prompt comparison](prompt_comparison.md), [retrieval design](retrieval_design.md), [validation record](../artifacts/phase4_validation.md), [evaluation register](evaluation_report.md).
 
-Latest Phase 5 closure: [eight-case core validation](../artifacts/phase5_validation.md) preserves initial failures and confirms final expected outcomes, canonical citations and independent local ticket read-back. Phase 6 is now implemented/measured; Phase 7 is implemented; Phase 8 is next.
+Latest Phase 5 closure: [eight-case core validation](../artifacts/phase5_validation.md) preserves initial failures and confirms final expected outcomes, canonical citations and independent local ticket read-back. Phase 6 is now implemented/measured; Phase 7 is implemented; Phase 8 is verified; Phase 9 is next.
 
 Phase 6 closure: [validation](../artifacts/phase6_validation.md) records all ten expected conversation/mode conditions passing, the four positive follow-up answers versus zero without memory, reset/expiry deletion and preserved failed runs. The separate Phase 7 evidence is linked above.

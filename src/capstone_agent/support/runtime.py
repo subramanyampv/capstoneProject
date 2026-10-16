@@ -17,11 +17,12 @@ from capstone_agent.support.guards import SafetyRules
 MEMORY=SessionMemory(background=True)
 
 def safe_record(result,identity,secrets=()):
+    from capstone_agent.observability.support_tracing import safe_error
     # Deliberately omit request, tool payloads, specialist prose and intermediate state.
     return {'request_ref':uuid.uuid4().hex,'session_ref':opaque(identity.session_id),
         'customer_ref':opaque(identity.customer_id),'outcome':result['outcome'],'stages':result['stages'],
-        'triggers':result['triggers'],'refusals':result['refusals'],'errors':result['errors'],
-        'tools':[{k:r[k] for k in ['exec_id','name','status','error','duration_ms']} for r in result['tool_records']],
+        'triggers':result['triggers'],'refusals':result['refusals'],'errors':[safe_error(value) for value in result['errors']],
+        'tools':[{**{k:r[k] for k in ['exec_id','name','status','duration_ms']},'error':safe_error(r['error'])} for r in result['tool_records']],
         'model_calls':result['model_calls'],'tool_calls':result['tool_calls'],'handoffs':result['handoffs'],
         'replans':result['replans'],'repairs':result['repairs'],'tokens':result['tokens'],
         'latency_ms':result['latency_ms'],'safety_version':result['safety_version'],
@@ -29,12 +30,12 @@ def safe_record(result,identity,secrets=()):
         'style':result.get('style',{}),
         'memory':{k:v for k,v in result.get('memory',{}).items() if k in {'enabled','history_messages','resolved_reference','expired','reset'}}}
 
-def run_support(query,customer_id='C-100',*,search=None,identity=None,faults=None,root=ROOT,memory=None,memory_enabled=None,preferences=None):
+def _run_support(query,customer_id='C-100',*,search=None,identity=None,faults=None,root=ROOT,memory=None,memory_enabled=None,preferences=None,_request_id=None):
     identity=identity or SessionIdentity(customer_id)
     manager=memory or MEMORY
     secrets=()
     preferences=preferences or PreferenceStore(root)
-    request_id=uuid.uuid4().hex
+    request_id=_request_id or uuid.uuid4().hex
     if is_preference_command(query):
         if identity.customer_id not in Services(root=root).customers():raise ValueError('UNKNOWN_SYNTHETIC_CUSTOMER')
         command=query.strip()
@@ -59,7 +60,9 @@ def run_support(query,customer_id='C-100',*,search=None,identity=None,faults=Non
         # Deletion must remain available even if the provider/config/index is down.
         result=manager.process(query,identity,lambda *_:None,enabled=memory_enabled is not False)
     else:
-        config=LLMConfig.from_env(root/'.env');secrets=(config.api_key,)
+        config=LLMConfig.from_env(root/'.env')
+        values=load_environment(root/'.env')
+        secrets=tuple({config.api_key,*[value for name,value in values.items() if name.endswith('API_KEY') and value]})
         services=Services(root=root,search=search)
         if identity.customer_id not in services.customers():raise ValueError('UNKNOWN_SYNTHETIC_CUSTOMER')
         if memory_enabled is None:
@@ -83,8 +86,46 @@ def run_support(query,customer_id='C-100',*,search=None,identity=None,faults=Non
                 return asyncio.run(agent.run(message,identity,faults=faults,memory_context=context,style=profile))
         result=manager.process(query,identity,execute,enabled=memory_enabled,secrets=secrets)
     result["request_id"]=request_id
-    record=safe_record(result,identity,secrets)
-    record["request_ref"]=request_id
+    return result
+
+
+def run_support(query,customer_id='C-100',*,search=None,identity=None,faults=None,root=ROOT,memory=None,memory_enabled=None,preferences=None):
+    from capstone_agent.observability.langsmith_tracing import ObservabilityConfig
+    from capstone_agent.observability.support_tracing import SupportTrace,CURRENT,EXPORTER,numbers,OUTCOMES,TOOLS
+    identity=identity or SessionIdentity(customer_id)
+    request_id=uuid.uuid4().hex;trace=SupportTrace(request_id)
+    token=CURRENT.set(trace)
+    try:
+        with trace.span('support_request') as output:
+            result=_run_support(query,identity=identity,search=search,faults=faults,root=root,memory=memory,
+                memory_enabled=memory_enabled,preferences=preferences,_request_id=request_id)
+            result['request_id']=request_id
+            output.update(numbers(result))
+            if result['outcome'] in OUTCOMES:output['outcome']=result['outcome']
+            output['style_version']=result.get('style',{}).get('version',0)
+    except Exception:
+        # Never serialize input or exception messages (which may contain endpoint credentials).
+        path=root/'data/runtime/requests.jsonl'
+        try:
+            path.parent.mkdir(parents=True,exist_ok=True)
+            with path.open('a') as stream:stream.write(json.dumps({'request_ref':request_id,
+                'customer_ref':opaque(identity.customer_id),'session_ref':opaque(identity.session_id),
+                'outcome':'REQUEST_REJECTED','errors':['REQUEST_FAILED'],'spans':trace.spans})+'\n')
+        except OSError:pass
+        raise
+    finally:CURRENT.reset(token)
+    # An invalid or unavailable optional tracing configuration cannot alter a support outcome.
+    try:
+        config=ObservabilityConfig.from_env(root/'.env')
+        status=EXPORTER.submit(config,list(trace.spans),root)
+    except Exception:status='configuration_error'
+    result['tracing']={'trace_id':str(uuid.UUID(request_id)),'status':status,'span_count':len(trace.spans)}
+    record=safe_record(result,identity)
+    record['request_ref']=request_id
+    record['tools']=[{**row,'name':row['name'] if row['name'] in TOOLS else 'unknown_tool'} for row in record['tools']]
+    record['trace']=result['tracing'];record['spans']=trace.spans
+    record['order_refs']=sorted({opaque(ref['source_id'].split(':',1)[1]) for tool in result['tool_records']
+        for ref in tool.get('evidence_refs',[]) if ref['source_id'].startswith(('order:','tracking:'))})
     path=root/'data/runtime/requests.jsonl'
     try:
         path.parent.mkdir(parents=True,exist_ok=True)

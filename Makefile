@@ -36,3 +36,27 @@ compare-style:
 
 scan-style:
 	.venv/bin/python scripts/scan_style.py
+
+support-ready:
+	env HF_HUB_OFFLINE=1 .venv/bin/capstone-agent doctor --index
+
+support-ui:
+	bash scripts/run_support_ui.sh
+
+verify-operations:
+	.venv/bin/python scripts/verify_support_operations.py
+
+verify-hosted:
+	.venv/bin/python scripts/verify_hosted_tracing.py
+
+scan-final:
+	.venv/bin/python scripts/scan_final.py
+
+# Supply reviewed development/frozen contexts in Phase 9. No implicit holdout execution.
+evaluate-support:
+	.venv/bin/capstone-agent evaluate-support $(ARGS)
+
+consistency-support:
+	.venv/bin/capstone-agent evaluate-support --repeats 3 $(ARGS)
+
+.PHONY: support-ready support-ui verify-operations verify-hosted scan-final evaluate-support consistency-support compare-style scan-style

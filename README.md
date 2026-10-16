@@ -12,7 +12,8 @@ The core now implements a LangGraph supervisor, three LangChain specialists and 
 | 5 | Typed tools, server identity and bounded multi-agent core implemented; core live smoke verified; final acceptance pending |
 | 6 | Bounded projection memory, follow-ups and reset/expiry implemented; five-conversation comparison measured |
 | 7 | Implemented: controlled style feedback, versioning/reset/deletion in terminal and Streamlit; development evidence |
-| 8–9 | Pending: hosted observability, deployment verification and final evaluation |
+| 8 | Verified: hosted metadata hierarchy/masking/failure isolation, safe logs/startup and clean local deployment |
+| 9 | Pending: reviewed contexts, frozen/holdout evaluation, human calibration and final acceptance |
 
 ## Local setup
 
@@ -58,3 +59,5 @@ LangSmith defaults off. Configure its key/project in ignored `.env` to verify ho
 [Phase 2 closure](docs/phase2_closure.md) · [Phase 3 comparison](docs/prompt_comparison.md) · [Plan review](docs/plan_review.md). Dated artifacts establish measured results; planned capabilities and targets are labeled explicitly. No final safety pass is claimed.
 
 The existing repository contains a historical revoked credential. A scanned history-free source snapshot has been prepared locally and will be refreshed as work continues. The current repository remains in use; a new repository and author/student name are not required, and existing history will not be rewritten. `.env`, runtime stores, model cache and generated indices remain ignored.
+
+Final operations: `make support-ready`, `make support-ui`, `make verify-hosted` and `make scan-final`. Final-run recording/repeats are available through `capstone-agent evaluate-support`; reviewed contexts and final scoring belong to Phase 9. See [Phase 8 operations](docs/phase8_operations.md) and [validation](artifacts/phase8/validation.md).
