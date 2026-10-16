@@ -4,8 +4,8 @@
 | Field | Value |
 |---|---|
 | Document | Final Architecture Design & Project Plan |
-| Version | 3.1 — implementation/status update; retains the v3 scope and supersedes prior revisions |
-| Date | Updated 2026-10-15 (America/New_York); original revision 2026-10-13 |
+| Version | 3.2 — independent request obligations and Phase 9 repairs; retains the v3 scope and supersedes prior revisions |
+| Date | Updated 2026-10-16 (America/New_York); original revision 2026-10-13 |
 | Industry scenario | Scenario 3: Customer Support, AI Support Resolution Agent |
 | Framework track | Track A, framework-based: LangChain (with LangGraph, LangChain's orchestration library) |
 | Submission target | 2026-10-18 |
@@ -1476,3 +1476,9 @@ class SupervisorPlan(BaseModel):
 ---
 
 *Revision 3.1 reconciles measured implementation and remaining work with the v3 design. The originally supplied v3.0 plan is preserved in docs/archive/v3/. Items marked PLANNED are not implemented; no final-system safety acceptance is claimed.*
+
+### Phase 9 architecture amendment: independent request obligations
+
+The original G5 planner/composer comparison can agree on a plan that omitted part of the user request. Revision 3.2 adds an immutable, turn-local obligation contract derived before planning from the current request and scoped references. It inserts missing specialist dependencies, verifies current-turn tool evidence for the requested order/request type, and checks authoritative policy citations independently of model-declared intents. Missing evidence cannot produce an answered outcome. Typed tools, ownership, escalation-only writes, budgets and projection-memory boundaries remain in force. See [contract design and limitations](obligation_contract.md). Offline regressions pass; targeted live evidence and final frozen/repeated/holdout acceptance are being completed.
+
+The twenty-case baseline human review is supplied: 57 paired ratings, 84.21% threshold agreement. It does not waive deterministic routing defects or automatically grade materially changed outputs. The initial baseline and separately versioned evaluator corrections remain preserved.

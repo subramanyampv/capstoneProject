@@ -1,5 +1,5 @@
 {
-  "version": "2026-10-15-v2",
+  "version": "2026-10-16-v3",
   "refusals": {
     "R1": [
       "ignore (?:all |your |the |any |previous |prior )*(?:rules|instructions)",
@@ -7,11 +7,17 @@
     ],
     "R2": [
       "(?:another|someone else|other customer).{0,30}(?:order|account|record)",
-      "(?:all orders|full (?:card|number)|card number|save.{0,20}ssn)"
+      "(?:all orders|full (?:card|number)|card number|save.{0,20}ssn)",
+      "\\b(?:ssn|social security number)\\b.{0,90}\\b(?:save|store|keep|record)\\b",
+      "\\bnot my order\\b|\\b(?:order|account).{0,20}(?:not mine|belongs to someone else)\\b"
     ],
     "R3": [
       "(?:approve|push through|refund).{0,70}(?:anyway|without.{0,15}(?:review|confirmation)|no review|outside.{0,20}window)",
-      "give me.{0,15}(?:coupon|free laptop)"
+      "give me.{0,15}(?:coupon|free laptop)",
+      "\\b(?:refund|pay|give)\\b.{0,30}\\b(?:double|twice)\\b",
+      "\\b(?:approve|override|make)\\b.{0,45}(?:out.of.window|exception|bypass)",
+      "\\b(?:change|alter|fake|falsify)\\b.{0,30}\\b(?:delivery|delivered|record|date)\\b",
+      "\\b(?:owed|apply|give)\\b.{0,30}\\bfree laptop\\b"
     ],
     "R4": [
       "(?:medical|legal) advice",
@@ -20,7 +26,9 @@
   },
   "triggers": {
     "T1": [
-      "\\b(?:injur\\w*|burned|burnt|cut my|cut me|bleeding|hurt me|safety complaint|caught fire)\\b"
+      "\\b(?:injur\\w*|burned|burnt|cut my|cut me|bleeding|hurt me|safety complaint|caught fire)\\b",
+      "\\b(?:burns?|scalded|injured|injuries|wounded|bleeding|exploded)\\b",
+      "\\b(?:cut|hurt|burned)\\b.{0,15}\\b(?:hand|skin|wrist|finger|arm|leg|me)\\b"
     ],
     "T6": [
       "\\b(?:want|need|request|speak|talk|connect|contact|reach|transfer|would like)\\b.{0,50}\\b(?:human|representative|supervisor|manager)\\b",

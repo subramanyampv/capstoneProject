@@ -5,6 +5,7 @@ import time
 import uuid
 from dataclasses import dataclass, field
 from datetime import date
+from decimal import Decimal
 from pydantic import ValidationError
 from langchain_core.tools import StructuredTool
 from capstone_agent.support.contracts import *
@@ -22,6 +23,7 @@ class ToolContext:
     secrets: tuple[str,...] = ()
     calls: int = 0
     allowed_order_ids: set[str] | None = None
+    refund_order_ids: set[str] = field(default_factory=set)
     triggers: set[str] = field(default_factory=set)
     legal: bool = False
     categories: set[str] = field(default_factory=set)
@@ -46,7 +48,7 @@ SPECS={
 DESCRIPTIONS={
  'lookup_order':'Read an owned order by O-1234 identifier; identity is supplied by the server.',
  'get_tracking_events':'Read owned tracking events; disclose missing carrier estimates and stale in-transit data.',
- 'search_policy':'Retrieve current policy evidence. Omit category unless verified this turn by a product/order tool. Never choose between conflicting sources.',
+ 'search_policy':'Retrieve current policy evidence. doc_types accepts only return_policy, refund_policy, shipping_policy, cancellation_policy, warranty_policy, faq, escalation_guidelines; omit it to search all. Values such as policy or return are invalid. Omit category unless verified this turn by a product/order tool. Never choose between conflicting sources.',
  'get_product_details':'Find catalog facts using SKU or product-name substring; missing specifications stay unknown.',
  'check_return_eligibility':'Compute information-only return/refund/cancellation eligibility from owned records; does not execute transactions.',
  'create_escalation':'Create and verify a sanitized local mock handoff. Queue/priority come from server triggers. No promises or personal data.',
@@ -68,6 +70,9 @@ class Registry:
         self.ctx.facts.append({'name':name,'args':args,'data':data})
         refs=[]
         if name=='lookup_order':
+            if data['order_id'] in self.ctx.refund_order_ids:
+                amount=sum(Decimal(str(item['price'])) for item in data['items'])
+                if amount>Decimal(str(self.services.rules['refund_auto_approve_max_amount'])):self.ctx.triggers.add('T2')
             self.ctx.categories.update(item['category'] for item in data['items'])
             refs=[EvidenceRef(source_id='order:'+data['order_id'],record_version=data['record_version']).model_dump()]
         elif name=='get_tracking_events':
@@ -122,7 +127,15 @@ class Registry:
         except ToolFailure as exc:
             code=exc.code
             if exc.details: data=exc.details
-        except (ValidationError,TypeError): code='INVALID_ARGUMENT'
+        except ValidationError as exc:
+            code='INVALID_ARGUMENT'
+            fields=SPECS[name][1].model_fields if name in SPECS else {}
+            labels=[]
+            for error in exc.errors(include_input=False,include_url=False):
+                field=str(error['loc'][0]) if error['loc'] and error['loc'][0] in fields else 'arguments'
+                labels.append(error['type']+'@'+field)
+            data={'argument_errors':sorted(set(labels))[:8],'retry_with_exact_tool_schema':True}
+        except TypeError: code='INVALID_ARGUMENT'
         except TimeoutError: code='TIMEOUT'
         except Exception: code='FAILED'  # never stringify provider/storage exceptions
         record=ToolResult(evidence_refs=refs,exec_id=exec_id,name=name,status='error' if code else 'ok',data=data,error=code,

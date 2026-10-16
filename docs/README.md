@@ -1,6 +1,6 @@
 # Project documents
 
-[Architecture and Plan v3.1](architecture_and_plan.md) is the authoritative design and delivery plan. It supersedes all earlier documents. [Implementation status](implementation_status.md) distinguishes measured results from targets in the plan.
+[Architecture and Plan v3.2](architecture_and_plan.md) is the authoritative design and delivery plan. It supersedes all earlier documents. [Implementation status](implementation_status.md) distinguishes measured results from targets in the plan.
 
 | Document | Purpose |
 |---|---|
@@ -31,3 +31,5 @@ Existing dated run evidence is preserved. Historical reports describe the code a
 - [Phase 8 operations](phase8_operations.md): safe hierarchy, hosted verification, readiness commands and clean local deployment.
 
 - [Phase 9 evaluation](phase9_evaluation.md): frozen baseline, versioned context review, local DeepEval judging and actual human-calibration requirements.
+
+- [Independent obligation contract](obligation_contract.md): request coverage, evidence and citation safeguards introduced by Phase 9 repairs.

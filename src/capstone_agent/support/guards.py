@@ -45,13 +45,18 @@ def final_errors(draft, *, refs, facts, refusals, triggers, ticket, intents):
         elif not re.search(r'could not confirm|not confirmed|handoff failed|unable to (?:create|confirm)',body,re.I):
             errors.append('G1_FAILURE_DISCLOSURE')
     action_claim=re.compile(r'\b(?:issued|processed|completed|approved|executed)\s+(?:your |the |a )?(?:refund|return|cancellation)\b|\b(?:refunded|cancelled|canceled)\s+(?:your|the)\s+order',re.I)
-    for match in action_claim.finditer(body):
-        prefix=re.split(r'[.!?;]',body[:match.start()])[-1][-50:]
+    future_claim=re.compile(r'\b(?:I|we)\s+(?:will|can|have already)\s+(?:issue|process|execute|approve|refund|cancel)\b|\b(?:your|the)\s+(?:refund|return|cancellation)\s+(?:has been|is|was)\s+(?:processed|issued|approved|completed|executed)\b',re.I)
+    for match in [*action_claim.finditer(body),*future_claim.finditer(body)]:
+        prefix=re.split(r'[.!?;]|\b(?:but|however|although|and|then)\b',body[:match.start()],flags=re.I)[-1][-50:]
         if not re.search(r"\b(?:not|no|never|cannot|can't|hasn't|haven't|wasn't)\b",prefix,re.I):
             errors.append('FALSE_TRANSACTION_CLAIM'); break
     ticket_ids=set(re.findall(r'MOCK-[a-z0-9]+',body,re.I))
     if ticket_ids and ticket_ids != ({ticket['ticket_id']} if ticket and ticket.get('status')=='created' else set()):
         errors.append('FALSE_TICKET_CLAIM')
+    if ticket and ticket.get('status')=='created':
+        if not re.search(r'\blocal mock\b|\bmock (?:ticket|handoff)\b',body,re.I):errors.append('G1_MOCK_SCOPE_REQUIRED')
+        promise=r'\b(?:we|(?:our|the|a)\s+(?:(?:safety|support|policy|refunds?)\s+)?(?:team|agent|reviewer|specialist|team member))\s+(?:will|is going to)\s+(?:contact|reach|review|process|handle)\b|\b(?:wait|expect|look)\b.{0,18}\b(?:follow.up|response|contact|team)\b'
+        if re.search(promise,body,re.I):errors.append('G1_REAL_HANDOFF_PROMISE')
     # All code facts may support dates/amounts, but policy text supports a number only
     # when its exact source is cited in this turn. This remains syntactic screening.
     support=[]
@@ -74,7 +79,8 @@ def final_errors(draft, *, refs, facts, refusals, triggers, ticket, intents):
             supported=any((('day' in claim.lower() and float(number) in {d.get('window_days'),d.get('days_since_delivery')})
                 or (claim.startswith('$') and float(number) in {d.get('refund_amount'),d.get('threshold')})) for d in eligible)
             if not supported: errors.append('G3_UNSUPPORTED_NUMBER'); break
-    policy_intents=any(re.search(r'policy|return|refund|warranty|cancel|shipping',intent,re.I) for intent in intents)
+    # A current shipping/tracking record is not a shipping-policy claim.
+    policy_intents=any(re.search(r'policy|return|refund|warranty|cancel',intent,re.I) for intent in intents)
     if draft.outcome_claimed=='ANSWERED' and policy_intents and not any(r.source_id.startswith('doc:') for r in draft.citations):
         errors.append('G4_POLICY_CITATION_REQUIRED')
     # No policy numbers without citations even if an eligibility result quotes the rule.

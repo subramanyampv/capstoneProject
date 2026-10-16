@@ -1,0 +1,42 @@
+# Request obligation contract — Phase 9 repair
+
+Status: implemented with offline regressions; targeted live verification in progress. This extends the approved v3 information/mock-handoff product. No transaction execution, new external service or knowledge graph is added.
+
+The initial frozen run exposed a circular check: the composer was validated against the supervisor's own intent list. A tracking-only plan could therefore omit a refund request and still pass intent coverage. The new contract is derived separately from the current customer request and code-resolved session references, before planning. It remains immutable for the turn.
+
+```mermaid
+flowchart TD
+  U[Current request and scoped reference resolution] --> O[Independent obligation contract]
+  U --> G[Refusal and safety guard]
+  O --> P[Supervisor plan plus required dependencies]
+  G --> P
+  P --> T[Bounded specialists and authorized tool registry]
+  O --> T
+  T --> E[Current-turn facts and evidence references]
+  O --> A[Independent obligation audit]
+  E --> A
+  A --> C[Composer and source citation checks]
+  C --> R[Verified answer, explicit unknown, refusal or mock handoff]
+```
+
+## Requirements and evidence
+
+Recognized obligations cover order tracking/status, return/refund/cancellation eligibility, product information, warranty and policy sources. The contract records canonical intent labels, the selected order reference, public catalog SKU where uniquely resolved, required request types and authoritative document families. It never supplies policy values or order facts. Public catalog matching selects a tool argument; answers still require the typed product read. Multiple explicit orders require clarification rather than silently choosing one.
+
+Plan normalization inserts missing specialists and order-before-policy dependencies. Specialists retain their existing tool allowlists. Required reads are performed before model-controlled tool work, and missing reads are backfilled through the same typed registry, ownership check, current-turn category validation, timeouts and eight-call budget; the handoff slot remains reserved. No obligation permits a new write. Failed reads remain visible. Refund-threshold review is latched as soon as the owned order supplies the verified amount; eligibility results also retain threshold and cancellation triggers. This protects T2 if later model tool attempts exhaust the budget. Source conflicts come from retrieval.
+
+Evidence checks match the required order and request type, not merely the presence of a similarly named tool. The final response must retain recognized obligations independently of planner labels. An answered outcome requires complete required evidence. Citation checks require the authoritative policy family and, when retrieved, the exact section/version referenced by the eligibility calculation. An FAQ cannot substitute for the return-window rule. A current order/shipping fact does not by itself require a shipping-policy citation.
+
+The response record includes the contract, evidence audit and an explicit safe-fallback flag. Customer text is not added to operational traces. The contract is turn-local and is not added to projection memory; privacy-minimized evaluation exports contain the diagnostic record. Metadata-only LangSmith tracing remains in use.
+
+## Safety and conversation repairs
+
+SSN-first storage wording, double refunds, out-of-window overrides, record tampering and explicit nonownership are recognized by the versioned input guard. The supervisor's safety bit cannot independently assert an injury. Real recognized injury/human/legal flags remain append-only and survive planning, clarification and model failure.
+
+Public phrases such as “the speaker” can resolve through the public catalog without requiring an owned order. “Send them back” can use a verified, scoped earlier order; reset, expiry and ownership failures continue to clear that reference. Requests contradicting an earlier shipping statement fetch current records. Feedback-only “too verbose” is stored as a controlled style signal when consent and a successful previous answer permit it; it does not need an LLM reply.
+
+## Limits and release evidence
+
+The obligation parser is an inspectable, bounded lexical grammar, not unrestricted language understanding. Unrecognized paraphrases can still depend on planning or clarification. Citation presence and exact source matching are structural safeguards, not general semantic entailment. Safe fallbacks and unknowns must remain distinct from completed answers. Before acceptance, rerun the frozen cases, repeat the safety subset, review semantic failures and calibration, then lock the build and use the untouched holdout without tuning.
+
+The original 65-case baseline and original evaluator labels remain preserved. Any context-label correction is a separate version with a rationale; changed software does not rewrite earlier results.

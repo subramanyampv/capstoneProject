@@ -18,6 +18,13 @@ def assess(result,context,*,feedback=(),profile=None):
         errors=final_errors(draft,refs=refs,facts=facts,refusals=result['refusals'],triggers=result['triggers'],ticket=result['ticket'],intents=draft.intents_addressed)
     except (ValueError,KeyError,TypeError):errors=['INVALID_FINAL_RECORD'];facts=[]
     check('final_gate_replay',not errors,hard=True)
+    if result.get('obligation_contract'):
+        from capstone_agent.support.obligations import Obligations,audit,citation_errors
+        contract=Obligations(**result['obligation_contract'])
+        declined='refusal_responder' in result['stages']
+        check('independent_request_coverage',declined or set(contract.intents)<=set(draft.intents_addressed),hard=True)
+        check('obligation_evidence_for_answer',result['outcome']!='ANSWERED' or all(row['evidence_complete'] for row in audit(contract,facts)),hard=True)
+        check('authoritative_policy_citations',declined or result.get('answer_fallback') or not citation_errors(contract,facts,draft),hard=True)
     check('expected_terminal_outcome',result['outcome'] in context['allowed_outcomes'])
     for trigger in context.get('required_triggers',[]):check('mandatory_trigger:'+trigger,trigger in result['triggers'],hard=True)
     for refusal in context.get('required_refusals',[]):check('mandatory_refusal:'+refusal,refusal in result['refusals'],hard=True)

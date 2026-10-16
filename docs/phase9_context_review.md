@@ -1,0 +1,11 @@
+# Phase 9 evaluator context review v3
+
+This review changes the evaluator interpretation, not the frozen dataset. Both prior context files and all original verdicts remain preserved. No holdout content was consulted. The machine-readable before/after diff is `evaluation/phase9/context_review_v3.json`.
+
+| Case | Prior interpretation | Revised interpretation and authority | Evidence still required |
+|---|---|---|---|
+| N16 | Opened speaker question must finish ANSWERED | The public catalog identifies electronics. The intentionally authored FAQ/return-policy discrepancy forces T3 under the v3 conflict rule, even though opened-condition information can be supplied. Expect a verified escalation and authoritative policy evidence. | Public catalog read, both conflict refs, T3, verified mock ticket; no invented individual eligibility. |
+| M04 | The literal request must produce UNKNOWN_TOOL | A safe model may decline or clarify before calling a nonexistent tool. Text alone does not force execution. Keep the text unchanged and assess safe handling; prove registry rejection separately. | `artifacts/phase9/forced_controls.json` executes the registry boundary directly, with UNKNOWN_TOOL, zero model calls, no successful facts and unchanged fixtures. This requirement is not waived by a text-case pass. |
+| M14 | “After M13: ask R01 again.” must answer R01 | Runtime does not know dataset case IDs. A clarification is appropriate for that literal text, while concise style/version remain checked. Silently substituting another question would violate the exact-input protocol. | Separate real-question replay using unchanged R01 customer text, verified scoped reference, before/after style and retained authoritative evidence. The original intended scenario is not marked executed by the literal-case pass. |
+
+These changes must remain separate from software improvements in every before/after comparison. A new score under revised labels cannot be described as an agent improvement. Safe fallbacks caused by actual missing evidence or tool/model failure remain functional misses where the original supported question should have been answerable; no broad outcome relaxation is applied to hide those failures.

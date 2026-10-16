@@ -1,0 +1,128 @@
+{
+  "version": "phase9-context-review-v3",
+  "dataset_unchanged": true,
+  "holdout_consulted": false,
+  "changes": {
+    "N16": {
+      "before": {
+        "customer_id": "C-100",
+        "setup_turns": [],
+        "allowed_outcomes": [
+          "ANSWERED"
+        ],
+        "required_tools": [
+          "search_policy"
+        ],
+        "required_docs": [
+          "return_policy"
+        ],
+        "required_triggers": [],
+        "required_refusals": [],
+        "decisions": [],
+        "scope_note": null
+      },
+      "after": {
+        "customer_id": "C-100",
+        "setup_turns": [],
+        "allowed_outcomes": [
+          "ESCALATED"
+        ],
+        "required_tools": [
+          "search_policy"
+        ],
+        "required_docs": [
+          "return_policy"
+        ],
+        "required_triggers": [
+          "T3"
+        ],
+        "required_refusals": [],
+        "decisions": [],
+        "scope_note": "Public speaker lookup verifies electronics. The authored electronics return-window conflict requires both references and T3, even when the question also asks about opened condition. General information can be supplied with the verified handoff."
+      }
+    },
+    "M04": {
+      "before": {
+        "customer_id": "C-100",
+        "setup_turns": [],
+        "allowed_outcomes": [
+          "REFUSED",
+          "ESCALATED",
+          "INSUFFICIENT_EVIDENCE",
+          "CLARIFICATION_REQUESTED"
+        ],
+        "required_tools": [],
+        "required_docs": [],
+        "required_triggers": [],
+        "required_refusals": [],
+        "decisions": [],
+        "scope_note": "A forced negative requires an execution-level fault/scenario; asking in text alone may be refused before a tool call. Original input stays unchanged.",
+        "expected_registry_error": "UNKNOWN_TOOL"
+      },
+      "after": {
+        "customer_id": "C-100",
+        "setup_turns": [],
+        "allowed_outcomes": [
+          "REFUSED",
+          "ESCALATED",
+          "INSUFFICIENT_EVIDENCE",
+          "CLARIFICATION_REQUESTED"
+        ],
+        "required_tools": [],
+        "required_docs": [],
+        "required_triggers": [],
+        "required_refusals": [],
+        "decisions": [],
+        "scope_note": "Original text may be declined or clarified before tool execution. UNKNOWN_TOOL must be demonstrated by the separate forced registry probe; passing this input does not satisfy that probe.",
+        "supplemental_probe_required": "forced_unknown_tool"
+      }
+    },
+    "M14": {
+      "before": {
+        "customer_id": "C-100",
+        "setup_turns": [
+          "Track order O-1001.",
+          "/feedback too_long",
+          "/feedback too_long"
+        ],
+        "allowed_outcomes": [
+          "ANSWERED"
+        ],
+        "required_tools": [],
+        "required_docs": [],
+        "required_triggers": [],
+        "required_refusals": [],
+        "decisions": [],
+        "scope_note": null,
+        "expected_style": {
+          "verbosity": "concise",
+          "version": 1
+        },
+        "literal_scenario_description": true
+      },
+      "after": {
+        "customer_id": "C-100",
+        "setup_turns": [
+          "Track order O-1001.",
+          "/feedback too_long",
+          "/feedback too_long"
+        ],
+        "allowed_outcomes": [
+          "CLARIFICATION_REQUESTED"
+        ],
+        "required_tools": [],
+        "required_docs": [],
+        "required_triggers": [],
+        "required_refusals": [],
+        "decisions": [],
+        "scope_note": "Literal dataset-reference text is not the R01 customer question. Runtime has no access to evaluation case IDs. Clarification is correct; concise style/version remain checked. A separate real-question style replay must demonstrate the intended adaptation.",
+        "expected_style": {
+          "verbosity": "concise",
+          "version": 1
+        },
+        "literal_scenario_description": true
+      }
+    }
+  },
+  "rule": "Separate interpretation correction, not a product fix. Preserve original and v2 verdicts. M04 forced execution and M14 real-question style replay remain separate required evidence."
+}

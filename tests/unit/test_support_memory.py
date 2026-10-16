@@ -201,7 +201,8 @@ def test_tracking_event_updates_override_history_and_never_enter_checkpoint(setu
     raw['events']['O-1001'].append({'timestamp':'2026-10-12T09:00:00Z','event':'fresh_fixture_event','location':'Fresh-only depot'})
     path.write_text(json.dumps(raw))
     response=memory.process('Track that order',IDENTITY,reads)
-    assert response['tool_records'][0]['data']['latest']['status']=='fresh_fixture_event'
+    tracking=next(row for row in response['tool_records'] if row['name']=='get_tracking_events' and row['status']=='ok')
+    assert tracking['data']['latest']['status']=='fresh_fixture_event'
     assert 'fresh_fixture_event' not in all_checkpoints(memory) and 'Fresh-only depot' not in all_checkpoints(memory)
 
 def test_resolved_other_order_plan_cannot_ask_for_the_id_again(setup):
@@ -222,7 +223,7 @@ def test_model_cannot_substitute_a_different_owned_order_for_resolved_followup(s
         return asyncio.run(SupportAgent(services,ScriptedGateway(replies)).run(query,IDENTITY,memory_context=context,
             faults={'escalation':'FAILED','composer':'FAILED'}))
     response=memory.process('Track that order',IDENTITY,invoke)
-    assert response['tool_records'][0]['error']=='UNEXPECTED_ORDER'
+    assert any(row['error']=='UNEXPECTED_ORDER' for row in response['tool_records'])
     assert 'Ceramic' not in json.dumps(response) and '54.0' not in json.dumps(response)
 
 def test_other_order_is_presented_as_one_explicit_reference_to_supervisor(setup):

@@ -15,7 +15,9 @@ ALLOWED_INTENTS=frozenset({'order_tracking','shipping_tracking','order_lookup','
 ORDER=re.compile(r'\bO-\d{4}\b',re.I)
 ORDER_REFERENCE=re.compile(r'\border\b|\b(?:track|cancel)\s+it\b',re.I)
 OTHER=re.compile(r'\b(?:other|previous)\s+order\b',re.I)
-REFERENCE=re.compile(r'\b(?:that|this|same|my|other|previous)\s+order\b|\b(?:track|cancel|return)\s+(?:it|them)\b|\b(?:its|their)\s+(?:material|size|care|warranty|status)\b|\b(?:the shoes|the jacket|the speaker|the pots)\b',re.I)
+REFERENCE=re.compile(r'\b(?:that|this|same|my|other|previous)\s+order\b|\b(?:track|cancel|return)\s+(?:it|them)\b|\bsend\s+(?:it|them)\s+back\b|\b(?:its|their)\s+(?:material|size|care|warranty|status)\b|\b(?:the shoes|the jacket|the speaker|the pots)\b',re.I)
+PUBLIC_PRODUCT=re.compile(r'\b(?:the shoes|the jacket|the speaker|the pots)\b',re.I)
+REVERIFY=re.compile(r'\bdelivery email\b|\btold me yesterday\b|\bhadn.t shipped\b',re.I)
 
 class Projection(TypedDict):
     messages:list[dict]
@@ -124,12 +126,13 @@ class SessionMemory:
                 return command_result(enabled)
             explicit=list(dict.fromkeys(m.upper() for m in ORDER.findall(query)))
             entities=dict(old['entities']);other=bool(OTHER.search(query))
-            references=bool(REFERENCE.search(query))
+            references=bool(REFERENCE.search(query) or (REVERIFY.search(query) and entities.get('order_id')))
+            public_product=bool(PUBLIC_PRODUCT.search(query)) and not ORDER_REFERENCE.search(query)
             resolved=None
             if len(explicit)==1:resolved=explicit[0]
-            elif not explicit and references:
+            elif not explicit and references and not public_product:
                 resolved=entities.get('previous_order_id') if other else entities.get('order_id')
-            needs=bool(len(explicit)>1 or (references and not resolved and (ORDER_REFERENCE.search(query) or not entities.get('sku'))))
+            needs=bool(len(explicit)>1 or (references and not public_product and not resolved and (ORDER_REFERENCE.search(query) or not entities.get('sku'))))
             streak=0
             for message in reversed(old['messages']):
                 if message['role']!='assistant':continue

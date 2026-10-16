@@ -22,7 +22,8 @@ class OrderArgs(Closed):
 
 class PolicyArgs(Closed):
     query: str = Field(min_length=1, max_length=2000)
-    doc_types: list[str] | None = Field(default=None, min_length=1, max_length=7)
+    doc_types: list[Literal['return_policy','refund_policy','shipping_policy','cancellation_policy',
+                          'warranty_policy','faq','escalation_guidelines']] | None = Field(default=None, min_length=1, max_length=7)
     category: Literal['footwear','apparel','home','electronics','perishable_grocery'] | None = None
     k: int = Field(default=5, ge=1, le=10)
 

@@ -22,6 +22,13 @@ from capstone_agent.observability.support_tracing import EXPORTER
 
 ROOT=Path(__file__).resolve().parents[1]
 
+def build_hashes():
+    paths=[*sorted((ROOT/'src/capstone_agent').rglob('*.py')),*sorted((ROOT/'config').glob('*.json')),
+        *sorted((ROOT/'knowledge/raw').glob('*.md')),
+        *(ROOT/'data'/name for name in ['sample_orders.json','sample_tracking_events.json','product_catalog.json','policy_rules.json']),
+        ROOT/'knowledge/index_manifest.json']
+    return {str(path.relative_to(ROOT)):hashlib.sha256(path.read_bytes()).hexdigest() for path in paths if path.exists()}
+
 def summarize(directory):
     rows=[json.loads(line) for line in (directory/'outputs.jsonl').read_text().splitlines()]
     checks={}
@@ -60,11 +67,12 @@ def main():
     protocol=ROOT/'evaluation/phase9/protocol_v1.json'
     manifest={'recorded_at':datetime.now(timezone.utc).isoformat(),'dataset_sha256':hashlib.sha256(dataset.read_bytes()).hexdigest(),
         'context_sha256':hashlib.sha256(args.contexts.read_bytes()).hexdigest(),'protocol_sha256':hashlib.sha256(protocol.read_bytes()).hexdigest(),
-        'source_sha256':source_hashes,'model_settings':settings,'model_config_sha256':fingerprint(config),
+        'source_sha256':source_hashes,'build_sha256':build_hashes(),'recorder_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+        'context_file':args.contexts.name,'model_settings':settings,'model_config_sha256':fingerprint(config),
         'repeats':args.repeats,'case_ids':[case['id'] for case in cases]}
     if args.resume:
         previous=json.loads((directory/'manifest.json').read_text())
-        for key in ['dataset_sha256','context_sha256','protocol_sha256','source_sha256','model_settings','model_config_sha256','repeats','case_ids']:
+        for key in ['dataset_sha256','context_sha256','protocol_sha256','source_sha256','build_sha256','recorder_sha256','context_file','model_settings','model_config_sha256','repeats','case_ids']:
             if previous.get(key)!=manifest[key]:raise ValueError('RESUME_BUILD_OR_PROTOCOL_MISMATCH')
     else:(directory/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
     secrets=tuple(value for name,value in env.items() if name.endswith('API_KEY') and value)
@@ -79,6 +87,8 @@ def main():
                 if (case['id'],repeat) in completed:continue
                 if fingerprint(LLMConfig.from_env(ROOT/'.env'))!=manifest['model_config_sha256']:
                     raise ValueError('MODEL_CONFIGURATION_CHANGED_DURING_RUN')
+                if build_hashes()!=manifest['build_sha256']:
+                    raise ValueError('BUILD_CHANGED_DURING_RUN')
                 preferences.forget(case['customer_id']);memory=SessionMemory();identity=SessionIdentity(case['customer_id']);setup=[]
                 started=time.perf_counter()
                 try:

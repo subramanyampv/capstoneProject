@@ -129,7 +129,7 @@ class PreferenceStore:
 def implicit_signal(query,context,*,embeddings=None):
     """Only successful prior answers qualify; compare transient masked text, never persist vectors."""
     if context.get('last_outcome')!='ANSWERED':return None
-    if re.search(r'\b(?:shorter|too long|tl;?dr|summarize)\b',query,re.I):return 'too_long'
+    if re.search(r'\b(?:shorter|too long|too verbose|tl;?dr|summarize)\b',query,re.I):return 'too_long'
     if re.search(r'\b(?:more detail|explain more)\b|^\s*why\??\s*$',query,re.I):return 'too_short'
     previous=[m['content'] for m in context.get('messages',[]) if m['role']=='user'][-2:]
     if not embeddings or not previous:return None

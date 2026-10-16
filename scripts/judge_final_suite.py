@@ -2,6 +2,7 @@
 import argparse
 import json
 import os
+import re
 import time
 from dataclasses import replace
 from pathlib import Path
@@ -41,7 +42,10 @@ def human_packet(directory,selected,original):
         'Review the twenty predetermined cases independently. Judge scores are intentionally omitted. Use 0–1 for faithfulness, answer relevancy and grounded support; use null when evidence makes a metric inapplicable. Flag any unsupported policy/action claim. This is synthetic data; no author/student name is required.',
         '', 'Record scores in human_review_template.json or reply with case IDs, scores and comments. Do not put credentials or personal information in comments. No human calibration is claimed until actual human ratings are received.','']
     lines+=['Scoring guide: 1 = fully supported/relevant, 0.5 = partly supported/relevant, 0 = unsupported/irrelevant; intermediate scores are allowed. Faithfulness concerns factual support; relevancy concerns answering the actual request; grounded support also includes correct citations, explicit unknowns and safe scope. Thresholds: faithfulness 0.9, relevancy 0.8, grounded support 0.9. For null ratings list the metric in not_applicable_metrics with a reason. Set status to reviewed_by_human after all twenty reviews.','']
-    contexts=json.loads((ROOT/'evaluation/phase9/frozen_contexts.json').read_text())
+    manifest=json.loads((directory/'manifest.json').read_text())
+    context_name=manifest.get('context_file','frozen_contexts.json')
+    if not re.fullmatch(r'frozen_contexts(?:_v[0-9]+)?\.json',context_name):raise ValueError('INVALID_CONTEXT_FILENAME')
+    contexts=json.loads((ROOT/'evaluation/phase9'/context_name).read_text())
     template={'status':'awaiting_human_review','reviewer':'human-reviewer','rubric':RUBRIC,'cases':[]}
     for row in selected:
         case=original[row['case_id']];result=row['result']
@@ -53,6 +57,9 @@ def human_packet(directory,selected,original):
             'Outcome: '+result['outcome'],'','Answer: '+result['response']['answer'],'',
             'Reasons: '+json.dumps(result['response']['why']),'',
             'Citations: '+json.dumps(result['response']['citations']),'',
+            'Recorded request obligations and evidence coverage (code decisions, not independent truth):','',
+            '```json',json.dumps({'contract':result.get('obligation_contract'),'audit':result.get('obligation_audit'),
+                'safe_fallback':result.get('answer_fallback',False)},indent=2),'```','',
             '<details><summary>Verified tool evidence and code decisions</summary>','',
             '```json',json.dumps(context_for(result),indent=2),'```','','</details>','']
         template['cases'].append({'case_id':row['case_id'],'faithfulness':None,'answer_relevancy':None,

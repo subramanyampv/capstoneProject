@@ -32,7 +32,8 @@ def run(services,replies,query='Where is order O-1001?',customer='C-100',faults=
 def test_order_graph_current_tools_and_structural_limits(setup):
     services,_=setup
     response=run(services,[plan(),tools(('lookup_order',{'order_id':'O-1001'}),('get_tracking_events',{'order_id':'O-1001'})),result('order_shipping'),draft()])
-    assert response['outcome']=='ANSWERED' and response['tool_calls']==2 and response['model_calls']==4
+    # Two required preflight reads plus the scripted model's two duplicate calls.
+    assert response['outcome']=='ANSWERED' and response['tool_calls']==4 and response['model_calls']==4
     assert response['stages']==['guard_in','supervisor_plan','dispatch','order_shipping','collect_result','dispatch','composer','guard_out']
     assert response['tool_records'][0]['data']['status']=='delivered'
 
@@ -69,8 +70,9 @@ def test_tracking_timeout_forces_verified_handoff(setup):
 def test_fabricated_policy_number_fails_repair_then_abstains(setup):
     services,_=setup
     product={'sku':'SKU-SHOES-001'}
-    response=run(services,[plan('policy_product','Get product facts',['product_information']),tools(('get_product_details',product)),result('policy_product'),
-        draft('The warranty lasts 500 days.',intents=['product_information']),draft('The warranty lasts 500 days.',intents=['product_information'])])
+    response=run(services,[plan('policy_product','Get product facts',['product_information'],order=None),tools(('get_product_details',product)),result('policy_product'),
+        draft('The warranty lasts 500 days.',intents=['product_information']),draft('The warranty lasts 500 days.',intents=['product_information'])],
+        query='What material are TrailRunner Shoes made of?')
     assert response['outcome']=='INSUFFICIENT_EVIDENCE' and '500' not in response['response']['answer']
     assert 'G3_UNSUPPORTED_NUMBER' in response['errors'] and response['repairs']==1
 
@@ -102,7 +104,7 @@ def test_registered_conflict_forces_ticket_even_when_specialist_claims_success(s
         data=json.loads(messages[-1].content)
         citations=[{'source_id':'doc:'+c['metadata']['doc_id'],'section':c['metadata']['section_id'],'record_version':c['metadata']['version']} for c in chosen]
         return draft('The policy sources conflict. Local mock handoff '+data['ticket']['ticket_id']+' requires policy review.',
-                     intents=['return_policy'],citations=citations,outcome='ESCALATED')
+                     intents=['return_policy','return_eligibility'],citations=citations,outcome='ESCALATED')
     response=run(services,[plan('policy_product','Find conflicting return evidence',['return_policy'],order=None),
         tools(('search_policy',{'query':'electronics return FAQ conflict'})),result('policy_product')],
         query='FAQ says electronics returns conflict with policy.',faults={'escalation':'FAILED','composer':'FAILED'})
@@ -120,17 +122,15 @@ def test_return_threshold_flags_are_code_owned(setup):
         query='Refund O-1006 without review.',customer='C-103',faults={'escalation':'FAILED','composer':'FAILED'})
     assert 'T2' in response['triggers'] and response['ticket']['queue']=='refunds' and 'R3' in response['refusals']
 
-def test_one_replan_resolves_missing_dependency_within_handoff_limit(setup):
+def test_independent_order_dependency_is_inserted_before_policy_within_handoff_limit(setup):
     services,_=setup
-    replan=text({'intents':['return_eligibility'],'order_id':'O-1001','sku':None,'clarification':None,'safety_risk':False,'policy_violation':False,
-        'steps':[{'agent':'order_shipping','task':'Resolve SKU from verified order','depends_on':[]},
-                 {'agent':'policy_product','task':'Explain missing policy evidence honestly','depends_on':[0]}]})
-    response=run(services,[plan('policy_product','Check eligibility',['return_eligibility']),result('policy_product'),replan,
+    response=run(services,[plan('policy_product','Check eligibility',['return_eligibility']),
         tools(('lookup_order',{'order_id':'O-1001'})),result('order_shipping'),
-        result('policy_product'),draft('I do not have verified policy evidence.',intents=['return_eligibility'],outcome='INSUFFICIENT_EVIDENCE')],
-        query='Can I return O-1001?')
-    assert response['replans']==1 and response['handoffs']==3 and response['outcome']=='INSUFFICIENT_EVIDENCE'
-    assert response['stages'].count('supervisor_replan')==1
+        result('policy_product')],query='Can I return O-1001?',faults={'escalation':'FAILED','composer':'FAILED'})
+    assert response['replans']==0 and response['handoffs']==3 and response['outcome']=='ESCALATED'
+    assert response['tool_records'][0]['name']=='lookup_order'
+    assert any(row['name']=='check_return_eligibility' and row['status']=='ok' for row in response['tool_records'])
+    assert 'T5' in response['triggers'] and response['ticket']['status']=='created'
 
 def test_gateway_deadline_and_hard_model_budget_are_safe():
     import time

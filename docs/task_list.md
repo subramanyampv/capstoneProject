@@ -1,12 +1,12 @@
 # Detailed project task checklist — updated 2026-10-16
 
-Authority: [Architecture revision 3.1](architecture_and_plan.md). This is the current work ledger, supported by the [progress report](project_progress.md) and recorded artifacts. Update a task only after its completion criterion has evidence.
+Authority: [Architecture revision 3.2](architecture_and_plan.md). This is the current work ledger, supported by the [progress report](project_progress.md) and recorded artifacts. Update a task only after its completion criterion has evidence.
 
 **DONE** = implemented/recorded for the stated scope; not a final-system acceptance claim. **UPDATE** = existing code, experiment or document needs extension, correction or final-build integration. **NOT STARTED** = implementation/evidence is still missing; package placeholders do not count. Deferred work is listed separately.
 
 **P0** = protects correctness, safety or a required delivery gate. **P1** = required capability or evaluation work. Dependencies are task IDs, not permission requests. Task counts do not represent a completion percentage because effort differs substantially.
 
-**Inventory:** 85 initial-product tasks — 70 done, 11 needing updates, 4 not started. 8 areas are deferred.
+**Inventory:** 85 initial-product tasks — 70 done, 12 needing updates, 3 not started. 8 areas are deferred.
 
 **Immediate sequence:** Phase 9 is in progress: preserve the initial frozen baseline, review failures and twenty human-calibration outputs, repair development defects, then lock the release before the untouched holdout. Phase 7 adaptation is implemented with development evidence. Phase 5 core tools, guards, server identity and bounded graph are implemented with repaired live evidence. Earlier failures remain preserved in phase5_tools_and_graph.md; broad semantic/safety acceptance remains Phase 9.
 
@@ -16,7 +16,7 @@ No author/student name or new repository is required. Hosted LangSmith configura
 
 | ID | Status | Priority | Task | Evidence / completion criterion | Dependencies |
 |---|---|---|---|---|---|
-| D01 | DONE | P0 | Adopt final v3 scope | Architecture 3.1: three specialists, six tools, escalation-only write; earlier plans archived. | — |
+| D01 | DONE | P0 | Adopt final v3 scope | Architecture 3.2: three specialists, six tools, escalation-only write; earlier plans archived. | — |
 | D02 | DONE | P0 | Record current implementation and evidence | project_progress.md, implementation_status.md and evaluation_report.md distinguish measured work from targets. | D01 |
 | D03 | DONE | P0 | Complete Phase 3 comparison documentation | Ten representative cases, 195-output appendix, A/B/C failure breakdown and C development selection. | B08 |
 | D04 | DONE | P1 | Document Phase 4 implementation and gaps | retrieval_design.md records 28 chunks, initial 80% versus improved 100% retained recall, and preserved RAG/wording failures. | R07 |
@@ -82,12 +82,12 @@ No author/student name or new repository is required. Hosted LangSmith configura
 | S02 | DONE | P0 | Implement versioned safety rules | R1–R4 refusal patterns and T1–T6 escalation definitions, deterministic queue/priority precedence and startup validation. | D01 |
 | G01 | DONE | P0 | Implement Guard-In | Input/command validation, refusal/override detection, injury/human/legal/payment escalation triggers and log-safe copy before model calls. | S01,S02 |
 | G02 | DONE | P0 | Implement turn state and plan contracts | Typed plan/results/errors, append-only safety reducers, counters and code-controlled outcome; validate dependencies and finite plan length. | S01,S02 |
-| G03 | DONE | P0 | Implement supervisor plan/replan | Understand all intents, choose only allowed specialists, ask for ambiguous entities and preserve guard flags; one bounded replan. | G01,G02 |
+| G03 | DONE | P0 | Implement supervisor plan/replan | Independent immutable request obligations now insert missing specialist/dependency work before planning can omit it; scoped references, allowed specialists, bounded replan and guard flags retained. | G01,G02 |
 | G04 | DONE | P0 | Implement dispatch and result collection | Validate specialist evidence/results, retain flags, insert mandatory escalation and enforce budgets; do not drop escalation on clarification/refusal branches. | G02,G03,T08 |
 | G05 | DONE | P0 | Implement Order & Shipping specialist | Bounded LangChain tool-calling with lookup/tracking allowlist and isolated task context; no policy/transaction claims. | T02,T03,G04 |
 | G06 | DONE | P0 | Implement Policy & Product specialist | Allowlisted policy/product/eligibility calls; current-turn evidence, conflict/threshold flags and no LLM eligibility authority. | T04,T05,T06,G04 |
 | G07 | DONE | P0 | Implement Escalation specialist | Bounded sanitized handoff drafting, tool call, verified ticket/failure; no model authority for queue/priority or compensation promises. | T07,G04 |
-| G08 | DONE | P0 | Implement composer and Guard-Out | Merge all intents, citations, refusals and verified ticket/failure. Enforce G1–G8, bounded repair and safe fallback; code computes outcome. | G05,G06,G07 |
+| G08 | DONE | P0 | Implement composer and Guard-Out | Verify independent request/evidence coverage and authoritative section/version citations, then merge refusals and verified local mock handoff/failure. G1–G8, bounded repair and safe fallback remain; unsupported transaction/future team promises are rejected. | G05,G06,G07 |
 | G09 | DONE | P0 | Enforce mandatory escalation and refusal regressions | Code-backed R05 conflict, S01 injury, S15 threshold, ownership denial and mixed refusal/injury have component/live smoke proof; frozen repeats/holdout remain E02/E04/E07. | G01,G04,G07,G08,T10 |
 | G10 | DONE | P0 | Complete graph integration and core demos | Grounded return, tracking+refund review, prompt refusal, injury, ticket-write failure and tool/model failures saved under artifacts/phase5_runs; final demo screenshots/Phase 6–7 demos remain D08/O06. | G09 |
 
@@ -131,8 +131,8 @@ No author/student name or new repository is required. Hosted LangSmith configura
 |---|---|---|---|---|---|
 | E01 | UPDATE | P0 | Build final-system evaluation harness | Versioned 65-case identity/setup contexts, exact-input recorder, per-case tool/citation/outcome checks, separate DeepEval semantic judging and human-calibration tooling implemented. Initial baseline is complete; context corrections are separately versioned. Holdout context review remains deferred until the release is locked. | G10 |
 | E02 | UPDATE | P0 | Evaluate frozen cases and untouched holdout | Initial 65-case frozen baseline complete: v2 has 39 all-case-check passes and 59 hard-check passes; outputs preserved; untouched ten-case holdout remains pending after fixes/build lock. Separate scores and failures; never use holdout for tuning. | E01,R06 |
-| E03 | UPDATE | P1 | Measure final judged quality and calibrate humans | Local DeepEval faithfulness/relevancy/grounded-support judging of the predetermined twenty-case sample is complete. Blind twenty-case review packet and actual-rating agreement calculator implemented; actual human review is requested/pending. Same-model judging is disclosed; initial RAG scores are not calibration. | E02 |
-| E04 | NOT STARTED | P0 | Measure repeated-run consistency and worst-case safety | Fifteen-case priority subset ×3 (×2 cut line); identical terminal outcomes, mandatory refusal/escalation on every repeat. | E02,G09 |
+| E03 | UPDATE | P1 | Measure final judged quality and calibrate humans | Local DeepEval faithfulness/relevancy/grounded-support judging of the predetermined twenty-case sample is complete. Blind twenty-case review packet and actual-rating agreement calculator implemented; Baseline human review supplied: 20 cases/57 pairs, 84.21% threshold agreement. Review of materially changed final outputs remains open. Same-model judging is disclosed; initial RAG scores are not calibration. | E02 |
+| E04 | UPDATE | P0 | Measure repeated-run consistency and worst-case safety | Three-repeat run of the predetermined fifteen-case subset is starting on the same frozen repair build. Report outcome consistency and mandatory refusal/escalation on every repeat; no acceptance before results. | E02,G09 |
 | E05 | UPDATE | P0 | Run full canary and safe-failure scans | Initial Phase 9 export/runtime/current-key scan passes. Complete scans on all final artifacts, false action/handoff-success review and final hosted checks remain required. | O04,O05,T09 |
 | E06 | NOT STARTED | P1 | Run capability ladder and integration comparisons | Same ten cases across baseline, LLM, retrieval and final tools/guards; memory/adaptation comparison sets and retained-source metrics. | E02,M05,A04 |
 | E07 | NOT STARTED | P0 | Prove RCA before/after fixes | R05 conflict trigger disabled/enabled with repeats and holdout; unsupported-policy before/after; permanent regressions and residual risks. | E02,E04,G09 |

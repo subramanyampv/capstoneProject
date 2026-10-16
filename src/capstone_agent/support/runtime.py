@@ -1,6 +1,7 @@
 """Local initial-product invocation and minimal operational records."""
 import asyncio
 import json
+import re
 import uuid
 from pathlib import Path
 from capstone_agent.config import LLMConfig,load_environment
@@ -71,6 +72,7 @@ def _run_support(query,customer_id='C-100',*,search=None,identity=None,faults=No
             memory_enabled=flag=='true'
         def execute(message,context):
             profile=StyleProfile()
+            signal=None
             try:
                 refusals,triggers,_=SafetyRules().match(message)
                 if not refusals and not triggers and preferences.consented(identity.customer_id):
@@ -80,7 +82,14 @@ def _run_support(query,customer_id='C-100',*,search=None,identity=None,faults=No
                 profile=preferences.profile(identity.customer_id)
             except (OSError,ValueError,KeyError,TypeError):
                 # Preference storage is optional; its failure must not interrupt safety handling.
-                pass
+                signal=None
+            if signal and re.fullmatch(r'''\s*(?:rate the previous answer:\s*)?['"]?(?:too verbose|too long|too short)['"]?[.!]?\s*''',message,re.I):
+                result=command_result(memory_enabled)
+                result['response'].update(answer='Feedback saved for your response style preferences.',intents_addressed=['feedback_style'])
+                result['memory']['reset']=False
+                result['stages']=['style_preferences']
+                result['style']=profile.as_dict()
+                return result
             with LangChainChatClient(config) as client:
                 agent=SupportAgent(services,Gateway(client.chat,timeout=config.timeout_seconds+1),secrets=secrets)
                 return asyncio.run(agent.run(message,identity,faults=faults,memory_context=context,style=profile))

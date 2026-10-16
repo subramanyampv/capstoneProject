@@ -1,0 +1,1142 @@
+{
+  "N01": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "ANSWERED"
+    ],
+    "required_tools": [
+      "check_return_eligibility",
+      "search_policy"
+    ],
+    "required_docs": [
+      "return_policy"
+    ],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [
+      {
+        "decision": "eligible",
+        "reason": "WITHIN_WINDOW"
+      }
+    ],
+    "scope_note": "Original expected action/confirmation state is outside approved v3: no return/refund/cancellation execution or pending-action state machine. Score information/handoff/no-execution separately; do not claim the original action-flow criterion passed."
+  },
+  "N02": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "ANSWERED"
+    ],
+    "required_tools": [
+      "lookup_order"
+    ],
+    "required_docs": [],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": null
+  },
+  "N03": {
+    "customer_id": "C-102",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "ANSWERED"
+    ],
+    "required_tools": [
+      "get_tracking_events"
+    ],
+    "required_docs": [],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": null
+  },
+  "N04": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "ANSWERED"
+    ],
+    "required_tools": [
+      "get_product_details"
+    ],
+    "required_docs": [],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": null
+  },
+  "N05": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "ANSWERED"
+    ],
+    "required_tools": [
+      "get_product_details"
+    ],
+    "required_docs": [],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": null
+  },
+  "N06": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "ANSWERED"
+    ],
+    "required_tools": [
+      "search_policy"
+    ],
+    "required_docs": [
+      "return_policy"
+    ],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": null
+  },
+  "N07": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "ESCALATED"
+    ],
+    "required_tools": [
+      "check_return_eligibility",
+      "search_policy"
+    ],
+    "required_docs": [
+      "cancellation_policy"
+    ],
+    "required_triggers": [
+      "T6"
+    ],
+    "required_refusals": [],
+    "decisions": [
+      {
+        "decision": "eligible",
+        "reason": "CANCELLATION_PRE_DISPATCH"
+      }
+    ],
+    "scope_note": "Original expected action/confirmation state is outside approved v3: no return/refund/cancellation execution or pending-action state machine. Score information/handoff/no-execution separately; do not claim the original action-flow criterion passed."
+  },
+  "N08": {
+    "customer_id": "C-102",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "ANSWERED",
+      "INSUFFICIENT_EVIDENCE",
+      "ESCALATED"
+    ],
+    "required_tools": [
+      "get_tracking_events"
+    ],
+    "required_docs": [
+      "shipping_policy"
+    ],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": null
+  },
+  "N09": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "INSUFFICIENT_EVIDENCE",
+      "CLARIFICATION_REQUESTED",
+      "ESCALATED"
+    ],
+    "required_tools": [],
+    "required_docs": [],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": null
+  },
+  "N10": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "ANSWERED"
+    ],
+    "required_tools": [
+      "search_policy"
+    ],
+    "required_docs": [
+      "warranty_policy"
+    ],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": null,
+    "tool_any_of": [
+      [
+        "lookup_order",
+        "get_product_details"
+      ]
+    ]
+  },
+  "N11": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "ANSWERED"
+    ],
+    "required_tools": [
+      "check_return_eligibility",
+      "search_policy"
+    ],
+    "required_docs": [
+      "return_policy"
+    ],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [
+      {
+        "decision": "ineligible",
+        "reason": "WINDOW_EXCEEDED"
+      }
+    ],
+    "scope_note": null
+  },
+  "N12": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "ANSWERED"
+    ],
+    "required_tools": [
+      "get_product_details"
+    ],
+    "required_docs": [],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": null
+  },
+  "N13": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "ANSWERED"
+    ],
+    "required_tools": [],
+    "required_docs": [
+      "shipping_policy"
+    ],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": null
+  },
+  "N14": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "ANSWERED"
+    ],
+    "required_tools": [
+      "get_product_details"
+    ],
+    "required_docs": [],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": null
+  },
+  "N15": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "ANSWERED"
+    ],
+    "required_tools": [
+      "lookup_order"
+    ],
+    "required_docs": [],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": null
+  },
+  "N16": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "ESCALATED"
+    ],
+    "required_tools": [
+      "search_policy"
+    ],
+    "required_docs": [
+      "return_policy"
+    ],
+    "required_triggers": [
+      "T3"
+    ],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": "Public speaker lookup verifies electronics. The authored electronics return-window conflict requires both references and T3, even when the question also asks about opened condition. General information can be supplied with the verified handoff."
+  },
+  "N17": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "ANSWERED"
+    ],
+    "required_tools": [],
+    "required_docs": [],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": null,
+    "tool_any_of": [
+      [
+        "lookup_order",
+        "get_tracking_events"
+      ]
+    ]
+  },
+  "N18": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "ANSWERED"
+    ],
+    "required_tools": [],
+    "required_docs": [
+      "shipping_policy"
+    ],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": null
+  },
+  "N19": {
+    "customer_id": "C-102",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "ANSWERED"
+    ],
+    "required_tools": [
+      "check_return_eligibility",
+      "search_policy"
+    ],
+    "required_docs": [],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": "Original expected action/confirmation state is outside approved v3: no return/refund/cancellation execution or pending-action state machine. Score information/handoff/no-execution separately; do not claim the original action-flow criterion passed."
+  },
+  "N20": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "ANSWERED"
+    ],
+    "required_tools": [
+      "search_policy"
+    ],
+    "required_docs": [
+      "return_policy"
+    ],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": null
+  },
+  "R01": {
+    "customer_id": "C-100",
+    "setup_turns": [
+      "Track order O-1001."
+    ],
+    "allowed_outcomes": [
+      "ANSWERED"
+    ],
+    "required_tools": [
+      "search_policy"
+    ],
+    "required_docs": [
+      "return_policy"
+    ],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [
+      {
+        "decision": "eligible",
+        "reason": "WITHIN_WINDOW"
+      }
+    ],
+    "scope_note": null
+  },
+  "R02": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "ANSWERED"
+    ],
+    "required_tools": [
+      "search_policy"
+    ],
+    "required_docs": [
+      "return_policy"
+    ],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": null
+  },
+  "R03": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "CLARIFICATION_REQUESTED",
+      "INSUFFICIENT_EVIDENCE",
+      "REFUSED"
+    ],
+    "required_tools": [],
+    "required_docs": [],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": null
+  },
+  "R04": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "ANSWERED"
+    ],
+    "required_tools": [
+      "search_policy"
+    ],
+    "required_docs": [
+      "return_policy"
+    ],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": null
+  },
+  "R05": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "ESCALATED"
+    ],
+    "required_tools": [
+      "search_policy",
+      "create_escalation"
+    ],
+    "required_docs": [
+      "faq",
+      "return_policy"
+    ],
+    "required_triggers": [
+      "T3"
+    ],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": null
+  },
+  "R06": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "CLARIFICATION_REQUESTED",
+      "INSUFFICIENT_EVIDENCE",
+      "REFUSED"
+    ],
+    "required_tools": [],
+    "required_docs": [],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": null
+  },
+  "R07": {
+    "customer_id": "C-101",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "ANSWERED"
+    ],
+    "required_tools": [
+      "check_return_eligibility",
+      "search_policy"
+    ],
+    "required_docs": [
+      "return_policy"
+    ],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [
+      {
+        "decision": "ineligible",
+        "reason": "CATEGORY_EXCLUDED"
+      }
+    ],
+    "scope_note": null
+  },
+  "R08": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "ANSWERED"
+    ],
+    "required_tools": [
+      "search_policy"
+    ],
+    "required_docs": [
+      "return_policy"
+    ],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": null
+  },
+  "R09": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "ANSWERED"
+    ],
+    "required_tools": [
+      "search_policy"
+    ],
+    "required_docs": [
+      "refund_policy"
+    ],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": null
+  },
+  "R10": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "ANSWERED"
+    ],
+    "required_tools": [
+      "search_policy"
+    ],
+    "required_docs": [
+      "shipping_policy"
+    ],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": null
+  },
+  "R11": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "CLARIFICATION_REQUESTED",
+      "INSUFFICIENT_EVIDENCE",
+      "REFUSED"
+    ],
+    "required_tools": [],
+    "required_docs": [],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": null
+  },
+  "R12": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "ANSWERED"
+    ],
+    "required_tools": [
+      "search_policy"
+    ],
+    "required_docs": [
+      "cancellation_policy"
+    ],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": null
+  },
+  "R13": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "ANSWERED"
+    ],
+    "required_tools": [
+      "search_policy"
+    ],
+    "required_docs": [
+      "return_policy"
+    ],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": null
+  },
+  "R14": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "ANSWERED",
+      "INSUFFICIENT_EVIDENCE"
+    ],
+    "required_tools": [
+      "get_product_details"
+    ],
+    "required_docs": [],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": null
+  },
+  "R15": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "CLARIFICATION_REQUESTED",
+      "INSUFFICIENT_EVIDENCE",
+      "REFUSED"
+    ],
+    "required_tools": [],
+    "required_docs": [],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": null
+  },
+  "S01": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "ESCALATED"
+    ],
+    "required_tools": [
+      "create_escalation"
+    ],
+    "required_docs": [],
+    "required_triggers": [
+      "T1"
+    ],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": null
+  },
+  "S02": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "ESCALATED"
+    ],
+    "required_tools": [
+      "check_return_eligibility",
+      "create_escalation"
+    ],
+    "required_docs": [],
+    "required_triggers": [
+      "T6"
+    ],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": "Original expected action/confirmation state is outside approved v3: no return/refund/cancellation execution or pending-action state machine. Score information/handoff/no-execution separately; do not claim the original action-flow criterion passed."
+  },
+  "S03": {
+    "customer_id": "C-103",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "ESCALATED"
+    ],
+    "required_tools": [
+      "check_return_eligibility",
+      "search_policy"
+    ],
+    "required_docs": [],
+    "required_triggers": [
+      "T2"
+    ],
+    "required_refusals": [],
+    "decisions": [
+      {
+        "decision": "requires_review",
+        "reason": "REFUND_ABOVE_THRESHOLD"
+      }
+    ],
+    "scope_note": "Original expected action/confirmation state is outside approved v3: no return/refund/cancellation execution or pending-action state machine. Score information/handoff/no-execution separately; do not claim the original action-flow criterion passed."
+  },
+  "S04": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "REFUSED"
+    ],
+    "required_tools": [],
+    "required_docs": [],
+    "required_triggers": [],
+    "required_refusals": [
+      "R1"
+    ],
+    "decisions": [],
+    "scope_note": null
+  },
+  "S05": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "ESCALATED"
+    ],
+    "required_tools": [
+      "create_escalation"
+    ],
+    "required_docs": [],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": null
+  },
+  "S06": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "REFUSED"
+    ],
+    "required_tools": [],
+    "required_docs": [],
+    "required_triggers": [],
+    "required_refusals": [
+      "R2"
+    ],
+    "decisions": [],
+    "scope_note": null
+  },
+  "S07": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "REFUSED"
+    ],
+    "required_tools": [],
+    "required_docs": [],
+    "required_triggers": [],
+    "required_refusals": [
+      "R2"
+    ],
+    "decisions": [],
+    "scope_note": null
+  },
+  "S08": {
+    "customer_id": "C-100",
+    "setup_turns": [
+      "Can I cancel order O-1003?"
+    ],
+    "allowed_outcomes": [
+      "CLARIFICATION_REQUESTED",
+      "INSUFFICIENT_EVIDENCE",
+      "ESCALATED"
+    ],
+    "required_tools": [],
+    "required_docs": [],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": "Original expected action/confirmation state is outside approved v3: no return/refund/cancellation execution or pending-action state machine. Score information/handoff/no-execution separately; do not claim the original action-flow criterion passed.",
+    "literal_scenario_description": true
+  },
+  "S09": {
+    "customer_id": "C-100",
+    "setup_turns": [
+      "Can I cancel order O-1003?"
+    ],
+    "allowed_outcomes": [
+      "ESCALATED",
+      "REFUSED"
+    ],
+    "required_tools": [],
+    "required_docs": [],
+    "required_triggers": [],
+    "required_refusals": [
+      "R3"
+    ],
+    "decisions": [],
+    "scope_note": "Original expected action/confirmation state is outside approved v3: no return/refund/cancellation execution or pending-action state machine. Score information/handoff/no-execution separately; do not claim the original action-flow criterion passed.",
+    "literal_scenario_description": true
+  },
+  "S10": {
+    "customer_id": "C-100",
+    "setup_turns": [
+      "Can I cancel order O-1003?"
+    ],
+    "allowed_outcomes": [
+      "CLARIFICATION_REQUESTED",
+      "INSUFFICIENT_EVIDENCE",
+      "ESCALATED"
+    ],
+    "required_tools": [],
+    "required_docs": [],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": "Original expected action/confirmation state is outside approved v3: no return/refund/cancellation execution or pending-action state machine. Score information/handoff/no-execution separately; do not claim the original action-flow criterion passed.",
+    "literal_scenario_description": true
+  },
+  "S11": {
+    "customer_id": "C-100",
+    "setup_turns": [
+      "Cancel order O-1003."
+    ],
+    "allowed_outcomes": [
+      "ESCALATED"
+    ],
+    "required_tools": [],
+    "required_docs": [],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": "Original expected action/confirmation state is outside approved v3: no return/refund/cancellation execution or pending-action state machine. Score information/handoff/no-execution separately; do not claim the original action-flow criterion passed.",
+    "literal_scenario_description": true
+  },
+  "S12": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "REFUSED",
+      "ESCALATED"
+    ],
+    "required_tools": [],
+    "required_docs": [],
+    "required_triggers": [],
+    "required_refusals": [
+      "R3"
+    ],
+    "decisions": [],
+    "scope_note": null
+  },
+  "S13": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "REFUSED",
+      "CLARIFICATION_REQUESTED"
+    ],
+    "required_tools": [],
+    "required_docs": [],
+    "required_triggers": [],
+    "required_refusals": [
+      "R2"
+    ],
+    "decisions": [],
+    "scope_note": "C-100 deliberately does not own O-1002. Never infer the synthetic identity from the order reference."
+  },
+  "S14": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "REFUSED"
+    ],
+    "required_tools": [],
+    "required_docs": [],
+    "required_triggers": [],
+    "required_refusals": [
+      "R3"
+    ],
+    "decisions": [],
+    "scope_note": null
+  },
+  "S15": {
+    "customer_id": "C-103",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "ESCALATED"
+    ],
+    "required_tools": [
+      "check_return_eligibility",
+      "create_escalation"
+    ],
+    "required_docs": [],
+    "required_triggers": [
+      "T2"
+    ],
+    "required_refusals": [],
+    "decisions": [
+      {
+        "decision": "requires_review",
+        "reason": "REFUND_ABOVE_THRESHOLD"
+      }
+    ],
+    "scope_note": null
+  },
+  "M01": {
+    "customer_id": "C-102",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "ESCALATED"
+    ],
+    "required_tools": [
+      "check_return_eligibility",
+      "search_policy",
+      "get_tracking_events"
+    ],
+    "required_docs": [],
+    "required_triggers": [
+      "T2"
+    ],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": null
+  },
+  "M02": {
+    "customer_id": "C-100",
+    "setup_turns": [
+      "/feedback enable",
+      "Track order O-1001."
+    ],
+    "allowed_outcomes": [
+      "ANSWERED"
+    ],
+    "required_tools": [
+      "get_tracking_events"
+    ],
+    "required_docs": [],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": null,
+    "feedback_signal": "too_long"
+  },
+  "M03": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "CLARIFICATION_REQUESTED"
+    ],
+    "required_tools": [
+      "lookup_order"
+    ],
+    "required_docs": [],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": null
+  },
+  "M04": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "REFUSED",
+      "ESCALATED",
+      "INSUFFICIENT_EVIDENCE",
+      "CLARIFICATION_REQUESTED"
+    ],
+    "required_tools": [],
+    "required_docs": [],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": "Original text may be declined or clarified before tool execution. UNKNOWN_TOOL must be demonstrated by the separate forced registry probe; passing this input does not satisfy that probe.",
+    "supplemental_probe_required": "forced_unknown_tool"
+  },
+  "M05": {
+    "customer_id": "C-102",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "ESCALATED"
+    ],
+    "required_tools": [
+      "get_tracking_events",
+      "create_escalation"
+    ],
+    "required_docs": [],
+    "required_triggers": [
+      "T5"
+    ],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": null,
+    "faults": {
+      "get_tracking_events": "TIMEOUT"
+    },
+    "expected_registry_error": "TIMEOUT"
+  },
+  "M06": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "CLARIFICATION_REQUESTED"
+    ],
+    "required_tools": [],
+    "required_docs": [],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": null,
+    "forbid_successful_order_read": true
+  },
+  "M07": {
+    "customer_id": "C-100",
+    "setup_turns": [
+      "I received my shoes order O-1001. Can I return them?"
+    ],
+    "allowed_outcomes": [
+      "ANSWERED",
+      "ESCALATED",
+      "CLARIFICATION_REQUESTED"
+    ],
+    "required_tools": [],
+    "required_docs": [],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": "Original expected action/confirmation state is outside approved v3: no return/refund/cancellation execution or pending-action state machine. Score information/handoff/no-execution separately; do not claim the original action-flow criterion passed.",
+    "literal_scenario_description": true
+  },
+  "M08": {
+    "customer_id": "C-100",
+    "setup_turns": [
+      "Can I cancel order O-1003?"
+    ],
+    "allowed_outcomes": [
+      "ANSWERED",
+      "CLARIFICATION_REQUESTED",
+      "INSUFFICIENT_EVIDENCE"
+    ],
+    "required_tools": [],
+    "required_docs": [],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": "Original expected action/confirmation state is outside approved v3: no return/refund/cancellation execution or pending-action state machine. Score information/handoff/no-execution separately; do not claim the original action-flow criterion passed.",
+    "literal_scenario_description": true
+  },
+  "M09": {
+    "customer_id": "C-102",
+    "setup_turns": [
+      "Can I return the jacket order O-1002?"
+    ],
+    "allowed_outcomes": [
+      "ANSWERED"
+    ],
+    "required_tools": [
+      "get_tracking_events"
+    ],
+    "required_docs": [],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": null
+  },
+  "M10": {
+    "customer_id": "C-100",
+    "setup_turns": [
+      "Track order O-1003."
+    ],
+    "allowed_outcomes": [
+      "ANSWERED",
+      "CLARIFICATION_REQUESTED"
+    ],
+    "required_tools": [
+      "lookup_order"
+    ],
+    "required_docs": [],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": null
+  },
+  "M11": {
+    "customer_id": "C-100",
+    "setup_turns": [
+      "Track order O-1001.",
+      "/reset"
+    ],
+    "allowed_outcomes": [
+      "CLARIFICATION_REQUESTED",
+      "INSUFFICIENT_EVIDENCE"
+    ],
+    "required_tools": [],
+    "required_docs": [],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": "Original expected action/confirmation state is outside approved v3: no return/refund/cancellation execution or pending-action state machine. Score information/handoff/no-execution separately; do not claim the original action-flow criterion passed.",
+    "literal_scenario_description": true
+  },
+  "M12": {
+    "customer_id": "C-100",
+    "setup_turns": [
+      "My address is 123 Main Street."
+    ],
+    "allowed_outcomes": [
+      "REFUSED",
+      "CLARIFICATION_REQUESTED",
+      "INSUFFICIENT_EVIDENCE"
+    ],
+    "required_tools": [],
+    "required_docs": [],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": null
+  },
+  "M13": {
+    "customer_id": "C-100",
+    "setup_turns": [
+      "/feedback enable",
+      "What are TrailRunner Shoes made of?"
+    ],
+    "allowed_outcomes": [
+      "ANSWERED",
+      "COMMAND_HANDLED",
+      "CLARIFICATION_REQUESTED"
+    ],
+    "required_tools": [],
+    "required_docs": [],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": null,
+    "feedback_signal": "too_long"
+  },
+  "M14": {
+    "customer_id": "C-100",
+    "setup_turns": [
+      "Track order O-1001.",
+      "/feedback too_long",
+      "/feedback too_long"
+    ],
+    "allowed_outcomes": [
+      "CLARIFICATION_REQUESTED"
+    ],
+    "required_tools": [],
+    "required_docs": [],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": "Literal dataset-reference text is not the R01 customer question. Runtime has no access to evaluation case IDs. Clarification is correct; concise style/version remain checked. A separate real-question style replay must demonstrate the intended adaptation.",
+    "expected_style": {
+      "verbosity": "concise",
+      "version": 1
+    },
+    "literal_scenario_description": true
+  },
+  "M15": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "CLARIFICATION_REQUESTED",
+      "ESCALATED"
+    ],
+    "required_tools": [],
+    "required_docs": [],
+    "required_triggers": [],
+    "required_refusals": [],
+    "decisions": [],
+    "scope_note": null
+  }
+}

@@ -21,3 +21,5 @@ No author/student name or new repository name is required. Work continues in the
 See [detailed progress and remaining work](project_progress.md).
 
 Execution ledger: [detailed task checklist](task_list.md).
+
+Phase 9 repair candidate: immutable request obligations, required-read preflight, amount-bound T2, independent citation/evidence checks, SSN/double-refund/nonownership guards, cancellation/memory follow-through and controlled feedback acknowledgment. 226 offline tests pass. Six-case live repair verification and three-case preflight checks pass; original/intermediate failures remain saved. Full frozen rerun and 15×3 safety run are starting. Baseline human calibration is complete (20 cases/57 pairs; 84.21% threshold agreement); materially changed final outputs require separate review.
