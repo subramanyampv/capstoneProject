@@ -1,0 +1,8 @@
+{
+  "status": "initial_judge_export_discarded_and_rerun",
+  "invalid_export": "judgments_initial_export_invalid.txt",
+  "reason": "Text-pattern redaction applied after JSON serialization matched long decimal digits, corrupting numeric tokens. Never infer lost numeric scores from redacted text.",
+  "correction": "Minimize string values before JSON serialization; preserve numeric/boolean/null types. Added long-decimal/privacy regression. Restarted judging from the saved agent outputs; no agent cases were replaced for this incident.",
+  "score_use": "Invalid exports are diagnostic evidence only, excluded from all scored aggregates. Corrected judgments are separate.",
+  "baseline_limits": "Initial baseline recorder predates the export correction; all saved output lines are validated when reports are built. A future release run uses the corrected exporter."
+}

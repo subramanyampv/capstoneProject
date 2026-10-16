@@ -1,0 +1,14 @@
+{
+  "offline_regression": {
+    "command": "env DEEPEVAL_DISABLE_DOTENV=1 DEEPEVAL_TELEMETRY_OPT_OUT=YES .venv/bin/python -m pytest -q --tb=no",
+    "passed": 211,
+    "failed": 0,
+    "elapsed_seconds": 107.73
+  },
+  "frozen_cases_recorded": 65,
+  "frozen_inputs_unchanged": true,
+  "holdout_opened_or_used": false,
+  "human_reviews_completed": 0,
+  "human_review_packet_cases": 20,
+  "scope": "Initial Phase 9 evaluation only; no product fixes, consistency release repeats, capability ladder, final holdout or final acceptance claimed."
+}

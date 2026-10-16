@@ -95,9 +95,9 @@ The final runtime records content-free request/node/model/tool hierarchy, contro
 
 A clean temporary venv with copied source installed matching dependencies, passed pip check and 204 tests, rebuilt the 28-chunk index using the existing pinned model download cache, and started CLI/loopback Streamlit. `doctor --index`, final UI startup, final-graph DeepEval recorder/repeats and canary scans are available. [Phase 8 operations](phase8_operations.md) records commands and limits; [validation](../artifacts/phase8/validation.md) records evidence. Final semantic/held-out acceptance remains Phase 9.
 
-### Phase 9 — final evaluation and submission
+### Phase 9 — final evaluation and submission in progress
 
-Run the frozen 65 cases and ten untouched holdout cases; repeat the safety/consistency subset. Measure routing/tool correctness, refusal, verified escalation, fabricated policy, citation support, personal-data canaries, safe failures and per-path latency/errors.
+The exact-input frozen 65-case baseline is complete and the twenty-case DeepEval sample is complete. Versioned contexts declare identity/setup, preserve legacy scope exclusions and retain initial assessments when evaluator labels are corrected. The untouched ten-case holdout is deferred until development fixes and build/protocol lock. See [Phase 9 evaluation](phase9_evaluation.md). Repeat the safety/consistency subset. Measure routing/tool correctness, refusal, verified escalation, fabricated policy, citation support, personal-data canaries, safe failures and per-path latency/errors.
 
 Run the capability ladder, memory on/off, adaptation before/after, RAG comparison and RCA before/after with repeats. Apply standardized judged quality metrics and human calibration on twenty final judged outputs. Report failures and unavailable metrics explicitly.
 
@@ -109,14 +109,14 @@ The [Memory Pad](memory_pad.md) adds an ecommerce feature comparison with Gorgia
 
 LangSmith credentials were supplied locally and hosted verification passed. No additional credentials are needed for the next evaluation work; later human calibration of final outputs remains required. Author/student identity and a new repository name are not requested.
 
-For later hosted tracing verification, optionally configure LANGSMITH_API_KEY, LANGSMITH_PROJECT and LANGSMITH_TRACING in the ignored .env and tell us it is ready; never send the key in chat. A separate judge endpoint/model is optional. Human review of the final twenty judged outputs will be requested when that review packet exists.
+A separate judge endpoint/model is optional. Human review of the final twenty judged outputs will be requested when that review packet exists.
 
 ## 6. Current acceptance position
 
-The components and experiments above are measured, but the final safety-first multi-agent system is not built or accepted. Prompt C is a development choice; a schema-valid output or a self-judge score does not prove grounded policy, authorization, coverage or a completed ticket. The submission target remains 2026-10-18, subject to the remaining implementation and evidence work.
+The multi-agent system is implemented and locally verified, but final-system acceptance remains open. Prompt C is a development choice; a schema-valid output or a self-judge score does not prove grounded policy, authorization, coverage or a completed ticket. The submission target remains 2026-10-18, subject to the remaining implementation and evidence work.
 
 Evidence links: [architecture](architecture_and_plan.md), [baseline closure](phase2_closure.md), [prompt comparison](prompt_comparison.md), [retrieval design](retrieval_design.md), [validation record](../artifacts/phase4_validation.md), [evaluation register](evaluation_report.md).
 
-Latest Phase 5 closure: [eight-case core validation](../artifacts/phase5_validation.md) preserves initial failures and confirms final expected outcomes, canonical citations and independent local ticket read-back. Phase 6 is now implemented/measured; Phase 7 is implemented; Phase 8 is verified; Phase 9 is next.
+Latest Phase 5 closure: [eight-case core validation](../artifacts/phase5_validation.md) preserves initial failures and confirms final expected outcomes, canonical citations and independent local ticket read-back. Phase 6 is now implemented/measured; Phase 7 is implemented; Phase 8 is verified; Phase 9 is in progress.
 
 Phase 6 closure: [validation](../artifacts/phase6_validation.md) records all ten expected conversation/mode conditions passing, the four positive follow-up answers versus zero without memory, reset/expiry deletion and preserved failed runs. The separate Phase 7 evidence is linked above.

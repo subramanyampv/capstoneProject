@@ -1,0 +1,5 @@
+{
+  "accounting": "partial",
+  "reason": "Judge processes were interrupted for export and review-packet repairs. Final judge manifest reports calls/tokens only for its last process; earlier judge usage is unavailable. Agent graph token counts remain separately recorded. No total judge cost or complete judge-token claim is made.",
+  "valid_judgments_retained_on_resume": true
+}

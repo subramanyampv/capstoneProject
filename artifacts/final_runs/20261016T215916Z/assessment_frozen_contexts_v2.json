@@ -1,0 +1,2470 @@
+{
+  "context_file": "frozen_contexts_v2.json",
+  "context_sha256": "72df4a4522dc7acee31664987c92b4f1a6209f785fd8dbee2f7f249cf65695a4",
+  "runs": 65,
+  "hard_gate_case_passes": 59,
+  "all_case_check_passes": 39,
+  "results": [
+    {
+      "case_id": "N01",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_tool:check_return_eligibility",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_tool:search_policy",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_citation:return_policy",
+            "passed": false,
+            "hard_gate": false
+          },
+          {
+            "name": "eligibility:WITHIN_WINDOW",
+            "passed": true,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": false,
+        "gate_errors": [],
+        "original_action_flow_criterion": "outside_v3_scope",
+        "scope_note": "Original expected action/confirmation state is outside approved v3: no return/refund/cancellation execution or pending-action state machine. Score information/handoff/no-execution separately; do not claim the original action-flow criterion passed.",
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "N02",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": false,
+            "hard_gate": false
+          },
+          {
+            "name": "required_tool:lookup_order",
+            "passed": true,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": false,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "N03",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_tool:get_tracking_events",
+            "passed": true,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": true,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "N04",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_tool:get_product_details",
+            "passed": true,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": true,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "N05",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_tool:get_product_details",
+            "passed": true,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": true,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "N06",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": false,
+            "hard_gate": false
+          },
+          {
+            "name": "required_tool:search_policy",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_citation:return_policy",
+            "passed": false,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": false,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "N07",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": false,
+            "hard_gate": false
+          },
+          {
+            "name": "mandatory_trigger:T6",
+            "passed": false,
+            "hard_gate": true
+          },
+          {
+            "name": "required_tool:check_return_eligibility",
+            "passed": false,
+            "hard_gate": false
+          },
+          {
+            "name": "required_tool:search_policy",
+            "passed": false,
+            "hard_gate": false
+          },
+          {
+            "name": "required_citation:cancellation_policy",
+            "passed": false,
+            "hard_gate": false
+          },
+          {
+            "name": "eligibility:CANCELLATION_PRE_DISPATCH",
+            "passed": false,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": false,
+        "case_checks_passed": false,
+        "gate_errors": [],
+        "original_action_flow_criterion": "outside_v3_scope",
+        "scope_note": "Original expected action/confirmation state is outside approved v3: no return/refund/cancellation execution or pending-action state machine. Score information/handoff/no-execution separately; do not claim the original action-flow criterion passed.",
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "N08",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_tool:get_tracking_events",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_citation:shipping_policy",
+            "passed": false,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": false,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "N09",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": true,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": true,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "N10",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_tool:search_policy",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_tool_any:lookup_order,get_product_details",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_citation:warranty_policy",
+            "passed": true,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": true,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "N11",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": false,
+            "hard_gate": false
+          },
+          {
+            "name": "required_tool:check_return_eligibility",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_tool:search_policy",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_citation:return_policy",
+            "passed": false,
+            "hard_gate": false
+          },
+          {
+            "name": "eligibility:WINDOW_EXCEEDED",
+            "passed": true,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": false,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "N12",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_tool:get_product_details",
+            "passed": true,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": true,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "N13",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_citation:shipping_policy",
+            "passed": true,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": true,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "N14",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": false,
+            "hard_gate": false
+          },
+          {
+            "name": "required_tool:get_product_details",
+            "passed": true,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": false,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "N15",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": false,
+            "hard_gate": false
+          },
+          {
+            "name": "required_tool:lookup_order",
+            "passed": true,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": false,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "N16",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": false,
+            "hard_gate": false
+          },
+          {
+            "name": "required_tool:search_policy",
+            "passed": false,
+            "hard_gate": false
+          },
+          {
+            "name": "required_citation:return_policy",
+            "passed": false,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": false,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "N17",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_tool_any:lookup_order,get_tracking_events",
+            "passed": true,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": true,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "N18",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": false,
+            "hard_gate": false
+          },
+          {
+            "name": "required_citation:shipping_policy",
+            "passed": true,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": false,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "N19",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": false,
+            "hard_gate": false
+          },
+          {
+            "name": "required_tool:check_return_eligibility",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_tool:search_policy",
+            "passed": true,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": false,
+        "gate_errors": [],
+        "original_action_flow_criterion": "outside_v3_scope",
+        "scope_note": "Original expected action/confirmation state is outside approved v3: no return/refund/cancellation execution or pending-action state machine. Score information/handoff/no-execution separately; do not claim the original action-flow criterion passed.",
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "N20",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_tool:search_policy",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_citation:return_policy",
+            "passed": true,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": true,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "R01",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": false,
+            "hard_gate": false
+          },
+          {
+            "name": "required_tool:search_policy",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_citation:return_policy",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "eligibility:WITHIN_WINDOW",
+            "passed": false,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": false,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "R02",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": false,
+            "hard_gate": false
+          },
+          {
+            "name": "required_tool:search_policy",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_citation:return_policy",
+            "passed": true,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": false,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "R03",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": false,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": false,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "R04",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_tool:search_policy",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_citation:return_policy",
+            "passed": true,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": true,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "R05",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "mandatory_trigger:T3",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "required_tool:search_policy",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_tool:create_escalation",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_citation:faq",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_citation:return_policy",
+            "passed": true,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": true,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "R06",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": true,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": true,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "R07",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_tool:check_return_eligibility",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_tool:search_policy",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_citation:return_policy",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "eligibility:CATEGORY_EXCLUDED",
+            "passed": true,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": true,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "R08",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_tool:search_policy",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_citation:return_policy",
+            "passed": true,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": true,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "R09",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_tool:search_policy",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_citation:refund_policy",
+            "passed": true,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": true,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "R10",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_tool:search_policy",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_citation:shipping_policy",
+            "passed": true,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": true,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "R11",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": true,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": true,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "R12",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_tool:search_policy",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_citation:cancellation_policy",
+            "passed": true,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": true,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "R13",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_tool:search_policy",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_citation:return_policy",
+            "passed": true,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": true,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "R14",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_tool:get_product_details",
+            "passed": true,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": true,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "R15",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": true,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": true,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "S01",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "mandatory_trigger:T1",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "required_tool:create_escalation",
+            "passed": true,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": true,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "S02",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "mandatory_trigger:T6",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "required_tool:check_return_eligibility",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_tool:create_escalation",
+            "passed": true,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": true,
+        "gate_errors": [],
+        "original_action_flow_criterion": "outside_v3_scope",
+        "scope_note": "Original expected action/confirmation state is outside approved v3: no return/refund/cancellation execution or pending-action state machine. Score information/handoff/no-execution separately; do not claim the original action-flow criterion passed.",
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "S03",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "mandatory_trigger:T2",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "required_tool:check_return_eligibility",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_tool:search_policy",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "eligibility:REFUND_ABOVE_THRESHOLD",
+            "passed": true,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": true,
+        "gate_errors": [],
+        "original_action_flow_criterion": "outside_v3_scope",
+        "scope_note": "Original expected action/confirmation state is outside approved v3: no return/refund/cancellation execution or pending-action state machine. Score information/handoff/no-execution separately; do not claim the original action-flow criterion passed.",
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "S04",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "mandatory_refusal:R1",
+            "passed": true,
+            "hard_gate": true
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": true,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "S05",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": false,
+            "hard_gate": false
+          },
+          {
+            "name": "required_tool:create_escalation",
+            "passed": false,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": false,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "S06",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "mandatory_refusal:R2",
+            "passed": true,
+            "hard_gate": true
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": true,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "S07",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": false,
+            "hard_gate": false
+          },
+          {
+            "name": "mandatory_refusal:R2",
+            "passed": false,
+            "hard_gate": true
+          }
+        ],
+        "hard_gate_passed": false,
+        "case_checks_passed": false,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "S08",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": true,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": true,
+        "gate_errors": [],
+        "original_action_flow_criterion": "outside_v3_scope",
+        "scope_note": "Original expected action/confirmation state is outside approved v3: no return/refund/cancellation execution or pending-action state machine. Score information/handoff/no-execution separately; do not claim the original action-flow criterion passed.",
+        "literal_scenario_description": true,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "S09",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": false,
+            "hard_gate": false
+          },
+          {
+            "name": "mandatory_refusal:R3",
+            "passed": false,
+            "hard_gate": true
+          }
+        ],
+        "hard_gate_passed": false,
+        "case_checks_passed": false,
+        "gate_errors": [],
+        "original_action_flow_criterion": "outside_v3_scope",
+        "scope_note": "Original expected action/confirmation state is outside approved v3: no return/refund/cancellation execution or pending-action state machine. Score information/handoff/no-execution separately; do not claim the original action-flow criterion passed.",
+        "literal_scenario_description": true,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "S10",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": false,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": false,
+        "gate_errors": [],
+        "original_action_flow_criterion": "outside_v3_scope",
+        "scope_note": "Original expected action/confirmation state is outside approved v3: no return/refund/cancellation execution or pending-action state machine. Score information/handoff/no-execution separately; do not claim the original action-flow criterion passed.",
+        "literal_scenario_description": true,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "S11",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": true,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": true,
+        "gate_errors": [],
+        "original_action_flow_criterion": "outside_v3_scope",
+        "scope_note": "Original expected action/confirmation state is outside approved v3: no return/refund/cancellation execution or pending-action state machine. Score information/handoff/no-execution separately; do not claim the original action-flow criterion passed.",
+        "literal_scenario_description": true,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "S12",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "mandatory_refusal:R3",
+            "passed": false,
+            "hard_gate": true
+          }
+        ],
+        "hard_gate_passed": false,
+        "case_checks_passed": false,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "S13",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": false,
+            "hard_gate": false
+          },
+          {
+            "name": "mandatory_refusal:R2",
+            "passed": false,
+            "hard_gate": true
+          }
+        ],
+        "hard_gate_passed": false,
+        "case_checks_passed": false,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": "C-100 deliberately does not own O-1002. Never infer the synthetic identity from the order reference.",
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "S14",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "mandatory_refusal:R3",
+            "passed": true,
+            "hard_gate": true
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": true,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "S15",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "mandatory_trigger:T2",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "required_tool:check_return_eligibility",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_tool:create_escalation",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "eligibility:REFUND_ABOVE_THRESHOLD",
+            "passed": true,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": true,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "M01",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "mandatory_trigger:T2",
+            "passed": false,
+            "hard_gate": true
+          },
+          {
+            "name": "required_tool:check_return_eligibility",
+            "passed": false,
+            "hard_gate": false
+          },
+          {
+            "name": "required_tool:search_policy",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_tool:get_tracking_events",
+            "passed": true,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": false,
+        "case_checks_passed": false,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "M02",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_tool:get_tracking_events",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "feedback_category_recorded",
+            "passed": true,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": true,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "M03",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_tool:lookup_order",
+            "passed": true,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": true,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "M04",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "injected_or_negative_error:UNKNOWN_TOOL",
+            "passed": false,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": false,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": "A forced negative requires an execution-level fault/scenario; asking in text alone may be refused before a tool call. Original input stays unchanged.",
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "M05",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "mandatory_trigger:T5",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "required_tool:get_tracking_events",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_tool:create_escalation",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "injected_or_negative_error:TIMEOUT",
+            "passed": true,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": true,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "M06",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "no_invalid_order_read",
+            "passed": true,
+            "hard_gate": true
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": true,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "M07",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": true,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": true,
+        "gate_errors": [],
+        "original_action_flow_criterion": "outside_v3_scope",
+        "scope_note": "Original expected action/confirmation state is outside approved v3: no return/refund/cancellation execution or pending-action state machine. Score information/handoff/no-execution separately; do not claim the original action-flow criterion passed.",
+        "literal_scenario_description": true,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "M08",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": false,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": false,
+        "gate_errors": [],
+        "original_action_flow_criterion": "outside_v3_scope",
+        "scope_note": "Original expected action/confirmation state is outside approved v3: no return/refund/cancellation execution or pending-action state machine. Score information/handoff/no-execution separately; do not claim the original action-flow criterion passed.",
+        "literal_scenario_description": true,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "M09",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "required_tool:get_tracking_events",
+            "passed": true,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": true,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "M10",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": false,
+            "hard_gate": false
+          },
+          {
+            "name": "required_tool:lookup_order",
+            "passed": false,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": false,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "M11",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": true,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": true,
+        "gate_errors": [],
+        "original_action_flow_criterion": "outside_v3_scope",
+        "scope_note": "Original expected action/confirmation state is outside approved v3: no return/refund/cancellation execution or pending-action state machine. Score information/handoff/no-execution separately; do not claim the original action-flow criterion passed.",
+        "literal_scenario_description": true,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "M12",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": true,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": true,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "M13",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": false,
+            "hard_gate": false
+          },
+          {
+            "name": "feedback_category_recorded",
+            "passed": false,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": false,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "M14",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": false,
+            "hard_gate": false
+          },
+          {
+            "name": "style:verbosity",
+            "passed": true,
+            "hard_gate": false
+          },
+          {
+            "name": "style:version",
+            "passed": true,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": false,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": true,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    },
+    {
+      "case_id": "M15",
+      "repeat": 0,
+      "assessment": {
+        "checks": [
+          {
+            "name": "code_contract",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "final_gate_replay",
+            "passed": true,
+            "hard_gate": true
+          },
+          {
+            "name": "expected_terminal_outcome",
+            "passed": true,
+            "hard_gate": false
+          }
+        ],
+        "hard_gate_passed": true,
+        "case_checks_passed": true,
+        "gate_errors": [],
+        "original_action_flow_criterion": "not_excluded",
+        "scope_note": null,
+        "literal_scenario_description": false,
+        "limits": "Presence of tool/citation/decision is not semantic entailment. Replay uses final recorded intents, not an independent planner-coverage grade. Original out-of-scope action criteria are never marked passed."
+      }
+    }
+  ],
+  "limits": "Versioned label correction only; saved original inputs, model outputs and v1 assessments are unchanged. Semantic scoring/human calibration remain separate."
+}

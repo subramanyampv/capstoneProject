@@ -14,7 +14,7 @@ Authority: [Architecture and Plan v3](architecture_and_plan.md), section 14. Fin
 | Phase 6 memory | Five conversations × on/off pass expected behavior; four of four dependent follow-ups answered on versus zero off; reset/expiry/checkpoint audit | Development scripts; no independent semantic or held-out multi-turn grade |
 | Phase 7 adaptation | Same-question answer 72 → 46 words, version 0 → 1; reset version 2 returns to 72 words; citations retained; four safety cases × two styles preserve outcomes/flags; scoped deletion passes | Authored development cases; original false numeric rejections preserved; style-only adaptation, no semantic/holdout acceptance |
 | Phase 8 operations | Clean venv/index/CLI/Streamlit checks, hosted twelve/thirteen-run trees, canary exclusion and failure isolation; six expected live path outcomes | Local source deployment, warm pinned download cache, two samples/path; no production SLA or final acceptance |
-| Offline regression | 204 tests in existing and clean environments | Final semantic/frozen/holdout acceptance remains open |
+| Offline regression | Phase 9 harness/calibration additions: 211 tests pass; historical Phase 8 clean environment: 204 | Final semantic/frozen/holdout acceptance remains open |
 | Packaging | Pinned app/dev/eval/ui/rag install in existing venv succeeded; pip dependency check passed | Clean source/venv verification passed in Phase 8; cold model download and other platforms remain unverified |
 | UI | Three default tabs and explicit deferred-tab flag verified by AppTest | Final synthetic identity/chat workflow remains Phase 5+ |
 
@@ -27,6 +27,10 @@ DeepEval same-model faithfulness: nine context-bearing outputs scored 1.0 each, 
 - **Retrieval coverage, corrected on development labels:** public-catalog/topic hints restore all labeled sources at threshold 0.464133. Preserve the initial misses and evaluate final generalization on the untouched holdout.
 - **R02 wording, targeted follow-up:** the fresh ten-case self-judged run flags an unsupported/ambiguous refund-deadline claim at .667. Prompt v2 separates return-window inclusivity from undefined refund deadlines. Targeted R01/R02/R05/R08 outputs validate/cite and self-score 1.0; these four scores remain separate from the full ten-case run and from final human calibration.
 - **CLI credential echo, fixed:** baseline console echoed input while logs used narrow patterns. Shared sanitizer plus permanent console/log synthetic-canary regressions now pass. This is not universal PII detection.
+
+## Phase 9 baseline in progress
+
+The full 65-case initial frozen run is complete and the predetermined twenty-case DeepEval sample is complete; see [Phase 9 evaluation](phase9_evaluation.md). Raw outputs and initial assessments are retained separately from versioned context corrections. Initial review found missing authoritative return-policy citations, cancellation routing/eligibility omissions, overbroad shipping citation fallback and incorrect SSN/injury classification. These are development findings, not completed fixes. Schema validity and same-model scores cannot waive them. Holdout content remains unopened.
 
 ## Pending final evaluation
 

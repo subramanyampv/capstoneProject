@@ -1,0 +1,14 @@
+{
+  "observed_at": "2026-10-16T22:11:34.256873+00:00",
+  "settings": {
+    "provider": "openai_compatible",
+    "model": "qwen3.7-max",
+    "timeout_seconds": 20.0,
+    "max_retries": 1,
+    "response_format": "json_object",
+    "temperature": 0.0,
+    "max_completion_tokens": 1200,
+    "enable_thinking": false
+  },
+  "limits": "Recorded during the initial run, not snapshotted at its start. Initial recorder did not enforce configuration locking; future runs now fingerprint settings and endpoint, rejecting changes. Endpoint and all keys omitted."
+}

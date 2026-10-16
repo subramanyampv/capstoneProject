@@ -17,3 +17,19 @@ Currently implemented: `run_baseline.sh`, its internal `verify_baseline.py` help
 directory; they resolve the project root and require its `.venv/bin/python`.
 The baseline runner overwrites saved Phase 2 outputs. Prompt comparisons create
 unique directories and retain previous runs.
+
+## Phase 9 evaluation
+
+Run from the project root with the existing local venv:
+
+```sh
+.venv/bin/python scripts/run_final_suite.py
+.venv/bin/python scripts/judge_final_suite.py artifacts/final_runs/RUN --follow
+.venv/bin/python scripts/rescore_final_suite.py artifacts/final_runs/RUN --contexts evaluation/phase9/frozen_contexts_v2.json
+.venv/bin/python scripts/calibrate_final_review.py artifacts/final_runs/RUN --review artifacts/final_runs/RUN/human_review_template.json
+.venv/bin/python scripts/scan_phase9.py artifacts/final_runs/RUN
+```
+
+The recorder uses all 65 unchanged frozen inputs with declared setup/identity. Future runs lock public model settings plus an opaque endpoint/config fingerprint; keys and endpoint are not exported. `--case ID` can be repeated; `--repeats 3` supports the predetermined consistency subset. Do not run the holdout before fixing development defects and locking the release. The judge defaults to the predetermined twenty-case sample and is same-model self-evaluation unless a separate local judge is configured. Calibration requires actual human ratings; empty templates do not count. See `docs/phase9_evaluation.md` for limits.
+
+`build_final_report.py RUN` builds a bounded initial evidence summary without API calls. `verify_final_tickets.py RUN` independently reads the local SQLite mock-ticket store in read-only mode. Preserve initial outputs and invalid-export diagnostics; do not overwrite historical runs to hide failures.

@@ -1207,11 +1207,11 @@ The [detailed task checklist](task_list.md) tracks completed, update-needed and 
 | **6 Planning, memory & context** | Plans, projection memory, TTL, reset | IMPLEMENTED; five-conversation comparison measured | Final held-out/semantic and repeated-run proof remain Phase 9 | phase6_memory.md; memory tests and recorded comparisons | Architecture/Memory (15) |
 | **7 Adaptive behaviour** | Feedback signals, style adaptation | IMPLEMENTED (development scope) | Section 12 | Before/after logs, limits | Adaptive (5) |
 | **8 Deployment readiness** | Packaging, logs, tracing, failure handling | VERIFIED (local/metadata scope) | Section 13 | Clean-venv run, latency/error report, trace samples, canary reports | Deployment (10) |
-| **9 Evaluation & review** | Full evaluation, consistency, RCA, safety review, roadmap | PLANNED (Days 4–5) | Section 14 | `evaluation_report.md` | Safety/Eval (15) |
+| **9 Evaluation & review** | Full evaluation, consistency, RCA, safety review, roadmap | IN PROGRESS | Preserve frozen baseline; review/fix defects, human calibration, repeats, then locked-build holdout | `phase9_evaluation.md`, `evaluation_report.md` | Safety/Eval (15) |
 
 ### 16.2 Delivery schedule (targets; current status takes precedence)
 
-The original Day 1 implementation tasks were substantially completed on 2026-10-13. Phase 4 coverage and category follow-through are measured. Phase 5 tools/control are implemented and live validation is recorded; Phases 6 and 7 now implement bounded projection memory and controlled style adaptation; Phase 8 hosted metadata observability and local delivery checks now pass; next major work is Phase 9 final evaluation. The daily blocks below are planning targets, not claims of completion or guaranteed dates. No author/student identity or new repository is a dependency.
+The original Day 1 implementation tasks were substantially completed on 2026-10-13. Phase 4 coverage and category follow-through are measured. Phase 5 tools/control are implemented and live validation is recorded; Phases 6 and 7 now implement bounded projection memory and controlled style adaptation; Phase 8 hosted metadata observability and local delivery checks now pass; Phase 9 frozen baseline is complete and the twenty-case local DeepEval sample is complete, with versioned case contexts and pending actual human review. The daily blocks below are planning targets, not claims of completion or guaranteed dates. No author/student identity or new repository is a dependency.
 
 **Day 0: Tuesday 2026-10-13 (evening, ~1.5 h)**
 - Freeze scope. Add feature flags for deferred components and hide deferred UI tabs.

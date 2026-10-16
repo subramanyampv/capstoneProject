@@ -12,7 +12,7 @@ Authority: [Architecture and Plan v3](architecture_and_plan.md). Updated 2026-10
 | 6 | Projection memory implemented; five-conversation comparison measured | Six-message window, scoped verified refs, reset/TTL/background deletion, fresh reads and privacy tests; phase6_memory.md |
 | 7 | Implemented; development validation recorded | Shared terminal/Streamlit feedback, consent, bounded preferences, rollback/deletion, live before/after and safety subset; phase7_adaptation.md |
 | 8 | Verified for local deployment and metadata observability | Hosted graph/canary read-back, invalid-key isolation, safe logs/startup, clean install/index rebuild, terminal/Streamlit and 204 tests; phase8_operations.md |
-| 9 | Planned | Frozen + holdout, consistency, canaries, RCA and final report |
+| 9 | In progress | Exact-input 65-case baseline complete, versioned context review and twenty-case DeepEval sample complete; 210 offline tests pass. Human calibration, fixes/repeats, untouched holdout and final acceptance remain open; phase9_evaluation.md |
 
 Current offline regression and live adaptation results are recorded in [Phase 7 validation](../artifacts/phase7_validation.md). LangChain/LangGraph single-agent workflow, local DeepEval metrics and Streamlit are implemented. The supervisor/tool hierarchy now runs locally. Hosted LangSmith hierarchy, canary exclusion and failure isolation are verified in Phase 8; final safety acceptance remains Phase 9. Phase 3's seven escalation-classification failures remain preserved; current code-backed escalation has component/live smoke evidence but full regression and holdout proof remain open. Historical KG/OSRM/NWS demos are deferred; default UI shows Chat, Evaluation and Traces.
 

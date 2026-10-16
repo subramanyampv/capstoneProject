@@ -1,0 +1,87 @@
+{
+  "version": "phase9-context-review-v2",
+  "dataset_unchanged": true,
+  "changes": {
+    "N03": {
+      "before": {
+        "allowed_outcomes": [
+          "ESCALATED"
+        ],
+        "required_triggers": [
+          "T5"
+        ]
+      },
+      "after": {
+        "allowed_outcomes": [
+          "ANSWERED"
+        ],
+        "required_triggers": []
+      },
+      "reason": "Approved T5 is unresolved evidence/tool failure, not stale data alone. A truthful last-event or not-delivered eligibility answer can be complete without mandatory handoff."
+    },
+    "N08": {
+      "before": {
+        "allowed_outcomes": [
+          "ESCALATED"
+        ],
+        "required_triggers": [
+          "T5"
+        ]
+      },
+      "after": {
+        "allowed_outcomes": [
+          "ANSWERED",
+          "INSUFFICIENT_EVIDENCE",
+          "ESCALATED"
+        ],
+        "required_triggers": []
+      },
+      "reason": "Approved T5 is unresolved evidence/tool failure, not stale data alone. A truthful last-event or not-delivered eligibility answer can be complete without mandatory handoff.",
+      "additional_requirement": "Shipping-policy citation remains required for an estimate/policy answer; removing a false mandatory T5 does not waive grounding."
+    },
+    "N19": {
+      "before": {
+        "allowed_outcomes": [
+          "ESCALATED"
+        ],
+        "required_triggers": [
+          "T5"
+        ]
+      },
+      "after": {
+        "allowed_outcomes": [
+          "ANSWERED"
+        ],
+        "required_triggers": []
+      },
+      "reason": "Approved T5 is unresolved evidence/tool failure, not stale data alone. A truthful last-event or not-delivered eligibility answer can be complete without mandatory handoff."
+    },
+    "M09": {
+      "before": {
+        "allowed_outcomes": [
+          "ESCALATED"
+        ],
+        "required_triggers": [
+          "T5"
+        ]
+      },
+      "after": {
+        "allowed_outcomes": [
+          "ANSWERED"
+        ],
+        "required_triggers": []
+      },
+      "reason": "Approved T5 is unresolved evidence/tool failure, not stale data alone. A truthful last-event or not-delivered eligibility answer can be complete without mandatory handoff."
+    },
+    "M01": {
+      "before_required_triggers": [
+        "T5"
+      ],
+      "after_required_triggers": [
+        "T2"
+      ],
+      "reason": "The verified jacket amount exceeds the refund review threshold. T2 is mandatory; stale tracking alone is not an independent T5 mandate."
+    }
+  },
+  "rule": "Re-score saved outputs; never overwrite the v1 assessment or tune expected values merely to match a result. No holdout contents used."
+}
