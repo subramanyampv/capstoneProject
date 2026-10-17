@@ -1,8 +1,18 @@
-# Project progress and remaining work — 2026-10-16
+# Project progress and remaining work — 2026-10-17
 
 The project has a tested baseline, a completed LLM prompt comparison, framework integration and a working local policy-retrieval layer and a smoke-verified bounded multi-agent support core. The **complete initial product is still pending** final evaluation and acceptance. Architecture revision 3.3 records this distinction. The initial v3/Phase 4 implementation was recorded in `1fe4976`; later commits contain the documented follow-through; the existing GitHub repository remains the working repository.
 
 The [detailed task checklist](task_list.md) translates this summary into tracked work items with done/update/not-started states.
+
+## Current checkpoint — 2026-10-17
+
+Application repair commit `48672f9` is pushed to the existing GitHub repository. It passes 235 offline regression tests. Architecture 3.3 adds independent obligations, correct unknown/reference outcomes, exact requested policy sections, decision-specific exclusion citations, feedback/tracking follow-through and bounded read-failure handling. A new holdout gate separately passes its regression against incomplete human review.
+
+The completed first repaired full run has 51/65 all-check passes and 64/65 hard gates. A targeted follow-up has 14/15 all-check passes and 15/15 hard gates; its last dependency was subsequently corrected. The first repeated safety run passes 45/45 hard gates but achieves only 13/15 exact terminal consistency, below target. Two later development runs were explicitly interrupted and are not complete results.
+
+The fresh locked single-worker full run `20261017T125423Z` and all-case DeepEval judgments are in progress. Runtime/provider failures remain visible as quality misses; safe failure disclosure does not count as a successful answer. Three planner-only probes per general question returned valid plans, so those fresh probes do not establish the cause of the earlier generic failures. Holdout is unopened. Actual baseline human calibration is complete; candidate changed-output review, repeated safety evidence, holdout, final acceptance and final source snapshot remain open.
+
+Separate completed evidence includes conflict-latch ablation, unsupported-number guard probe, historical capability ladder, real-question style replay, Streamlit eligibility screenshot and terminal refusal/failed-handoff demos. Their scope limits are recorded with the artifacts.
 
 ## 1. Current scope and architecture
 

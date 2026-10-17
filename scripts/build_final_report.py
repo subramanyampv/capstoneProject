@@ -33,7 +33,7 @@ def main():
     lines+=['## Recorded error categories','','Final runtime codes: '+json.dumps(dict(errors),sort_keys=True),
         '', 'Tool error codes: '+json.dumps(dict(tool_errors),sort_keys=True),'',
         'These counters are recorded runtime/tool codes, not an independent classification of every semantic failure. Setup and judge errors are separate.','']
-    path=directory/'judgments_calibration.jsonl'
+    path=directory/('judgments_all.jsonl' if (directory/'judgments_all.jsonl').exists() else 'judgments_calibration.jsonl')
     if path.exists():
         judgments=[json.loads(line) for line in path.read_text().splitlines()];metrics={}
         for row in judgments:
@@ -42,7 +42,7 @@ def main():
                 if metric['status']=='measured':group['values'].append(metric['score']);group['passed']+=bool(metric['pass'])
                 elif metric['status']=='judge_failed':group['failed']+=1
                 else:group['skipped']+=1
-        lines+=['## Indicative same-model DeepEval sample','',f'{len(judgments)} predetermined cases judged. Human calibration must refer to these exact outputs; baseline ratings do not transfer to changed answers. These scores cannot waive case failures. Current-question-only judge input can underrepresent prior-turn context.','',
+        lines+=['## Indicative same-model DeepEval judgments','',f'{len(judgments)} cases judged in {path.name}. The predetermined twenty-case calibration subset is kept separately. Human calibration must refer to these exact outputs; baseline ratings do not transfer to changed answers. These scores cannot waive case failures. Current-question-only judge input can underrepresent prior-turn context.','',
             '| Metric | Measured | Mean | Above threshold | Skipped | Judge errors |','|---|---:|---:|---:|---:|---:|']
         for name,group in metrics.items():
             values=group['values'];mean=round(sum(values)/len(values),4) if values else None

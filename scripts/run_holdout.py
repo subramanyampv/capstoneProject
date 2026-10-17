@@ -1,0 +1,84 @@
+"""Unseal the fixed ten-case holdout only after a locked, human-reviewed candidate."""
+import argparse
+import hashlib
+import json
+import tempfile
+from datetime import datetime,timezone
+from pathlib import Path
+from run_final_suite import build_hashes,summarize
+from capstone_agent.config import LLMConfig,load_environment
+from capstone_agent.evaluation.calibration import calibrate
+from capstone_agent.evaluation.export import minimized_json
+from capstone_agent.evaluation.final_protocol import assess
+from capstone_agent.evaluation.support_runner import load_cases
+from capstone_agent.retrieval.chroma_store import PolicySearch
+from capstone_agent.retrieval.embeddings_voyage import VoyageNanoEmbeddings
+from capstone_agent.support.memory import SessionMemory
+from capstone_agent.support.preferences import PreferenceStore
+from capstone_agent.support.registry import SessionIdentity
+from capstone_agent.support.runtime import run_support
+from capstone_agent.observability.support_tracing import EXPORTER
+
+ROOT=Path(__file__).resolve().parents[1]
+
+def main():
+    parser=argparse.ArgumentParser();parser.add_argument('--allow-holdout',action='store_true')
+    parser.add_argument('--release-run',required=True,type=Path);parser.add_argument('--review',required=True,type=Path)
+    parser.add_argument('--contexts',required=True,type=Path);parser.add_argument('--resume',type=Path);args=parser.parse_args()
+    if not args.allow_holdout:raise ValueError('HOLDOUT_REQUIRES_EXPLICIT_OPT_IN')
+    release=args.release_run.resolve();manifest=json.loads((release/'manifest.json').read_text())
+    summary=json.loads((release/'summary.json').read_text());locked=build_hashes()
+    if summary['runs']!=65 or summary['hard_gate_case_passes']!=65:raise ValueError('COMPLETE_HARD_GATE_PASS_REQUIRED_BEFORE_HOLDOUT')
+    if manifest['build_sha256']!=locked:raise ValueError('RELEASE_BUILD_CHANGED')
+    if args.review.resolve().parent!=release:raise ValueError('HUMAN_REVIEW_MUST_BELONG_TO_THIS_RELEASE_RUN')
+    protocol=json.loads((ROOT/'evaluation/phase9/protocol_v1.json').read_text())
+    judgments=[json.loads(line) for line in (release/'judgments_calibration.jsonl').read_text().splitlines()]
+    if len(judgments)!=20 or {row['case_id'] for row in judgments}!=set(protocol['human_review_ids']):raise ValueError('COMPLETE_PREDETERMINED_JUDGE_SAMPLE_REQUIRED')
+    review=json.loads(args.review.read_text());calibration=calibrate(judgments,review,expected_ids=protocol['human_review_ids'])
+    if calibration.get('status')!='calibrated':raise ValueError('ACTUAL_COMPLETE_HUMAN_REVIEW_REQUIRED')
+    if calibration.get('unsafe_case_ids'):raise ValueError('UNRESOLVED_HUMAN_SAFETY_FINDING')
+    app=LLMConfig.from_env(ROOT/'.env')
+    fingerprint=lambda config:hashlib.sha256(json.dumps({'settings':config.public_settings(),'endpoint':config.base_url},sort_keys=True).encode()).hexdigest()
+    if fingerprint(app)!=manifest['model_config_sha256']:raise ValueError('RELEASE_MODEL_CONFIGURATION_CHANGED')
+    # No holdout bytes are read before the above gates. Contexts must be authored
+    # from the sealed questions/requirements before observing generated outputs.
+    dataset=ROOT/'data/holdout_v1_1.json';contexts=json.loads(args.contexts.read_text())
+    cases=load_cases(dataset,contexts=contexts,allow_holdout=True)
+    if len(cases)!=10:raise ValueError('EXPECTED_TEN_FROZEN_HOLDOUT_CASES')
+    parent=ROOT/'artifacts/holdout_runs'
+    if not args.resume and any(parent.glob('*/manifest.json')):raise ValueError('HOLDOUT_ALREADY_UNSEALED_USE_UNCHANGED_RESUME_ONLY')
+    directory=args.resume or parent/datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')
+    info={'recorded_at':datetime.now(timezone.utc).isoformat(),'release_run':release.name,
+        'dataset_sha256':hashlib.sha256(dataset.read_bytes()).hexdigest(),'context_sha256':hashlib.sha256(args.contexts.read_bytes()).hexdigest(),
+        'review_sha256':hashlib.sha256(args.review.read_bytes()).hexdigest(),'build_sha256':locked,
+        'model_settings':app.public_settings(),'model_config_sha256':fingerprint(app),'case_ids':[case['id'] for case in cases],
+        'recorder_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+        'limits':'First held-out assessment of a locked, actually human-reviewed development candidate. Report failures without tuning against this holdout; a changed build requires a newly authored holdout. A resume preserves build/model/contexts and completed outputs.'}
+    if args.resume:
+        old=json.loads((directory/'manifest.json').read_text())
+        if any(old.get(key)!=value for key,value in info.items() if key!='recorded_at'):raise ValueError('HOLDOUT_RESUME_LOCK_MISMATCH')
+    else:
+        directory.mkdir(parents=True,exist_ok=False);(directory/'manifest.json').write_text(json.dumps(info,indent=2)+'\n')
+    env=load_environment(ROOT/'.env');secrets=tuple(value for name,value in env.items() if name.endswith('API_KEY') and value)
+    search=PolicySearch(VoyageNanoEmbeddings());search.search('return policy')
+    completed={row['case_id'] for row in map(json.loads,(directory/'outputs.jsonl').read_text().splitlines())} if (directory/'outputs.jsonl').exists() else set()
+    with tempfile.TemporaryDirectory() as local:
+        preferences=PreferenceStore(Path(local))
+        for case in cases:
+            if case['id'] in completed:continue
+            if build_hashes()!=locked or fingerprint(LLMConfig.from_env(ROOT/'.env'))!=info['model_config_sha256']:raise ValueError('HOLDOUT_RELEASE_LOCK_CHANGED')
+            preferences.forget(case['customer_id']);memory=SessionMemory();identity=SessionIdentity(case['customer_id'])
+            try:
+                setup=[run_support(query,identity=identity,search=search,memory=memory,preferences=preferences) for query in case['setup_turns']]
+                result=run_support(case['input'],identity=identity,search=search,memory=memory,preferences=preferences,faults=contexts[case['id']].get('faults'))
+                feedback_path=Path(local)/'data/runtime/feedback.jsonl'
+                feedback=[json.loads(line) for line in feedback_path.read_text().splitlines()] if feedback_path.exists() else []
+                record={'case_id':case['id'],'repeat':0,'input_sha256':hashlib.sha256(case['input'].encode()).hexdigest(),
+                    'setup_results':setup,'result':result,'feedback':feedback,'assessment':assess(result,contexts[case['id']],feedback=feedback)}
+                exported=json.loads(minimized_json(record,secrets));exported['input_sha256']=record['input_sha256']
+                with (directory/'outputs.jsonl').open('a') as stream:stream.write(json.dumps(exported,allow_nan=False)+'\n')
+                summarize(directory);print(case['id'],result['outcome'],'hard',record['assessment']['hard_gate_passed'],flush=True)
+            finally:memory.close()
+    EXPORTER.wait(10);summarize(directory);print('Holdout evidence:',directory)
+
+if __name__=='__main__':main()

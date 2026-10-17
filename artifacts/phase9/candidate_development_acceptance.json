@@ -1,0 +1,111 @@
+{
+  "run": "20261017T125423Z",
+  "complete_frozen": true,
+  "hard_case_passes": 65,
+  "all_case_passes": 60,
+  "runs": 65,
+  "case_failures": [
+    {
+      "case_id": "N13",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "expected_terminal_outcome",
+        "required_citation:shipping_policy"
+      ]
+    },
+    {
+      "case_id": "R09",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "expected_terminal_outcome",
+        "required_tool:search_policy",
+        "required_citation:refund_policy"
+      ]
+    },
+    {
+      "case_id": "R10",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "expected_terminal_outcome",
+        "required_citation:shipping_policy"
+      ]
+    },
+    {
+      "case_id": "R13",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "expected_terminal_outcome",
+        "required_citation:return_policy"
+      ]
+    },
+    {
+      "case_id": "M08",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "expected_terminal_outcome"
+      ]
+    }
+  ],
+  "context_label_escalation_precision": 0.75,
+  "escalation_numerator": 15,
+  "escalation_denominator": 20,
+  "precision_target_met": false,
+  "consistency": null,
+  "consistency_same_build": false,
+  "human_calibration": {
+    "status": "awaiting_actual_candidate_human_review"
+  },
+  "scans": {},
+  "operations": {
+    "paths": {
+      "ANSWERED": {
+        "requests": 26,
+        "latency_ms_p50": 12531.945,
+        "latency_ms_p95": 19642.214,
+        "tokens": 162999,
+        "repairs": 0,
+        "tool_errors": 0
+      },
+      "ESCALATED": {
+        "requests": 20,
+        "latency_ms_p50": 25451.198,
+        "latency_ms_p95": 30257.759,
+        "tokens": 256095,
+        "repairs": 0,
+        "tool_errors": 13
+      },
+      "CLARIFICATION_REQUESTED": {
+        "requests": 12,
+        "latency_ms_p50": 10849.553,
+        "latency_ms_p95": 15087.313,
+        "tokens": 45168,
+        "repairs": 0,
+        "tool_errors": 2
+      },
+      "REFUSED": {
+        "requests": 6,
+        "latency_ms_p50": 33.151,
+        "latency_ms_p95": 13120.897,
+        "tokens": 9103,
+        "repairs": 1,
+        "tool_errors": 0
+      },
+      "COMMAND_HANDLED": {
+        "requests": 1,
+        "latency_ms_p50": 0.0,
+        "latency_ms_p95": 0.0,
+        "tokens": 0,
+        "repairs": 0,
+        "tool_errors": 0
+      }
+    },
+    "limits": "Observed samples by terminal outcome, interpolated percentiles; not a production latency SLA."
+  },
+  "release_accepted": false,
+  "limits": "Context-label precision is a routing diagnostic, not independent adjudication of every escalation. Hard checks are structural/case assertions, not proof of semantic truth. Same-model DeepEval and actual human calibration remain separate. This report never declares release acceptance automatically; untouched holdout, full safety/semantic review, demos and packaging must be assessed explicitly."
+}

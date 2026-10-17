@@ -13,7 +13,7 @@ from urllib3.util.retry import Retry
 
 CURRENT=contextvars.ContextVar('support_trace',default=None)
 PARENT=contextvars.ContextVar('support_parent',default=None)
-NODES=frozenset({'guard_in','plan','dispatch','order_shipping','policy_product','escalation','replan','compose','refuse','unsupported_command','missing_reference','command_handler'})
+NODES=frozenset({'guard_in','plan','dispatch','order_shipping','policy_product','escalation','replan','compose','refuse','unsupported_command','missing_reference','withdrawal','command_handler'})
 TOOLS=frozenset({'lookup_order','get_tracking_events','search_policy','get_product_details','check_return_eligibility','create_escalation'})
 COUNTERS=frozenset({'model_calls','tool_calls','handoffs','replans','repairs','tokens','latency_ms','input_tokens','output_tokens','total_tokens','style_version','word_count'})
 OUTCOMES=frozenset({'ANSWERED','CLARIFICATION_REQUESTED','INSUFFICIENT_EVIDENCE','REFUSED','ESCALATED','ESCALATION_FAILED_DISCLOSED','TOOL_ERROR_DISCLOSED','BUDGET_EXHAUSTED_ESCALATED','COMMAND_HANDLED'})

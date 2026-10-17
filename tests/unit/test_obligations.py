@@ -106,6 +106,27 @@ def test_required_read_timeout_does_not_spend_model_steps_or_mislabel_step_limit
     assert len([r for r in response['tool_records'] if r['name']=='search_policy'])==1
 
 
+def test_request_coverage_survives_both_planner_and_composer_failure(setup):
+    services,_=setup
+    response=asyncio.run(SupportAgent(services,ScriptedGateway([])).run(
+        'Track O-1002 and can I request a refund?',SessionIdentity('C-102'),
+        faults={'supervisor':'FAILED','escalation':'FAILED','composer':'FAILED'}))
+    assert response['outcome']=='ESCALATED' and response['ticket']['status']=='created'
+    assert {'order_tracking','refund_request'}<=set(response['response']['intents_addressed'])
+
+
+def test_withdrawing_cancellation_does_not_request_new_cancellation_eligibility(setup):
+    services,_=setup
+    query='During N07 cancellation flow: "wait, actually keep the order."'
+    response=asyncio.run(SupportAgent(services,ScriptedGateway([])).run(
+        query,SessionIdentity('C-100'),memory_context={'resolved_order_id':'O-1003'}))
+    assert response['outcome']=='CLARIFICATION_REQUESTED' and not response['triggers']
+    assert not response['tool_records'] and response['model_calls']==0
+    assert 'not executed' in response['response']['answer']
+    assert not derive("Do not cancel O-1003; keep my order.").request_types
+    assert derive("Do not cancel O-1003; also request a refund.").request_types==('refund',)
+
+
 def test_contract_retains_both_requests_when_plan_claims_only_tracking():
     contract=derive('Package O-1002 is delayed. Latest tracking event, and can I request a refund?')
     narrowed=SupervisorPlan.model_validate_json(plan(order='O-1002').content)

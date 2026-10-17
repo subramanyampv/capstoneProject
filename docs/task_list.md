@@ -6,11 +6,11 @@ Authority: [Architecture revision 3.3](architecture_and_plan.md). This is the cu
 
 **P0** = protects correctness, safety or a required delivery gate. **P1** = required capability or evaluation work. Dependencies are task IDs, not permission requests. Task counts do not represent a completion percentage because effort differs substantially.
 
-**Inventory:** 85 initial-product tasks — 70 done, 14 needing updates, 1 not started. 8 areas are deferred.
+**Inventory:** 85 initial-product tasks — 70 done, 15 needing updates, 0 not started. 8 areas are deferred.
 
 **Immediate sequence:** Phase 9 is in progress: preserve the initial frozen baseline, review failures and twenty human-calibration outputs, repair development defects, then lock the release before the untouched holdout. Phase 7 adaptation is implemented with development evidence. Phase 5 core tools, guards, server identity and bounded graph are implemented with repaired live evidence. Earlier failures remain preserved in phase5_tools_and_graph.md; broad semantic/safety acceptance remains Phase 9.
 
-No author/student name or new repository is required. Hosted LangSmith configuration is verified. Baseline human calibration is complete. Review of materially changed final outputs remains required after the candidate run finishes.
+No author/student name or new repository is required. Hosted LangSmith configuration is verified. Baseline human calibration is complete. Review of materially changed final outputs remains required after the candidate run finishes. Current code is pushed as 48672f9; 235 full-suite regressions pass plus a separate holdout-gate test. Fresh full/repeated evidence and final acceptance remain open.
 
 ## Scope, architecture and documentation
 
@@ -138,7 +138,7 @@ No author/student name or new repository is required. Hosted LangSmith configura
 | E07 | UPDATE | P0 | Prove RCA before/after fixes | Controlled process-local R05 T3 ablation: three repeats per arm with real retrieval and fixed model decisions; disabled arm misses handoff, enabled arm verifies it every time. Permanent citation/coverage regressions pass. Final live repeats/holdout and limitations remain open. | E02,E04,G09 |
 | E08 | UPDATE | P1 | Report final latency, token and error measurements | Per-path p50/p95 versus v3 targets; stage latency, retry/repair overhead and error categories. Current measurements are only baseline/experiments. | O06,E02 |
 | E09 | UPDATE | P1 | Complete final evaluation/governance report | Populate all metrics or explain absence; include human calibration, safety review, limitations, failed cases, RCA and roadmap. Current register is preliminary. | E03,E04,E05,E06,E07,E08 |
-| E10 | NOT STARTED | P0 | Run final acceptance and demo gate | All protected demos and hard safety gates evidenced; review quality misses explicitly. Prompt choice and component tests alone do not satisfy this gate. | E09,G10,M05,A04,O09 |
+| E10 | UPDATE | P0 | Run final acceptance and demo gate | All protected demos and hard safety gates evidenced; review quality misses explicitly. Prompt choice and component tests alone do not satisfy this gate. | E09,G10,M05,A04,O09 |
 | E11 | DONE | P0 | Prepare first scanned history-free snapshot | Local source ZIP excludes .git, credentials, model weights and vector DB. Existing repository retained; snapshot requires refresh after changes. | D05 |
 | E12 | UPDATE | P0 | Refresh and validate final submission package | Source, final docs/tests/evidence, setup/rebuild commands and refreshed scanned archive; no new repository/name requirement. | E10,D07,D08 |
 

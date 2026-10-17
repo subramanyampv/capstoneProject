@@ -1,0 +1,65 @@
+{
+  "probes": [
+    {
+      "case_id": "N13",
+      "repeat": 0,
+      "valid_schema": true,
+      "unverified_order_selected": false,
+      "agents": [
+        "policy_product"
+      ],
+      "clarification_requested": false
+    },
+    {
+      "case_id": "N13",
+      "repeat": 1,
+      "valid_schema": true,
+      "unverified_order_selected": false,
+      "agents": [
+        "policy_product"
+      ],
+      "clarification_requested": false
+    },
+    {
+      "case_id": "N13",
+      "repeat": 2,
+      "valid_schema": true,
+      "unverified_order_selected": false,
+      "agents": [
+        "policy_product"
+      ],
+      "clarification_requested": false
+    },
+    {
+      "case_id": "R09",
+      "repeat": 0,
+      "valid_schema": true,
+      "unverified_order_selected": false,
+      "agents": [
+        "policy_product"
+      ],
+      "clarification_requested": false
+    },
+    {
+      "case_id": "R09",
+      "repeat": 1,
+      "valid_schema": true,
+      "unverified_order_selected": false,
+      "agents": [
+        "policy_product"
+      ],
+      "clarification_requested": false
+    },
+    {
+      "case_id": "R09",
+      "repeat": 2,
+      "valid_schema": true,
+      "unverified_order_selected": false,
+      "agents": [
+        "policy_product"
+      ],
+      "clarification_requested": false
+    }
+  ],
+  "limits": "Fresh one-call planner-only diagnostic, not a replay of missing original planner text. Contains schema/selection metadata only, no raw prompts, answers, identifiers, secrets or tool actions."
+}

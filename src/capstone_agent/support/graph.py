@@ -15,7 +15,7 @@ from capstone_agent.support.guards import SafetyRules,REFUSAL,FAILURE,final_erro
 from capstone_agent.support.privacy import minimize,mask_sensitive
 from capstone_agent.support.registry import Registry,ToolContext,SessionIdentity
 from capstone_agent.safety.redaction import sanitize
-from capstone_agent.support.obligations import derive,normalize_plan,fulfill,audit,citation_errors
+from capstone_agent.support.obligations import derive,normalize_plan,fulfill,audit,citation_errors,WITHDRAW_CANCELLATION
 
 class SupportState(TypedDict,total=False):
     query:str
@@ -150,7 +150,9 @@ class SupportAgent:
             legitimate=bool(re.search(r'order|track|shipping|return|refund|warranty|product|cancel',query,re.I))
             privacy_only='R2' in refusals and bool(re.search(r'not my order|not (?:my|your) (?:order|account)',query,re.I)) and not re.search(r'\balso\b',query,re.I)
             tampering_only='R3' in refusals and bool(re.search(r'\b(?:change|alter|fake|falsify)\b.{0,30}\b(?:delivery|delivered|record|date)\b',query,re.I)) and not re.search(r'\balso\b',query,re.I)
-            route=('missing_reference' if ((memory_context and memory_context.get('needs_clarification')) or (obligations.needs_reference and not obligations.intents)) and not triggers and not refusals else
+            withdrawal=bool(WITHDRAW_CANCELLATION.search(query)) and set(obligations.intents)=={'cancellation'}
+            route=('withdrawal' if withdrawal and not triggers and not refusals else
+                   'missing_reference' if ((memory_context and memory_context.get('needs_clarification')) or (obligations.needs_reference and not obligations.intents)) and not triggers and not refusals else
                    'unsupported_command' if query.lstrip().startswith('/') and not triggers else
                    'refuse' if refusals and not triggers and (not legitimate or privacy_only or tampering_only) else 'plan')
             return {'query':mask_sensitive(query,self.secrets),'refusals':refusals,'triggers':triggers,
@@ -175,7 +177,7 @@ class SupportAgent:
                         'refusals':refusals,'stages':['supervisor_plan']}
             except Exception:
                 ctx.triggers.add('T5')
-                return {'plan':{'intents':['support_request'],'steps':[],'order_id':None,'sku':None,'clarification':None},
+                return {'plan':{'intents':list(dict.fromkeys([*obligations.intents,'support_request'])),'steps':[],'order_id':None,'sku':None,'clarification':None},
                         'cursor':0,'handoffs':0,'replans':0,'triggers':['T5'],'errors':['SUPERVISOR_FAILED'],'stages':['supervisor_plan']}
 
         def dispatch(state):
@@ -343,10 +345,11 @@ class SupportAgent:
             ticket=state.get('ticket')
             if ctx.triggers:
                 parts.append(f"Local mock handoff verified: {ticket['ticket_id']} ({ticket['queue']}). No refund, return or cancellation was executed." if ticket and ticket.get('status')=='created' else FAILURE)
+                parts.append('I could not provide a fully verified response to every part of your request. Contact retailer support for actual review.')
             elif state['plan'].get('clarification'): parts.append(sanitize(state['plan']['clarification'],self.secrets))
             else: parts.append('I cannot provide a fully verified answer from the available evidence. Please confirm the order or product, or contact retailer support for review.')
             return ResponseDraft(answer=' '.join(parts),why=['SAFE_FALLBACK'],citations=[],
-                next_steps=['Contact retailer support if further help is needed.'],intents_addressed=state['plan']['intents'],outcome_claimed=computed)
+                next_steps=['Contact retailer support if further help is needed.'],intents_addressed=list(dict.fromkeys([*obligations.intents,*state['plan']['intents']])),outcome_claimed=computed)
 
         async def compose(state):
             computed=outcome(state)
@@ -413,6 +416,11 @@ class SupportAgent:
                 why=[],citations=[],next_steps=[],intents_addressed=list(dict.fromkeys([*obligations.intents,'entity_clarification'])),outcome_claimed='CLARIFICATION_REQUESTED')
             return {'draft':draft.model_dump(),'outcome':'CLARIFICATION_REQUESTED','stages':['memory_clarification','guard_out']}
 
+        def withdrawal(state):
+            draft=ResponseDraft(answer='This assistant has not executed a cancellation. Please clarify whether you want the current order status or cancellation-policy information.',
+                why=[],citations=[],next_steps=[],intents_addressed=list(obligations.intents),outcome_claimed='CLARIFICATION_REQUESTED')
+            return {'draft':draft.model_dump(),'outcome':'CLARIFICATION_REQUESTED','stages':['cancellation_withdrawal','guard_out']}
+
         from capstone_agent.observability.support_tracing import observed_node
         graph=StateGraph(SupportState)
         graph.add_node('guard_in',observed_node('guard_in',guard_in)); graph.add_node('plan',observed_node('plan',plan)); graph.add_node('dispatch',observed_node('dispatch',dispatch))
@@ -423,7 +431,8 @@ class SupportAgent:
         graph.add_node('compose',observed_node('compose',compose)); graph.add_node('refuse',observed_node('refuse',refuse)); graph.add_node('unsupported_command',observed_node('unsupported_command',unsupported_command))
         graph.add_edge('unsupported_command',END)
         graph.add_node('missing_reference',observed_node('missing_reference',missing_reference));graph.add_edge('missing_reference',END)
-        graph.add_edge(START,'guard_in'); graph.add_conditional_edges('guard_in',lambda s:s['route'],{'plan':'plan','refuse':'refuse','unsupported_command':'unsupported_command','missing_reference':'missing_reference'})
+        graph.add_node('withdrawal',observed_node('withdrawal',withdrawal));graph.add_edge('withdrawal',END)
+        graph.add_edge(START,'guard_in'); graph.add_conditional_edges('guard_in',lambda s:s['route'],{'plan':'plan','refuse':'refuse','unsupported_command':'unsupported_command','missing_reference':'missing_reference','withdrawal':'withdrawal'})
         graph.add_edge('plan','dispatch')
         graph.add_conditional_edges('dispatch',lambda s:s['route'],{a:a for a in ['order_shipping','policy_product','escalation','compose']})
         graph.add_edge('compose',END); graph.add_edge('refuse',END)

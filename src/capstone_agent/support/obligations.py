@@ -12,6 +12,7 @@ ORDER = re.compile(r'\bO-\d{4}\b', re.I)
 RETURN = re.compile(r'\b(?:returns?|returning|retrun|restocking)\b|\bsend\b.{0,25}\bback\b', re.I)
 REFUND = re.compile(r'\brefund\w*\b', re.I)
 CANCEL = re.compile(r'\bcancel\w*\b', re.I)
+WITHDRAW_CANCELLATION = re.compile(r"\b(?:do not|don't|don’t)\s+cancel\b|\bkeep\s+(?:my|the|this|that)\s+order\b|\bstop\b.{0,20}\bcancellation\b",re.I)
 TRACK = re.compile(r'\btrack\w*\b|latest.{0,20}event|\bwhere.{0,35}\b(?:order|package)\b|\bwhen.{0,35}\b(?:ship|arriv|deliver)', re.I)
 STATUS = re.compile(r'\b(?:order|package).{0,20}\bstatus\b|\b(?:has|did|hadn.t|hasn.t|it|not|never).{0,30}\bship\w*\b|\bdelivery email\b', re.I)
 PRODUCT = re.compile(r'material|\bsize\b|sizing|\bcare\b|\bwash\w*\b|\bclean\w*\b|weight|specification|\bwarrant\w*\b|opened', re.I)
@@ -54,12 +55,14 @@ def derive(query, context=None, *, services=None):
         tracking=bool(set(context.get('last_intents',[])) & {'order_tracking','shipping_tracking'})
     # Named return/refund discussions may include a historic delivery date without
     # asking a new tracking question. Only explicit tracking wording creates it.
-    has_return=bool(RETURN.search(query));has_refund=bool(REFUND.search(query));has_cancel=bool(CANCEL.search(query))
+    has_return=bool(RETURN.search(query));has_refund=bool(REFUND.search(query));withdraw=bool(WITHDRAW_CANCELLATION.search(query))
+    has_cancel=bool(CANCEL.search(query)) and not withdraw
     individual=re.search(r'\b(?:can I|can you|I want|I need)\s+(?:please\s+)?(?:return|refund|cancel|start|request)\b|\b(?:start|approve|cancel)\s+(?:my|this|that|order|O-)',query,re.I)
     general=bool(GENERAL.search(query)) and not individual
     refund_status=has_refund and bool(re.search(r'refund.{0,25}(?:approved yet|arriv|status|processed)',query,re.I))
     requests=[];docs=[];intents=[]
     if tracking or status:intents.append('order_tracking')
+    if withdraw:intents.append('cancellation')
     if re.search(r'\b(?:shorter|too verbose|too long|more detail)\b',query,re.I):intents.append('feedback_style')
     for flag,kind,doc,intent in [(has_cancel,'cancellation','cancellation_policy','cancellation'),
                                 (has_refund,'refund','refund_policy','refund_request'),

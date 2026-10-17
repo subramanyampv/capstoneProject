@@ -1,0 +1,9 @@
+{
+  "python": "3.12.12",
+  "HF_HUB_OFFLINE": "1",
+  "OMP_NUM_THREADS": "4",
+  "MKL_NUM_THREADS": "4",
+  "evaluation_workers": 1,
+  "temporary_ui_closed": true,
+  "note": "Launch settings recorded separately; no concurrency/SLA claim. Existing user processes are outside this recorder."
+}
