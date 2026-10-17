@@ -7,7 +7,7 @@ import tempfile
 from pathlib import Path
 from unittest.mock import patch
 from langchain_core.messages import AIMessage
-from capstone_agent.evaluation.export import minimized_json
+from capstone_agent.evaluation.export import minimized_json,verified_tickets
 from capstone_agent.retrieval.chroma_store import PolicySearch
 from capstone_agent.retrieval.embeddings_voyage import VoyageNanoEmbeddings
 from capstone_agent.support.graph import SupportAgent
@@ -68,7 +68,8 @@ def main():
     report={'passed':all(checks.values()),'checks':checks,'input_sha256':hashlib.sha256(query.encode()).hexdigest(),
         'source_sha256':{name:hashlib.sha256((ROOT/name).read_bytes()).hexdigest() for name in ['src/capstone_agent/support/graph.py','src/capstone_agent/support/registry.py']},
         'runs':rows,'limits':'Controlled component ablation only: real pinned retrieval and local mock ticket store, identical scripted model decisions, three repeats per arm. Disables only the process-local registry T3 latch, never source files or application configuration. Not an LLM-quality estimate or historical binary replay. Holdout is not read. Final live frozen/repeated evaluations remain separate.'}
-    args.output.parent.mkdir(parents=True,exist_ok=True);args.output.write_text(minimized_json(report)+'\n')
+    ids=tuple(ident for row in rows for ident in verified_tickets(row['result']))
+    args.output.parent.mkdir(parents=True,exist_ok=True);args.output.write_text(minimized_json(report,verified_ticket_ids=ids)+'\n')
     print(json.dumps(checks,indent=2));return 0 if report['passed'] else 1
 
 if __name__=='__main__':raise SystemExit(main())

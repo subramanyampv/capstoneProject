@@ -8,7 +8,7 @@ from pathlib import Path
 from run_final_suite import build_hashes,summarize
 from capstone_agent.config import LLMConfig,load_environment
 from capstone_agent.evaluation.calibration import calibrate
-from capstone_agent.evaluation.export import minimized_json
+from capstone_agent.evaluation.export import minimized_json,verified_tickets
 from capstone_agent.evaluation.final_protocol import assess
 from capstone_agent.evaluation.support_runner import load_cases
 from capstone_agent.retrieval.chroma_store import PolicySearch
@@ -75,7 +75,8 @@ def main():
                 feedback=[json.loads(line) for line in feedback_path.read_text().splitlines()] if feedback_path.exists() else []
                 record={'case_id':case['id'],'repeat':0,'input_sha256':hashlib.sha256(case['input'].encode()).hexdigest(),
                     'setup_results':setup,'result':result,'feedback':feedback,'assessment':assess(result,contexts[case['id']],feedback=feedback)}
-                exported=json.loads(minimized_json(record,secrets));exported['input_sha256']=record['input_sha256']
+                ids=tuple(ident for item in [result,*setup] for ident in verified_tickets(item))
+                exported=json.loads(minimized_json(record,secrets,verified_ticket_ids=ids));exported['input_sha256']=record['input_sha256']
                 with (directory/'outputs.jsonl').open('a') as stream:stream.write(json.dumps(exported,allow_nan=False)+'\n')
                 summarize(directory);print(case['id'],result['outcome'],'hard',record['assessment']['hard_gate_passed'],flush=True)
             finally:memory.close()

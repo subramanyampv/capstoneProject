@@ -10,7 +10,7 @@ from datetime import datetime,timezone
 from pathlib import Path
 from capstone_agent.config import LLMConfig,load_environment
 from capstone_agent.evaluation.final_protocol import assess
-from capstone_agent.evaluation.export import minimized_json
+from capstone_agent.evaluation.export import minimized_json,verified_tickets
 from capstone_agent.evaluation.support_runner import load_cases
 from capstone_agent.retrieval.chroma_store import PolicySearch
 from capstone_agent.retrieval.embeddings_voyage import VoyageNanoEmbeddings
@@ -119,7 +119,8 @@ def main():
             for case in cases for repeat in range(args.repeats) if (case['id'],repeat) not in completed]
         for future in as_completed(futures):
             record=future.result();result=record['result'];assessment=record['assessment']
-            exported=json.loads(minimized_json(record,secrets));exported['input_sha256']=record['input_sha256']
+            ids=tuple(ident for item in [record['result'],*record['setup_results']] for ident in verified_tickets(item))
+            exported=json.loads(minimized_json(record,secrets,verified_ticket_ids=ids));exported['input_sha256']=record['input_sha256']
             with (directory/'outputs.jsonl').open('a') as stream:stream.write(json.dumps(exported,allow_nan=False)+'\n')
             summarize(directory)
             print(record['case_id'],record['repeat'],result['outcome'],'hard',assessment['hard_gate_passed'],'all',assessment['case_checks_passed'],flush=True)

@@ -392,10 +392,11 @@ class SupportAgent:
                 # A fallback omits substantive facts rather than claim a successful answer.
                 if computed=='ANSWERED': computed='INSUFFICIENT_EVIDENCE'; draft.outcome_claimed=computed
             # G8 removes patterned sensitive values from every customer-facing field.
+            verified_ids=(state['ticket']['ticket_id'],) if (state.get('ticket') or {}).get('status')=='created' else ()
             for name in ['answer']:
-                setattr(draft,name,mask_sensitive(getattr(draft,name),self.secrets))
-            draft.why=[mask_sensitive(v,self.secrets) for v in draft.why]
-            draft.next_steps=[mask_sensitive(v,self.secrets) for v in draft.next_steps]
+                setattr(draft,name,mask_sensitive(getattr(draft,name),self.secrets,verified_ticket_ids=verified_ids))
+            draft.why=[mask_sensitive(v,self.secrets,verified_ticket_ids=verified_ids) for v in draft.why]
+            draft.next_steps=[mask_sensitive(v,self.secrets,verified_ticket_ids=verified_ids) for v in draft.next_steps]
             return {'draft':draft.model_dump(),'outcome':computed,'repairs':min(repairs,1),'errors':gate_errors,'answer_fallback':fallback_used,
                     'stages':['composer','guard_out']}
 

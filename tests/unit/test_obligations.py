@@ -127,6 +127,28 @@ def test_withdrawing_cancellation_does_not_request_new_cancellation_eligibility(
     assert derive("Do not cancel O-1003; also request a refund.").request_types==('refund',)
 
 
+def test_numeric_verified_ticket_survives_customer_and_export_masking(setup,monkeypatch):
+    from types import SimpleNamespace
+    from capstone_agent.support import services as service_module
+    from capstone_agent.support.privacy import mask_sensitive
+    from capstone_agent.evaluation.export import minimized_json,verified_tickets
+    monkeypatch.setattr(service_module.uuid,'uuid4',lambda:SimpleNamespace(hex='123456789012abcdef123456789012ab'))
+    services,_=setup
+    response=asyncio.run(SupportAgent(services,ScriptedGateway([])).run(
+        'The product burned me.',SessionIdentity('C-100'),
+        faults={'supervisor':'FAILED','escalation':'FAILED','composer':'FAILED'}))
+    ident=response['ticket']['ticket_id']
+    assert ident=='MOCK-123456789012' and ident in response['response']['answer']
+    text=ident+' phone +1-555-0100 unverified MOCK-123456789013'
+    masked=mask_sensitive(text,verified_ticket_ids=verified_tickets(response))
+    assert ident in masked and '+1-555-0100' not in masked and 'MOCK-123456789013' not in masked
+    exported=json.loads(minimized_json(response,verified_ticket_ids=verified_tickets(response)))
+    assert exported['ticket']['ticket_id']==ident and ident in exported['response']['answer']
+    assert ident not in mask_sensitive(ident)
+    assert ident not in mask_sensitive(ident,secrets=(ident,),verified_ticket_ids=(ident,))
+    assert not verified_tickets({'ticket':{'status':'created','ticket_id':ident},'tool_records':[]})
+
+
 def test_contract_retains_both_requests_when_plan_claims_only_tracking():
     contract=derive('Package O-1002 is delayed. Latest tracking event, and can I request a refund?')
     narrowed=SupervisorPlan.model_validate_json(plan(order='O-1002').content)

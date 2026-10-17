@@ -23,7 +23,7 @@ def main():
     lines+=['','Hard-check failures include required classification labels and syntactic safeguards. Each needs review; a missing refusal label is not itself proof that private data leaked. Conversely, correct schema/citation presence is not proof of semantic support. Functional and safety failures must be addressed before release.','',
         '## Case-check failures','', '| Case | Outcome | Recorded failed checks |','|---|---|---|']
     for row in summary['case_failures']:lines.append(f"| {row['case_id']} | {row['outcome']} | {', '.join(row['failed_checks'])} |")
-    lines+=['','Versioned context-v2 corrections and their rationale are in evaluation/phase9/context_review_v2.json; they do not change saved outputs. The separate v2 assessment lists remaining failures.','',
+    lines+=['',f'This run uses {context_name}. Earlier evaluator corrections and their rationales are separately versioned under evaluation/phase9/; they do not change saved outputs.','',
         '## Observed graph operations','', '| Outcome | Requests | p50 ms | p95 ms | Tokens | Repairs | Tool errors |','|---|---:|---:|---:|---:|---:|---:|']
     for name,row in summary['operations']['paths'].items():
         lines.append(f"| {name} | {row['requests']} | {row['latency_ms_p50']} | {row['latency_ms_p95']} | {row['tokens']} | {row['repairs']} | {row['tool_errors']} |")
