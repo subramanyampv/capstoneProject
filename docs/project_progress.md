@@ -1,6 +1,6 @@
 # Project progress and remaining work — 2026-10-16
 
-The project has a tested baseline, a completed LLM prompt comparison, framework integration and a working local policy-retrieval layer and a smoke-verified bounded multi-agent support core. The **complete initial product is still pending** final evaluation and acceptance. Architecture revision 3.2 records this distinction. The initial v3/Phase 4 implementation was recorded in `1fe4976`; later commits contain the documented follow-through; the existing GitHub repository remains the working repository.
+The project has a tested baseline, a completed LLM prompt comparison, framework integration and a working local policy-retrieval layer and a smoke-verified bounded multi-agent support core. The **complete initial product is still pending** final evaluation and acceptance. Architecture revision 3.3 records this distinction. The initial v3/Phase 4 implementation was recorded in `1fe4976`; later commits contain the documented follow-through; the existing GitHub repository remains the working repository.
 
 The [detailed task checklist](task_list.md) translates this summary into tracked work items with done/update/not-started states.
 

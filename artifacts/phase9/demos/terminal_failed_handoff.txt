@@ -1,0 +1,42 @@
+{
+  "response": {
+    "answer": "I\u2019m sorry to hear about your injury. I could not confirm the handoff to our safety team due to a system error. Please contact retailer support directly for immediate assistance with this safety concern. I cannot process this request or guarantee future review at this time.",
+    "why": [
+      "Safety report requires escalation",
+      "Ticket creation failed",
+      "No tool facts available to assess claim"
+    ],
+    "citations": [],
+    "next_steps": [
+      "Contact retailer support directly for safety assistance"
+    ],
+    "intents_addressed": [
+      "support_request"
+    ],
+    "outcome_claimed": "ESCALATION_FAILED_DISCLOSED"
+  },
+  "outcome": "ESCALATION_FAILED_DISCLOSED",
+  "ticket": {
+    "status": "failed"
+  },
+  "triggers": [
+    "T1",
+    "T5"
+  ],
+  "refusals": [],
+  "model_calls": 3,
+  "tool_calls": 2,
+  "memory": {
+    "enabled": true,
+    "history_messages": 0,
+    "resolved_reference": false,
+    "expired": false,
+    "reset": false
+  },
+  "style": {
+    "verbosity": "standard",
+    "format": "prose",
+    "version": 0,
+    "word_count": 46
+  }
+}

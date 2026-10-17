@@ -1,6 +1,6 @@
 # E-commerce Support Resolution Agent
 
-The authoritative [Architecture and Plan v3.2](docs/architecture_and_plan.md) supersedes all earlier designs. See the [document index](docs/README.md), [implementation status](docs/implementation_status.md), and [detailed progress summary](docs/project_progress.md), and [task checklist](docs/task_list.md). The [Memory Pad](docs/memory_pad.md) compares ecommerce agents and tracks possible extensions; the earlier [market comparison](docs/market_comparison.md) remains available.
+The authoritative [Architecture and Plan v3.3](docs/architecture_and_plan.md) supersedes all earlier designs. See the [document index](docs/README.md), [implementation status](docs/implementation_status.md), and [detailed progress summary](docs/project_progress.md), and [task checklist](docs/task_list.md). The [Memory Pad](docs/memory_pad.md) compares ecommerce agents and tracks possible extensions; the earlier [market comparison](docs/market_comparison.md) remains available.
 
 The core now implements a LangGraph supervisor, three LangChain specialists and six typed tools. Policy retrieval uses local Voyage-4-nano and Chroma. Deterministic guards decide safety, eligibility and verified mock escalation. Return/refund/cancellation writes, the knowledge graph and external API ETA are deferred until the initial product succeeds. Synthetic data only.
 
@@ -17,7 +17,7 @@ The core now implements a LangGraph supervisor, three LangChain specialists and 
 
 ## Local setup
 
-Run from `capstone_agent/` using the existing project `.venv`. If it is absent, obtain approval before creating one. Python 3.22 is the tested environment.
+Run from `capstone_agent/` using the existing project `.venv`. If it is absent, obtain approval before creating one. Python 3.12.12 is the tested environment.
 
 ```bash
 .venv/bin/python -m pip install -c constraints-dev.txt -e ".[dev,eval,ui,rag]"

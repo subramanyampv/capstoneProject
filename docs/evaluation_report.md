@@ -14,7 +14,7 @@ Authority: [Architecture and Plan v3](architecture_and_plan.md), section 14. Fin
 | Phase 6 memory | Five conversations × on/off pass expected behavior; four of four dependent follow-ups answered on versus zero off; reset/expiry/checkpoint audit | Development scripts; no independent semantic or held-out multi-turn grade |
 | Phase 7 adaptation | Same-question answer 72 → 46 words, version 0 → 1; reset version 2 returns to 72 words; citations retained; four safety cases × two styles preserve outcomes/flags; scoped deletion passes | Authored development cases; original false numeric rejections preserved; style-only adaptation, no semantic/holdout acceptance |
 | Phase 8 operations | Clean venv/index/CLI/Streamlit checks, hosted twelve/thirteen-run trees, canary exclusion and failure isolation; six expected live path outcomes | Local source deployment, warm pinned download cache, two samples/path; no production SLA or final acceptance |
-| Offline regression | Phase 9 harness/calibration additions: 211 tests pass; historical Phase 8 clean environment: 204 | Final semantic/frozen/holdout acceptance remains open |
+| Offline regression | Current Phase 9 repair build: 232 tests pass; historical Phase 8 clean environment: 204 | Final semantic/frozen/holdout acceptance remains open |
 | Packaging | Pinned app/dev/eval/ui/rag install in existing venv succeeded; pip dependency check passed | Clean source/venv verification passed in Phase 8; cold model download and other platforms remain unverified |
 | UI | Three default tabs and explicit deferred-tab flag verified by AppTest | Final synthetic identity/chat workflow remains Phase 5+ |
 
@@ -43,3 +43,11 @@ Phase 5 closure: [151-test / eight-case evidence](../artifacts/phase5_validation
 Current memory evidence: [Phase 6 validation](../artifacts/phase6_validation.md), [on/off checks](../artifacts/memory_runs/20261015T194351Z/validation.json), [checkpoint deletion audit](../artifacts/phase6_checkpoint_audit.json). Earlier failed comparisons remain preserved; memory/working-state partition is tested rather than inferred from a final state.
 
 Phase 7 details and preserved initial failures: [validation](../artifacts/phase7_validation.md). Numeric duration wording now accepts singular/plural day/month equivalence, while tests reject changed values, changed units and numeric suffix matches. A punctuation-only follow-up is replayed against all eleven recorded final drafts with identical gate results.
+
+## 2026-10-17 release-candidate work
+
+The first repaired frozen run records 51/65 all-case-check passes, 64/65 hard gates. Its repeated subset records 45/45 hard passes but 86.67% exact terminal consistency, below target. These are development findings, not acceptance. A targeted second repair passes 14/15 all checks and 15/15 hard gates; its remaining tracking dependency now has a further regression. The complete corrected-build run and final repeated suite are still in progress. See [Phase 9 evaluation](phase9_evaluation.md) for run IDs, preserved failures and current limits.
+
+Actual baseline human calibration: 20 cases, 57 paired ratings, 84.21% threshold agreement, nine disagreements and no human-flagged unsafe cases. This applies only to baseline outputs. Final changed-output review and untouched holdout remain required.
+
+The [retrospective capability ladder](../artifacts/phase9/capability_ladder_development.md) compares ten historical cases without claiming a causal accuracy uplift. The process-local conflict experiment isolates T3 using real retrieved conflict evidence and identical scripted model decisions: 0/3 verified handoffs with the latch disabled, 3/3 with it enabled. The real-question style replay retains identical citations and shortens the answer from 55 to 43 words, profile version 0 to 1. No holdout content was read for these experiments.

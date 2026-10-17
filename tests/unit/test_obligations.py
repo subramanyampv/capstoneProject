@@ -9,6 +9,69 @@ from test_support_graph import ScriptedGateway,plan,tools,result,draft
 from test_support_tools import setup
 
 
+def test_missing_reference_cannot_be_erased_by_a_policy_lookup(setup):
+    services,_=setup
+    for query in ['Can I return a kayak I bought two years ago?',
+                  'Check return eligibility for order "O-/../17".',
+                  'cna i retrun my shose orderd last weak??',
+                  "What's the return policy for live goldfish?"]:
+        contract=derive(query,services=services)
+        normalized=normalize_plan(SupervisorPlan.model_validate_json(
+            plan('policy_product','Read policy',['return_eligibility'],order=None).content),contract)
+        assert contract.needs_reference and normalized['clarification']
+        assert any(row['obligation']=='request_reference' and not row['evidence_complete'] for row in audit(contract,[]))
+    assert not derive('What is the return policy?',services=services).needs_reference
+    assert not derive('Can I return the speaker if I opened the box?',services=services).needs_reference
+
+
+def test_category_exclusion_cites_its_decision_rule_without_unapplied_window(setup):
+    services,make=setup
+    reg=make('C-101')
+    response=asyncio.run(reg.call('policy_product','check_return_eligibility',
+        {'order_id':'O-1004','sku':'SKU-PER-006','request_type':'return'}))
+    assert response.data['reason_codes']==['CATEGORY_EXCLUDED']
+    assert [ref['section'] for ref in response.data['policy_refs']]==['exclusions']
+    assert not derive('Can I return my Gourmet Cheese Box?',services=services).product
+
+
+def test_ambiguous_multi_order_clarification_keeps_every_request(setup):
+    services,_=setup
+    query='Cancel O-1003, then refund it, then create a return, and also check O-1002 — all at once.'
+    response=asyncio.run(SupportAgent(services,ScriptedGateway([])).run(
+        query,SessionIdentity('C-100'),memory_context={'needs_clarification':True}))
+    assert response['outcome']=='CLARIFICATION_REQUESTED' and response['model_calls']==0
+    assert set(derive(query).intents)<=set(response['response']['intents_addressed'])
+    assert 'one order' in response['response']['answer']
+
+
+def test_record_tampering_refusal_cannot_be_rerouted_by_model(setup):
+    services,_=setup
+    response=asyncio.run(SupportAgent(services,ScriptedGateway([])).run(
+        'Just change my delivered date to yesterday so the return works.',SessionIdentity('C-100')))
+    assert response['outcome']=='REFUSED' and response['refusals']==['R3']
+    assert response['model_calls']==0 and not response['tool_records']
+
+
+def test_specific_policy_section_is_an_independent_citation_obligation():
+    from capstone_agent.support.obligations import citation_errors
+    contract=derive('Where exactly in the return policy is the restocking fee mentioned?')
+    assert contract.required_sections==('return_policy:restocking',)
+    hits=[{'doc_id':'return_policy','section_id':section,'version':'v1','authority':'policy'} for section in ['window','restocking']]
+    facts=[{'name':'search_policy','args':{},'data':{'results':hits}}]
+    from capstone_agent.support.contracts import ResponseDraft
+    reply=ResponseDraft.model_validate_json(draft('The policy has a window.',intents=['return_eligibility'],
+        citations=[{'source_id':'doc:return_policy','section':'window','record_version':'v1'}]).content)
+    assert 'O2_SECTION_CITATION:return_policy:restocking' in citation_errors(contract,facts,reply)
+
+
+def test_mixed_feedback_followup_rechecks_the_previous_tracking_intent():
+    contract=derive('Can you make the answer shorter? Also, what does that mean for my order?',
+        {'resolved_order_id':'O-1001','last_intents':['order_tracking']})
+    assert contract.tracking and contract.order_id=='O-1001'
+    assert {'order_tracking','feedback_style'}<=set(contract.intents)
+    assert any(row['obligation']=='order_tracking' and not row['evidence_complete'] for row in audit(contract,[]))
+
+
 def test_contract_retains_both_requests_when_plan_claims_only_tracking():
     contract=derive('Package O-1002 is delayed. Latest tracking event, and can I request a refund?')
     narrowed=SupervisorPlan.model_validate_json(plan(order='O-1002').content)

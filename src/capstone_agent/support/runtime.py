@@ -92,7 +92,7 @@ def _run_support(query,customer_id='C-100',*,search=None,identity=None,faults=No
                 return result
             with LangChainChatClient(config) as client:
                 agent=SupportAgent(services,Gateway(client.chat,timeout=config.timeout_seconds+1),secrets=secrets)
-                return asyncio.run(agent.run(message,identity,faults=faults,memory_context=context,style=profile))
+                return asyncio.run(agent.run(message,identity,faults=faults,memory_context={**context,'feedback_signal':signal},style=profile))
         result=manager.process(query,identity,execute,enabled=memory_enabled,secrets=secrets)
     result["request_id"]=request_id
     return result

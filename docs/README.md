@@ -1,6 +1,6 @@
 # Project documents
 
-[Architecture and Plan v3.2](architecture_and_plan.md) is the authoritative design and delivery plan. It supersedes all earlier documents. [Implementation status](implementation_status.md) distinguishes measured results from targets in the plan.
+[Architecture and Plan v3.3](architecture_and_plan.md) is the authoritative design and delivery plan. It supersedes all earlier documents. [Implementation status](implementation_status.md) distinguishes measured results from targets in the plan.
 
 | Document | Purpose |
 |---|---|

@@ -7,14 +7,14 @@ from dataclasses import dataclass, asdict
 import json
 import re
 
-VERSION = 'request-obligations-v1'
+VERSION = 'request-obligations-v2'
 ORDER = re.compile(r'\bO-\d{4}\b', re.I)
 RETURN = re.compile(r'\b(?:returns?|returning|retrun|restocking)\b|\bsend\b.{0,25}\bback\b', re.I)
 REFUND = re.compile(r'\brefund\w*\b', re.I)
 CANCEL = re.compile(r'\bcancel\w*\b', re.I)
 TRACK = re.compile(r'\btrack\w*\b|latest.{0,20}event|\bwhere.{0,35}\b(?:order|package)\b|\bwhen.{0,35}\b(?:ship|arriv|deliver)', re.I)
 STATUS = re.compile(r'\b(?:order|package).{0,20}\bstatus\b|\b(?:has|did|hadn.t|hasn.t|it|not|never).{0,30}\bship\w*\b|\bdelivery email\b', re.I)
-PRODUCT = re.compile(r'material|\bsize\b|sizing|\bcare\b|weight|specification|\bwarrant\w*\b|opened|\bbox\b', re.I)
+PRODUCT = re.compile(r'material|\bsize\b|sizing|\bcare\b|weight|specification|\bwarrant\w*\b|opened', re.I)
 SHIPPING = re.compile(r'\bshipping\b|\bship\b.{0,35}\b(?:canada|international|usually|standard)\b|\barrive\b|\bdelivery estimate\b', re.I)
 GENERAL = re.compile(r'\bpolicy|\bwindow|\bdeadline|\blargest|\bthreshold|how many|\bdocument|\bfee|\bguarantee|how long', re.I)
 
@@ -29,6 +29,8 @@ class Obligations:
     product: bool = False
     ambiguous_orders: bool = False
     sku: str | None = None
+    needs_reference: bool = False
+    required_sections: tuple[str, ...] = ()
     version: str = VERSION
 
     def public(self):
@@ -47,6 +49,9 @@ def derive(query, context=None, *, services=None):
     resolved=ids[0] if len(ids)==1 else context.get('resolved_order_id') if not ids else None
     if not resolved and not ids and STATUS.search(query):resolved=context.get('entities',{}).get('order_id')
     tracking=bool(TRACK.search(query));status=bool(STATUS.search(query))
+    if re.search(r'what.{0,25}mean.{0,20}\b(?:my|the|that) order\b',query,re.I):
+        status=True
+        tracking=bool(set(context.get('last_intents',[])) & {'order_tracking','shipping_tracking'})
     # Named return/refund discussions may include a historic delivery date without
     # asking a new tracking question. Only explicit tracking wording creates it.
     has_return=bool(RETURN.search(query));has_refund=bool(REFUND.search(query));has_cancel=bool(CANCEL.search(query))
@@ -54,6 +59,7 @@ def derive(query, context=None, *, services=None):
     refund_status=has_refund and bool(re.search(r'refund.{0,25}(?:approved yet|arriv|status|processed)',query,re.I))
     requests=[];docs=[];intents=[]
     if tracking or status:intents.append('order_tracking')
+    if re.search(r'\b(?:shorter|too verbose|too long|more detail)\b',query,re.I):intents.append('feedback_style')
     for flag,kind,doc,intent in [(has_cancel,'cancellation','cancellation_policy','cancellation'),
                                 (has_refund,'refund','refund_policy','refund_request'),
                                 (has_return,'return','return_policy','return_eligibility')]:
@@ -69,8 +75,18 @@ def derive(query, context=None, *, services=None):
     if refund_status:status=True
     if has_refund and re.search(r'window|deadline|footwear',query,re.I):docs.append('return_policy')
     product_ref=catalog_reference(query,services,context) if services else None
+    # A public, conditional product-policy question does not require a private
+    # order. An individual eligibility request does, even when retrieval succeeds.
+    conditional=bool(product_ref and re.search(r'\bif\b',query,re.I))
+    unknown_policy_subject=has_return and bool(re.search(r'policy\s+for\b',query,re.I)) and not product_ref and not re.search(r'footwear|apparel|home|electronics|perishable|grocery',query,re.I)
+    needs_reference=not resolved and not conditional and bool(
+        ((has_return or has_refund or has_cancel or tracking or status) and not general)
+        or unknown_policy_subject
+        or (not intents and re.search(r'\b(?:again|previous answer|earlier question)\b',query,re.I)))
+    sections=('return_policy:restocking',) if re.search(r'restock',query,re.I) else ()
     return Obligations(tuple(dict.fromkeys(intents)),resolved,tuple(requests),tuple(dict.fromkeys(docs)),
-        tracking,status,product,len(ids)>1,product_ref.get('sku') if product_ref else None)
+        tracking,status,product,len(ids)>1,product_ref.get('sku') if product_ref else None,
+        needs_reference,sections)
 
 
 def catalog_reference(query, services, context=None):
@@ -106,7 +122,9 @@ def normalize_plan(parsed, contract):
         rebuilt.append({**step,'depends_on':deps})
     data['steps']=rebuilt
     data['intents']=list(dict.fromkeys([*contract.intents,*data['intents']]))[:8]
-    if contract.order_id or (contract.policy_docs and not contract.request_types):data['clarification']=None
+    if contract.needs_reference:
+        data['clarification']='Please provide a valid order reference or clarify the product and request so I can verify it.'
+    elif contract.order_id:data['clarification']=None
     return data
 
 
@@ -148,6 +166,9 @@ async def fulfill(contract,agent,registry,query,context=None):
             for ref in fact['data']['policy_refs']:
                 if not any(hit['doc_id']==ref['source_id'][4:] and hit['section_id']==ref['section'] and hit['version']==ref['record_version'] for hit in hits):
                     missing.add(ref['source_id'][4:])
+    for section in contract.required_sections:
+        doc,heading=section.split(':',1)
+        if not any(hit['doc_id']==doc and hit['section_id']==heading and hit['authority']=='policy' for hit in hits):missing.add(doc)
     if missing:
         hints={'return_policy':'return policy calendar days window condition exclusions restocking exceptions',
                'refund_policy':'refund policy request review threshold delayed shipments',
@@ -155,6 +176,7 @@ async def fulfill(contract,agent,registry,query,context=None):
                'shipping_policy':'shipping policy estimates standard international guaranteed',
                'warranty_policy':'warranty policy product category duration coverage'}
         text=' '.join(hints[doc] for doc in sorted(missing))
+        if 'return_policy:restocking' in contract.required_sections:text='opened electronics restocking fee'
         category=next(iter(ctx.categories)) if len(ctx.categories)==1 else None
         await registry.call(agent,'search_policy',{'query':text,'doc_types':sorted(missing),'category':category,'k':10})
 
@@ -163,6 +185,7 @@ def audit(contract,facts):
     """Record evidence coverage without trusting plan or claimed intent labels."""
     rows=[]
     def add(kind,complete,needed):rows.append({'obligation':kind,'evidence_complete':bool(complete),'required':needed})
+    if contract.needs_reference:add('request_reference',False,['valid_order_or_product_reference'])
     if contract.tracking:add('order_tracking',matching_fact(facts,'get_tracking_events',order_id=contract.order_id),['get_tracking_events'])
     elif contract.order_status:add('order_tracking',matching_fact(facts,'lookup_order',order_id=contract.order_id),['lookup_order'])
     for kind in contract.request_types:
@@ -177,6 +200,9 @@ def audit(contract,facts):
     for fact in facts:
         if fact['name']=='check_return_eligibility':required.update(ref['source_id'][4:] for ref in fact['data']['policy_refs'])
     for doc in sorted(required):add('policy:'+doc,any(hit['doc_id']==doc and hit['authority']=='policy' for hit in hits),['search_policy:'+doc])
+    for section in contract.required_sections:
+        doc,heading=section.split(':',1)
+        add('section:'+section,any(hit['doc_id']==doc and hit['section_id']==heading and hit['authority']=='policy' for hit in hits),['search_policy:requested_section'])
     for fact in facts:
         if fact['name']=='check_return_eligibility':
             for ref in fact['data']['policy_refs']:
@@ -190,6 +216,10 @@ def citation_errors(contract,facts,draft):
     errors=['O2_AUTHORITATIVE_CITATION:'+doc for doc in sorted(required) if 'doc:'+doc not in citations]
     cited={json.dumps(ref.model_dump(),sort_keys=True) for ref in draft.citations}
     hits=[hit for fact in facts if fact['name']=='search_policy' for hit in fact['data']['results']]
+    for section in contract.required_sections:
+        doc,heading=section.split(':',1)
+        matching=[hit for hit in hits if hit['doc_id']==doc and hit['section_id']==heading and hit['authority']=='policy']
+        if matching and not any(ref.source_id=='doc:'+doc and ref.section==heading and any(ref.record_version==hit['version'] for hit in matching) for ref in draft.citations):errors.append('O2_SECTION_CITATION:'+section)
     for fact in facts:
         if fact['name']=='check_return_eligibility':
             for ref in fact['data']['policy_refs']:

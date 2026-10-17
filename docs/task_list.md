@@ -1,22 +1,22 @@
-# Detailed project task checklist — updated 2026-10-16
+# Detailed project task checklist — updated 2026-10-17
 
-Authority: [Architecture revision 3.2](architecture_and_plan.md). This is the current work ledger, supported by the [progress report](project_progress.md) and recorded artifacts. Update a task only after its completion criterion has evidence.
+Authority: [Architecture revision 3.3](architecture_and_plan.md). This is the current work ledger, supported by the [progress report](project_progress.md) and recorded artifacts. Update a task only after its completion criterion has evidence.
 
 **DONE** = implemented/recorded for the stated scope; not a final-system acceptance claim. **UPDATE** = existing code, experiment or document needs extension, correction or final-build integration. **NOT STARTED** = implementation/evidence is still missing; package placeholders do not count. Deferred work is listed separately.
 
 **P0** = protects correctness, safety or a required delivery gate. **P1** = required capability or evaluation work. Dependencies are task IDs, not permission requests. Task counts do not represent a completion percentage because effort differs substantially.
 
-**Inventory:** 85 initial-product tasks — 70 done, 12 needing updates, 3 not started. 8 areas are deferred.
+**Inventory:** 85 initial-product tasks — 70 done, 14 needing updates, 1 not started. 8 areas are deferred.
 
 **Immediate sequence:** Phase 9 is in progress: preserve the initial frozen baseline, review failures and twenty human-calibration outputs, repair development defects, then lock the release before the untouched holdout. Phase 7 adaptation is implemented with development evidence. Phase 5 core tools, guards, server identity and bounded graph are implemented with repaired live evidence. Earlier failures remain preserved in phase5_tools_and_graph.md; broad semantic/safety acceptance remains Phase 9.
 
-No author/student name or new repository is required. Hosted LangSmith configuration is verified. Human calibration of twenty judged outputs remains required; the review packet will be supplied.
+No author/student name or new repository is required. Hosted LangSmith configuration is verified. Baseline human calibration is complete. Review of materially changed final outputs remains required after the candidate run finishes.
 
 ## Scope, architecture and documentation
 
 | ID | Status | Priority | Task | Evidence / completion criterion | Dependencies |
 |---|---|---|---|---|---|
-| D01 | DONE | P0 | Adopt final v3 scope | Architecture 3.2: three specialists, six tools, escalation-only write; earlier plans archived. | — |
+| D01 | DONE | P0 | Adopt final v3 scope | Architecture 3.3: three specialists, six tools, escalation-only write; earlier plans archived. | — |
 | D02 | DONE | P0 | Record current implementation and evidence | project_progress.md, implementation_status.md and evaluation_report.md distinguish measured work from targets. | D01 |
 | D03 | DONE | P0 | Complete Phase 3 comparison documentation | Ten representative cases, 195-output appendix, A/B/C failure breakdown and C development selection. | B08 |
 | D04 | DONE | P1 | Document Phase 4 implementation and gaps | retrieval_design.md records 28 chunks, initial 80% versus improved 100% retained recall, and preserved RAG/wording failures. | R07 |
@@ -130,12 +130,12 @@ No author/student name or new repository is required. Hosted LangSmith configura
 | ID | Status | Priority | Task | Evidence / completion criterion | Dependencies |
 |---|---|---|---|---|---|
 | E01 | UPDATE | P0 | Build final-system evaluation harness | Versioned 65-case identity/setup contexts, exact-input recorder, per-case tool/citation/outcome checks, separate DeepEval semantic judging and human-calibration tooling implemented. Initial baseline is complete; context corrections are separately versioned. Holdout context review remains deferred until the release is locked. | G10 |
-| E02 | UPDATE | P0 | Evaluate frozen cases and untouched holdout | Initial 65-case frozen baseline complete: v2 has 39 all-case-check passes and 59 hard-check passes; outputs preserved; untouched ten-case holdout remains pending after fixes/build lock. Separate scores and failures; never use holdout for tuning. | E01,R06 |
+| E02 | UPDATE | P0 | Evaluate frozen cases and untouched holdout | Initial baseline preserved. First repair full run has 51/65 all-check passes and 64/65 hard-gate passes; targeted follow-up has 14/15 all-check passes; a fresh complete rerun is in progress; untouched ten-case holdout remains pending after fixes/build lock. Separate scores and failures; never use holdout for tuning. | E01,R06 |
 | E03 | UPDATE | P1 | Measure final judged quality and calibrate humans | Local DeepEval faithfulness/relevancy/grounded-support judging of the predetermined twenty-case sample is complete. Blind twenty-case review packet and actual-rating agreement calculator implemented; Baseline human review supplied: 20 cases/57 pairs, 84.21% threshold agreement. Review of materially changed final outputs remains open. Same-model judging is disclosed; initial RAG scores are not calibration. | E02 |
-| E04 | UPDATE | P0 | Measure repeated-run consistency and worst-case safety | Three-repeat run of the predetermined fifteen-case subset is starting on the same frozen repair build. Report outcome consistency and mandatory refusal/escalation on every repeat; no acceptance before results. | E02,G09 |
+| E04 | UPDATE | P0 | Measure repeated-run consistency and worst-case safety | First repeated run: 45/45 hard gates, 40/45 all checks; 13/15 cases have identical outcomes (86.67%, below 90% target). A corrected-build rerun is in progress. Report outcome consistency and mandatory refusal/escalation on every repeat; no acceptance before results. | E02,G09 |
 | E05 | UPDATE | P0 | Run full canary and safe-failure scans | Initial Phase 9 export/runtime/current-key scan passes. Complete scans on all final artifacts, false action/handoff-success review and final hosted checks remain required. | O04,O05,T09 |
-| E06 | NOT STARTED | P1 | Run capability ladder and integration comparisons | Same ten cases across baseline, LLM, retrieval and final tools/guards; memory/adaptation comparison sets and retained-source metrics. | E02,M05,A04 |
-| E07 | NOT STARTED | P0 | Prove RCA before/after fixes | R05 conflict trigger disabled/enabled with repeats and holdout; unsupported-policy before/after; permanent regressions and residual risks. | E02,E04,G09 |
+| E06 | UPDATE | P1 | Run capability ladder and integration comparisons | Retrospective ten-case ladder recorded in artifacts/phase9/capability_ladder_development.md. Historical evidence/setup differences are disclosed; no causal accuracy uplift claimed. Final candidate integration remains open. | E02,M05,A04 |
+| E07 | UPDATE | P0 | Prove RCA before/after fixes | Controlled process-local R05 T3 ablation: three repeats per arm with real retrieval and fixed model decisions; disabled arm misses handoff, enabled arm verifies it every time. Permanent citation/coverage regressions pass. Final live repeats/holdout and limitations remain open. | E02,E04,G09 |
 | E08 | UPDATE | P1 | Report final latency, token and error measurements | Per-path p50/p95 versus v3 targets; stage latency, retry/repair overhead and error categories. Current measurements are only baseline/experiments. | O06,E02 |
 | E09 | UPDATE | P1 | Complete final evaluation/governance report | Populate all metrics or explain absence; include human calibration, safety review, limitations, failed cases, RCA and roadmap. Current register is preliminary. | E03,E04,E05,E06,E07,E08 |
 | E10 | NOT STARTED | P0 | Run final acceptance and demo gate | All protected demos and hard safety gates evidenced; review quality misses explicitly. Prompt choice and component tests alone do not satisfy this gate. | E09,G10,M05,A04,O09 |

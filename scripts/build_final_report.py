@@ -10,16 +10,18 @@ def main():
     directory=args.run_dir
     summary=json.loads((directory/'summary.json').read_text())
     records=[json.loads(line) for line in (directory/'outputs.jsonl').read_text().splitlines()]
+    manifest=json.loads((directory/'manifest.json').read_text())
+    context_name=manifest.get('context_file','frozen_contexts.json')
     reviewed_path=directory/'assessment_frozen_contexts_v2.json'
     reviewed=json.loads(reviewed_path.read_text()) if reviewed_path.exists() else None
-    lines=['# Phase 9 initial frozen baseline','',
+    lines=['# Phase 9 recorded development evaluation','',
         'Development evaluation, not final acceptance. Frozen input strings are unchanged; identity/setup are declared separately. Holdout content was not used. Twelve legacy transaction/action-state criteria are excluded under approved v3 scope, not passed.','',
         '| Assessment | Runs | Hard-check case passes | All in-scope case-check passes |',
         '|---|---:|---:|---:|',
-        f"| Original context v1 | {summary['runs']} | {summary['hard_gate_case_passes']} | {summary['all_case_check_passes']} |"]
+        f"| Recorded {context_name} | {summary['runs']} | {summary['hard_gate_case_passes']} | {summary['all_case_check_passes']} |"]
     if reviewed:lines.append(f"| Separately reviewed context v2 | {reviewed['runs']} | {reviewed['hard_gate_case_passes']} | {reviewed['all_case_check_passes']} |")
     lines+=['','Hard-check failures include required classification labels and syntactic safeguards. Each needs review; a missing refusal label is not itself proof that private data leaked. Conversely, correct schema/citation presence is not proof of semantic support. Functional and safety failures must be addressed before release.','',
-        '## Case-check failures','', '| Case | Outcome | Failed checks (v1) |','|---|---|---|']
+        '## Case-check failures','', '| Case | Outcome | Recorded failed checks |','|---|---|---|']
     for row in summary['case_failures']:lines.append(f"| {row['case_id']} | {row['outcome']} | {', '.join(row['failed_checks'])} |")
     lines+=['','Versioned context-v2 corrections and their rationale are in evaluation/phase9/context_review_v2.json; they do not change saved outputs. The separate v2 assessment lists remaining failures.','',
         '## Observed graph operations','', '| Outcome | Requests | p50 ms | p95 ms | Tokens | Repairs | Tool errors |','|---|---:|---:|---:|---:|---:|---:|']
@@ -40,7 +42,7 @@ def main():
                 if metric['status']=='measured':group['values'].append(metric['score']);group['passed']+=bool(metric['pass'])
                 elif metric['status']=='judge_failed':group['failed']+=1
                 else:group['skipped']+=1
-        lines+=['## Indicative same-model DeepEval sample','',f'{len(judgments)} predetermined cases judged. Actual human calibration remains pending; these scores cannot waive case failures. Current-question-only judge input can underrepresent prior-turn context.','',
+        lines+=['## Indicative same-model DeepEval sample','',f'{len(judgments)} predetermined cases judged. Human calibration must refer to these exact outputs; baseline ratings do not transfer to changed answers. These scores cannot waive case failures. Current-question-only judge input can underrepresent prior-turn context.','',
             '| Metric | Measured | Mean | Above threshold | Skipped | Judge errors |','|---|---:|---:|---:|---:|---:|']
         for name,group in metrics.items():
             values=group['values'];mean=round(sum(values)/len(values),4) if values else None

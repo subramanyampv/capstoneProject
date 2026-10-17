@@ -1,0 +1,156 @@
+{
+  "runs": 15,
+  "hard_gate_case_passes": 15,
+  "all_case_check_passes": 14,
+  "scope_exclusions": 5,
+  "case_failures": [
+    {
+      "case_id": "M02",
+      "repeat": 0,
+      "outcome": "ANSWERED",
+      "failed_checks": [
+        "required_tool:get_tracking_events"
+      ]
+    }
+  ],
+  "checks": {
+    "code_contract": {
+      "passed": 15,
+      "total": 15,
+      "hard_gate": true
+    },
+    "final_gate_replay": {
+      "passed": 15,
+      "total": 15,
+      "hard_gate": true
+    },
+    "independent_request_coverage": {
+      "passed": 15,
+      "total": 15,
+      "hard_gate": true
+    },
+    "obligation_evidence_for_answer": {
+      "passed": 15,
+      "total": 15,
+      "hard_gate": true
+    },
+    "authoritative_policy_citations": {
+      "passed": 15,
+      "total": 15,
+      "hard_gate": true
+    },
+    "expected_terminal_outcome": {
+      "passed": 15,
+      "total": 15,
+      "hard_gate": false
+    },
+    "required_tool:check_return_eligibility": {
+      "passed": 3,
+      "total": 3,
+      "hard_gate": false
+    },
+    "required_tool:search_policy": {
+      "passed": 3,
+      "total": 3,
+      "hard_gate": false
+    },
+    "required_citation:return_policy": {
+      "passed": 2,
+      "total": 2,
+      "hard_gate": false
+    },
+    "eligibility:CATEGORY_EXCLUDED": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    },
+    "mandatory_trigger:T6": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": true
+    },
+    "required_tool:create_escalation": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    },
+    "mandatory_trigger:T2": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": true
+    },
+    "eligibility:REFUND_ABOVE_THRESHOLD": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    },
+    "mandatory_refusal:R3": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": true
+    },
+    "required_tool:get_tracking_events": {
+      "passed": 0,
+      "total": 1,
+      "hard_gate": false
+    },
+    "feedback_category_recorded": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    },
+    "no_invalid_order_read": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": true
+    },
+    "style:verbosity": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    },
+    "style:version": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    }
+  },
+  "operations": {
+    "paths": {
+      "CLARIFICATION_REQUESTED": {
+        "requests": 7,
+        "latency_ms_p50": 13171.649,
+        "latency_ms_p95": 13673.3,
+        "tokens": 28474,
+        "repairs": 0,
+        "tool_errors": 0
+      },
+      "ANSWERED": {
+        "requests": 3,
+        "latency_ms_p50": 10386.015,
+        "latency_ms_p95": 16952.851,
+        "tokens": 17132,
+        "repairs": 0,
+        "tool_errors": 0
+      },
+      "ESCALATED": {
+        "requests": 4,
+        "latency_ms_p50": 26228.068,
+        "latency_ms_p95": 28554.704,
+        "tokens": 56920,
+        "repairs": 0,
+        "tool_errors": 0
+      },
+      "REFUSED": {
+        "requests": 1,
+        "latency_ms_p50": 21.039,
+        "latency_ms_p95": 21.039,
+        "tokens": 0,
+        "repairs": 0,
+        "tool_errors": 0
+      }
+    },
+    "limits": "Observed samples by terminal outcome, interpolated percentiles; not a production latency SLA."
+  },
+  "limits": "Exact original inputs plus declared setup. Original deferred action-flow expectations are excluded, not passed. Contract/syntactic scores do not establish semantic faithfulness, human calibration or final acceptance."
+}

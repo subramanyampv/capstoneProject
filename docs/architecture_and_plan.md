@@ -4,8 +4,8 @@
 | Field | Value |
 |---|---|
 | Document | Final Architecture Design & Project Plan |
-| Version | 3.2 — independent request obligations and Phase 9 repairs; retains the v3 scope and supersedes prior revisions |
-| Date | Updated 2026-10-16 (America/New_York); original revision 2026-10-13 |
+| Version | 3.3 — explicit unknown/reference outcomes and decision-specific citations; retains the approved v3 scope |
+| Date | Updated 2026-10-17 (America/New_York); original revision 2026-10-13 |
 | Industry scenario | Scenario 3: Customer Support, AI Support Resolution Agent |
 | Framework track | Track A, framework-based: LangChain (with LangGraph, LangChain's orchestration library) |
 | Submission target | 2026-10-18 |
@@ -25,7 +25,7 @@
 
 **What we are building.** A multi-agent customer-support resolution agent for a synthetic e-commerce retailer. It answers order, shipping, delivery, return, refund, product, and warranty questions.
 
-**Core workflow.** A bounded supervisor/three-specialist graph, six typed tools, synthetic session identity and deterministic guards are now implemented alongside the baseline and retrieval experiments. Phase 5 live validation records eight expected smoke outcomes and independent local ticket read-back; bounded projection memory is now implemented and measured. Adaptation, hosted observability and final acceptance remain pending.
+**Core workflow.** A bounded supervisor/three-specialist graph, six typed tools, synthetic session identity and deterministic guards are implemented. An immutable request-obligation contract preserves recognized requests independently of the model's plan. Projection memory, opt-in style adaptation and hosted metadata-only LangSmith observability are implemented and measured. Final acceptance remains open.
 - A LangGraph **supervisor** plans each request and delegates to three **specialist agents**: Order & Shipping, Policy & Product, and Escalation.
 - Each specialist is a bounded LangChain tool-calling agent with its own small tool allowlist.
 - Policy answers come from retrieval-augmented generation (RAG) over a versioned policy corpus. The corpus is embedded with **Voyage-4-nano** (Hugging Face, local) and stored in **Chroma**.
@@ -33,7 +33,7 @@
 
 **How we prove it.**
 - **DeepEval** provides standardized quality metrics and written evaluation rubrics. Deterministic assertions decide all safety outcomes.
-- **LangSmith** has an opt-in hidden-input/metadata wrapper implemented. Hosted verification and hierarchical specialist/tool traces are **PLANNED**. Local redacted evidence remains primary.
+- **LangSmith** uses opt-in metadata-only traces with verified hierarchical specialist/tool spans. Hosted read-back, canary exclusion and failure isolation were measured in Phase 8. Local sanitized evidence remains primary.
 - Every rubric capability maps to a named artifact (Section 3).
 
 **Where we are.**
@@ -41,7 +41,7 @@
 - Phase 3 is complete: the written ten-case comparison, per-prompt failure breakdown and development selection are recorded. The frozen experiment produced 195/195 schema-valid outputs (**MEASURED**). Prompt C is the development default; this does not establish final safety acceptance (Section 14.5).
 - Phase 4 has seven authored documents, 28 indexed sections, pinned local Voyage-4-nano/Chroma, 20 retrieval labels and a live ten-case RAG on/off comparison (**IMPLEMENTED / MEASURED**). The development coverage gap is corrected by the follow-through in Section 9.8; category applicability and registered-tool/current-turn citation integration are implemented. Held-out generalization remains open.
 - Phase 5 core tools/control are **IMPLEMENTED**, with live defects and repairs preserved in [the implementation chapter](phase5_tools_and_graph.md). Phase 6 projection memory is **IMPLEMENTED** with five-conversation comparison measured. Phase 7 controlled adaptation is **IMPLEMENTED** with live development validation; Phase 8 local deployment and hosted metadata observability are **VERIFIED**; Phase 9 final acceptance remains **PLANNED**. The target submission date stays 2026-10-18; schedule dates are targets, not guarantees.
-- Latest offline regression is recorded in [Phase 7 validation](../artifacts/phase7_validation.md). [Detailed progress and remaining work](project_progress.md) records the evidence and next steps.
+- Latest offline regression: 231 tests pass on the 2026-10-17 repair build. The first repaired full frozen run records 51/65 all-check passes and 64/65 hard-gate passes; subsequent repairs are under evaluation. [Phase 9 evidence](phase9_evaluation.md) and [detailed progress](project_progress.md) distinguish development results from acceptance.
 - Author/student name and a new GitHub repository are not required. Continue in the existing repository; use the scanned history-free source snapshot for packaging.
 
 **Key design stance.** The rubric evaluates "engineering judgment, reliability, explainability, safety-first design, and practical usefulness… not unnecessary complexity." The architecture is therefore deliberately minimal:

@@ -100,7 +100,11 @@ def main():
                     assessment=assess(result,contexts[case['id']],feedback=feedback,profile=preferences.profile(case['customer_id']))
                     record={'case_id':case['id'],'repeat':repeat,'category':case['category'],'input_sha256':hashlib.sha256(case['input'].encode()).hexdigest(),
                         'setup_results':setup,'result':result,'assessment':assessment,'feedback':feedback,'case_elapsed_ms':round((time.perf_counter()-started)*1000,3)}
-                    with (directory/'outputs.jsonl').open('a') as stream:stream.write(minimized_json(record,secrets)+'\n')
+                    exported=json.loads(minimized_json(record,secrets))
+                    # This digest is computed by the recorder, not supplied by
+                    # the customer. Preserve it after text/PII minimization.
+                    exported['input_sha256']=record['input_sha256']
+                    with (directory/'outputs.jsonl').open('a') as stream:stream.write(json.dumps(exported,allow_nan=False)+'\n')
                     summarize(directory)
                     print(case['id'],repeat,result['outcome'],'hard',assessment['hard_gate_passed'],'all',assessment['case_checks_passed'],flush=True)
                 finally:memory.close()

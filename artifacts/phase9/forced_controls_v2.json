@@ -1,0 +1,27 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "probe": "forced_unknown_tool",
+      "expected_error": "UNKNOWN_TOOL",
+      "actual_error": "UNKNOWN_TOOL",
+      "passed": true
+    },
+    {
+      "probe": "permission_boundary",
+      "expected_error": "PERMISSION_DENIED",
+      "actual_error": "PERMISSION_DENIED",
+      "passed": true
+    },
+    {
+      "probe": "malformed_order",
+      "expected_error": "INVALID_ARGUMENT",
+      "actual_error": "INVALID_ARGUMENT",
+      "passed": true
+    }
+  ],
+  "fixture_hashes_unchanged": true,
+  "successful_facts": 0,
+  "model_calls": 0,
+  "limits": "Forced execution-level negative tests. The original M04 user text stays unchanged; this separately proves registry rejection without relying on model tool selection. Holdout was not read; no ticket or transaction is created."
+}

@@ -113,7 +113,7 @@ class Services:
             decision='eligible' if allowed else 'ineligible'
             reasons=['CANCELLATION_PRE_DISPATCH' if allowed else 'ALREADY_DISPATCHED']
         elif category in r['return_excluded_categories']:
-            decision='ineligible'; reasons=['CATEGORY_EXCLUDED']; refs.append(self.policy_refs[('return_policy','exclusions')])
+            decision='ineligible'; reasons=['CATEGORY_EXCLUDED']; refs=[self.policy_refs[('return_policy','exclusions')]]
         elif order['status']!='delivered':
             decision='unknown'; reasons=['NOT_DELIVERED']
         elif not order['delivered_on']:

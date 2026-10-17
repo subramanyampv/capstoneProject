@@ -1,0 +1,73 @@
+Browser tab: 5, Title: "Support desk", URL: "http://127.0.0.1:8502/".
+0 AXWebArea Support desk, URL: 127.0.0.1:8502/
+	1 container
+		2 container
+			3 container
+				4 button Deploy
+				5 pop up button (collapsed) Description: Main menu, Secondary Actions: Expand
+			6 heading Support desk, Value: 1, ID: support-desk
+				7 text Support desk
+				8 link Description: Link to heading, Value: 127.0.0.1:8502/#support-desk
+			9 text Synthetic e-commerce support · clear answers, cited evidence, human review when needed
+			10 tab group react-aria8697059931-:r3:
+				11 tab (selected, settable, boolean) Chat, ID: react-aria8697059931-:r3:-tab-0, Value: 1
+Chat
+				12 tab (selectable, settable, boolean) Evaluation, ID: react-aria8697059931-:r3:-tab-1, Value: 0
+Evaluation
+				13 tab (selectable, settable, boolean) Traces, ID: react-aria8697059931-:r3:-tab-2, Value: 0
+Traces
+			14 container Description: Chat, ID: react-aria8697059931-:r3:-tabpanel-0
+				15 container
+					16 Description: Answer mode, ID: react-aria8697059931-:rc:
+						17 container
+							18 radio button (settable, integer) Description: Rule baseline, Value: 0
+							19 text Rule baseline
+						20 container
+							21 radio button (settable, integer) Description: LLM experiment, Value: 0
+							22 text LLM experiment
+						23 container
+							24 radio button (settable, integer) Description: Support agent, Value: 1
+							25 text Support agent
+				26 container
+					27 combo box (collapsed, settable) Description: Synthetic account, Value: C-100, ID: react-aria8697059931-:r35:, Secondary Actions: Expand
+					28 pop up button (collapsed) Description: Open, ID: react-aria8697059931-:r31:, Secondary Actions: Expand
+				29 text Test records only · demo date 12 Oct 2026. Handoffs create local mock tickets; refunds, returns and cancellations are not executed. Session context expires after 30 minutes of inactivity. Records are checked again for every answer.
+				38 button New support session
+					39 text New support session
+				30 text Style learning is off until you enable it or submit feedback. Two matching signals in the recent ten can adjust length or format. Preferences persist locally per synthetic customer. Reset style and clear session memory are separate actions.
+				31 button (collapsed) keyboard_arrow_right Response style and feedback, Secondary Actions: Expand
+					32 text keyboard_arrow_right
+					33 text Response style and feedback
+				34 container
+					35 text entry area (settable) Description: How can we help?, ID: :r3e:
+				36 button Get answer
+					37 text Get answer
+				42 text Your TrailRunner Shoes (order O-1001) are eligible for return. The system shows you are within the 30-day window, as delivery was 12 days ago. However, I cannot process this return directly; human review is required to proceed. Please contact retailer support with your order number and item condition to complete the request.
+				43 button (collapsed) keyboard_arrow_right Why this answer?, Secondary Actions: Expand
+					44 text keyboard_arrow_right
+					45 text Why this answer?
+				62 container
+					63 button (expanded) keyboard_arrow_down Sources, Secondary Actions: Collapse
+						64 text keyboard_arrow_down
+						65 text Sources
+					66 container
+						67 text order :O-1001  · · 2026-10-12
+					68 container
+						69 text doc :return_policy  · window · v1
+					70 container
+						71 text doc :return_policy  · exceptions · v1
+				49 text Contact retailer support with order O-1001 and item condition to initiate the return
+				50 text Answered
+				51 text Style version 0 · standard · prose
+				52 button Too long
+					53 text Too long
+				54 button Too short
+					55 text Too short
+				56 button Unclear
+					57 text Unclear
+				58 button Helpful
+					59 text Helpful
+				60 button Not helpful
+					61 text Not helpful
+
+The focused UI element is 63 button (expanded) keyboard_arrow_down Sources, Secondary Actions: Collapse

@@ -85,6 +85,8 @@ retailer delivery. If it failed, say 'I could not confirm the handoff' and direc
 A mock ticket is not delivered to a real team. Never promise future review/contact or ask the
 customer to wait for a team response. Direct them to retailer support for actual review/action.
 Address all intents, explicitly including unknowns/clarification.
+If feedback_signal is supplied, acknowledge that the style feedback was saved.
+It does not mean a previous response was edited or a new style threshold was reached.
 Write concise, plain customer prose, usually at most 140 words. Source references belong in
 citations, not inline field labels. Do not mention tool/function names, record_version,
 reason-code field names or phase numbers in answer/next_steps. Why should explain reasons
@@ -147,9 +149,10 @@ class SupportAgent:
             # Original raw input lives only in this invocation, never in operational records.
             legitimate=bool(re.search(r'order|track|shipping|return|refund|warranty|product|cancel',query,re.I))
             privacy_only='R2' in refusals and bool(re.search(r'not my order|not (?:my|your) (?:order|account)',query,re.I)) and not re.search(r'\balso\b',query,re.I)
-            route=('missing_reference' if memory_context and memory_context.get('needs_clarification') and not triggers and not refusals else
+            tampering_only='R3' in refusals and bool(re.search(r'\b(?:change|alter|fake|falsify)\b.{0,30}\b(?:delivery|delivered|record|date)\b',query,re.I)) and not re.search(r'\balso\b',query,re.I)
+            route=('missing_reference' if ((memory_context and memory_context.get('needs_clarification')) or (obligations.needs_reference and not obligations.intents)) and not triggers and not refusals else
                    'unsupported_command' if query.lstrip().startswith('/') and not triggers else
-                   'refuse' if refusals and not triggers and (not legitimate or privacy_only) else 'plan')
+                   'refuse' if refusals and not triggers and (not legitimate or privacy_only or tampering_only) else 'plan')
             return {'query':mask_sensitive(query,self.secrets),'refusals':refusals,'triggers':triggers,
                     'route':route,'stages':['guard_in']}
 
@@ -212,7 +215,10 @@ class SupportAgent:
             messages=[SystemMessage(content=SYSTEM_SPECIALIST.format(agent=agent,schema=json.dumps(AgentResult.model_json_schema()))),
                       HumanMessage(content=json.dumps(payload))]
             parsed=None; error=None
-            for _ in range(3 if agent=='escalation' else 4):
+            failed_preflight=any(row['status']=='error' and row['error'] in {'TIMEOUT','FAILED','INDEX_UNAVAILABLE','RETRIEVAL_FAILED'} for row in ctx.records[before:])
+            # A failed required read already has an honest error outcome. Do not
+            # let the model retry it until the reserved handoff budget is consumed.
+            for _ in range(0 if failed_preflight else 3 if agent=='escalation' else 4):
                 try:
                     if ctx.faults.get(agent): raise ValueError('INJECTED_MODEL_FAILURE')
                     reply=await self.gateway.invoke(messages,tools=tools)
@@ -349,6 +355,7 @@ class SupportAgent:
                 for f in facts if f['name']=='search_policy' for h in f['data']['results']}
             final_refs=[json.loads(r) for r in sorted(ctx.evidence) if not json.loads(r)['source_id'].startswith('doc:') or r in retrieved]
             data={'request':state['query'],'intents':state['plan']['intents'],'code_facts':facts,
+                  'feedback_signal':(memory_context or {}).get('feedback_signal'),
                   'request_obligations':obligations.public(),'obligation_audit':audit(obligations,facts),
                   'allowed_citations':final_refs,
                   'statuses':[{'agent':r['agent_name'],'status':r['status']} for r in state.get('results',[])],
@@ -401,8 +408,9 @@ class SupportAgent:
             return {'draft':draft.model_dump(),'outcome':'CLARIFICATION_REQUESTED','stages':['command_validation','guard_out']}
 
         def missing_reference(state):
-            draft=ResponseDraft(answer='Which order or product do you mean? Please provide its reference.',
-                why=[],citations=[],next_steps=[],intents_addressed=['entity_clarification'],outcome_claimed='CLARIFICATION_REQUESTED')
+            answer=('I can help with cancellation, refund and return eligibility, and order status. Please choose one order and request at a time so each can be verified.' if obligations.ambiguous_orders else 'Which order or product do you mean? Please provide its reference.')
+            draft=ResponseDraft(answer=answer,
+                why=[],citations=[],next_steps=[],intents_addressed=list(dict.fromkeys([*obligations.intents,'entity_clarification'])),outcome_claimed='CLARIFICATION_REQUESTED')
             return {'draft':draft.model_dump(),'outcome':'CLARIFICATION_REQUESTED','stages':['memory_clarification','guard_out']}
 
         from capstone_agent.observability.support_tracing import observed_node
