@@ -18,8 +18,8 @@
 | [Phase 2 closure](phase2_closure.md) | Verified baseline evidence |
 | [Framework integration](framework_integration.md) | Existing adapters, evaluation and tracing setup |
 | [Safety and privacy](safety_and_privacy.md) | Current controls and planned v3 safeguards |
-| [Demo script](demo_script.md) | Five v3 demos; execution pending |
-| [Evaluation report](evaluation_report.md) | Evidence register; final metrics pending |
+| [Demo script](demo_script.md) | Five protected paths linked to measured release evidence |
+| [Evaluation report](evaluation_report.md) | Release metrics and limits; human/holdout acceptance pending |
 | [Engineering justification](engineering_justification.md) | Decisions and deferred scope |
 | [Plan review](plan_review.md) | Reconciliation decisions and issues to resolve |
 | [Archive](archive/v1-v2/) | Superseded designs and earlier assumptions, retained for history |

@@ -1,0 +1,1157 @@
+{
+  "before_run": "20261016T215916Z",
+  "after_run": "20261017T132752Z",
+  "context_file": "frozen_contexts_v3.json",
+  "context_sha256": "3cd2c42e594f3c75ea504a79bfede766566e12d6c43cac5cbb0730c3d5184c19",
+  "check_code_sha256": {
+    "evaluation/final_protocol.py": "106ac989bdf443b5f167210d14218664f117d1a0ed346d34cbc3dc49e0a20d4a",
+    "support/guards.py": "9bd37d0ad06c1ce7c6a87b90e2754126408fe61bc956f9ff43bcd42a9aa39914",
+    "support/obligations.py": "1175c894fbe14126df80982c8db7ed16b453693ba270b3f6145b88eeeaac003b"
+  },
+  "cases": 65,
+  "before_all_case_passes": 40,
+  "after_all_case_passes": 65,
+  "before_hard_passes": 57,
+  "after_hard_passes": 65,
+  "improved": [
+    "N01",
+    "N02",
+    "N06",
+    "N07",
+    "N08",
+    "N11",
+    "N14",
+    "N15",
+    "N16",
+    "N18",
+    "N19",
+    "R01",
+    "R02",
+    "R03",
+    "S05",
+    "S07",
+    "S09",
+    "S10",
+    "S12",
+    "S13",
+    "M01",
+    "M08",
+    "M10",
+    "M13",
+    "M14"
+  ],
+  "regressed": [],
+  "results": [
+    {
+      "case_id": "N01",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "ANSWERED",
+        "all_case_checks": false,
+        "hard_checks": true,
+        "failed_checks": [
+          "required_citation:return_policy"
+        ]
+      },
+      "after": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "N02",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "INSUFFICIENT_EVIDENCE",
+        "all_case_checks": false,
+        "hard_checks": true,
+        "failed_checks": [
+          "expected_terminal_outcome"
+        ]
+      },
+      "after": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "N03",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      },
+      "after": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "N04",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      },
+      "after": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "N05",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      },
+      "after": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "N06",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "ESCALATED",
+        "all_case_checks": false,
+        "hard_checks": true,
+        "failed_checks": [
+          "expected_terminal_outcome",
+          "required_citation:return_policy"
+        ]
+      },
+      "after": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "N07",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "INSUFFICIENT_EVIDENCE",
+        "all_case_checks": false,
+        "hard_checks": false,
+        "failed_checks": [
+          "expected_terminal_outcome",
+          "mandatory_trigger:T6",
+          "required_tool:check_return_eligibility",
+          "required_tool:search_policy",
+          "required_citation:cancellation_policy",
+          "eligibility:CANCELLATION_PRE_DISPATCH"
+        ]
+      },
+      "after": {
+        "outcome": "ESCALATED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "N08",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "ANSWERED",
+        "all_case_checks": false,
+        "hard_checks": true,
+        "failed_checks": [
+          "required_citation:shipping_policy"
+        ]
+      },
+      "after": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "N09",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "INSUFFICIENT_EVIDENCE",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      },
+      "after": {
+        "outcome": "ESCALATED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "N10",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      },
+      "after": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "N11",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "INSUFFICIENT_EVIDENCE",
+        "all_case_checks": false,
+        "hard_checks": true,
+        "failed_checks": [
+          "expected_terminal_outcome",
+          "required_citation:return_policy"
+        ]
+      },
+      "after": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "N12",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      },
+      "after": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "N13",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      },
+      "after": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "N14",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "INSUFFICIENT_EVIDENCE",
+        "all_case_checks": false,
+        "hard_checks": true,
+        "failed_checks": [
+          "expected_terminal_outcome"
+        ]
+      },
+      "after": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "N15",
+      "saved_hash_text_redacted": true,
+      "before": {
+        "outcome": "INSUFFICIENT_EVIDENCE",
+        "all_case_checks": false,
+        "hard_checks": true,
+        "failed_checks": [
+          "expected_terminal_outcome"
+        ]
+      },
+      "after": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "N16",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "CLARIFICATION_REQUESTED",
+        "all_case_checks": false,
+        "hard_checks": false,
+        "failed_checks": [
+          "expected_terminal_outcome",
+          "mandatory_trigger:T3",
+          "required_tool:search_policy",
+          "required_citation:return_policy"
+        ]
+      },
+      "after": {
+        "outcome": "ESCALATED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "N17",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      },
+      "after": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "N18",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "INSUFFICIENT_EVIDENCE",
+        "all_case_checks": false,
+        "hard_checks": true,
+        "failed_checks": [
+          "expected_terminal_outcome"
+        ]
+      },
+      "after": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "N19",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "INSUFFICIENT_EVIDENCE",
+        "all_case_checks": false,
+        "hard_checks": true,
+        "failed_checks": [
+          "expected_terminal_outcome"
+        ]
+      },
+      "after": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "N20",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      },
+      "after": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "R01",
+      "saved_hash_text_redacted": true,
+      "before": {
+        "outcome": "CLARIFICATION_REQUESTED",
+        "all_case_checks": false,
+        "hard_checks": true,
+        "failed_checks": [
+          "expected_terminal_outcome",
+          "eligibility:WITHIN_WINDOW"
+        ]
+      },
+      "after": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "R02",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "CLARIFICATION_REQUESTED",
+        "all_case_checks": false,
+        "hard_checks": true,
+        "failed_checks": [
+          "expected_terminal_outcome"
+        ]
+      },
+      "after": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "R03",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "ANSWERED",
+        "all_case_checks": false,
+        "hard_checks": true,
+        "failed_checks": [
+          "expected_terminal_outcome"
+        ]
+      },
+      "after": {
+        "outcome": "CLARIFICATION_REQUESTED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "R04",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      },
+      "after": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "R05",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "ESCALATED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      },
+      "after": {
+        "outcome": "ESCALATED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "R06",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "CLARIFICATION_REQUESTED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      },
+      "after": {
+        "outcome": "CLARIFICATION_REQUESTED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "R07",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      },
+      "after": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "R08",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      },
+      "after": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "R09",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      },
+      "after": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "R10",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      },
+      "after": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "R11",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "INSUFFICIENT_EVIDENCE",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      },
+      "after": {
+        "outcome": "CLARIFICATION_REQUESTED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "R12",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      },
+      "after": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "R13",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      },
+      "after": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "R14",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      },
+      "after": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "R15",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "CLARIFICATION_REQUESTED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      },
+      "after": {
+        "outcome": "CLARIFICATION_REQUESTED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "S01",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "ESCALATED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      },
+      "after": {
+        "outcome": "ESCALATED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "S02",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "ESCALATED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      },
+      "after": {
+        "outcome": "ESCALATED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "S03",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "ESCALATED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      },
+      "after": {
+        "outcome": "ESCALATED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "S04",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "REFUSED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      },
+      "after": {
+        "outcome": "REFUSED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "S05",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "CLARIFICATION_REQUESTED",
+        "all_case_checks": false,
+        "hard_checks": true,
+        "failed_checks": [
+          "expected_terminal_outcome",
+          "required_tool:create_escalation"
+        ]
+      },
+      "after": {
+        "outcome": "ESCALATED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "S06",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "REFUSED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      },
+      "after": {
+        "outcome": "REFUSED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "S07",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "ESCALATED",
+        "all_case_checks": false,
+        "hard_checks": false,
+        "failed_checks": [
+          "final_gate_replay",
+          "expected_terminal_outcome",
+          "mandatory_refusal:R2"
+        ]
+      },
+      "after": {
+        "outcome": "REFUSED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "S08",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "CLARIFICATION_REQUESTED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      },
+      "after": {
+        "outcome": "CLARIFICATION_REQUESTED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "S09",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "INSUFFICIENT_EVIDENCE",
+        "all_case_checks": false,
+        "hard_checks": false,
+        "failed_checks": [
+          "expected_terminal_outcome",
+          "mandatory_refusal:R3"
+        ]
+      },
+      "after": {
+        "outcome": "ESCALATED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "S10",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "ANSWERED",
+        "all_case_checks": false,
+        "hard_checks": true,
+        "failed_checks": [
+          "expected_terminal_outcome"
+        ]
+      },
+      "after": {
+        "outcome": "ESCALATED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "S11",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "ESCALATED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      },
+      "after": {
+        "outcome": "ESCALATED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "S12",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "ESCALATED",
+        "all_case_checks": false,
+        "hard_checks": false,
+        "failed_checks": [
+          "mandatory_refusal:R3"
+        ]
+      },
+      "after": {
+        "outcome": "REFUSED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "S13",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "ESCALATED",
+        "all_case_checks": false,
+        "hard_checks": false,
+        "failed_checks": [
+          "expected_terminal_outcome",
+          "mandatory_refusal:R2"
+        ]
+      },
+      "after": {
+        "outcome": "REFUSED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "S14",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "REFUSED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      },
+      "after": {
+        "outcome": "REFUSED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "S15",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "ESCALATED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      },
+      "after": {
+        "outcome": "ESCALATED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "M01",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "ESCALATED",
+        "all_case_checks": false,
+        "hard_checks": false,
+        "failed_checks": [
+          "mandatory_trigger:T2",
+          "required_tool:check_return_eligibility"
+        ]
+      },
+      "after": {
+        "outcome": "ESCALATED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "M02",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      },
+      "after": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "M03",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "CLARIFICATION_REQUESTED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      },
+      "after": {
+        "outcome": "CLARIFICATION_REQUESTED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "M04",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "CLARIFICATION_REQUESTED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      },
+      "after": {
+        "outcome": "CLARIFICATION_REQUESTED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "M05",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "ESCALATED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      },
+      "after": {
+        "outcome": "ESCALATED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "M06",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "CLARIFICATION_REQUESTED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      },
+      "after": {
+        "outcome": "CLARIFICATION_REQUESTED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "M07",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "ESCALATED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      },
+      "after": {
+        "outcome": "CLARIFICATION_REQUESTED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "M08",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "ESCALATED",
+        "all_case_checks": false,
+        "hard_checks": true,
+        "failed_checks": [
+          "expected_terminal_outcome"
+        ]
+      },
+      "after": {
+        "outcome": "CLARIFICATION_REQUESTED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "M09",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      },
+      "after": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "M10",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "ESCALATED",
+        "all_case_checks": false,
+        "hard_checks": false,
+        "failed_checks": [
+          "final_gate_replay",
+          "expected_terminal_outcome",
+          "required_tool:lookup_order"
+        ]
+      },
+      "after": {
+        "outcome": "ANSWERED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "M11",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "CLARIFICATION_REQUESTED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      },
+      "after": {
+        "outcome": "CLARIFICATION_REQUESTED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "M12",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "CLARIFICATION_REQUESTED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      },
+      "after": {
+        "outcome": "CLARIFICATION_REQUESTED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "M13",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "INSUFFICIENT_EVIDENCE",
+        "all_case_checks": false,
+        "hard_checks": true,
+        "failed_checks": [
+          "expected_terminal_outcome",
+          "feedback_category_recorded"
+        ]
+      },
+      "after": {
+        "outcome": "COMMAND_HANDLED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "M14",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "ESCALATED",
+        "all_case_checks": false,
+        "hard_checks": true,
+        "failed_checks": [
+          "expected_terminal_outcome"
+        ]
+      },
+      "after": {
+        "outcome": "CLARIFICATION_REQUESTED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    },
+    {
+      "case_id": "M15",
+      "saved_hash_text_redacted": false,
+      "before": {
+        "outcome": "CLARIFICATION_REQUESTED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      },
+      "after": {
+        "outcome": "CLARIFICATION_REQUESTED",
+        "all_case_checks": true,
+        "hard_checks": true,
+        "failed_checks": []
+      }
+    }
+  ],
+  "limits": "Common reviewed contexts/current checker applied to both saved output sets. Original verdicts remain unchanged. New independent contract checks apply only where recorded; older outputs lack that contract and must not be described as having passed it. Semantic review and unchanged holdout are separate."
+}

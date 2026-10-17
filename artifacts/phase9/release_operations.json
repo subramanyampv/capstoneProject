@@ -1,0 +1,48 @@
+{
+  "run": "20261017T132752Z",
+  "classification": "Zero-model refusal/command first, then clarification, then two or more distinct result agents or escalation outcome, then one agent. Remaining model-assisted refusals are separately reported without inventing a target. Final turns only; setup/judge/warmup excluded. Nearest-rank percentiles; three concurrent case workers, serialized local embeddings. Observed samples, not production SLA.",
+  "paths": {
+    "single_specialist": {
+      "n": 22,
+      "p50_ms": 11619.303,
+      "p95_ms": 13797.005,
+      "target_p95_ms": 30000,
+      "target_met": true,
+      "individual_over_target": []
+    },
+    "multi_specialist_or_escalation": {
+      "n": 23,
+      "p50_ms": 22589.044,
+      "p95_ms": 32393.051,
+      "target_p95_ms": 45000,
+      "target_met": true,
+      "individual_over_target": []
+    },
+    "clarification": {
+      "n": 14,
+      "p50_ms": 10366.532,
+      "p95_ms": 12515.449,
+      "target_p95_ms": 15000,
+      "target_met": true,
+      "individual_over_target": []
+    },
+    "deterministic_refusal_or_command": {
+      "n": 6,
+      "p50_ms": 9.539,
+      "p95_ms": 47.135,
+      "target_p95_ms": 2000,
+      "target_met": true,
+      "individual_over_target": []
+    }
+  },
+  "provider_reported_final_tokens": 448777,
+  "currency_cost": "Unavailable: endpoint price schedule not configured; token total excludes setup, judging, and usage unavailable on failed transport.",
+  "tool_error_codes": {
+    "INVALID_ARGUMENT": 3,
+    "NOT_FOUND": 2,
+    "TIMEOUT": 1
+  },
+  "runtime_error_codes": {
+    "SPECIALIST_STEP_LIMIT": 1
+  }
+}

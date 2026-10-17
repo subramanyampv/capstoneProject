@@ -1,0 +1,3328 @@
+{
+  "final_run": "20261017T132752Z",
+  "stage": "tools_guards_memory_explicitly_off",
+  "workers": 3,
+  "model_settings": {
+    "provider": "openai_compatible",
+    "model": "qwen3.7-max",
+    "timeout_seconds": 20.0,
+    "max_retries": 1,
+    "response_format": "json_object",
+    "temperature": 0.0,
+    "max_completion_tokens": 1200,
+    "enable_thinking": false
+  },
+  "paired_build_verified": true,
+  "isolated_preferences_and_sessions": true,
+  "comparisons": [
+    {
+      "case_id": "R01",
+      "input_sha256": "ad0d4e10485016e2fe466136a18eafe202bc7e55648137769923af4a60807fc9",
+      "setup_results": [
+        {
+          "response": {
+            "answer": "Order ref:6b2d27e6813f395f2e78 was delivered on September 30, 2026, at 10:47 AM in Denver, CO. Tracking shows it shipped from Reno, NV on September 28 and was out for delivery at the Denver hub on September 29 before final delivery.",
+            "why": [
+              "Tracking events confirm delivery date, time, and location for order ref:6b2d27e6813f395f2e78",
+              "Shipment history provides complete transit timeline from origin to destination"
+            ],
+            "citations": [
+              {
+                "source_id": "tracking:ref:6b2d27e6813f395f2e78",
+                "section": null,
+                "record_version": "2026-10-12"
+              },
+              {
+                "source_id": "order:ref:6b2d27e6813f395f2e78",
+                "section": null,
+                "record_version": "2026-10-12"
+              }
+            ],
+            "next_steps": [],
+            "intents_addressed": [
+              "order_tracking"
+            ],
+            "outcome_claimed": "ANSWERED"
+          },
+          "outcome": "ANSWERED",
+          "ticket": null,
+          "refusals": [],
+          "triggers": [],
+          "obligation_contract": {
+            "intents": [
+              "order_tracking"
+            ],
+            "order_id": "ref:6b2d27e6813f395f2e78",
+            "request_types": [],
+            "policy_docs": [],
+            "tracking": true,
+            "order_status": false,
+            "product": false,
+            "ambiguous_orders": false,
+            "sku": null,
+            "needs_reference": false,
+            "required_sections": [],
+            "version": "request-obligations-v2"
+          },
+          "obligation_audit": [
+            {
+              "obligation": "order_tracking",
+              "evidence_complete": true,
+              "required": [
+                "get_tracking_events"
+              ]
+            }
+          ],
+          "answer_fallback": false,
+          "tool_records": [
+            {
+              "evidence_refs": [
+                {
+                  "source_id": "order:ref:6b2d27e6813f395f2e78",
+                  "section": null,
+                  "record_version": "2026-10-12"
+                }
+              ],
+              "exec_id": "8f5b9c21b77740d1a2bb4d7fc2c89b86",
+              "name": "lookup_order",
+              "status": "ok",
+              "data": {
+                "order_id": "ref:6b2d27e6813f395f2e78",
+                "status": "delivered",
+                "placed_at": "2026-09-25",
+                "dispatched_at": "2026-09-28",
+                "delivered_at": "2026-09-30",
+                "shipping_service": null,
+                "items": [
+                  {
+                    "sku": "SKU-SHOES-001",
+                    "name": "TrailRunner Shoes",
+                    "category": "footwear",
+                    "price": 89.99
+                  }
+                ],
+                "record_version": "2026-10-12"
+              },
+              "error": null,
+              "duration_ms": 0.768
+            },
+            {
+              "evidence_refs": [
+                {
+                  "source_id": "tracking:ref:6b2d27e6813f395f2e78",
+                  "section": null,
+                  "record_version": "2026-10-12"
+                }
+              ],
+              "exec_id": "f1fc29c19ba0439b9d6a0c403c56d351",
+              "name": "get_tracking_events",
+              "status": "ok",
+              "data": {
+                "events": [
+                  {
+                    "ts": "2026-09-28T08:12:00Z",
+                    "status": "shipped",
+                    "city": "Origin facility, Reno NV"
+                  },
+                  {
+                    "ts": "2026-09-29T14:03:00Z",
+                    "status": "out_for_delivery",
+                    "city": "Denver CO hub"
+                  },
+                  {
+                    "ts": "2026-09-30T10:47:00Z",
+                    "status": "delivered",
+                    "city": "Denver CO"
+                  }
+                ],
+                "latest": {
+                  "ts": "2026-09-30T10:47:00Z",
+                  "status": "delivered",
+                  "city": "Denver CO"
+                },
+                "carrier_estimate": null,
+                "stale": false,
+                "record_version": "2026-10-12"
+              },
+              "error": null,
+              "duration_ms": 0.541
+            }
+          ],
+          "results": [
+            {
+              "agent_name": "order_shipping",
+              "status": "success",
+              "summary": "Order ref:6b2d27e6813f395f2e78 was delivered on 2026-09-30 at 10:47 UTC in Denver, CO. Latest tracking event confirms delivery; no carrier estimate or stale data reported.",
+              "evidence": [
+                {
+                  "source_id": "order:ref:6b2d27e6813f395f2e78",
+                  "section": null,
+                  "record_version": "2026-10-12"
+                },
+                {
+                  "source_id": "tracking:ref:6b2d27e6813f395f2e78",
+                  "section": null,
+                  "record_version": "2026-10-12"
+                }
+              ],
+              "facts": {
+                "tools": [
+                  {
+                    "name": "lookup_order",
+                    "args": {
+                      "order_id": "ref:6b2d27e6813f395f2e78"
+                    },
+                    "data": {
+                      "order_id": "ref:6b2d27e6813f395f2e78",
+                      "status": "delivered",
+                      "placed_at": "2026-09-25",
+                      "dispatched_at": "2026-09-28",
+                      "delivered_at": "2026-09-30",
+                      "shipping_service": null,
+                      "items": [
+                        {
+                          "sku": "SKU-SHOES-001",
+                          "name": "TrailRunner Shoes",
+                          "category": "footwear",
+                          "price": 89.99
+                        }
+                      ],
+                      "record_version": "2026-10-12"
+                    }
+                  },
+                  {
+                    "name": "get_tracking_events",
+                    "args": {
+                      "order_id": "ref:6b2d27e6813f395f2e78"
+                    },
+                    "data": {
+                      "events": [
+                        {
+                          "ts": "2026-09-28T08:12:00Z",
+                          "status": "shipped",
+                          "city": "Origin facility, Reno NV"
+                        },
+                        {
+                          "ts": "2026-09-29T14:03:00Z",
+                          "status": "out_for_delivery",
+                          "city": "Denver CO hub"
+                        },
+                        {
+                          "ts": "2026-09-30T10:47:00Z",
+                          "status": "delivered",
+                          "city": "Denver CO"
+                        }
+                      ],
+                      "latest": {
+                        "ts": "2026-09-30T10:47:00Z",
+                        "status": "delivered",
+                        "city": "Denver CO"
+                      },
+                      "carrier_estimate": null,
+                      "stale": false,
+                      "record_version": "2026-10-12"
+                    }
+                  }
+                ]
+              },
+              "flags": {
+                "conflict": false,
+                "requires_review": false
+              }
+            }
+          ],
+          "stages": [
+            "guard_in",
+            "supervisor_plan",
+            "dispatch",
+            "order_shipping",
+            "collect_result",
+            "dispatch",
+            "composer",
+            "guard_out"
+          ],
+          "errors": [],
+          "model_calls": 3,
+          "tool_calls": 2,
+          "handoffs": 1,
+          "replans": 0,
+          "repairs": 0,
+          "tokens": 4653,
+          "style": {
+            "verbosity": "standard",
+            "format": "prose",
+            "version": 0,
+            "word_count": 39
+          },
+          "safety_version": "2026-10-16-v3",
+          "latency_ms": 11426.636,
+          "memory": {
+            "enabled": false,
+            "history_messages": 0,
+            "resolved_reference": false,
+            "expired": false,
+            "reset": false
+          },
+          "request_id": "56c85282e16e4be3a9fb965b5b580522",
+          "tracing": {
+            "trace_id": "56c85282-e16e-4be3-a9fb-965b5b580522",
+            "status": "queued",
+            "span_count": 12
+          }
+        }
+      ],
+      "result": {
+        "response": {
+          "answer": "Which order or product do you mean? Please provide its reference.",
+          "why": [],
+          "citations": [],
+          "next_steps": [],
+          "intents_addressed": [
+            "return_eligibility",
+            "entity_clarification"
+          ],
+          "outcome_claimed": "CLARIFICATION_REQUESTED"
+        },
+        "outcome": "CLARIFICATION_REQUESTED",
+        "ticket": null,
+        "refusals": [],
+        "triggers": [],
+        "obligation_contract": {
+          "intents": [
+            "return_eligibility"
+          ],
+          "order_id": null,
+          "request_types": [],
+          "policy_docs": [
+            "return_policy"
+          ],
+          "tracking": false,
+          "order_status": false,
+          "product": false,
+          "ambiguous_orders": false,
+          "sku": "SKU-SHOES-001",
+          "needs_reference": true,
+          "required_sections": [],
+          "version": "request-obligations-v2"
+        },
+        "obligation_audit": [
+          {
+            "obligation": "request_reference",
+            "evidence_complete": false,
+            "required": [
+              "valid_order_or_product_reference"
+            ]
+          },
+          {
+            "obligation": "policy:return_policy",
+            "evidence_complete": false,
+            "required": [
+              "search_policy:return_policy"
+            ]
+          }
+        ],
+        "answer_fallback": false,
+        "tool_records": [],
+        "results": [],
+        "stages": [
+          "guard_in",
+          "memory_clarification",
+          "guard_out"
+        ],
+        "errors": [],
+        "model_calls": 0,
+        "tool_calls": 0,
+        "handoffs": 0,
+        "replans": 0,
+        "repairs": 0,
+        "tokens": 0,
+        "style": {
+          "verbosity": "standard",
+          "format": "prose",
+          "version": 0,
+          "word_count": 11
+        },
+        "safety_version": "2026-10-16-v3",
+        "latency_ms": 10.131,
+        "memory": {
+          "enabled": false,
+          "history_messages": 0,
+          "resolved_reference": false,
+          "expired": false,
+          "reset": false
+        },
+        "request_id": "5cdffce6db8f4ddf9feb64b98806529c",
+        "tracing": {
+          "trace_id": "5cdffce6-db8f-4ddf-9feb-64b98806529c",
+          "status": "queued",
+          "span_count": 3
+        }
+      },
+      "paired_memory_on_outcome": "ANSWERED",
+      "memory_off_confirmed": true,
+      "paired_memory_on_confirmed": true
+    },
+    {
+      "case_id": "R02",
+      "input_sha256": "fa3105a17baaecb52089169d327f6fa4d36ebaca5d240e0f3ff902652dd5bb4c",
+      "setup_results": [],
+      "result": {
+        "response": {
+          "answer": "Footwear has a 30-day return window calculated in calendar days from verified delivery, inclusive of the final day. This is a return eligibility period, not a refund deadline. Refund processing depends on eligibility verification and review thresholds, not just the window's end. Please contact retailer support for specific refund timelines or to initiate a return.",
+          "why": [
+            "Policy defines footwear return window as 30 calendar days from verified delivery",
+            "Return window determines eligibility to return, not refund processing deadlines",
+            "Refund issuance requires eligibility verification and may require human review above threshold"
+          ],
+          "citations": [
+            {
+              "source_id": "doc:return_policy",
+              "section": "window",
+              "record_version": "v1"
+            },
+            {
+              "source_id": "doc:refund_policy",
+              "section": "review-threshold",
+              "record_version": "v1"
+            }
+          ],
+          "next_steps": [
+            "Contact retailer support for refund timeline details or to start a return"
+          ],
+          "intents_addressed": [
+            "refund_request"
+          ],
+          "outcome_claimed": "ANSWERED"
+        },
+        "outcome": "ANSWERED",
+        "ticket": null,
+        "refusals": [],
+        "triggers": [],
+        "obligation_contract": {
+          "intents": [
+            "refund_request"
+          ],
+          "order_id": null,
+          "request_types": [],
+          "policy_docs": [
+            "refund_policy",
+            "return_policy"
+          ],
+          "tracking": false,
+          "order_status": false,
+          "product": false,
+          "ambiguous_orders": false,
+          "sku": null,
+          "needs_reference": false,
+          "required_sections": [],
+          "version": "request-obligations-v2"
+        },
+        "obligation_audit": [
+          {
+            "obligation": "policy:refund_policy",
+            "evidence_complete": true,
+            "required": [
+              "search_policy:refund_policy"
+            ]
+          },
+          {
+            "obligation": "policy:return_policy",
+            "evidence_complete": true,
+            "required": [
+              "search_policy:return_policy"
+            ]
+          }
+        ],
+        "answer_fallback": false,
+        "tool_records": [
+          {
+            "evidence_refs": [
+              {
+                "source_id": "doc:return_policy",
+                "section": "window",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:refund_policy",
+                "section": "delayed-shipments",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:refund_policy",
+                "section": "review-threshold",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:return_policy",
+                "section": "exceptions",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:return_policy",
+                "section": "condition",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:return_policy",
+                "section": "exclusions",
+                "record_version": "v1"
+              }
+            ],
+            "exec_id": "81d6f82623f34fd38b08491c7569ec11",
+            "name": "search_policy",
+            "status": "ok",
+            "data": {
+              "results": [
+                {
+                  "chunk_id": "return_policy:v1:window:0",
+                  "doc_id": "return_policy",
+                  "section_id": "window",
+                  "version": "v1",
+                  "effective_date": "2026-10-01",
+                  "authority": "policy",
+                  "text": "Window\nReturns use calendar days from verified delivery, inclusive on the final day. The default return window is 30 days. Footwear and apparel have 30-day windows, home products have 30 days, and electronics have 15 days. An undelivered order has not started its return window. The earlier reported 60-day window is not current; use this version and disclose the discrepancy.",
+                  "score": 0.560593,
+                  "category": "all"
+                },
+                {
+                  "chunk_id": "refund_policy:v1:delayed-shipments:0",
+                  "doc_id": "refund_policy",
+                  "section_id": "delayed-shipments",
+                  "version": "v1",
+                  "effective_date": "2026-10-01",
+                  "authority": "policy",
+                  "text": "Delayed shipments\nUse current tracking events and shipping policy to explain delays. A delay alone does not prove refund eligibility. Above-threshold amounts require review even when a parcel is delayed. Escalate unresolved delivery/refund requests with evidence references; never guarantee compensation.",
+                  "score": 0.560271,
+                  "category": "all"
+                },
+                {
+                  "chunk_id": "refund_policy:v1:review-threshold:0",
+                  "doc_id": "refund_policy",
+                  "section_id": "review-threshold",
+                  "version": "v1",
+                  "effective_date": "2026-10-01",
+                  "authority": "policy",
+                  "text": "Review threshold\nThe configured automatic-review threshold is $100. Refund amounts above $100 require human review; the agent cannot bypass that threshold. ref:c3181ffefc9c0f6c47e7's $250 knife set therefore requires review. At or below $100, eligibility still requires verified records and all applicable return rules. The evaluated agent issues no refunds at any amount.",
+                  "score": 0.539887,
+                  "category": "all"
+                },
+                {
+                  "chunk_id": "return_policy:v1:exceptions:0",
+                  "doc_id": "return_policy",
+                  "section_id": "exceptions",
+                  "version": "v1",
+                  "effective_date": "2026-10-01",
+                  "authority": "policy",
+                  "text": "Exceptions\nRequests for an exception on an ineligible item require human review. Product injury or safety complaints always require safety escalation. This agent provides eligibility information; it does not create returns or issue refunds.",
+                  "score": 0.534752,
+                  "category": "all"
+                },
+                {
+                  "chunk_id": "return_policy:v1:condition:0",
+                  "doc_id": "return_policy",
+                  "section_id": "condition",
+                  "version": "v1",
+                  "effective_date": "2026-10-01",
+                  "authority": "policy",
+                  "text": "Condition\nFor review, provide the order reference and describe the item condition. The agent must not infer condition or approve an exception. Eligibility is computed from the verified order and configured rules, not a customer-supplied delivery date.",
+                  "score": 0.472886,
+                  "category": "all"
+                },
+                {
+                  "chunk_id": "return_policy:v1:exclusions:0",
+                  "doc_id": "return_policy",
+                  "section_id": "exclusions",
+                  "version": "v1",
+                  "effective_date": "2026-10-01",
+                  "authority": "policy",
+                  "text": "Exclusions\nPerishable grocery products, including the Gourmet Cheese Box, are excluded from returns. No live-animal, kayak or other unlisted-product-specific policy is defined. Missing policy requires clarification or abstention, not a generic eligibility promise.",
+                  "score": 0.472159,
+                  "category": "all"
+                }
+              ],
+              "below_threshold": false,
+              "conflict": false,
+              "conflict_details": null,
+              "index_version": "v2",
+              "category_filter": null,
+              "conflict_evidence_exceeds_k": false
+            },
+            "error": null,
+            "duration_ms": 596.352
+          }
+        ],
+        "results": [
+          {
+            "agent_name": "policy_product",
+            "status": "success",
+            "summary": "Footwear refund/return window is 30 calendar days from verified delivery, inclusive of the final day. No separate footwear-specific refund deadline differs from the standard return window in current policy.",
+            "evidence": [
+              {
+                "source_id": "doc:return_policy",
+                "section": "condition",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:refund_policy",
+                "section": "delayed-shipments",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:return_policy",
+                "section": "exceptions",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:return_policy",
+                "section": "exclusions",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:refund_policy",
+                "section": "review-threshold",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:return_policy",
+                "section": "window",
+                "record_version": "v1"
+              }
+            ],
+            "facts": {
+              "tools": [
+                {
+                  "name": "search_policy",
+                  "args": {
+                    "query": "refund policy request review threshold delayed shipments return policy calendar days window condition exclusions restocking exceptions",
+                    "doc_types": [
+                      "refund_policy",
+                      "return_policy"
+                    ],
+                    "category": null,
+                    "k": 10
+                  },
+                  "data": {
+                    "results": [
+                      {
+                        "chunk_id": "return_policy:v1:window:0",
+                        "doc_id": "return_policy",
+                        "section_id": "window",
+                        "version": "v1",
+                        "effective_date": "2026-10-01",
+                        "authority": "policy",
+                        "text": "Window\nReturns use calendar days from verified delivery, inclusive on the final day. The default return window is 30 days. Footwear and apparel have 30-day windows, home products have 30 days, and electronics have 15 days. An undelivered order has not started its return window. The earlier reported 60-day window is not current; use this version and disclose the discrepancy.",
+                        "score": 0.560593,
+                        "category": "all"
+                      },
+                      {
+                        "chunk_id": "refund_policy:v1:delayed-shipments:0",
+                        "doc_id": "refund_policy",
+                        "section_id": "delayed-shipments",
+                        "version": "v1",
+                        "effective_date": "2026-10-01",
+                        "authority": "policy",
+                        "text": "Delayed shipments\nUse current tracking events and shipping policy to explain delays. A delay alone does not prove refund eligibility. Above-threshold amounts require review even when a parcel is delayed. Escalate unresolved delivery/refund requests with evidence references; never guarantee compensation.",
+                        "score": 0.560271,
+                        "category": "all"
+                      },
+                      {
+                        "chunk_id": "refund_policy:v1:review-threshold:0",
+                        "doc_id": "refund_policy",
+                        "section_id": "review-threshold",
+                        "version": "v1",
+                        "effective_date": "2026-10-01",
+                        "authority": "policy",
+                        "text": "Review threshold\nThe configured automatic-review threshold is $100. Refund amounts above $100 require human review; the agent cannot bypass that threshold. ref:c3181ffefc9c0f6c47e7's $250 knife set therefore requires review. At or below $100, eligibility still requires verified records and all applicable return rules. The evaluated agent issues no refunds at any amount.",
+                        "score": 0.539887,
+                        "category": "all"
+                      },
+                      {
+                        "chunk_id": "return_policy:v1:exceptions:0",
+                        "doc_id": "return_policy",
+                        "section_id": "exceptions",
+                        "version": "v1",
+                        "effective_date": "2026-10-01",
+                        "authority": "policy",
+                        "text": "Exceptions\nRequests for an exception on an ineligible item require human review. Product injury or safety complaints always require safety escalation. This agent provides eligibility information; it does not create returns or issue refunds.",
+                        "score": 0.534752,
+                        "category": "all"
+                      },
+                      {
+                        "chunk_id": "return_policy:v1:condition:0",
+                        "doc_id": "return_policy",
+                        "section_id": "condition",
+                        "version": "v1",
+                        "effective_date": "2026-10-01",
+                        "authority": "policy",
+                        "text": "Condition\nFor review, provide the order reference and describe the item condition. The agent must not infer condition or approve an exception. Eligibility is computed from the verified order and configured rules, not a customer-supplied delivery date.",
+                        "score": 0.472886,
+                        "category": "all"
+                      },
+                      {
+                        "chunk_id": "return_policy:v1:exclusions:0",
+                        "doc_id": "return_policy",
+                        "section_id": "exclusions",
+                        "version": "v1",
+                        "effective_date": "2026-10-01",
+                        "authority": "policy",
+                        "text": "Exclusions\nPerishable grocery products, including the Gourmet Cheese Box, are excluded from returns. No live-animal, kayak or other unlisted-product-specific policy is defined. Missing policy requires clarification or abstention, not a generic eligibility promise.",
+                        "score": 0.472159,
+                        "category": "all"
+                      }
+                    ],
+                    "below_threshold": false,
+                    "conflict": false,
+                    "conflict_details": null,
+                    "index_version": "v2",
+                    "category_filter": null,
+                    "conflict_evidence_exceeds_k": false
+                  }
+                }
+              ]
+            },
+            "flags": {
+              "conflict": false,
+              "requires_review": false
+            }
+          }
+        ],
+        "stages": [
+          "guard_in",
+          "supervisor_plan",
+          "dispatch",
+          "policy_product",
+          "collect_result",
+          "dispatch",
+          "composer",
+          "guard_out"
+        ],
+        "errors": [],
+        "model_calls": 3,
+        "tool_calls": 1,
+        "handoffs": 1,
+        "replans": 0,
+        "repairs": 0,
+        "tokens": 6371,
+        "style": {
+          "verbosity": "standard",
+          "format": "prose",
+          "version": 0,
+          "word_count": 55
+        },
+        "safety_version": "2026-10-16-v3",
+        "latency_ms": 13871.511,
+        "memory": {
+          "enabled": false,
+          "history_messages": 0,
+          "resolved_reference": false,
+          "expired": false,
+          "reset": false
+        },
+        "request_id": "5f0105f028e7433ebf75d1445fe0bf5e",
+        "tracing": {
+          "trace_id": "5f0105f0-28e7-433e-bf75-d1445fe0bf5e",
+          "status": "queued",
+          "span_count": 11
+        }
+      },
+      "paired_memory_on_outcome": "ANSWERED",
+      "memory_off_confirmed": true,
+      "paired_memory_on_confirmed": true
+    },
+    {
+      "case_id": "R05",
+      "input_sha256": "efc62674da7402d14d3c6af8a71269c74c74a7f36fc446bcb8da5c8f43469f55",
+      "setup_results": [],
+      "result": {
+        "response": {
+          "answer": "I found conflicting information regarding the return window for your Bluetooth Speaker. The FAQ states electronics can be returned within 30 days, while the return policy specifies a 15-day window for electronics. Because these sources disagree, I cannot confirm which timeframe applies to your speaker without human review. I have created ticket MOCK-62497fb82aa6 in the policy queue as a local mock handoff to address this discrepancy. This is not a delivery to a real team. Please contact retailer support directly for actual review and to determine your specific eligibility.",
+          "why": [
+            "Policy sources conflict on electronics return window duration",
+            "Escalation required to resolve FAQ versus policy discrepancy",
+            "Eligibility cannot be determined until conflict is reviewed"
+          ],
+          "citations": [
+            {
+              "source_id": "doc:faq",
+              "section": "electronics-returns",
+              "record_version": "v1"
+            },
+            {
+              "source_id": "doc:return_policy",
+              "section": "window",
+              "record_version": "v1"
+            }
+          ],
+          "next_steps": [
+            "Contact retailer support for actual review of return eligibility",
+            "Reference ticket MOCK-62497fb82aa6 when contacting support"
+          ],
+          "intents_addressed": [
+            "return_eligibility"
+          ],
+          "outcome_claimed": "ESCALATED"
+        },
+        "outcome": "ESCALATED",
+        "ticket": {
+          "ticket_id": "MOCK-62497fb82aa6",
+          "status": "created",
+          "queue": "policy",
+          "priority": "normal",
+          "triggers": [
+            "T3"
+          ],
+          "summary_hash": "3080bfa4ef5d3d2de368436da013d675fa3fecc9457c159ee7a8c0ecff6d1f7c",
+          "idempotent_replay": false
+        },
+        "refusals": [],
+        "triggers": [
+          "T3"
+        ],
+        "obligation_contract": {
+          "intents": [
+            "return_eligibility"
+          ],
+          "order_id": null,
+          "request_types": [],
+          "policy_docs": [
+            "return_policy"
+          ],
+          "tracking": false,
+          "order_status": false,
+          "product": false,
+          "ambiguous_orders": false,
+          "sku": "SKU-ELEC-004",
+          "needs_reference": false,
+          "required_sections": [],
+          "version": "request-obligations-v2"
+        },
+        "obligation_audit": [
+          {
+            "obligation": "policy:return_policy",
+            "evidence_complete": true,
+            "required": [
+              "search_policy:return_policy"
+            ]
+          }
+        ],
+        "answer_fallback": false,
+        "tool_records": [
+          {
+            "evidence_refs": [
+              {
+                "source_id": "product:SKU-ELEC-004",
+                "section": null,
+                "record_version": "2026-10-12"
+              }
+            ],
+            "exec_id": "6e5e9364a73a40629a3c8461524471db",
+            "name": "get_product_details",
+            "status": "ok",
+            "data": {
+              "sku": "SKU-ELEC-004",
+              "name": "Bluetooth Speaker",
+              "category": "electronics",
+              "return_category": "electronics",
+              "warranty_days": 365,
+              "warranty_months": null,
+              "specs": {
+                "material": "ABS housing, IPX7 rating",
+                "sizes": null,
+                "care": "Wipe with dry cloth.",
+                "sizing_note": null
+              },
+              "record_version": "2026-10-12"
+            },
+            "error": null,
+            "duration_ms": 0.502
+          },
+          {
+            "evidence_refs": [
+              {
+                "source_id": "doc:faq",
+                "section": "electronics-returns",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:return_policy",
+                "section": "window",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:return_policy",
+                "section": "exceptions",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:return_policy",
+                "section": "exclusions",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:return_policy",
+                "section": "condition",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:return_policy",
+                "section": "restocking",
+                "record_version": "v1"
+              }
+            ],
+            "exec_id": "2a3d27195efc40639f42f6d16cadeddf",
+            "name": "search_policy",
+            "status": "ok",
+            "data": {
+              "results": [
+                {
+                  "chunk_id": "faq:v1:electronics-returns:0",
+                  "doc_id": "faq",
+                  "section_id": "electronics-returns",
+                  "version": "v1",
+                  "effective_date": "2026-10-01",
+                  "authority": "faq",
+                  "text": "Electronics returns\nLegacy FAQ wording says electronics, including the Bluetooth Speaker, can be returned within 30 days. This deliberately inconsistent FAQ passage is retained for conflict evaluation: return_policy v1 section window says 15 days. Both sources are applicable in the scenario and the discrepancy is unresolved. Do not use this FAQ to override policy; surface both references and escalate per escalation_guidelines section conflicts.",
+                  "score": null,
+                  "category": "electronics"
+                },
+                {
+                  "chunk_id": "return_policy:v1:window:0",
+                  "doc_id": "return_policy",
+                  "section_id": "window",
+                  "version": "v1",
+                  "effective_date": "2026-10-01",
+                  "authority": "policy",
+                  "text": "Window\nReturns use calendar days from verified delivery, inclusive on the final day. The default return window is 30 days. Footwear and apparel have 30-day windows, home products have 30 days, and electronics have 15 days. An undelivered order has not started its return window. The earlier reported 60-day window is not current; use this version and disclose the discrepancy.",
+                  "score": 0.58026,
+                  "category": "all"
+                },
+                {
+                  "chunk_id": "return_policy:v1:exceptions:0",
+                  "doc_id": "return_policy",
+                  "section_id": "exceptions",
+                  "version": "v1",
+                  "effective_date": "2026-10-01",
+                  "authority": "policy",
+                  "text": "Exceptions\nRequests for an exception on an ineligible item require human review. Product injury or safety complaints always require safety escalation. This agent provides eligibility information; it does not create returns or issue refunds.",
+                  "score": 0.591963,
+                  "category": "all"
+                },
+                {
+                  "chunk_id": "return_policy:v1:exclusions:0",
+                  "doc_id": "return_policy",
+                  "section_id": "exclusions",
+                  "version": "v1",
+                  "effective_date": "2026-10-01",
+                  "authority": "policy",
+                  "text": "Exclusions\nPerishable grocery products, including the Gourmet Cheese Box, are excluded from returns. No live-animal, kayak or other unlisted-product-specific policy is defined. Missing policy requires clarification or abstention, not a generic eligibility promise.",
+                  "score": 0.552952,
+                  "category": "all"
+                },
+                {
+                  "chunk_id": "return_policy:v1:condition:0",
+                  "doc_id": "return_policy",
+                  "section_id": "condition",
+                  "version": "v1",
+                  "effective_date": "2026-10-01",
+                  "authority": "policy",
+                  "text": "Condition\nFor review, provide the order reference and describe the item condition. The agent must not infer condition or approve an exception. Eligibility is computed from the verified order and configured rules, not a customer-supplied delivery date.",
+                  "score": 0.527859,
+                  "category": "all"
+                },
+                {
+                  "chunk_id": "return_policy:v1:restocking:0",
+                  "doc_id": "return_policy",
+                  "section_id": "restocking",
+                  "version": "v1",
+                  "effective_date": "2026-10-01",
+                  "authority": "policy",
+                  "text": "Restocking\nOpened electronics have a 10% restocking fee under the configured electronics_opened rule. Do not infer that an item is opened. Missing condition evidence requires clarification or review.",
+                  "score": 0.50828,
+                  "category": "electronics"
+                }
+              ],
+              "below_threshold": false,
+              "conflict": true,
+              "conflict_details": [
+                {
+                  "kind": "declared_faq_policy_conflict",
+                  "sources": [
+                    "faq:v1:electronics-returns:0",
+                    "return_policy:v1:window:0"
+                  ]
+                }
+              ],
+              "index_version": "v2",
+              "category_filter": "electronics",
+              "conflict_evidence_exceeds_k": false
+            },
+            "error": null,
+            "duration_ms": 167.175
+          },
+          {
+            "evidence_refs": [],
+            "exec_id": "af5cc9516a7844b1b9a8d72a729a977b",
+            "name": "create_escalation",
+            "status": "ok",
+            "data": {
+              "ticket_id": "MOCK-62497fb82aa6",
+              "status": "created",
+              "queue": "policy",
+              "priority": "normal",
+              "triggers": [
+                "T3"
+              ],
+              "summary_hash": "3080bfa4ef5d3d2de368436da013d675fa3fecc9457c159ee7a8c0ecff6d1f7c",
+              "idempotent_replay": false
+            },
+            "error": null,
+            "duration_ms": 37.643
+          }
+        ],
+        "results": [
+          {
+            "agent_name": "policy_product",
+            "status": "escalation_required",
+            "summary": "Conflict exists between FAQ (30 days) and return_policy window section (15 days for electronics) for SKU-ELEC-004. Return policy is authoritative but FAQ discrepancy is unresolved per source guidance. Escalation required to reconcile conflicting return window durations before confirming eligibility.",
+            "evidence": [
+              {
+                "source_id": "product:SKU-ELEC-004",
+                "section": null,
+                "record_version": "2026-10-12"
+              },
+              {
+                "source_id": "doc:return_policy",
+                "section": "condition",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:faq",
+                "section": "electronics-returns",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:return_policy",
+                "section": "exceptions",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:return_policy",
+                "section": "exclusions",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:return_policy",
+                "section": "restocking",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:return_policy",
+                "section": "window",
+                "record_version": "v1"
+              }
+            ],
+            "facts": {
+              "tools": [
+                {
+                  "name": "get_product_details",
+                  "args": {
+                    "sku": "SKU-ELEC-004",
+                    "name": null
+                  },
+                  "data": {
+                    "sku": "SKU-ELEC-004",
+                    "name": "Bluetooth Speaker",
+                    "category": "electronics",
+                    "return_category": "electronics",
+                    "warranty_days": 365,
+                    "warranty_months": null,
+                    "specs": {
+                      "material": "ABS housing, IPX7 rating",
+                      "sizes": null,
+                      "care": "Wipe with dry cloth.",
+                      "sizing_note": null
+                    },
+                    "record_version": "2026-10-12"
+                  }
+                },
+                {
+                  "name": "search_policy",
+                  "args": {
+                    "query": "return policy calendar days window condition exclusions restocking exceptions",
+                    "doc_types": [
+                      "return_policy"
+                    ],
+                    "category": "electronics",
+                    "k": 10
+                  },
+                  "data": {
+                    "results": [
+                      {
+                        "chunk_id": "faq:v1:electronics-returns:0",
+                        "doc_id": "faq",
+                        "section_id": "electronics-returns",
+                        "version": "v1",
+                        "effective_date": "2026-10-01",
+                        "authority": "faq",
+                        "text": "Electronics returns\nLegacy FAQ wording says electronics, including the Bluetooth Speaker, can be returned within 30 days. This deliberately inconsistent FAQ passage is retained for conflict evaluation: return_policy v1 section window says 15 days. Both sources are applicable in the scenario and the discrepancy is unresolved. Do not use this FAQ to override policy; surface both references and escalate per escalation_guidelines section conflicts.",
+                        "score": null,
+                        "category": "electronics"
+                      },
+                      {
+                        "chunk_id": "return_policy:v1:window:0",
+                        "doc_id": "return_policy",
+                        "section_id": "window",
+                        "version": "v1",
+                        "effective_date": "2026-10-01",
+                        "authority": "policy",
+                        "text": "Window\nReturns use calendar days from verified delivery, inclusive on the final day. The default return window is 30 days. Footwear and apparel have 30-day windows, home products have 30 days, and electronics have 15 days. An undelivered order has not started its return window. The earlier reported 60-day window is not current; use this version and disclose the discrepancy.",
+                        "score": 0.58026,
+                        "category": "all"
+                      },
+                      {
+                        "chunk_id": "return_policy:v1:exceptions:0",
+                        "doc_id": "return_policy",
+                        "section_id": "exceptions",
+                        "version": "v1",
+                        "effective_date": "2026-10-01",
+                        "authority": "policy",
+                        "text": "Exceptions\nRequests for an exception on an ineligible item require human review. Product injury or safety complaints always require safety escalation. This agent provides eligibility information; it does not create returns or issue refunds.",
+                        "score": 0.591963,
+                        "category": "all"
+                      },
+                      {
+                        "chunk_id": "return_policy:v1:exclusions:0",
+                        "doc_id": "return_policy",
+                        "section_id": "exclusions",
+                        "version": "v1",
+                        "effective_date": "2026-10-01",
+                        "authority": "policy",
+                        "text": "Exclusions\nPerishable grocery products, including the Gourmet Cheese Box, are excluded from returns. No live-animal, kayak or other unlisted-product-specific policy is defined. Missing policy requires clarification or abstention, not a generic eligibility promise.",
+                        "score": 0.552952,
+                        "category": "all"
+                      },
+                      {
+                        "chunk_id": "return_policy:v1:condition:0",
+                        "doc_id": "return_policy",
+                        "section_id": "condition",
+                        "version": "v1",
+                        "effective_date": "2026-10-01",
+                        "authority": "policy",
+                        "text": "Condition\nFor review, provide the order reference and describe the item condition. The agent must not infer condition or approve an exception. Eligibility is computed from the verified order and configured rules, not a customer-supplied delivery date.",
+                        "score": 0.527859,
+                        "category": "all"
+                      },
+                      {
+                        "chunk_id": "return_policy:v1:restocking:0",
+                        "doc_id": "return_policy",
+                        "section_id": "restocking",
+                        "version": "v1",
+                        "effective_date": "2026-10-01",
+                        "authority": "policy",
+                        "text": "Restocking\nOpened electronics have a 10% restocking fee under the configured electronics_opened rule. Do not infer that an item is opened. Missing condition evidence requires clarification or review.",
+                        "score": 0.50828,
+                        "category": "electronics"
+                      }
+                    ],
+                    "below_threshold": false,
+                    "conflict": true,
+                    "conflict_details": [
+                      {
+                        "kind": "declared_faq_policy_conflict",
+                        "sources": [
+                          "faq:v1:electronics-returns:0",
+                          "return_policy:v1:window:0"
+                        ]
+                      }
+                    ],
+                    "index_version": "v2",
+                    "category_filter": "electronics",
+                    "conflict_evidence_exceeds_k": false
+                  }
+                }
+              ]
+            },
+            "flags": {
+              "conflict": true,
+              "requires_review": false
+            }
+          },
+          {
+            "agent_name": "escalation",
+            "status": "success",
+            "summary": "Policy conflict detected for electronics return window: FAQ states 30 days while return_policy specifies 15 days. Escalation created for human review per conflict guidelines.",
+            "evidence": [
+              {
+                "source_id": "product:SKU-ELEC-004",
+                "section": null,
+                "record_version": "2026-10-12"
+              },
+              {
+                "source_id": "doc:return_policy",
+                "section": "condition",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:faq",
+                "section": "electronics-returns",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:return_policy",
+                "section": "exceptions",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:return_policy",
+                "section": "exclusions",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:return_policy",
+                "section": "restocking",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:return_policy",
+                "section": "window",
+                "record_version": "v1"
+              }
+            ],
+            "facts": {
+              "tools": [
+                {
+                  "name": "create_escalation",
+                  "args": {
+                    "triggers": [
+                      "T3"
+                    ],
+                    "summary": "Policy conflict detected for electronics return window: FAQ states 30 days while return_policy specifies 15 days for electronics. Conflict requires human review per escalation guidelines. No eligibility determination possible until resolved.",
+                    "evidence_refs": [
+                      {
+                        "source_id": "doc:return_policy",
+                        "section": "window",
+                        "record_version": "v1"
+                      },
+                      {
+                        "source_id": "doc:faq",
+                        "section": "electronics-returns",
+                        "record_version": "v1"
+                      }
+                    ],
+                    "order_ref": null
+                  },
+                  "data": {
+                    "ticket_id": "MOCK-62497fb82aa6",
+                    "status": "created",
+                    "queue": "policy",
+                    "priority": "normal",
+                    "triggers": [
+                      "T3"
+                    ],
+                    "summary_hash": "3080bfa4ef5d3d2de368436da013d675fa3fecc9457c159ee7a8c0ecff6d1f7c",
+                    "idempotent_replay": false
+                  }
+                }
+              ]
+            },
+            "flags": {
+              "conflict": true,
+              "requires_review": false
+            }
+          }
+        ],
+        "stages": [
+          "guard_in",
+          "supervisor_plan",
+          "dispatch",
+          "policy_product",
+          "collect_result",
+          "dispatch",
+          "escalation",
+          "collect_result",
+          "dispatch",
+          "composer",
+          "guard_out"
+        ],
+        "errors": [],
+        "model_calls": 5,
+        "tool_calls": 3,
+        "handoffs": 2,
+        "replans": 0,
+        "repairs": 0,
+        "tokens": 13158,
+        "style": {
+          "verbosity": "standard",
+          "format": "prose",
+          "version": 0,
+          "word_count": 89
+        },
+        "safety_version": "2026-10-16-v3",
+        "latency_ms": 21321.44,
+        "memory": {
+          "enabled": false,
+          "history_messages": 0,
+          "resolved_reference": false,
+          "expired": false,
+          "reset": false
+        },
+        "request_id": "0558d26fe91d429482cec52c6a7c358c",
+        "tracing": {
+          "trace_id": "0558d26f-e91d-4294-82ce-c52c6a7c358c",
+          "status": "queued",
+          "span_count": 17
+        }
+      },
+      "paired_memory_on_outcome": "ESCALATED",
+      "memory_off_confirmed": true,
+      "paired_memory_on_confirmed": true
+    },
+    {
+      "case_id": "R08",
+      "input_sha256": "6f8f2581bfbb9389b5a3ca15a46b44d837a51605a59d4f4c5f7b49f0b125182f",
+      "setup_results": [],
+      "result": {
+        "response": {
+          "answer": "I cannot confirm eligibility based solely on a date you provide. Returns use calendar days from verified delivery, inclusive on the final day, with a default 30-day window for most items. However, eligibility is computed from the verified order and configured rules, not a customer-supplied delivery date. Additionally, some products like perishable groceries are excluded entirely. Please contact retailer support with your order reference to verify your specific return window and item eligibility.",
+          "why": [
+            "Policy requires verified delivery data to determine eligibility; agent cannot rely on customer-supplied dates",
+            "Return windows vary by category and some items are excluded regardless of timing",
+            "Agent provides eligibility information only and does not create returns or issue refunds"
+          ],
+          "citations": [
+            {
+              "source_id": "doc:return_policy",
+              "section": "window",
+              "record_version": "v1"
+            },
+            {
+              "source_id": "doc:return_policy",
+              "section": "condition",
+              "record_version": "v1"
+            },
+            {
+              "source_id": "doc:return_policy",
+              "section": "exclusions",
+              "record_version": "v1"
+            },
+            {
+              "source_id": "doc:return_policy",
+              "section": "exceptions",
+              "record_version": "v1"
+            }
+          ],
+          "next_steps": [
+            "Contact retailer support with your order reference to verify delivery date and eligibility",
+            "Confirm item type as some products are excluded from returns"
+          ],
+          "intents_addressed": [
+            "return_eligibility"
+          ],
+          "outcome_claimed": "ANSWERED"
+        },
+        "outcome": "ANSWERED",
+        "ticket": null,
+        "refusals": [],
+        "triggers": [],
+        "obligation_contract": {
+          "intents": [
+            "return_eligibility"
+          ],
+          "order_id": null,
+          "request_types": [],
+          "policy_docs": [
+            "return_policy"
+          ],
+          "tracking": false,
+          "order_status": false,
+          "product": false,
+          "ambiguous_orders": false,
+          "sku": null,
+          "needs_reference": false,
+          "required_sections": [],
+          "version": "request-obligations-v2"
+        },
+        "obligation_audit": [
+          {
+            "obligation": "policy:return_policy",
+            "evidence_complete": true,
+            "required": [
+              "search_policy:return_policy"
+            ]
+          }
+        ],
+        "answer_fallback": false,
+        "tool_records": [
+          {
+            "evidence_refs": [
+              {
+                "source_id": "doc:return_policy",
+                "section": "exceptions",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:return_policy",
+                "section": "exclusions",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:return_policy",
+                "section": "condition",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:return_policy",
+                "section": "window",
+                "record_version": "v1"
+              }
+            ],
+            "exec_id": "919ed36c181e4e698a272bcd82cf4e12",
+            "name": "search_policy",
+            "status": "ok",
+            "data": {
+              "results": [
+                {
+                  "chunk_id": "return_policy:v1:exceptions:0",
+                  "doc_id": "return_policy",
+                  "section_id": "exceptions",
+                  "version": "v1",
+                  "effective_date": "2026-10-01",
+                  "authority": "policy",
+                  "text": "Exceptions\nRequests for an exception on an ineligible item require human review. Product injury or safety complaints always require safety escalation. This agent provides eligibility information; it does not create returns or issue refunds.",
+                  "score": 0.550776,
+                  "category": "all"
+                },
+                {
+                  "chunk_id": "return_policy:v1:exclusions:0",
+                  "doc_id": "return_policy",
+                  "section_id": "exclusions",
+                  "version": "v1",
+                  "effective_date": "2026-10-01",
+                  "authority": "policy",
+                  "text": "Exclusions\nPerishable grocery products, including the Gourmet Cheese Box, are excluded from returns. No live-animal, kayak or other unlisted-product-specific policy is defined. Missing policy requires clarification or abstention, not a generic eligibility promise.",
+                  "score": 0.525569,
+                  "category": "all"
+                },
+                {
+                  "chunk_id": "return_policy:v1:condition:0",
+                  "doc_id": "return_policy",
+                  "section_id": "condition",
+                  "version": "v1",
+                  "effective_date": "2026-10-01",
+                  "authority": "policy",
+                  "text": "Condition\nFor review, provide the order reference and describe the item condition. The agent must not infer condition or approve an exception. Eligibility is computed from the verified order and configured rules, not a customer-supplied delivery date.",
+                  "score": 0.514839,
+                  "category": "all"
+                },
+                {
+                  "chunk_id": "return_policy:v1:window:0",
+                  "doc_id": "return_policy",
+                  "section_id": "window",
+                  "version": "v1",
+                  "effective_date": "2026-10-01",
+                  "authority": "policy",
+                  "text": "Window\nReturns use calendar days from verified delivery, inclusive on the final day. The default return window is 30 days. Footwear and apparel have 30-day windows, home products have 30 days, and electronics have 15 days. An undelivered order has not started its return window. The earlier reported 60-day window is not current; use this version and disclose the discrepancy.",
+                  "score": 0.507758,
+                  "category": "all"
+                }
+              ],
+              "below_threshold": false,
+              "conflict": false,
+              "conflict_details": null,
+              "index_version": "v2",
+              "category_filter": null,
+              "conflict_evidence_exceeds_k": false
+            },
+            "error": null,
+            "duration_ms": 698.622
+          }
+        ],
+        "results": [
+          {
+            "agent_name": "policy_product",
+            "status": "success",
+            "summary": "The default return window is 30 calendar days from verified delivery, inclusive on the final day. A delivery exactly 30 days ago falls within this window, provided the item is not excluded and eligibility is computed from verified order records.",
+            "evidence": [
+              {
+                "source_id": "doc:return_policy",
+                "section": "condition",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:return_policy",
+                "section": "exceptions",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:return_policy",
+                "section": "exclusions",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:return_policy",
+                "section": "window",
+                "record_version": "v1"
+              }
+            ],
+            "facts": {
+              "tools": [
+                {
+                  "name": "search_policy",
+                  "args": {
+                    "query": "return policy calendar days window condition exclusions restocking exceptions",
+                    "doc_types": [
+                      "return_policy"
+                    ],
+                    "category": null,
+                    "k": 10
+                  },
+                  "data": {
+                    "results": [
+                      {
+                        "chunk_id": "return_policy:v1:exceptions:0",
+                        "doc_id": "return_policy",
+                        "section_id": "exceptions",
+                        "version": "v1",
+                        "effective_date": "2026-10-01",
+                        "authority": "policy",
+                        "text": "Exceptions\nRequests for an exception on an ineligible item require human review. Product injury or safety complaints always require safety escalation. This agent provides eligibility information; it does not create returns or issue refunds.",
+                        "score": 0.550776,
+                        "category": "all"
+                      },
+                      {
+                        "chunk_id": "return_policy:v1:exclusions:0",
+                        "doc_id": "return_policy",
+                        "section_id": "exclusions",
+                        "version": "v1",
+                        "effective_date": "2026-10-01",
+                        "authority": "policy",
+                        "text": "Exclusions\nPerishable grocery products, including the Gourmet Cheese Box, are excluded from returns. No live-animal, kayak or other unlisted-product-specific policy is defined. Missing policy requires clarification or abstention, not a generic eligibility promise.",
+                        "score": 0.525569,
+                        "category": "all"
+                      },
+                      {
+                        "chunk_id": "return_policy:v1:condition:0",
+                        "doc_id": "return_policy",
+                        "section_id": "condition",
+                        "version": "v1",
+                        "effective_date": "2026-10-01",
+                        "authority": "policy",
+                        "text": "Condition\nFor review, provide the order reference and describe the item condition. The agent must not infer condition or approve an exception. Eligibility is computed from the verified order and configured rules, not a customer-supplied delivery date.",
+                        "score": 0.514839,
+                        "category": "all"
+                      },
+                      {
+                        "chunk_id": "return_policy:v1:window:0",
+                        "doc_id": "return_policy",
+                        "section_id": "window",
+                        "version": "v1",
+                        "effective_date": "2026-10-01",
+                        "authority": "policy",
+                        "text": "Window\nReturns use calendar days from verified delivery, inclusive on the final day. The default return window is 30 days. Footwear and apparel have 30-day windows, home products have 30 days, and electronics have 15 days. An undelivered order has not started its return window. The earlier reported 60-day window is not current; use this version and disclose the discrepancy.",
+                        "score": 0.507758,
+                        "category": "all"
+                      }
+                    ],
+                    "below_threshold": false,
+                    "conflict": false,
+                    "conflict_details": null,
+                    "index_version": "v2",
+                    "category_filter": null,
+                    "conflict_evidence_exceeds_k": false
+                  }
+                }
+              ]
+            },
+            "flags": {
+              "conflict": false,
+              "requires_review": false
+            }
+          }
+        ],
+        "stages": [
+          "guard_in",
+          "supervisor_plan",
+          "dispatch",
+          "policy_product",
+          "collect_result",
+          "dispatch",
+          "composer",
+          "guard_out"
+        ],
+        "errors": [],
+        "model_calls": 3,
+        "tool_calls": 1,
+        "handoffs": 1,
+        "replans": 0,
+        "repairs": 0,
+        "tokens": 5697,
+        "style": {
+          "verbosity": "standard",
+          "format": "prose",
+          "version": 0,
+          "word_count": 73
+        },
+        "safety_version": "2026-10-16-v3",
+        "latency_ms": 13309.046,
+        "memory": {
+          "enabled": false,
+          "history_messages": 0,
+          "resolved_reference": false,
+          "expired": false,
+          "reset": false
+        },
+        "request_id": "d156862510724bb1be109e66347d2aea",
+        "tracing": {
+          "trace_id": "d1568625-1072-4bb1-be10-9e66347d2aea",
+          "status": "queued",
+          "span_count": 11
+        }
+      },
+      "paired_memory_on_outcome": "ANSWERED",
+      "memory_off_confirmed": true,
+      "paired_memory_on_confirmed": true
+    },
+    {
+      "case_id": "R07",
+      "input_sha256": "3337bb4a53445618838af01ffdf18d673deff7f45ae0baeb516be1a914d3347c",
+      "setup_results": [],
+      "result": {
+        "response": {
+          "answer": "The Gourmet Cheese Box in order ref:dfa9869c63cb7ee788f5 is ineligible for return. Perishable grocery products, including this item, are excluded from returns under current policy. This eligibility decision is based on the item category and cannot be overridden automatically. If you believe an exception applies, please contact retailer support directly for human review, as I cannot create returns or issue refunds.",
+          "why": [
+            "check_return_eligibility returned ineligible with reason code CATEGORY_EXCLUDED for SKU-PER-006",
+            "Return policy explicitly excludes perishable grocery products including Gourmet Cheese Box",
+            "Policy states exception requests require human review and agent cannot approve exceptions"
+          ],
+          "citations": [
+            {
+              "source_id": "order:ref:dfa9869c63cb7ee788f5",
+              "section": null,
+              "record_version": "2026-10-12"
+            },
+            {
+              "source_id": "doc:return_policy",
+              "section": "exclusions",
+              "record_version": "v1"
+            },
+            {
+              "source_id": "doc:return_policy",
+              "section": "exceptions",
+              "record_version": "v1"
+            }
+          ],
+          "next_steps": [
+            "Contact retailer support directly to request a human review for a possible exception"
+          ],
+          "intents_addressed": [
+            "return_eligibility"
+          ],
+          "outcome_claimed": "ANSWERED"
+        },
+        "outcome": "ANSWERED",
+        "ticket": null,
+        "refusals": [],
+        "triggers": [],
+        "obligation_contract": {
+          "intents": [
+            "return_eligibility"
+          ],
+          "order_id": "ref:dfa9869c63cb7ee788f5",
+          "request_types": [
+            "return"
+          ],
+          "policy_docs": [
+            "return_policy"
+          ],
+          "tracking": false,
+          "order_status": false,
+          "product": false,
+          "ambiguous_orders": false,
+          "sku": "SKU-PER-006",
+          "needs_reference": false,
+          "required_sections": [],
+          "version": "request-obligations-v2"
+        },
+        "obligation_audit": [
+          {
+            "obligation": "return",
+            "evidence_complete": true,
+            "required": [
+              "check_return_eligibility:return"
+            ]
+          },
+          {
+            "obligation": "policy:return_policy",
+            "evidence_complete": true,
+            "required": [
+              "search_policy:return_policy"
+            ]
+          },
+          {
+            "obligation": "rule:doc:return_policy:exclusions",
+            "evidence_complete": true,
+            "required": [
+              "search_policy:exact_rule_reference"
+            ]
+          }
+        ],
+        "answer_fallback": false,
+        "tool_records": [
+          {
+            "evidence_refs": [
+              {
+                "source_id": "order:ref:dfa9869c63cb7ee788f5",
+                "section": null,
+                "record_version": "2026-10-12"
+              }
+            ],
+            "exec_id": "77c1a5f6b9eb41feb3a86f5f9af9efeb",
+            "name": "lookup_order",
+            "status": "ok",
+            "data": {
+              "order_id": "ref:dfa9869c63cb7ee788f5",
+              "status": "delivered",
+              "placed_at": "2026-08-29",
+              "dispatched_at": "2026-08-31",
+              "delivered_at": "2026-09-01",
+              "shipping_service": null,
+              "items": [
+                {
+                  "sku": "SKU-PER-006",
+                  "name": "Gourmet Cheese Box",
+                  "category": "perishable_grocery",
+                  "price": 62.5
+                }
+              ],
+              "record_version": "2026-10-12"
+            },
+            "error": null,
+            "duration_ms": 0.972
+          },
+          {
+            "evidence_refs": [
+              {
+                "source_id": "doc:return_policy",
+                "section": "exclusions",
+                "record_version": "v1"
+              }
+            ],
+            "exec_id": "21722cd8371543f49b40c025c47b4c30",
+            "name": "check_return_eligibility",
+            "status": "ok",
+            "data": {
+              "decision": "ineligible",
+              "reason_codes": [
+                "CATEGORY_EXCLUDED"
+              ],
+              "window_days": null,
+              "days_since_delivery": null,
+              "refund_amount": null,
+              "threshold": 100.0,
+              "rule_version": "2026-10-01",
+              "policy_refs": [
+                {
+                  "source_id": "doc:return_policy",
+                  "section": "exclusions",
+                  "record_version": "v1"
+                }
+              ],
+              "action_executed": false,
+              "human_action_required": false
+            },
+            "error": null,
+            "duration_ms": 8.284
+          },
+          {
+            "evidence_refs": [
+              {
+                "source_id": "doc:return_policy",
+                "section": "exclusions",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:return_policy",
+                "section": "exceptions",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:return_policy",
+                "section": "window",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:return_policy",
+                "section": "condition",
+                "record_version": "v1"
+              }
+            ],
+            "exec_id": "cdfa5abeb362454e83c9615646f3f169",
+            "name": "search_policy",
+            "status": "ok",
+            "data": {
+              "results": [
+                {
+                  "chunk_id": "return_policy:v1:exclusions:0",
+                  "doc_id": "return_policy",
+                  "section_id": "exclusions",
+                  "version": "v1",
+                  "effective_date": "2026-10-01",
+                  "authority": "policy",
+                  "text": "Exclusions\nPerishable grocery products, including the Gourmet Cheese Box, are excluded from returns. No live-animal, kayak or other unlisted-product-specific policy is defined. Missing policy requires clarification or abstention, not a generic eligibility promise.",
+                  "score": 0.68742,
+                  "category": "all"
+                },
+                {
+                  "chunk_id": "return_policy:v1:exceptions:0",
+                  "doc_id": "return_policy",
+                  "section_id": "exceptions",
+                  "version": "v1",
+                  "effective_date": "2026-10-01",
+                  "authority": "policy",
+                  "text": "Exceptions\nRequests for an exception on an ineligible item require human review. Product injury or safety complaints always require safety escalation. This agent provides eligibility information; it does not create returns or issue refunds.",
+                  "score": 0.577576,
+                  "category": "all"
+                },
+                {
+                  "chunk_id": "return_policy:v1:window:0",
+                  "doc_id": "return_policy",
+                  "section_id": "window",
+                  "version": "v1",
+                  "effective_date": "2026-10-01",
+                  "authority": "policy",
+                  "text": "Window\nReturns use calendar days from verified delivery, inclusive on the final day. The default return window is 30 days. Footwear and apparel have 30-day windows, home products have 30 days, and electronics have 15 days. An undelivered order has not started its return window. The earlier reported 60-day window is not current; use this version and disclose the discrepancy.",
+                  "score": 0.57163,
+                  "category": "all"
+                },
+                {
+                  "chunk_id": "return_policy:v1:condition:0",
+                  "doc_id": "return_policy",
+                  "section_id": "condition",
+                  "version": "v1",
+                  "effective_date": "2026-10-01",
+                  "authority": "policy",
+                  "text": "Condition\nFor review, provide the order reference and describe the item condition. The agent must not infer condition or approve an exception. Eligibility is computed from the verified order and configured rules, not a customer-supplied delivery date.",
+                  "score": 0.528913,
+                  "category": "all"
+                }
+              ],
+              "below_threshold": false,
+              "conflict": false,
+              "conflict_details": null,
+              "index_version": "v2",
+              "category_filter": "perishable_grocery",
+              "conflict_evidence_exceeds_k": false
+            },
+            "error": null,
+            "duration_ms": 374.135
+          }
+        ],
+        "results": [
+          {
+            "agent_name": "order_shipping",
+            "status": "success",
+            "summary": "Order ref:dfa9869c63cb7ee788f5 confirmed delivered with Gourmet Cheese Box SKU-PER-006 (perishable_grocery). Order details retrieved successfully for return eligibility assessment.",
+            "evidence": [
+              {
+                "source_id": "order:ref:dfa9869c63cb7ee788f5",
+                "section": null,
+                "record_version": "2026-10-12"
+              }
+            ],
+            "facts": {
+              "tools": [
+                {
+                  "name": "lookup_order",
+                  "args": {
+                    "order_id": "ref:dfa9869c63cb7ee788f5"
+                  },
+                  "data": {
+                    "order_id": "ref:dfa9869c63cb7ee788f5",
+                    "status": "delivered",
+                    "placed_at": "2026-08-29",
+                    "dispatched_at": "2026-08-31",
+                    "delivered_at": "2026-09-01",
+                    "shipping_service": null,
+                    "items": [
+                      {
+                        "sku": "SKU-PER-006",
+                        "name": "Gourmet Cheese Box",
+                        "category": "perishable_grocery",
+                        "price": 62.5
+                      }
+                    ],
+                    "record_version": "2026-10-12"
+                  }
+                }
+              ]
+            },
+            "flags": {
+              "conflict": false,
+              "requires_review": false
+            }
+          },
+          {
+            "agent_name": "policy_product",
+            "status": "success",
+            "summary": "Gourmet Cheese Box (SKU-PER-006) in order ref:dfa9869c63cb7ee788f5 is ineligible for return. Perishable grocery products are explicitly excluded from returns under current policy. No exceptions apply without human review.",
+            "evidence": [
+              {
+                "source_id": "order:ref:dfa9869c63cb7ee788f5",
+                "section": null,
+                "record_version": "2026-10-12"
+              },
+              {
+                "source_id": "doc:return_policy",
+                "section": "condition",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:return_policy",
+                "section": "exceptions",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:return_policy",
+                "section": "exclusions",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:return_policy",
+                "section": "window",
+                "record_version": "v1"
+              }
+            ],
+            "facts": {
+              "tools": [
+                {
+                  "name": "check_return_eligibility",
+                  "args": {
+                    "order_id": "ref:dfa9869c63cb7ee788f5",
+                    "sku": "SKU-PER-006",
+                    "request_type": "return"
+                  },
+                  "data": {
+                    "decision": "ineligible",
+                    "reason_codes": [
+                      "CATEGORY_EXCLUDED"
+                    ],
+                    "window_days": null,
+                    "days_since_delivery": null,
+                    "refund_amount": null,
+                    "threshold": 100.0,
+                    "rule_version": "2026-10-01",
+                    "policy_refs": [
+                      {
+                        "source_id": "doc:return_policy",
+                        "section": "exclusions",
+                        "record_version": "v1"
+                      }
+                    ],
+                    "action_executed": false,
+                    "human_action_required": false
+                  }
+                },
+                {
+                  "name": "search_policy",
+                  "args": {
+                    "query": "return policy calendar days window condition exclusions restocking exceptions",
+                    "doc_types": [
+                      "return_policy"
+                    ],
+                    "category": "perishable_grocery",
+                    "k": 10
+                  },
+                  "data": {
+                    "results": [
+                      {
+                        "chunk_id": "return_policy:v1:exclusions:0",
+                        "doc_id": "return_policy",
+                        "section_id": "exclusions",
+                        "version": "v1",
+                        "effective_date": "2026-10-01",
+                        "authority": "policy",
+                        "text": "Exclusions\nPerishable grocery products, including the Gourmet Cheese Box, are excluded from returns. No live-animal, kayak or other unlisted-product-specific policy is defined. Missing policy requires clarification or abstention, not a generic eligibility promise.",
+                        "score": 0.68742,
+                        "category": "all"
+                      },
+                      {
+                        "chunk_id": "return_policy:v1:exceptions:0",
+                        "doc_id": "return_policy",
+                        "section_id": "exceptions",
+                        "version": "v1",
+                        "effective_date": "2026-10-01",
+                        "authority": "policy",
+                        "text": "Exceptions\nRequests for an exception on an ineligible item require human review. Product injury or safety complaints always require safety escalation. This agent provides eligibility information; it does not create returns or issue refunds.",
+                        "score": 0.577576,
+                        "category": "all"
+                      },
+                      {
+                        "chunk_id": "return_policy:v1:window:0",
+                        "doc_id": "return_policy",
+                        "section_id": "window",
+                        "version": "v1",
+                        "effective_date": "2026-10-01",
+                        "authority": "policy",
+                        "text": "Window\nReturns use calendar days from verified delivery, inclusive on the final day. The default return window is 30 days. Footwear and apparel have 30-day windows, home products have 30 days, and electronics have 15 days. An undelivered order has not started its return window. The earlier reported 60-day window is not current; use this version and disclose the discrepancy.",
+                        "score": 0.57163,
+                        "category": "all"
+                      },
+                      {
+                        "chunk_id": "return_policy:v1:condition:0",
+                        "doc_id": "return_policy",
+                        "section_id": "condition",
+                        "version": "v1",
+                        "effective_date": "2026-10-01",
+                        "authority": "policy",
+                        "text": "Condition\nFor review, provide the order reference and describe the item condition. The agent must not infer condition or approve an exception. Eligibility is computed from the verified order and configured rules, not a customer-supplied delivery date.",
+                        "score": 0.528913,
+                        "category": "all"
+                      }
+                    ],
+                    "below_threshold": false,
+                    "conflict": false,
+                    "conflict_details": null,
+                    "index_version": "v2",
+                    "category_filter": "perishable_grocery",
+                    "conflict_evidence_exceeds_k": false
+                  }
+                }
+              ]
+            },
+            "flags": {
+              "conflict": false,
+              "requires_review": false
+            }
+          }
+        ],
+        "stages": [
+          "guard_in",
+          "supervisor_plan",
+          "dispatch",
+          "order_shipping",
+          "collect_result",
+          "dispatch",
+          "policy_product",
+          "collect_result",
+          "dispatch",
+          "composer",
+          "guard_out"
+        ],
+        "errors": [],
+        "model_calls": 4,
+        "tool_calls": 3,
+        "handoffs": 2,
+        "replans": 0,
+        "repairs": 0,
+        "tokens": 8428,
+        "style": {
+          "verbosity": "standard",
+          "format": "prose",
+          "version": 0,
+          "word_count": 60
+        },
+        "safety_version": "2026-10-16-v3",
+        "latency_ms": 16464.363,
+        "memory": {
+          "enabled": false,
+          "history_messages": 0,
+          "resolved_reference": false,
+          "expired": false,
+          "reset": false
+        },
+        "request_id": "bcf6a11d6832445389fcae6ccff65230",
+        "tracing": {
+          "trace_id": "bcf6a11d-[REDACTED-PHONE]-89fc-ae6ccff65230",
+          "status": "queued",
+          "span_count": 16
+        }
+      },
+      "paired_memory_on_outcome": "ANSWERED",
+      "memory_off_confirmed": true,
+      "paired_memory_on_confirmed": true
+    },
+    {
+      "case_id": "R09",
+      "input_sha256": "5957a2e2817f185b819ec94831417c6c743c9a91e8b265e4d0505f4253b62416",
+      "setup_results": [],
+      "result": {
+        "response": {
+          "answer": "The automatic review threshold is $100. Refund amounts above $100 require human review and cannot be bypassed. Even at or below $100, eligibility still requires verified records and applicable return rules. I do not issue refunds at any amount; please contact retailer support for actual review or processing.",
+          "why": [
+            "Policy states the configured automatic-review threshold is $100 and amounts above require human review",
+            "Policy confirms the agent issues no refunds at any amount"
+          ],
+          "citations": [
+            {
+              "source_id": "doc:refund_policy",
+              "section": "review-threshold",
+              "record_version": "v1"
+            }
+          ],
+          "next_steps": [
+            "Contact retailer support for refund review or processing"
+          ],
+          "intents_addressed": [
+            "refund_request"
+          ],
+          "outcome_claimed": "ANSWERED"
+        },
+        "outcome": "ANSWERED",
+        "ticket": null,
+        "refusals": [],
+        "triggers": [],
+        "obligation_contract": {
+          "intents": [
+            "refund_request"
+          ],
+          "order_id": null,
+          "request_types": [],
+          "policy_docs": [
+            "refund_policy"
+          ],
+          "tracking": false,
+          "order_status": false,
+          "product": false,
+          "ambiguous_orders": false,
+          "sku": null,
+          "needs_reference": false,
+          "required_sections": [],
+          "version": "request-obligations-v2"
+        },
+        "obligation_audit": [
+          {
+            "obligation": "policy:refund_policy",
+            "evidence_complete": true,
+            "required": [
+              "search_policy:refund_policy"
+            ]
+          }
+        ],
+        "answer_fallback": false,
+        "tool_records": [
+          {
+            "evidence_refs": [
+              {
+                "source_id": "doc:refund_policy",
+                "section": "delayed-shipments",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:refund_policy",
+                "section": "review-threshold",
+                "record_version": "v1"
+              }
+            ],
+            "exec_id": "125cc0e700ae4bd6ac51eee690b4658f",
+            "name": "search_policy",
+            "status": "ok",
+            "data": {
+              "results": [
+                {
+                  "chunk_id": "refund_policy:v1:delayed-shipments:0",
+                  "doc_id": "refund_policy",
+                  "section_id": "delayed-shipments",
+                  "version": "v1",
+                  "effective_date": "2026-10-01",
+                  "authority": "policy",
+                  "text": "Delayed shipments\nUse current tracking events and shipping policy to explain delays. A delay alone does not prove refund eligibility. Above-threshold amounts require review even when a parcel is delayed. Escalate unresolved delivery/refund requests with evidence references; never guarantee compensation.",
+                  "score": 0.681419,
+                  "category": "all"
+                },
+                {
+                  "chunk_id": "refund_policy:v1:review-threshold:0",
+                  "doc_id": "refund_policy",
+                  "section_id": "review-threshold",
+                  "version": "v1",
+                  "effective_date": "2026-10-01",
+                  "authority": "policy",
+                  "text": "Review threshold\nThe configured automatic-review threshold is $100. Refund amounts above $100 require human review; the agent cannot bypass that threshold. ref:c3181ffefc9c0f6c47e7's $250 knife set therefore requires review. At or below $100, eligibility still requires verified records and all applicable return rules. The evaluated agent issues no refunds at any amount.",
+                  "score": 0.52508,
+                  "category": "all"
+                }
+              ],
+              "below_threshold": false,
+              "conflict": false,
+              "conflict_details": null,
+              "index_version": "v2",
+              "category_filter": null,
+              "conflict_evidence_exceeds_k": false
+            },
+            "error": null,
+            "duration_ms": 369.781
+          }
+        ],
+        "results": [
+          {
+            "agent_name": "policy_product",
+            "status": "success",
+            "summary": "Refund policy sets automatic-review threshold at $100; amounts above require human review and cannot be bypassed. Delayed shipments alone do not prove eligibility, and above-threshold refunds still need review. Agents issue no refunds at any amount; unresolved cases require escalation with evidence.",
+            "evidence": [
+              {
+                "source_id": "doc:refund_policy",
+                "section": "delayed-shipments",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:refund_policy",
+                "section": "review-threshold",
+                "record_version": "v1"
+              }
+            ],
+            "facts": {
+              "tools": [
+                {
+                  "name": "search_policy",
+                  "args": {
+                    "query": "refund policy request review threshold delayed shipments",
+                    "doc_types": [
+                      "refund_policy"
+                    ],
+                    "category": null,
+                    "k": 10
+                  },
+                  "data": {
+                    "results": [
+                      {
+                        "chunk_id": "refund_policy:v1:delayed-shipments:0",
+                        "doc_id": "refund_policy",
+                        "section_id": "delayed-shipments",
+                        "version": "v1",
+                        "effective_date": "2026-10-01",
+                        "authority": "policy",
+                        "text": "Delayed shipments\nUse current tracking events and shipping policy to explain delays. A delay alone does not prove refund eligibility. Above-threshold amounts require review even when a parcel is delayed. Escalate unresolved delivery/refund requests with evidence references; never guarantee compensation.",
+                        "score": 0.681419,
+                        "category": "all"
+                      },
+                      {
+                        "chunk_id": "refund_policy:v1:review-threshold:0",
+                        "doc_id": "refund_policy",
+                        "section_id": "review-threshold",
+                        "version": "v1",
+                        "effective_date": "2026-10-01",
+                        "authority": "policy",
+                        "text": "Review threshold\nThe configured automatic-review threshold is $100. Refund amounts above $100 require human review; the agent cannot bypass that threshold. ref:c3181ffefc9c0f6c47e7's $250 knife set therefore requires review. At or below $100, eligibility still requires verified records and all applicable return rules. The evaluated agent issues no refunds at any amount.",
+                        "score": 0.52508,
+                        "category": "all"
+                      }
+                    ],
+                    "below_threshold": false,
+                    "conflict": false,
+                    "conflict_details": null,
+                    "index_version": "v2",
+                    "category_filter": null,
+                    "conflict_evidence_exceeds_k": false
+                  }
+                }
+              ]
+            },
+            "flags": {
+              "conflict": false,
+              "requires_review": false
+            }
+          }
+        ],
+        "stages": [
+          "guard_in",
+          "supervisor_plan",
+          "dispatch",
+          "policy_product",
+          "collect_result",
+          "dispatch",
+          "composer",
+          "guard_out"
+        ],
+        "errors": [],
+        "model_calls": 3,
+        "tool_calls": 1,
+        "handoffs": 1,
+        "replans": 0,
+        "repairs": 0,
+        "tokens": 4997,
+        "style": {
+          "verbosity": "standard",
+          "format": "prose",
+          "version": 0,
+          "word_count": 48
+        },
+        "safety_version": "2026-10-16-v3",
+        "latency_ms": 11060.366,
+        "memory": {
+          "enabled": false,
+          "history_messages": 0,
+          "resolved_reference": false,
+          "expired": false,
+          "reset": false
+        },
+        "request_id": "f889dc75a2ec4000a73f0378d975aa6d",
+        "tracing": {
+          "trace_id": "f889dc75-a2ec-4000-a73f-0378d975aa6d",
+          "status": "queued",
+          "span_count": 11
+        }
+      },
+      "paired_memory_on_outcome": "ANSWERED",
+      "memory_off_confirmed": true,
+      "paired_memory_on_confirmed": true
+    },
+    {
+      "case_id": "R10",
+      "input_sha256": "68ef29fe7b218a6e323e40c28f1548f3c1445ab2ba8da19eba6f112d46fa6b77",
+      "setup_results": [],
+      "result": {
+        "response": {
+          "answer": "Shipping is not guaranteed. Standard shipping is estimated at 3 to 7 days, and this range is an estimate only. It cannot establish an exact arrival date without a verified dispatch anchor. Carrier estimates from current tracking records take precedence when available.",
+          "why": [
+            "Policy explicitly states shipping is not guaranteed",
+            "Transit times are defined as estimates dependent on dispatch verification"
+          ],
+          "citations": [
+            {
+              "source_id": "doc:shipping_policy",
+              "section": "guarantees",
+              "record_version": "v1"
+            },
+            {
+              "source_id": "doc:shipping_policy",
+              "section": "transit-estimates",
+              "record_version": "v1"
+            }
+          ],
+          "next_steps": [],
+          "intents_addressed": [
+            "policy_question"
+          ],
+          "outcome_claimed": "ANSWERED"
+        },
+        "outcome": "ANSWERED",
+        "ticket": null,
+        "refusals": [],
+        "triggers": [],
+        "obligation_contract": {
+          "intents": [
+            "policy_question"
+          ],
+          "order_id": null,
+          "request_types": [],
+          "policy_docs": [
+            "shipping_policy"
+          ],
+          "tracking": false,
+          "order_status": false,
+          "product": false,
+          "ambiguous_orders": false,
+          "sku": null,
+          "needs_reference": false,
+          "required_sections": [],
+          "version": "request-obligations-v2"
+        },
+        "obligation_audit": [
+          {
+            "obligation": "policy:shipping_policy",
+            "evidence_complete": true,
+            "required": [
+              "search_policy:shipping_policy"
+            ]
+          }
+        ],
+        "answer_fallback": false,
+        "tool_records": [
+          {
+            "evidence_refs": [
+              {
+                "source_id": "doc:shipping_policy",
+                "section": "transit-estimates",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:shipping_policy",
+                "section": "guarantees",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:shipping_policy",
+                "section": "dispatch",
+                "record_version": "v1"
+              }
+            ],
+            "exec_id": "fae4d0c7036e4d9eb0b49aab5a5b04c5",
+            "name": "search_policy",
+            "status": "ok",
+            "data": {
+              "results": [
+                {
+                  "chunk_id": "shipping_policy:v1:transit-estimates:0",
+                  "doc_id": "shipping_policy",
+                  "section_id": "transit-estimates",
+                  "version": "v1",
+                  "effective_date": "2026-10-01",
+                  "authority": "policy",
+                  "text": "Transit estimates\nStandard shipping is estimated at 3 to 7 days. This range is an estimate, not a guarantee, and cannot establish an exact arrival date without a verified dispatch anchor. A carrier estimate from current tracking records takes precedence when available. Do not invent a missing carrier estimate.",
+                  "score": 0.567003,
+                  "category": "all"
+                },
+                {
+                  "chunk_id": "shipping_policy:v1:guarantees:0",
+                  "doc_id": "shipping_policy",
+                  "section_id": "guarantees",
+                  "version": "v1",
+                  "effective_date": "2026-10-01",
+                  "authority": "policy",
+                  "text": "Guarantees\nShipping is not guaranteed. Weather/distance API estimates are deferred and are not an authoritative source for the initial product.",
+                  "score": 0.564668,
+                  "category": "all"
+                },
+                {
+                  "chunk_id": "shipping_policy:v1:dispatch:0",
+                  "doc_id": "shipping_policy",
+                  "section_id": "dispatch",
+                  "version": "v1",
+                  "effective_date": "2026-10-01",
+                  "authority": "policy",
+                  "text": "Dispatch\nOnly pending or processing orders are pre-dispatch cancellation candidates. Do not promise a dispatch date that is absent from verified records. International shipping is not supported by this synthetic policy.",
+                  "score": 0.521465,
+                  "category": "all"
+                }
+              ],
+              "below_threshold": false,
+              "conflict": false,
+              "conflict_details": null,
+              "index_version": "v2",
+              "category_filter": null,
+              "conflict_evidence_exceeds_k": false
+            },
+            "error": null,
+            "duration_ms": 280.742
+          }
+        ],
+        "results": [
+          {
+            "agent_name": "policy_product",
+            "status": "success",
+            "summary": "Shipping dates are estimates, not guaranteed. The shipping_policy transit-estimates section states standard shipping is an estimate, not a guarantee. The guarantees section confirms shipping is not guaranteed.",
+            "evidence": [
+              {
+                "source_id": "doc:shipping_policy",
+                "section": "dispatch",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:shipping_policy",
+                "section": "guarantees",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:shipping_policy",
+                "section": "transit-estimates",
+                "record_version": "v1"
+              }
+            ],
+            "facts": {
+              "tools": [
+                {
+                  "name": "search_policy",
+                  "args": {
+                    "query": "shipping policy estimates standard international guaranteed",
+                    "doc_types": [
+                      "shipping_policy"
+                    ],
+                    "category": null,
+                    "k": 10
+                  },
+                  "data": {
+                    "results": [
+                      {
+                        "chunk_id": "shipping_policy:v1:transit-estimates:0",
+                        "doc_id": "shipping_policy",
+                        "section_id": "transit-estimates",
+                        "version": "v1",
+                        "effective_date": "2026-10-01",
+                        "authority": "policy",
+                        "text": "Transit estimates\nStandard shipping is estimated at 3 to 7 days. This range is an estimate, not a guarantee, and cannot establish an exact arrival date without a verified dispatch anchor. A carrier estimate from current tracking records takes precedence when available. Do not invent a missing carrier estimate.",
+                        "score": 0.567003,
+                        "category": "all"
+                      },
+                      {
+                        "chunk_id": "shipping_policy:v1:guarantees:0",
+                        "doc_id": "shipping_policy",
+                        "section_id": "guarantees",
+                        "version": "v1",
+                        "effective_date": "2026-10-01",
+                        "authority": "policy",
+                        "text": "Guarantees\nShipping is not guaranteed. Weather/distance API estimates are deferred and are not an authoritative source for the initial product.",
+                        "score": 0.564668,
+                        "category": "all"
+                      },
+                      {
+                        "chunk_id": "shipping_policy:v1:dispatch:0",
+                        "doc_id": "shipping_policy",
+                        "section_id": "dispatch",
+                        "version": "v1",
+                        "effective_date": "2026-10-01",
+                        "authority": "policy",
+                        "text": "Dispatch\nOnly pending or processing orders are pre-dispatch cancellation candidates. Do not promise a dispatch date that is absent from verified records. International shipping is not supported by this synthetic policy.",
+                        "score": 0.521465,
+                        "category": "all"
+                      }
+                    ],
+                    "below_threshold": false,
+                    "conflict": false,
+                    "conflict_details": null,
+                    "index_version": "v2",
+                    "category_filter": null,
+                    "conflict_evidence_exceeds_k": false
+                  }
+                }
+              ]
+            },
+            "flags": {
+              "conflict": false,
+              "requires_review": false
+            }
+          }
+        ],
+        "stages": [
+          "guard_in",
+          "supervisor_plan",
+          "dispatch",
+          "policy_product",
+          "collect_result",
+          "dispatch",
+          "composer",
+          "guard_out"
+        ],
+        "errors": [],
+        "model_calls": 3,
+        "tool_calls": 1,
+        "handoffs": 1,
+        "replans": 0,
+        "repairs": 0,
+        "tokens": 5207,
+        "style": {
+          "verbosity": "standard",
+          "format": "prose",
+          "version": 0,
+          "word_count": 42
+        },
+        "safety_version": "2026-10-16-v3",
+        "latency_ms": 10909.813,
+        "memory": {
+          "enabled": false,
+          "history_messages": 0,
+          "resolved_reference": false,
+          "expired": false,
+          "reset": false
+        },
+        "request_id": "c18feeb997c44246b5aeae8980e276b9",
+        "tracing": {
+          "trace_id": "c18feeb9-97c4-4246-b5ae-ae8980e276b9",
+          "status": "queued",
+          "span_count": 11
+        }
+      },
+      "paired_memory_on_outcome": "ANSWERED",
+      "memory_off_confirmed": true,
+      "paired_memory_on_confirmed": true
+    },
+    {
+      "case_id": "R12",
+      "input_sha256": "3c7716c7fbd0c101edc3d250820b669dfd09d8e66cc522327374908a2a14c12e",
+      "setup_results": [],
+      "result": {
+        "response": {
+          "answer": "The cancellation policy document covers order cancellations. Cancellation eligibility is limited to pending and processing orders; shipped, dispatched, or delivered orders are not cancellable under these rules. Additionally, cancellation is information-only in this agent. Even an eligible request must go to human support for action through a verified mock escalation ticket.",
+          "why": [
+            "Identified cancellation_policy as the governing document based on search results",
+            "Summarized eligibility scope and mandatory human action requirement from retrieved sections"
+          ],
+          "citations": [
+            {
+              "source_id": "doc:cancellation_policy",
+              "section": "eligibility",
+              "record_version": "v1"
+            },
+            {
+              "source_id": "doc:cancellation_policy",
+              "section": "human-action",
+              "record_version": "v1"
+            }
+          ],
+          "next_steps": [
+            "Contact retailer support directly for actual cancellation review or action"
+          ],
+          "intents_addressed": [
+            "cancellation"
+          ],
+          "outcome_claimed": "ANSWERED"
+        },
+        "outcome": "ANSWERED",
+        "ticket": null,
+        "refusals": [],
+        "triggers": [],
+        "obligation_contract": {
+          "intents": [
+            "cancellation"
+          ],
+          "order_id": null,
+          "request_types": [],
+          "policy_docs": [
+            "cancellation_policy"
+          ],
+          "tracking": false,
+          "order_status": false,
+          "product": false,
+          "ambiguous_orders": false,
+          "sku": null,
+          "needs_reference": false,
+          "required_sections": [],
+          "version": "request-obligations-v2"
+        },
+        "obligation_audit": [
+          {
+            "obligation": "policy:cancellation_policy",
+            "evidence_complete": true,
+            "required": [
+              "search_policy:cancellation_policy"
+            ]
+          }
+        ],
+        "answer_fallback": false,
+        "tool_records": [
+          {
+            "evidence_refs": [
+              {
+                "source_id": "doc:cancellation_policy",
+                "section": "human-action",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:cancellation_policy",
+                "section": "eligibility",
+                "record_version": "v1"
+              }
+            ],
+            "exec_id": "f6ada020a5ff41c1808ee9b881fc1892",
+            "name": "search_policy",
+            "status": "ok",
+            "data": {
+              "results": [
+                {
+                  "chunk_id": "cancellation_policy:v1:human-action:0",
+                  "doc_id": "cancellation_policy",
+                  "section_id": "human-action",
+                  "version": "v1",
+                  "effective_date": "2026-10-01",
+                  "authority": "policy",
+                  "text": "Human action\nCancellation is information-only in this agent. Even an eligible request must go to human support for action through a verified mock escalation ticket. Never claim the order was cancelled. Once dispatched, discuss the applicable return policy without promising eligibility before delivery.",
+                  "score": 0.557385,
+                  "category": "all"
+                },
+                {
+                  "chunk_id": "cancellation_policy:v1:eligibility:0",
+                  "doc_id": "cancellation_policy",
+                  "section_id": "eligibility",
+                  "version": "v1",
+                  "effective_date": "2026-10-01",
+                  "authority": "policy",
+                  "text": "Eligibility\nCancellation eligibility is limited to pending and processing orders. Shipped, dispatched or delivered orders are not cancellable under these rules. Fetch the order status each turn; customer claims and memory are not status authority.",
+                  "score": 0.491597,
+                  "category": "all"
+                }
+              ],
+              "below_threshold": false,
+              "conflict": false,
+              "conflict_details": null,
+              "index_version": "v2",
+              "category_filter": null,
+              "conflict_evidence_exceeds_k": false
+            },
+            "error": null,
+            "duration_ms": 99.173
+          }
+        ],
+        "results": [
+          {
+            "agent_name": "policy_product",
+            "status": "success",
+            "summary": "Cancellation policy covers eligibility and human-action requirements. Cancellation is limited to pending or processing orders; shipped, dispatched, or delivered orders are not cancellable. This agent provides information only; eligible requests require human support via verified escalation. Post-dispatch, refer to return policy without promising eligibility.",
+            "evidence": [
+              {
+                "source_id": "doc:cancellation_policy",
+                "section": "eligibility",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:cancellation_policy",
+                "section": "human-action",
+                "record_version": "v1"
+              }
+            ],
+            "facts": {
+              "tools": [
+                {
+                  "name": "search_policy",
+                  "args": {
+                    "query": "cancellation policy eligibility before dispatch human action",
+                    "doc_types": [
+                      "cancellation_policy"
+                    ],
+                    "category": null,
+                    "k": 10
+                  },
+                  "data": {
+                    "results": [
+                      {
+                        "chunk_id": "cancellation_policy:v1:human-action:0",
+                        "doc_id": "cancellation_policy",
+                        "section_id": "human-action",
+                        "version": "v1",
+                        "effective_date": "2026-10-01",
+                        "authority": "policy",
+                        "text": "Human action\nCancellation is information-only in this agent. Even an eligible request must go to human support for action through a verified mock escalation ticket. Never claim the order was cancelled. Once dispatched, discuss the applicable return policy without promising eligibility before delivery.",
+                        "score": 0.557385,
+                        "category": "all"
+                      },
+                      {
+                        "chunk_id": "cancellation_policy:v1:eligibility:0",
+                        "doc_id": "cancellation_policy",
+                        "section_id": "eligibility",
+                        "version": "v1",
+                        "effective_date": "2026-10-01",
+                        "authority": "policy",
+                        "text": "Eligibility\nCancellation eligibility is limited to pending and processing orders. Shipped, dispatched or delivered orders are not cancellable under these rules. Fetch the order status each turn; customer claims and memory are not status authority.",
+                        "score": 0.491597,
+                        "category": "all"
+                      }
+                    ],
+                    "below_threshold": false,
+                    "conflict": false,
+                    "conflict_details": null,
+                    "index_version": "v2",
+                    "category_filter": null,
+                    "conflict_evidence_exceeds_k": false
+                  }
+                }
+              ]
+            },
+            "flags": {
+              "conflict": false,
+              "requires_review": false
+            }
+          }
+        ],
+        "stages": [
+          "guard_in",
+          "supervisor_plan",
+          "dispatch",
+          "policy_product",
+          "collect_result",
+          "dispatch",
+          "composer",
+          "guard_out"
+        ],
+        "errors": [],
+        "model_calls": 3,
+        "tool_calls": 1,
+        "handoffs": 1,
+        "replans": 0,
+        "repairs": 0,
+        "tokens": 4930,
+        "style": {
+          "verbosity": "standard",
+          "format": "prose",
+          "version": 0,
+          "word_count": 51
+        },
+        "safety_version": "2026-10-16-v3",
+        "latency_ms": 11140.155,
+        "memory": {
+          "enabled": false,
+          "history_messages": 0,
+          "resolved_reference": false,
+          "expired": false,
+          "reset": false
+        },
+        "request_id": "ec2c4922fe674b0baba5ad7e12abb8ae",
+        "tracing": {
+          "trace_id": "ec2c4922-fe67-4b0b-aba5-ad7e12abb8ae",
+          "status": "queued",
+          "span_count": 11
+        }
+      },
+      "paired_memory_on_outcome": "ANSWERED",
+      "memory_off_confirmed": true,
+      "paired_memory_on_confirmed": true
+    },
+    {
+      "case_id": "R13",
+      "input_sha256": "4dd28e9100e1341cf05f3bb2b8faad06d5262014cac1b899e828bfdbc124ee39",
+      "setup_results": [],
+      "result": {
+        "response": {
+          "answer": "The restocking fee is mentioned in the Restocking section of the return policy. It states that opened electronics have a 10% restocking fee. Please note this applies only if the item is confirmed as opened; missing condition evidence requires clarification or review.",
+          "why": [
+            "The retrieved policy text explicitly locates the restocking fee in the Restocking section.",
+            "The policy specifies the fee applies to opened electronics and notes that condition must be verified."
+          ],
+          "citations": [
+            {
+              "source_id": "doc:return_policy",
+              "section": "restocking",
+              "record_version": "v1"
+            }
+          ],
+          "next_steps": [
+            "Confirm whether your electronic item is opened to determine if the fee applies.",
+            "Contact retailer support if you need help verifying item condition or eligibility."
+          ],
+          "intents_addressed": [
+            "return_eligibility"
+          ],
+          "outcome_claimed": "ANSWERED"
+        },
+        "outcome": "ANSWERED",
+        "ticket": null,
+        "refusals": [],
+        "triggers": [],
+        "obligation_contract": {
+          "intents": [
+            "return_eligibility"
+          ],
+          "order_id": null,
+          "request_types": [],
+          "policy_docs": [
+            "return_policy"
+          ],
+          "tracking": false,
+          "order_status": false,
+          "product": false,
+          "ambiguous_orders": false,
+          "sku": null,
+          "needs_reference": false,
+          "required_sections": [
+            "return_policy:restocking"
+          ],
+          "version": "request-obligations-v2"
+        },
+        "obligation_audit": [
+          {
+            "obligation": "policy:return_policy",
+            "evidence_complete": true,
+            "required": [
+              "search_policy:return_policy"
+            ]
+          },
+          {
+            "obligation": "section:return_policy:restocking",
+            "evidence_complete": true,
+            "required": [
+              "search_policy:requested_section"
+            ]
+          }
+        ],
+        "answer_fallback": false,
+        "tool_records": [
+          {
+            "evidence_refs": [
+              {
+                "source_id": "doc:return_policy",
+                "section": "restocking",
+                "record_version": "v1"
+              }
+            ],
+            "exec_id": "1d0d579bfd494111a3f4358b0b5e59ec",
+            "name": "search_policy",
+            "status": "ok",
+            "data": {
+              "results": [
+                {
+                  "chunk_id": "return_policy:v1:restocking:0",
+                  "doc_id": "return_policy",
+                  "section_id": "restocking",
+                  "version": "v1",
+                  "effective_date": "2026-10-01",
+                  "authority": "policy",
+                  "text": "Restocking\nOpened electronics have a 10% restocking fee under the configured electronics_opened rule. Do not infer that an item is opened. Missing condition evidence requires clarification or review.",
+                  "score": 0.710216,
+                  "category": "electronics"
+                }
+              ],
+              "below_threshold": false,
+              "conflict": false,
+              "conflict_details": null,
+              "index_version": "v2",
+              "category_filter": null,
+              "conflict_evidence_exceeds_k": false
+            },
+            "error": null,
+            "duration_ms": 366.899
+          }
+        ],
+        "results": [
+          {
+            "agent_name": "policy_product",
+            "status": "success",
+            "summary": "Return policy restocking section states opened electronics incur a 10% restocking fee under the electronics_opened rule; condition evidence must not be inferred and missing evidence requires clarification.",
+            "evidence": [
+              {
+                "source_id": "doc:return_policy",
+                "section": "restocking",
+                "record_version": "v1"
+              }
+            ],
+            "facts": {
+              "tools": [
+                {
+                  "name": "search_policy",
+                  "args": {
+                    "query": "opened electronics restocking fee",
+                    "doc_types": [
+                      "return_policy"
+                    ],
+                    "category": null,
+                    "k": 10
+                  },
+                  "data": {
+                    "results": [
+                      {
+                        "chunk_id": "return_policy:v1:restocking:0",
+                        "doc_id": "return_policy",
+                        "section_id": "restocking",
+                        "version": "v1",
+                        "effective_date": "2026-10-01",
+                        "authority": "policy",
+                        "text": "Restocking\nOpened electronics have a 10% restocking fee under the configured electronics_opened rule. Do not infer that an item is opened. Missing condition evidence requires clarification or review.",
+                        "score": 0.710216,
+                        "category": "electronics"
+                      }
+                    ],
+                    "below_threshold": false,
+                    "conflict": false,
+                    "conflict_details": null,
+                    "index_version": "v2",
+                    "category_filter": null,
+                    "conflict_evidence_exceeds_k": false
+                  }
+                }
+              ]
+            },
+            "flags": {
+              "conflict": false,
+              "requires_review": false
+            }
+          }
+        ],
+        "stages": [
+          "guard_in",
+          "supervisor_plan",
+          "dispatch",
+          "policy_product",
+          "collect_result",
+          "dispatch",
+          "composer",
+          "guard_out"
+        ],
+        "errors": [],
+        "model_calls": 3,
+        "tool_calls": 1,
+        "handoffs": 1,
+        "replans": 0,
+        "repairs": 0,
+        "tokens": 4689,
+        "style": {
+          "verbosity": "standard",
+          "format": "prose",
+          "version": 0,
+          "word_count": 42
+        },
+        "safety_version": "2026-10-16-v3",
+        "latency_ms": 11942.106,
+        "memory": {
+          "enabled": false,
+          "history_messages": 0,
+          "resolved_reference": false,
+          "expired": false,
+          "reset": false
+        },
+        "request_id": "6d04d3be64784015811c1cbf257acb3f",
+        "tracing": {
+          "trace_id": "6d04d3be-[REDACTED-PHONE]-811c-1cbf257acb3f",
+          "status": "queued",
+          "span_count": 11
+        }
+      },
+      "paired_memory_on_outcome": "ANSWERED",
+      "memory_off_confirmed": true,
+      "paired_memory_on_confirmed": true
+    },
+    {
+      "case_id": "R15",
+      "input_sha256": "64de40d7279f297188e73d195b30ffb3da7c072284e8cf64d55a66c0e4b6d5c8",
+      "setup_results": [],
+      "result": {
+        "response": {
+          "answer": "I cannot confirm return eligibility for your shoes without a valid order reference. Please provide your order number so I can verify the delivery date and item details. Footwear generally has a 30-day return window calculated from verified delivery, but I must check your specific order to be sure.",
+          "why": [
+            "Eligibility requires a verified order reference and delivery date; I cannot infer these from 'last week' alone.",
+            "Policy states footwear has a 30-day window from verified delivery, inclusive on the final day."
+          ],
+          "citations": [
+            {
+              "source_id": "doc:return_policy",
+              "section": "condition",
+              "record_version": "v1"
+            },
+            {
+              "source_id": "doc:return_policy",
+              "section": "window",
+              "record_version": "v1"
+            }
+          ],
+          "next_steps": [
+            "Reply with your order number or receipt reference.",
+            "Describe the current condition of the shoes."
+          ],
+          "intents_addressed": [
+            "return_eligibility"
+          ],
+          "outcome_claimed": "CLARIFICATION_REQUESTED"
+        },
+        "outcome": "CLARIFICATION_REQUESTED",
+        "ticket": null,
+        "refusals": [],
+        "triggers": [],
+        "obligation_contract": {
+          "intents": [
+            "return_eligibility"
+          ],
+          "order_id": null,
+          "request_types": [],
+          "policy_docs": [
+            "return_policy"
+          ],
+          "tracking": false,
+          "order_status": false,
+          "product": false,
+          "ambiguous_orders": false,
+          "sku": null,
+          "needs_reference": true,
+          "required_sections": [],
+          "version": "request-obligations-v2"
+        },
+        "obligation_audit": [
+          {
+            "obligation": "request_reference",
+            "evidence_complete": false,
+            "required": [
+              "valid_order_or_product_reference"
+            ]
+          },
+          {
+            "obligation": "policy:return_policy",
+            "evidence_complete": true,
+            "required": [
+              "search_policy:return_policy"
+            ]
+          }
+        ],
+        "answer_fallback": false,
+        "tool_records": [
+          {
+            "evidence_refs": [
+              {
+                "source_id": "doc:return_policy",
+                "section": "exceptions",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:return_policy",
+                "section": "exclusions",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:return_policy",
+                "section": "condition",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:return_policy",
+                "section": "window",
+                "record_version": "v1"
+              }
+            ],
+            "exec_id": "8704b7ef525b4ad2ae8a1dba5c473b09",
+            "name": "search_policy",
+            "status": "ok",
+            "data": {
+              "results": [
+                {
+                  "chunk_id": "return_policy:v1:exceptions:0",
+                  "doc_id": "return_policy",
+                  "section_id": "exceptions",
+                  "version": "v1",
+                  "effective_date": "2026-10-01",
+                  "authority": "policy",
+                  "text": "Exceptions\nRequests for an exception on an ineligible item require human review. Product injury or safety complaints always require safety escalation. This agent provides eligibility information; it does not create returns or issue refunds.",
+                  "score": 0.550776,
+                  "category": "all"
+                },
+                {
+                  "chunk_id": "return_policy:v1:exclusions:0",
+                  "doc_id": "return_policy",
+                  "section_id": "exclusions",
+                  "version": "v1",
+                  "effective_date": "2026-10-01",
+                  "authority": "policy",
+                  "text": "Exclusions\nPerishable grocery products, including the Gourmet Cheese Box, are excluded from returns. No live-animal, kayak or other unlisted-product-specific policy is defined. Missing policy requires clarification or abstention, not a generic eligibility promise.",
+                  "score": 0.525569,
+                  "category": "all"
+                },
+                {
+                  "chunk_id": "return_policy:v1:condition:0",
+                  "doc_id": "return_policy",
+                  "section_id": "condition",
+                  "version": "v1",
+                  "effective_date": "2026-10-01",
+                  "authority": "policy",
+                  "text": "Condition\nFor review, provide the order reference and describe the item condition. The agent must not infer condition or approve an exception. Eligibility is computed from the verified order and configured rules, not a customer-supplied delivery date.",
+                  "score": 0.514839,
+                  "category": "all"
+                },
+                {
+                  "chunk_id": "return_policy:v1:window:0",
+                  "doc_id": "return_policy",
+                  "section_id": "window",
+                  "version": "v1",
+                  "effective_date": "2026-10-01",
+                  "authority": "policy",
+                  "text": "Window\nReturns use calendar days from verified delivery, inclusive on the final day. The default return window is 30 days. Footwear and apparel have 30-day windows, home products have 30 days, and electronics have 15 days. An undelivered order has not started its return window. The earlier reported 60-day window is not current; use this version and disclose the discrepancy.",
+                  "score": 0.507758,
+                  "category": "all"
+                }
+              ],
+              "below_threshold": false,
+              "conflict": false,
+              "conflict_details": null,
+              "index_version": "v2",
+              "category_filter": null,
+              "conflict_evidence_exceeds_k": false
+            },
+            "error": null,
+            "duration_ms": 331.682
+          }
+        ],
+        "results": [
+          {
+            "agent_name": "policy_product",
+            "status": "success",
+            "summary": "Return eligibility cannot be determined without a valid order ID or SKU. Return policy retrieved: 30-day default window (15 days for electronics), exclusions include perishable grocery, and condition review requires order reference. Please provide order ID and SKU to proceed.",
+            "evidence": [
+              {
+                "source_id": "doc:return_policy",
+                "section": "condition",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:return_policy",
+                "section": "exceptions",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:return_policy",
+                "section": "exclusions",
+                "record_version": "v1"
+              },
+              {
+                "source_id": "doc:return_policy",
+                "section": "window",
+                "record_version": "v1"
+              }
+            ],
+            "facts": {
+              "tools": [
+                {
+                  "name": "search_policy",
+                  "args": {
+                    "query": "return policy calendar days window condition exclusions restocking exceptions",
+                    "doc_types": [
+                      "return_policy"
+                    ],
+                    "category": null,
+                    "k": 10
+                  },
+                  "data": {
+                    "results": [
+                      {
+                        "chunk_id": "return_policy:v1:exceptions:0",
+                        "doc_id": "return_policy",
+                        "section_id": "exceptions",
+                        "version": "v1",
+                        "effective_date": "2026-10-01",
+                        "authority": "policy",
+                        "text": "Exceptions\nRequests for an exception on an ineligible item require human review. Product injury or safety complaints always require safety escalation. This agent provides eligibility information; it does not create returns or issue refunds.",
+                        "score": 0.550776,
+                        "category": "all"
+                      },
+                      {
+                        "chunk_id": "return_policy:v1:exclusions:0",
+                        "doc_id": "return_policy",
+                        "section_id": "exclusions",
+                        "version": "v1",
+                        "effective_date": "2026-10-01",
+                        "authority": "policy",
+                        "text": "Exclusions\nPerishable grocery products, including the Gourmet Cheese Box, are excluded from returns. No live-animal, kayak or other unlisted-product-specific policy is defined. Missing policy requires clarification or abstention, not a generic eligibility promise.",
+                        "score": 0.525569,
+                        "category": "all"
+                      },
+                      {
+                        "chunk_id": "return_policy:v1:condition:0",
+                        "doc_id": "return_policy",
+                        "section_id": "condition",
+                        "version": "v1",
+                        "effective_date": "2026-10-01",
+                        "authority": "policy",
+                        "text": "Condition\nFor review, provide the order reference and describe the item condition. The agent must not infer condition or approve an exception. Eligibility is computed from the verified order and configured rules, not a customer-supplied delivery date.",
+                        "score": 0.514839,
+                        "category": "all"
+                      },
+                      {
+                        "chunk_id": "return_policy:v1:window:0",
+                        "doc_id": "return_policy",
+                        "section_id": "window",
+                        "version": "v1",
+                        "effective_date": "2026-10-01",
+                        "authority": "policy",
+                        "text": "Window\nReturns use calendar days from verified delivery, inclusive on the final day. The default return window is 30 days. Footwear and apparel have 30-day windows, home products have 30 days, and electronics have 15 days. An undelivered order has not started its return window. The earlier reported 60-day window is not current; use this version and disclose the discrepancy.",
+                        "score": 0.507758,
+                        "category": "all"
+                      }
+                    ],
+                    "below_threshold": false,
+                    "conflict": false,
+                    "conflict_details": null,
+                    "index_version": "v2",
+                    "category_filter": null,
+                    "conflict_evidence_exceeds_k": false
+                  }
+                }
+              ]
+            },
+            "flags": {
+              "conflict": false,
+              "requires_review": false
+            }
+          }
+        ],
+        "stages": [
+          "guard_in",
+          "supervisor_plan",
+          "dispatch",
+          "policy_product",
+          "collect_result",
+          "dispatch",
+          "composer",
+          "guard_out"
+        ],
+        "errors": [],
+        "model_calls": 3,
+        "tool_calls": 1,
+        "handoffs": 1,
+        "replans": 0,
+        "repairs": 0,
+        "tokens": 5708,
+        "style": {
+          "verbosity": "standard",
+          "format": "prose",
+          "version": 0,
+          "word_count": 49
+        },
+        "safety_version": "2026-10-16-v3",
+        "latency_ms": 12254.153,
+        "memory": {
+          "enabled": false,
+          "history_messages": 0,
+          "resolved_reference": false,
+          "expired": false,
+          "reset": false
+        },
+        "request_id": "131971f2adb44f3f9484c01171a611a2",
+        "tracing": {
+          "trace_id": "131971f2-adb4-4f3f-9484-c01171a611a2",
+          "status": "queued",
+          "span_count": 11
+        }
+      },
+      "paired_memory_on_outcome": "CLARIFICATION_REQUESTED",
+      "memory_off_confirmed": true,
+      "paired_memory_on_confirmed": true
+    }
+  ],
+  "limits": "Current tools/guards arm uses unchanged frozen questions, customer identities and setup turns; only session retention is explicitly disabled. Compare to recorded final-run memory-on outputs. Historical baseline/LLM/RAG stages still differ in prompts, dates and evidence access, so the complete ladder is not a causal accuracy estimate. This arm is not scored as final-system acceptance. Holdout is not read.",
+  "build_sha256": {
+    "src/capstone_agent/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/capstone_agent/agents/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/capstone_agent/application/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/capstone_agent/baseline_agent.py": "70696c9d6059db904823162bd56bcc575e1b97a06bc758bd65a69c6884e5c68b",
+    "src/capstone_agent/config.py": "f8639f59262d9b3551083a164286b6aed5a25291e6e197eba9b942d1631216e1",
+    "src/capstone_agent/domain/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/capstone_agent/domain/delivery_estimate.py": "8678e904404b959e91e83732273033766175928da9284b6d85d993fb8ba4acd9",
+    "src/capstone_agent/domain/llm_response.py": "2166c06188de67d7d207424a04e104ef6b4d2bb8ba1ca98f87bc37379ff8f550",
+    "src/capstone_agent/evaluation/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/capstone_agent/evaluation/calibration.py": "21e466a4db50aaaddf79d3b4b2efb31aa0f83b4b7bedd592154dcf7e3635c86e",
+    "src/capstone_agent/evaluation/deepeval_runner.py": "919fc159129c1a877c1a7a1c8bc471d957c274eda39fb434e5ecd1874e91bb11",
+    "src/capstone_agent/evaluation/export.py": "7b40f7ead5c232a2422ca2f941ec7cfb5bc6916a340b95de1b0665b71373d339",
+    "src/capstone_agent/evaluation/final_protocol.py": "106ac989bdf443b5f167210d14218664f117d1a0ed346d34cbc3dc49e0a20d4a",
+    "src/capstone_agent/evaluation/prompt_comparison.py": "29ed69836f0763dbe4011caae83227a793db25d703fdbc211647e0b97ea6f041",
+    "src/capstone_agent/evaluation/support_runner.py": "58267aeea1181c26e3c56772f1b5fe292fb40b933ced3514d5ef46f956abb23c",
+    "src/capstone_agent/feedback/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/capstone_agent/langchain_client.py": "35e1a068f32d51632a82360de316e7b88b38b16047145a61ca8cfaca430afe7a",
+    "src/capstone_agent/llm_agent.py": "437b027e97d897294abe971e1f25634cb624513f32da8e20f102b2be5f25414c",
+    "src/capstone_agent/main.py": "10fde691c94de81cb2fd9727e21bcb435cf4a781e15592c9957980a540d8809a",
+    "src/capstone_agent/memory/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/capstone_agent/model_client.py": "5db7718d169111fcd4fc16cbd46cdaeac52c8b933da8aba74626b4b200bbb5f2",
+    "src/capstone_agent/observability/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/capstone_agent/observability/langsmith_tracing.py": "a7699fdd5a733624696fbcaca36a58d47e910f4965b25319f8b9421f4757b88d",
+    "src/capstone_agent/observability/support_tracing.py": "381786977610fb74823c76f4265565afea82967dde4418b7fb86c92e7aa27943",
+    "src/capstone_agent/operations.py": "8d80ad0f7245b6b9b0fdf31d8c3bc27012f98a877150de298ab45ad08f89da57",
+    "src/capstone_agent/orchestration/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/capstone_agent/prompts/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/capstone_agent/prompts/templates.py": "15a91dfcda804a7cb015f21b1c8c5eedaedb669b0ffaa0f1887946e3f5ca53a3",
+    "src/capstone_agent/retrieval/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/capstone_agent/retrieval/chroma_store.py": "38c24fe5792e2acaa3c354d5329b9129f59c30cf64fa27ac1c45f39a3184ad07",
+    "src/capstone_agent/retrieval/corpus.py": "d54167cb8f59a1a02236d3e49fa51e2420d6400d023fa5f56659af89ee2543fa",
+    "src/capstone_agent/retrieval/embeddings_voyage.py": "bfb2dc9ebdbaed7f42e5aee1200f43f9ea980069b4b2adc7faaa4ecb9d60c7f2",
+    "src/capstone_agent/retrieval/grounded_answer.py": "e7e22f29401b8efadc07566bea44a2c516e8f0c352f609ae28c6aec59bcc17a0",
+    "src/capstone_agent/retrieval/knowledge_graph.py": "ec11b36e49bb85d41cfbf97f51df0ae0a45043366a048c4720b345225d4d54f6",
+    "src/capstone_agent/retrieval/query_expansion.py": "fedb13abaf57f7daffaf9c7c7753c25e15876d0fae56507de1ef89431f5b751b",
+    "src/capstone_agent/safety/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/capstone_agent/safety/redaction.py": "6c4fd7cda9f9a413a483c9cf739dd0636b9be03ca433d1bd0bfe9ce40781b2d4",
+    "src/capstone_agent/support/__init__.py": "beb0f323dd24341fb2bdfc3d5905fadc80fab5695e9fb52ca5da3c969ce63eac",
+    "src/capstone_agent/support/contracts.py": "ee5d92e25d5f976ce94d47714c7aac9ba91ca2db4c70cd78082ac1bf9379171e",
+    "src/capstone_agent/support/graph.py": "669edbedf2a2d1d1cf7247796c132ebc78cde85f7973009c1175de89c5cb3cea",
+    "src/capstone_agent/support/guards.py": "9bd37d0ad06c1ce7c6a87b90e2754126408fe61bc956f9ff43bcd42a9aa39914",
+    "src/capstone_agent/support/memory.py": "bdf778a30380b151d3879f1559f9e40b49d863597f197d23768f84f5bcdcc1b6",
+    "src/capstone_agent/support/model.py": "bc565ed96046c2c10411dac0027b803ad9983559af92ca78e48f7b1de76342e5",
+    "src/capstone_agent/support/obligations.py": "1175c894fbe14126df80982c8db7ed16b453693ba270b3f6145b88eeeaac003b",
+    "src/capstone_agent/support/preferences.py": "0672f7c65f0a8040cfd11d1231c28d69f898a160150570c9d37b9e33258185a0",
+    "src/capstone_agent/support/privacy.py": "dee879c89fd2e1d4b2dfacd74e1c7075923ea8d052a979cce926b78d791f2049",
+    "src/capstone_agent/support/registry.py": "0c4c1f15888afe351966f3d11cb0aea2a0d11a0f334a51b207cd52f733657bb6",
+    "src/capstone_agent/support/runtime.py": "25271b33ab30f0d15c40c545fc3921c806deeba8fa01a746c5e097c5a070fdad",
+    "src/capstone_agent/support/services.py": "c55b459d162872340a865faec2d40d291d366cfd4f83b4d99fb30a48511f364d",
+    "src/capstone_agent/tools/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/capstone_agent/tools/external_facts.py": "d93a4ed642737df0f1eba269096e36327f499c819f62665f6b0c961fce0acf50",
+    "config/retrieval.json": "381192b67aafe68923e9eb55f3bdacc7df9e2e9bd2633992697a605e4cd823cf",
+    "config/safety_rules.json": "5ddbe9e9f34488e929baf9e1e466604eb4168a096e999bb8e3bfd8e6983770b0",
+    "knowledge/raw/cancellation_policy.md": "2967fc5a035b77c36fe809d83561129e2eb05ebc7165ec7974e15665ab03c5f8",
+    "knowledge/raw/escalation_guidelines.md": "716eb03aea6cafc534e4218167db411c3ff5d45d2ab06005f06676cb472dad6a",
+    "knowledge/raw/faq.md": "050e68b2e08690ea7f7bf13d2f244e7841fed845abededbd077418960a0d5274",
+    "knowledge/raw/refund_policy.md": "38311d56e49138c4179d44fdc5b17b99152703e3456557ce13f059dde434ae00",
+    "knowledge/raw/return_policy.md": "7c837441121fded9e1a863b5da79928515dd9192a0311a41736759cb9156ebf0",
+    "knowledge/raw/shipping_policy.md": "9233b2e3348710830914c8d4824b40fda87d6e96779be59f7a4be90b8b77f7ad",
+    "knowledge/raw/warranty_policy.md": "546ade98062265bc77470fd517c8752662ff399b61eb0dba840299cedaaa0f21",
+    "data/sample_orders.json": "91eeff0665915588a70b7356a09b4981f8cefa4b2c78d13e8cd8249811e07332",
+    "data/sample_tracking_events.json": "4163c63c8c2f7022aaf6b43638b24e77e0f51ba4607864b8cff09cff04940a19",
+    "data/product_catalog.json": "4edc0280346e3be7d33364d7d21411300a799e68cdba44a64abdbafc64c38196",
+    "data/policy_rules.json": "83bed31dfad9cae5cfb3bc825874671617757564e6ceda66f192872b8e273acb",
+    "knowledge/index_manifest.json": "a4d27beb6c1e626f3ffec1c1cac535b0fe22973f3070c45c8cba724d2b245e0e"
+  }
+}

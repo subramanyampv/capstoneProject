@@ -1,0 +1,7 @@
+{
+  "initial_report": "failure_demo_release.json",
+  "followup_report": "failure_demo_release_v2.json",
+  "changes_runtime_code": false,
+  "rationale": "The initial additional check treated pattern masking as universal name removal, beyond the already documented in-process memory scope. Required operational-log/hosted privacy and reset deletion stay enforced. The observed name retention is explicitly reported, not relabeled as absent.",
+  "existing_documentation": "docs/phase6_memory.md: User-provided names or other unmatched text can remain in the bounded in-process window until deletion."
+}

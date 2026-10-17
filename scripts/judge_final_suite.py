@@ -1,5 +1,6 @@
 """Local DeepEval judgments with explicit self-evaluation disclosure and blind human packet."""
 import argparse
+import hashlib
 import json
 import os
 import re
@@ -71,7 +72,7 @@ def human_packet(directory,selected,original):
             '```json',json.dumps([json.loads(value) for value in context_for(result)],indent=2),'```','','</details>','']
         template['cases'].append({'case_id':row['case_id'],'faithfulness':None,'answer_relevancy':None,
             'grounded_support':None,'not_applicable_metrics':[],'unsafe_or_fabricated_claim':None,'comment':''})
-    (directory/'human_review.md').write_text('\n'.join(lines).rstrip()+'\n')
+    if not (directory/'human_review.md').exists():(directory/'human_review.md').write_text('\n'.join(lines).rstrip()+'\n')
     if not (directory/'human_review_template.json').exists():(directory/'human_review_template.json').write_text(json.dumps(template,indent=2)+'\n')
 
 
@@ -133,7 +134,9 @@ def main():
             time.sleep(2)
     judgments=[json.loads(line) for line in target.read_text().splitlines()] if target.exists() else []
     report={'library':'deepeval','rubric':RUBRIC,'judge_settings':config.public_settings(),'same_model_self_evaluation':config.model==app.model and config.base_url==app.base_url,
-        'judged_cases':len(judgments),'requested_cases':len(wanted),'transport_calls_this_process':transport_calls,'tokens_this_process':tokens,'workers':args.workers,
+        'judged_cases':len(judgments),'requested_cases':len(wanted),'successful_completions_this_process':transport_calls,'tokens_this_process':tokens,'workers':args.workers,
+        'source_outputs_sha256':hashlib.sha256(source.read_bytes()).hexdigest(),
+        'usage_scope':'Successful completions in this process; failed transport usage and prior-process work are not fully counted.',
         'human_calibration':'awaiting_actual_human_ratings','limits':'Same-model results are indicative, not independent safety acceptance. Missing context and judge failures are skipped, never passed. No Confident AI uploads; model requests go only to the configured endpoint.'}
     (directory/('judge_all_manifest.json' if args.all else 'judge_calibration_manifest.json')).write_text(json.dumps(report,indent=2)+'\n')
 

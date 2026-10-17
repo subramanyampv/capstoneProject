@@ -13,7 +13,7 @@ The core now implements a LangGraph supervisor, three LangChain specialists and 
 | 6 | Bounded projection memory, follow-ups and reset/expiry implemented; five-conversation comparison measured |
 | 7 | Implemented: controlled style feedback, versioning/reset/deletion in terminal and Streamlit; development evidence |
 | 8 | Verified: hosted metadata hierarchy/masking/failure isolation, safe logs/startup and clean local deployment |
-| 9 | Pending: reviewed contexts, frozen/holdout evaluation, human calibration and final acceptance |
+| 9 | Release candidate: 65/65 frozen checks, 45/45 safety repeats, all-65 DeepEval judgments; changed-output human review, untouched holdout and acceptance pending |
 
 ## Local setup
 
@@ -60,4 +60,4 @@ LangSmith defaults off. Configure its key/project in ignored `.env` to verify ho
 
 The existing repository contains a historical revoked credential. A scanned history-free source snapshot has been prepared locally and will be refreshed as work continues. The current repository remains in use; a new repository and author/student name are not required, and existing history will not be rewritten. `.env`, runtime stores, model cache and generated indices remain ignored.
 
-Final operations: `make support-ready`, `make support-ui`, `make verify-hosted` and `make scan-final`. Final-run recording/repeats are available through `capstone-agent evaluate-support`; Phase 9 now has a versioned exact-input frozen recorder, separate DeepEval judgments and human-calibration tooling. The initial 65-case baseline is complete with failures preserved; final acceptance remains open. See [Phase 9 evaluation](docs/phase9_evaluation.md). See [Phase 8 operations](docs/phase8_operations.md) and [validation](artifacts/phase8/validation.md).
+Final operations: `make support-ready`, `make support-ui`, `make verify-hosted` and `make scan-final`. Final-run recording/repeats are available through `capstone-agent evaluate-support`; Phase 9 now has a versioned exact-input frozen recorder, separate DeepEval judgments and human-calibration tooling. The locked release passes all 65 frozen cases and all 45 repeated safety checks; all-65 same-model judgments retain quality misses and one unavailable faithfulness result. Actual review of changed release answers and the untouched holdout remain before acceptance. Earlier failures are preserved. See [Phase 9 evaluation](docs/phase9_evaluation.md). See [Phase 8 operations](docs/phase8_operations.md) and [validation](artifacts/phase8/validation.md).

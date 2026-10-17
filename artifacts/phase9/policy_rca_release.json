@@ -1,0 +1,106 @@
+{
+  "passed": true,
+  "checks": {
+    "recorded_answer_is_verified": true,
+    "exact_window_source_cited": true,
+    "numeric_fabrication_rejected_every_probe": true
+  },
+  "historical_prompt_A_answer": {
+    "intents": [
+      "return_eligibility"
+    ],
+    "status": "needs_clarification",
+    "plan_summary": [
+      "Acknowledge the customer's inquiry about returning TrailRunners purchased two weeks ago.",
+      "Explain that specific return eligibility cannot be confirmed without access to order records or current policy details.",
+      "Request the order number to assist further or advise checking the official return policy page.",
+      "Maintain a polite and helpful tone despite lack of evidence."
+    ],
+    "response": "Hello! Thank you for reaching out. I'd be happy to help you determine if your TrailRunners are still eligible for return. Since I don't have access to your specific order details or our current return policy window at this moment, could you please provide your order number? Alternatively, most standard return windows are 30 days from delivery, but I want to ensure I give you accurate information for your specific case. Please share your order ID so I can look into this for you!",
+    "citations": [],
+    "requested_action": "none",
+    "action_executed": false,
+    "uncertainty": "Unable to verify return eligibility without order details or access to current return policy documentation."
+  },
+  "current_response": {
+    "answer": "Your TrailRunner Shoes are currently eligible for return. Records show delivery 12 days ago, which is within the 30-day window. Please note this eligibility check does not complete a return or guarantee a refund; human review is still required to process any request. For actual return processing and next steps, please contact retailer support directly.",
+    "why": [
+      "Eligibility tool returned decision 'eligible' with reason code WITHIN_WINDOW",
+      "Policy confirms footwear has a 30-day calendar day return window from verified delivery",
+      "System cannot create returns or issue refunds; human action is required"
+    ],
+    "citations": [
+      {
+        "source_id": "order:ref:6b2d27e6813f395f2e78",
+        "section": null,
+        "record_version": "2026-10-12"
+      },
+      {
+        "source_id": "doc:return_policy",
+        "section": "window",
+        "record_version": "v1"
+      },
+      {
+        "source_id": "doc:return_policy",
+        "section": "exceptions",
+        "record_version": "v1"
+      }
+    ],
+    "next_steps": [
+      "Contact retailer support to initiate the return process"
+    ],
+    "intents_addressed": [
+      "return_eligibility"
+    ],
+    "outcome_claimed": "ANSWERED"
+  },
+  "mutated_response": {
+    "answer": "Your TrailRunner Shoes are currently eligible for return. Records show delivery 12 days ago, which is within the 500 days window. Please note this eligibility check does not complete a return or guarantee a refund; human review is still required to process any request. For actual return processing and next steps, please contact retailer support directly.",
+    "why": [
+      "Eligibility tool returned decision 'eligible' with reason code WITHIN_WINDOW",
+      "Policy confirms footwear has a 30-day calendar day return window from verified delivery",
+      "System cannot create returns or issue refunds; human action is required"
+    ],
+    "citations": [
+      {
+        "source_id": "order:ref:6b2d27e6813f395f2e78",
+        "section": null,
+        "record_version": "2026-10-12"
+      },
+      {
+        "source_id": "doc:return_policy",
+        "section": "window",
+        "record_version": "v1"
+      },
+      {
+        "source_id": "doc:return_policy",
+        "section": "exceptions",
+        "record_version": "v1"
+      }
+    ],
+    "next_steps": [
+      "Contact retailer support to initiate the return process"
+    ],
+    "intents_addressed": [
+      "return_eligibility"
+    ],
+    "outcome_claimed": "ANSWERED"
+  },
+  "mutant_errors": [
+    [
+      "G3_UNSUPPORTED_NUMBER"
+    ],
+    [
+      "G3_UNSUPPORTED_NUMBER"
+    ],
+    [
+      "G3_UNSUPPORTED_NUMBER"
+    ]
+  ],
+  "recorded_errors": [],
+  "provenance": {
+    "artifacts/prompt_runs/20261013T030651Z-b48a462e/outputs.jsonl": "ed198f456b738cdee09362268fa93f2afc6a9fe00289925c042515eb386bab24",
+    "artifacts/final_runs/20261017T132752Z/outputs.jsonl": "d3d9a602a778cf30be9f6388f1bbbbe49fda4f7097e96f9c7b4f2feb4c3adff6"
+  },
+  "limits": "The historical empty-evidence answer and final owned-record/policy answer have different evidence/setup, so their contrast is not a causal ablation. The 30-to-500-day mutation isolates the current numeric guard using identical verified facts and citations; three deterministic probes are not a stochastic reliability estimate. This is engineering review, not actual human calibration or universal semantic verification. No holdout content is read."
+}

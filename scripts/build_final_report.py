@@ -48,7 +48,7 @@ def main():
             values=group['values'];mean=round(sum(values)/len(values),4) if values else None
             lines.append(f"| {name} | {len(values)} | {mean} | {group['passed']} | {group['skipped']} | {group['failed']} |")
     lines+=['','## Release work still open','',
-        'Repair and repeat development failures; complete fifteen-case consistency repeats, capability ladder and RCA comparisons; obtain twenty actual human reviews; lock build/protocol and run the untouched holdout; refresh final demos, governance and submission package. No final acceptance is claimed.','']
+        'Assess the separate same-build consistency, ladder, RCA, operational and demo evidence; obtain actual human ratings of these exact outputs before loading the untouched holdout; record the acceptance decision and refresh the accepted source package. Earlier failed runs remain historical evidence. No final acceptance is claimed.','']
     (directory/'report.md').write_text('\n'.join(lines))
     print(directory/'report.md')
 

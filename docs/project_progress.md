@@ -6,13 +6,13 @@ The [detailed task checklist](task_list.md) translates this summary into tracked
 
 ## Current checkpoint — 2026-10-17
 
-Application repair commit `48672f9` is pushed to the existing GitHub repository. It passes 235 offline regression tests. Architecture 3.3 adds independent obligations, correct unknown/reference outcomes, exact requested policy sections, decision-specific exclusion citations, feedback/tracking follow-through and bounded read-failure handling. A new holdout gate separately passes its regression against incomplete human review.
+Application source `ecb208e` is pushed to the existing repository. The locked release run [20261017T132752Z](../artifacts/final_runs/20261017T132752Z/report.md) passes **65/65 hard gates and 65/65 in-scope case checks**. The matching-build [15 × 3 safety run](../artifacts/final_runs/20261017T133645Z/consistency.json) passes **45/45** with **15/15 identical terminal outcomes**. The full offline suite passes 242 tests, including both holdout-review/hash-gate tests. Earlier failed and interrupted runs are preserved as development history.
 
-The completed first repaired full run has 51/65 all-check passes and 64/65 hard gates. A targeted follow-up has 14/15 all-check passes and 15/15 hard gates; its last dependency was subsequently corrected. The first repeated safety run passes 45/45 hard gates but achieves only 13/15 exact terminal consistency, below target. Two later development runs were explicitly interrupted and are not complete results.
+All 65 outputs have same-model DeepEval judgments: faithfulness mean .9932 (51 measured, 13 skipped, one error), relevancy .7647 (32/65 above threshold), grounded support .9446 (57/65 above threshold). These are indicative scores, not universal semantic passes. Baseline actual human calibration covers only the original answers: 20 cases, 57 paired ratings, 84.21% agreement. **Actual review of the changed release answers is pending**, then the untouched ten-case holdout can run on the unchanged build. The recorder blocks unsealing when review, judged-output hash, or build/model identity is invalid.
 
-The fresh locked single-worker full run `20261017T125423Z` and all-case DeepEval judgments are in progress. Runtime/provider failures remain visible as quality misses; safe failure disclosure does not count as a successful answer. Three planner-only probes per general question returned valid plans, so those fresh probes do not establish the cause of the earlier generic failures. Holdout is unopened. Actual baseline human calibration is complete; candidate changed-output review, repeated safety evidence, holdout, final acceptance and final source snapshot remain open.
+Current supporting evidence includes 19 full-run and 24 repeat-run local ticket read-backs; hosted answer/safety/withdrawal trace read-backs; all-nine-check memory/style/reset replay (55 → 40 words, identical citations, style rollback); paired current-build ten-case memory on/off; conflict and unsupported-number probes; five protected demo paths and per-path latency/error measurements. See [release evidence](phase9_evaluation.md). Pattern masking is not universal name detection: unmatched names may remain in bounded process memory until reset/expiry; conversation text is excluded from operational logs/hosted spans.
 
-Separate completed evidence includes conflict-latch ablation, unsupported-number guard probe, historical capability ladder, real-question style replay, Streamlit eligibility screenshot and terminal refusal/failed-handoff demos. Their scope limits are recorded with the artifacts.
+**Still open:** actual release-output human calibration, untouched holdout, final acceptance decision and accepted-source package refresh. No author/student name or new repository is required. Knowledge graphs and external commerce/weather tools remain deferred.
 
 ## 1. Current scope and architecture
 
@@ -46,7 +46,7 @@ Knowledge graph, external distance/weather ETA, external commerce APIs, extended
 - Versioned prompts A/B/C were run on all 65 frozen cases: 195 saved outputs, all finally schema-valid. C required one repair.
 - A/B/C median latencies were 6.126/6.142/5.155 seconds; nearest-rank p95 values were 7.967/7.841/6.249 seconds. Recorded total usage was 175,357 tokens; currency cost was not calculated.
 - Completed the actual ten-case comparison table, full 195-row appendix and failure breakdown. v3 selects C as the development default.
-- DeepEval found seven mandatory escalation-classification misses: A missed R05/S01/S15; B and C missed R05/S15. C also omitted feedback intent on M02. These remain final-product defects, not waived gates.
+- DeepEval found seven mandatory escalation-classification misses: A missed R05/S01/S15; B and C missed R05/S15. C also omitted feedback intent on M02. These historical prompt-only failures remain preserved; release code-backed controls now pass the frozen and repeated suites, with untouched holdout still pending.
 - Framework smoke and tests verify the current integration; the original full comparison predates the framework migration. No full post-migration 195-output rerun is claimed.
 
 ### Phase 4 — knowledge and retrieval
@@ -107,11 +107,9 @@ A clean temporary venv with copied source installed matching dependencies, passe
 
 ### Phase 9 — final evaluation and submission in progress
 
-The exact-input frozen 65-case baseline is complete and the twenty-case DeepEval sample is complete. Versioned contexts declare identity/setup, preserve legacy scope exclusions and retain initial assessments when evaluator labels are corrected. The untouched ten-case holdout is deferred until development fixes and build/protocol lock. See [Phase 9 evaluation](phase9_evaluation.md). Repeat the safety/consistency subset. Measure routing/tool correctness, refusal, verified escalation, fabricated policy, citation support, personal-data canaries, safe failures and per-path latency/errors.
+The locked release frozen run passes all 65 hard and in-scope case checks; the matching-build repeated subset passes all 45 with 100% exact terminal consistency. All-65 DeepEval judgments, capability ladder, controlled RCA probes, memory/style/reset, per-path operations and five protected demos are complete within their disclosed scopes. See [Phase 9 evaluation](phase9_evaluation.md) for exact artifacts, score limitations and preserved development failures.
 
-Run the capability ladder, memory on/off, adaptation before/after, RAG comparison and RCA before/after with repeats. Apply standardized judged quality metrics and human calibration on twenty final judged outputs. Report failures and unavailable metrics explicitly.
-
-Complete five forced demo packets and the final framing, evaluation, engineering justification and deployment instructions. Refresh/scan the history-free source package. The existing GitHub repository remains in use; a separate repository is optional, not a requirement.
+Actual changed-output human review and calibration are required before the untouched ten-case holdout. After that, report all holdout results without tuning, decide acceptance and refresh the accepted history-free package. The existing repository remains in use.
 
 The [Memory Pad](memory_pad.md) adds an ecommerce feature comparison with Gorgias and nineteen stable core/extension idea IDs. The [market comparison](market_comparison.md) contrasts implemented/planned capabilities with Intercom Fin, Zendesk AI agents and Salesforce Agentforce using official documentation. No vendor trial or scope expansion was performed.
 
@@ -119,7 +117,7 @@ The [Memory Pad](memory_pad.md) adds an ecommerce feature comparison with Gorgia
 
 LangSmith credentials were supplied locally and hosted verification passed. No additional credentials are needed for the next evaluation work; later human calibration of final outputs remains required. Author/student identity and a new repository name are not requested.
 
-A separate judge endpoint/model is optional. Human review of the final twenty judged outputs will be requested when that review packet exists.
+A separate judge endpoint/model is optional. The release [twenty-case human review packet](../artifacts/final_runs/20261017T132752Z/human_review.md) is ready; fill its adjacent JSON template. Earlier baseline ratings cannot be reused for changed outputs.
 
 ## 6. Current acceptance position
 

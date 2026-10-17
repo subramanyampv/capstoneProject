@@ -1,0 +1,8 @@
+{
+  "command": "env DEEPEVAL_DISABLE_DOTENV=1 DEEPEVAL_TELEMETRY_OPT_OUT=YES .venv/bin/python -m pytest -q --tb=short",
+  "passed": 242,
+  "failed": 0,
+  "elapsed_seconds": 17.49,
+  "application_commit": "ecb208e",
+  "limits": "Existing local project virtual environment; not a fresh dependency install. Includes both holdout gates, package security/mode and CLI/Streamlit tests. Application source unchanged after release frozen/repeat runs."
+}

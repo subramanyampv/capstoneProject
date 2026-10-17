@@ -11,7 +11,8 @@ ROOT=Path(__file__).resolve().parents[1]
 
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('--output',type=Path,required=True);args=parser.parse_args()
-    listing=subprocess.run(['git','ls-tree','-rz','HEAD'],cwd=ROOT,check=True,capture_output=True).stdout.decode().split('\0')
+    commit=subprocess.run(['git','rev-parse','HEAD'],cwd=ROOT,check=True,capture_output=True,text=True).stdout.strip()
+    listing=subprocess.run(['git','ls-tree','-rz',commit],cwd=ROOT,check=True,capture_output=True).stdout.decode().split('\0')
     tracked={entry.split('\t',1)[1]:entry.split('\t',1)[0].split()[0] for entry in listing if entry}
     env=load_environment(ROOT/'.env');secrets=[value.encode() for key,value in env.items() if key.endswith('API_KEY') and value]
     entries={};excluded=[]
@@ -23,10 +24,9 @@ def main():
         if local.is_symlink() or mode=='120000':raise ValueError('SOURCE_SNAPSHOT_REJECTS_SYMLINKS')
         if mode not in {'100644','100755'}:raise ValueError('UNSUPPORTED_SOURCE_ENTRY')
         # Use the committed bytes, never accidentally include uncommitted edits.
-        content=subprocess.run(['git','show','HEAD:'+name],cwd=ROOT,check=True,capture_output=True).stdout
+        content=subprocess.run(['git','show',commit+':'+name],cwd=ROOT,check=True,capture_output=True).stdout
         if any(secret in content for secret in secrets):raise ValueError('CONFIGURED_CREDENTIAL_FOUND_IN_SOURCE')
         entries[name]=content
-    commit=subprocess.run(['git','rev-parse','HEAD'],cwd=ROOT,check=True,capture_output=True,text=True).stdout.strip()
     manifest={'commit':commit,'file_count':len(entries),'files':{name:hashlib.sha256(value).hexdigest() for name,value in entries.items()},
         'excluded_tracked_files':excluded,'limits':'Committed source/evidence only; no Git history, .env, local runtime, vector store or model cache. Current configured credentials scanned. Not universal secret detection or proof of release acceptance; use the accompanying evaluation/status documents.'}
     args.output.parent.mkdir(parents=True,exist_ok=True)

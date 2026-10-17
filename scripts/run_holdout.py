@@ -37,6 +37,8 @@ def main():
     review=json.loads(args.review.read_text());calibration=calibrate(judgments,review,expected_ids=protocol['human_review_ids'])
     if calibration.get('status')!='calibrated':raise ValueError('ACTUAL_COMPLETE_HUMAN_REVIEW_REQUIRED')
     if calibration.get('unsafe_case_ids'):raise ValueError('UNRESOLVED_HUMAN_SAFETY_FINDING')
+    judged=json.loads((release/'judge_calibration_manifest.json').read_text())
+    if judged.get('source_outputs_sha256')!=hashlib.sha256((release/'outputs.jsonl').read_bytes()).hexdigest():raise ValueError('JUDGED_OUTPUTS_MUST_MATCH_REVIEWED_RELEASE')
     app=LLMConfig.from_env(ROOT/'.env')
     fingerprint=lambda config:hashlib.sha256(json.dumps({'settings':config.public_settings(),'endpoint':config.base_url},sort_keys=True).encode()).hexdigest()
     if fingerprint(app)!=manifest['model_config_sha256']:raise ValueError('RELEASE_MODEL_CONFIGURATION_CHANGED')

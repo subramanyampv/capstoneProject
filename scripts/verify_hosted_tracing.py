@@ -9,7 +9,7 @@ from capstone_agent.support.services import ROOT
 
 
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('--invalid-key',action='store_true');parser.add_argument('--records',type=Path);parser.add_argument('--record-index',type=int,default=0);args=parser.parse_args()
+    parser=argparse.ArgumentParser();parser.add_argument('--invalid-key',action='store_true');parser.add_argument('--records',type=Path);parser.add_argument('--record-index',type=int,default=0);parser.add_argument('--output',type=Path);args=parser.parse_args()
     directory=ROOT/'artifacts/phase8';directory.mkdir(exist_ok=True)
     if args.invalid_key:
         config=ObservabilityConfig(True,'capstone-deliberately-invalid-credential')
@@ -60,6 +60,8 @@ def main():
         finally:client.close()
         path=directory/(('hosted_graph_readback_'+str(args.record_index)+'.json') if args.records else 'hosted_readback.json')
     report['limits']='Invalid credential/access failure isolation is separate from successful hosted ingestion. A 403 can reflect API authorization or an intermediary access policy.'
+    if args.output:path=args.output
+    path.parent.mkdir(parents=True,exist_ok=True)
     path.write_text(json.dumps(report,indent=2)+'\n');print(json.dumps(report,indent=2))
     return 0 if report['passed'] else 1
 

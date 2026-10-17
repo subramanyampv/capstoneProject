@@ -1,0 +1,40 @@
+{
+  "completed": true,
+  "receipt": {
+    "trace_id": "3902d73b-d214-469e-a700-442d1e9d0c49",
+    "status": "exported",
+    "error_category": null,
+    "span_count": 3
+  },
+  "inputs_exported": false,
+  "response_bodies_exported": false,
+  "passed": true,
+  "hosted_runs": [
+    {
+      "id": "e337db9a-6420-45aa-b293-f47cb17770e1",
+      "parent_run_id": "3902d73b-d214-469e-a700-442d1e9d0c49",
+      "name": "withdrawal",
+      "run_type": "chain",
+      "inputs_empty": true,
+      "outputs_match": true
+    },
+    {
+      "id": "11c1a9bf-d6a2-427d-80b0-736c91978782",
+      "parent_run_id": "3902d73b-d214-469e-a700-442d1e9d0c49",
+      "name": "guard_in",
+      "run_type": "chain",
+      "inputs_empty": true,
+      "outputs_match": true
+    },
+    {
+      "id": "3902d73b-d214-469e-a700-442d1e9d0c49",
+      "parent_run_id": null,
+      "name": "support_request",
+      "run_type": "chain",
+      "inputs_empty": true,
+      "outputs_match": true
+    }
+  ],
+  "hosted_payload_canaries_absent": true,
+  "limits": "Invalid credential/access failure isolation is separate from successful hosted ingestion. A 403 can reflect API authorization or an intermediary access policy."
+}
