@@ -14,9 +14,9 @@ REFUND = re.compile(r'\brefund\w*\b', re.I)
 CANCEL = re.compile(r'\bcancel\w*\b', re.I)
 TRACK = re.compile(r'\btrack\w*\b|latest.{0,20}event|\bwhere.{0,35}\b(?:order|package)\b|\bwhen.{0,35}\b(?:ship|arriv|deliver)', re.I)
 STATUS = re.compile(r'\b(?:order|package).{0,20}\bstatus\b|\b(?:has|did|hadn.t|hasn.t|it|not|never).{0,30}\bship\w*\b|\bdelivery email\b', re.I)
-PRODUCT = re.compile(r'material|\bsize\b|sizing|\bcare\b|weight|specification|\bwarrant\w*\b|opened', re.I)
+PRODUCT = re.compile(r'material|\bsize\b|sizing|\bcare\b|\bwash\w*\b|\bclean\w*\b|weight|specification|\bwarrant\w*\b|opened', re.I)
 SHIPPING = re.compile(r'\bshipping\b|\bship\b.{0,35}\b(?:canada|international|usually|standard)\b|\barrive\b|\bdelivery estimate\b', re.I)
-GENERAL = re.compile(r'\bpolicy|\bwindow|\bdeadline|\blargest|\bthreshold|how many|\bdocument|\bfee|\bguarantee|how long', re.I)
+GENERAL = re.compile(r'\bpolicy|\brule\b|\bwindow|\bdeadline|\blargest|\bthreshold|how many|\bdocument|\bfee|\bguarantee|how long', re.I)
 
 @dataclass(frozen=True)
 class Obligations:
@@ -55,7 +55,8 @@ def derive(query, context=None, *, services=None):
     # Named return/refund discussions may include a historic delivery date without
     # asking a new tracking question. Only explicit tracking wording creates it.
     has_return=bool(RETURN.search(query));has_refund=bool(REFUND.search(query));has_cancel=bool(CANCEL.search(query))
-    general=bool(GENERAL.search(query)) and not re.search(r'can I|can you|I want|I need|start|request a refund|approve|cancel (?:my |order|O-)',query,re.I)
+    individual=re.search(r'\b(?:can I|can you|I want|I need)\s+(?:please\s+)?(?:return|refund|cancel|start|request)\b|\b(?:start|approve|cancel)\s+(?:my|this|that|order|O-)',query,re.I)
+    general=bool(GENERAL.search(query)) and not individual
     refund_status=has_refund and bool(re.search(r'refund.{0,25}(?:approved yet|arriv|status|processed)',query,re.I))
     requests=[];docs=[];intents=[]
     if tracking or status:intents.append('order_tracking')
@@ -178,7 +179,7 @@ async def fulfill(contract,agent,registry,query,context=None):
         text=' '.join(hints[doc] for doc in sorted(missing))
         if 'return_policy:restocking' in contract.required_sections:text='opened electronics restocking fee'
         category=next(iter(ctx.categories)) if len(ctx.categories)==1 else None
-        await registry.call(agent,'search_policy',{'query':text,'doc_types':sorted(missing),'category':category,'k':10})
+        await attempt('search_policy',{'query':text,'doc_types':sorted(missing),'category':category,'k':10})
 
 
 def audit(contract,facts):

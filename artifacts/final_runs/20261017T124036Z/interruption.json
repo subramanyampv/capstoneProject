@@ -1,0 +1,6 @@
+{
+  "status": "interrupted_development_run",
+  "completed_rows": 13,
+  "reason": "Stopped to reduce local CPU contention; completed repeats preserved. Source subsequently changed, so do not resume or describe this as a complete consistency run.",
+  "release_accepted": false
+}

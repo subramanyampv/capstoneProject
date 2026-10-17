@@ -72,6 +72,40 @@ def test_mixed_feedback_followup_rechecks_the_previous_tracking_intent():
     assert any(row['obligation']=='order_tracking' and not row['evidence_complete'] for row in audit(contract,[]))
 
 
+def test_general_rule_and_threshold_questions_do_not_require_private_orders():
+    for query in ['You used to allow 60-day returns — is that still the rule?',
+                  "What's the largest refund you can approve without a human?",
+                  'Can you explain the return policy?']:
+        assert not derive(query).needs_reference
+    assert derive('Can you approve my refund?').needs_reference
+    assert derive('How should I wash the Alpine Down Jacket?').product
+
+
+def test_failed_preflight_is_not_implicitly_retried_by_backfill(setup):
+    from capstone_agent.support.obligations import fulfill
+    from capstone_agent.support.registry import Registry,ToolContext
+    services,_=setup
+    reg=Registry(services,ToolContext(SessionIdentity('C-100'),faults={'search_policy':'TIMEOUT'}))
+    contract=derive('What is the return policy?')
+    async def twice():
+        await fulfill(contract,'policy_product',reg,'What is the return policy?')
+        await fulfill(contract,'policy_product',reg,'What is the return policy?')
+    asyncio.run(twice())
+    assert len(reg.ctx.records)==1 and reg.ctx.records[0]['error']=='TIMEOUT'
+    assert not reg.ctx.facts
+
+
+def test_required_read_timeout_does_not_spend_model_steps_or_mislabel_step_limit(setup):
+    services,_=setup
+    response=asyncio.run(SupportAgent(services,ScriptedGateway([
+        plan('policy_product','Read policy',['return_eligibility'],order=None)])).run(
+        'What is the return policy?',SessionIdentity('C-100'),
+        faults={'search_policy':'TIMEOUT','escalation':'FAILED','composer':'FAILED'}))
+    assert response['outcome']=='ESCALATED' and response['ticket']['status']=='created'
+    assert response['model_calls']==1 and 'SPECIALIST_STEP_LIMIT' not in response['errors']
+    assert len([r for r in response['tool_records'] if r['name']=='search_policy'])==1
+
+
 def test_contract_retains_both_requests_when_plan_claims_only_tracking():
     contract=derive('Package O-1002 is delayed. Latest tracking event, and can I request a refund?')
     narrowed=SupervisorPlan.model_validate_json(plan(order='O-1002').content)

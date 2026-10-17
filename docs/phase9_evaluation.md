@@ -59,3 +59,9 @@ Separate evidence: `artifacts/phase9/style_replay_v2.json` passes real-question 
 A recorder diagnostic found that text minimization sometimes redacted digit runs in SHA-256 metadata. Historical strings remain unchanged; comparison verifies them against the same minimizer applied to the known frozen-input hash and records that limitation. The candidate recorder preserves only its locally computed input digest after minimizing response text. No customer field bypasses minimization.
 
 The holdout remains unopened. Actual baseline calibration is preserved; ratings cannot be transferred to changed candidate answers. A candidate review packet will be provided after results are complete. Final safety/semantic acceptance, demos and source packaging remain separate gates.
+
+### Final development lock, 2026-10-17
+
+The 20261017T124025Z full-development run was deliberately interrupted after 39 completed cases when two general-rule/threshold routing errors were confirmed. The 20261017T124036Z repeat run was interrupted after thirteen completed rows to reduce CPU contention. Their interruption records preserve scope and reasons; neither is a complete evaluation. Existing rows and partial judgments remain unchanged.
+
+The follow-through distinguishes general policy rules/thresholds from individual approval requests, includes product-care obligations and prevents implicit backfill retries after failed reads. The regression suite passes 235 tests. Sequential real-registry retrieval measurements are 75–121 ms under the unchanged five-second deadline; this does not prove concurrent-load performance. The temporary verification UI was closed to free model memory. A fresh single-worker full frozen run, 20261017T125423Z, is now in progress; only its completed result can establish the new frozen score. Judging and repeated safety runs follow without competing embedding processes. Holdout remains unopened.

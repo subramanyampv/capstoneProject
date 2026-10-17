@@ -269,7 +269,7 @@ class SupportAgent:
             if error or any(e not in {'NOT_FOUND','AMBIGUOUS','UNVERIFIED_CATEGORY'} for e in errors):
                 status='tool_error'
                 if not any(r['name']=='create_escalation' and r['status']=='ok' for r in records): ctx.triggers.add('T5')
-            if not parsed and not error and not code_completed:
+            if not parsed and not error and not code_completed and not failed_preflight:
                 status='tool_error'; ctx.triggers.add('T5'); error='SPECIALIST_STEP_LIMIT'
             for fact in facts:
                 if fact['name']=='search_policy' and fact['data']['below_threshold'] and not code_completed: status='insufficient_evidence'

@@ -1,0 +1,31 @@
+{
+  "torch_threads": 4,
+  "runs": [
+    {
+      "document": "return_policy",
+      "status": "ok",
+      "error": null,
+      "duration_ms": 120.934
+    },
+    {
+      "document": "shipping_policy",
+      "status": "ok",
+      "error": null,
+      "duration_ms": 75.894
+    },
+    {
+      "document": "warranty_policy",
+      "status": "ok",
+      "error": null,
+      "duration_ms": 75.027
+    },
+    {
+      "document": "return_policy",
+      "status": "ok",
+      "error": null,
+      "duration_ms": 78.639
+    }
+  ],
+  "all_within_deadline": true,
+  "limits": "Sequential local public-policy reads through the actual asynchronous registry and five-second deadline. Cached model/index, one active evaluation worker; not a concurrency or cold-start SLA."
+}

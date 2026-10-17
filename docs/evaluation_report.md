@@ -14,7 +14,7 @@ Authority: [Architecture and Plan v3](architecture_and_plan.md), section 14. Fin
 | Phase 6 memory | Five conversations × on/off pass expected behavior; four of four dependent follow-ups answered on versus zero off; reset/expiry/checkpoint audit | Development scripts; no independent semantic or held-out multi-turn grade |
 | Phase 7 adaptation | Same-question answer 72 → 46 words, version 0 → 1; reset version 2 returns to 72 words; citations retained; four safety cases × two styles preserve outcomes/flags; scoped deletion passes | Authored development cases; original false numeric rejections preserved; style-only adaptation, no semantic/holdout acceptance |
 | Phase 8 operations | Clean venv/index/CLI/Streamlit checks, hosted twelve/thirteen-run trees, canary exclusion and failure isolation; six expected live path outcomes | Local source deployment, warm pinned download cache, two samples/path; no production SLA or final acceptance |
-| Offline regression | Current Phase 9 repair build: 232 tests pass; historical Phase 8 clean environment: 204 | Final semantic/frozen/holdout acceptance remains open |
+| Offline regression | Current Phase 9 repair build: 235 tests pass; historical Phase 8 clean environment: 204 | Final semantic/frozen/holdout acceptance remains open |
 | Packaging | Pinned app/dev/eval/ui/rag install in existing venv succeeded; pip dependency check passed | Clean source/venv verification passed in Phase 8; cold model download and other platforms remain unverified |
 | UI | Three default tabs and explicit deferred-tab flag verified by AppTest | Final synthetic identity/chat workflow remains Phase 5+ |
 

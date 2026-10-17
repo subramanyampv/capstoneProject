@@ -1,0 +1,6 @@
+{
+  "status": "interrupted_development_run",
+  "completed_rows": 39,
+  "reason": "Stopped after confirmed general-question routing defects; completed rows preserved. Concurrent local retrieval load also caused safely disclosed timeouts. Not a complete frozen run.",
+  "release_accepted": false
+}

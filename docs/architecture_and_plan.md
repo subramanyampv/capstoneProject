@@ -40,8 +40,8 @@
 - Phases 1–2 are complete with exit evidence.
 - Phase 3 is complete: the written ten-case comparison, per-prompt failure breakdown and development selection are recorded. The frozen experiment produced 195/195 schema-valid outputs (**MEASURED**). Prompt C is the development default; this does not establish final safety acceptance (Section 14.5).
 - Phase 4 has seven authored documents, 28 indexed sections, pinned local Voyage-4-nano/Chroma, 20 retrieval labels and a live ten-case RAG on/off comparison (**IMPLEMENTED / MEASURED**). The development coverage gap is corrected by the follow-through in Section 9.8; category applicability and registered-tool/current-turn citation integration are implemented. Held-out generalization remains open.
-- Phase 5 core tools/control are **IMPLEMENTED**, with live defects and repairs preserved in [the implementation chapter](phase5_tools_and_graph.md). Phase 6 projection memory is **IMPLEMENTED** with five-conversation comparison measured. Phase 7 controlled adaptation is **IMPLEMENTED** with live development validation; Phase 8 local deployment and hosted metadata observability are **VERIFIED**; Phase 9 final acceptance remains **PLANNED**. The target submission date stays 2026-10-18; schedule dates are targets, not guarantees.
-- Latest offline regression: 231 tests pass on the 2026-10-17 repair build. The first repaired full frozen run records 51/65 all-check passes and 64/65 hard-gate passes; subsequent repairs are under evaluation. [Phase 9 evidence](phase9_evaluation.md) and [detailed progress](project_progress.md) distinguish development results from acceptance.
+- Phase 5 core tools/control are **IMPLEMENTED**, with live defects and repairs preserved in [the implementation chapter](phase5_tools_and_graph.md). Phase 6 projection memory is **IMPLEMENTED** with five-conversation comparison measured. Phase 7 controlled adaptation is **IMPLEMENTED** with live development validation; Phase 8 local deployment and hosted metadata observability are **VERIFIED**; Phase 9 evaluation is **IN PROGRESS**; final acceptance remains open. The target submission date stays 2026-10-18; schedule dates are targets, not guarantees.
+- Latest offline regression: 235 tests pass on the 2026-10-17 repair build. The first repaired full frozen run records 51/65 all-check passes and 64/65 hard-gate passes; subsequent repairs are under evaluation. [Phase 9 evidence](phase9_evaluation.md) and [detailed progress](project_progress.md) distinguish development results from acceptance.
 - Author/student name and a new GitHub repository are not required. Continue in the existing repository; use the scanned history-free source snapshot for packaging.
 
 **Key design stance.** The rubric evaluates "engineering judgment, reliability, explainability, safety-first design, and practical usefulness… not unnecessary complexity." The architecture is therefore deliberately minimal:
@@ -230,11 +230,11 @@ A single LLM prompt mixes these and fails in two costly ways, both observed in t
 |---|---|---|---|---|
 | LLM access | LangChain `langchain-openai` against an OpenAI-compatible endpoint; model `qwen3.7-max` | All LLM calls | Track A requirement; provider-swappable via base URL and model name; already measured in Phase 3 | IMPLEMENTED |
 | Orchestration | LangGraph `StateGraph` + checkpointer | Control flow, multi-agent routing, session memory | Explicit nodes and conditional edges map to safety gates and terminal outcomes; built-in checkpointed memory | IMPLEMENTED: bounded multi-agent core and separate projection memory; final acceptance pending |
-| Specialist agents | LangGraph/LangChain prebuilt tool-calling (ReAct-style) agent per specialist | Bounded tool use | Standard, traceable, step limits supported | PLANNED |
+| Specialist agents | Bounded LangChain tool-calling loops inside LangGraph specialist nodes | Bounded tool use | Closed tool allowlists, typed results, explicit step/call limits | IMPLEMENTED / tested; no prebuilt ReAct agent claimed |
 | Embeddings | `voyageai/voyage-4-nano` (Hugging Face, local, pinned revision) | Document and query embeddings | Local (no document export); retrieval-tuned; query/document input modes | IMPLEMENTED / MEASURED, normalized 2048 dimensions |
-| Vector store | Chroma via `langchain-chroma`, persisted | Similarity search with metadata filters | Named in the rubric; persistence and metadata filtering (version/section/effective date) needed for conflict detection | IMPLEMENTED / MEASURED, policies_v1 with 28 sections |
-| Evaluation | DeepEval + frozen harness | Quality metrics, GEval rubrics, tool correctness | Standardized metrics; written evaluation prompts; local execution | IMPLEMENTED (deterministic metrics + nine indicative RAG faithfulness scores); final calibration PLANNED |
-| Tracing | LangSmith (opt-in, masked) + local JSONL (primary) | Hierarchical traces; audit logs | Visual multi-agent routing evidence; local logs keep evidence reproducible for graders | Wrapper IMPLEMENTED; masked auto-tracing PLANNED |
+| Vector store | Chroma via `langchain-chroma`, persisted | Similarity search with metadata filters | Named in the rubric; persistence and metadata filtering (version/section/effective date) needed for conflict detection | IMPLEMENTED / MEASURED, policies_v2 with 28 sections |
+| Evaluation | DeepEval + frozen harness | Quality metrics, GEval rubrics, tool correctness | Standardized metrics; written evaluation prompts; local execution | IMPLEMENTED; frozen judgments and actual baseline human calibration measured; candidate review pending |
+| Tracing | LangSmith (opt-in, masked) + local JSONL (primary) | Hierarchical traces; audit logs | Visual multi-agent routing evidence; local logs keep evidence reproducible for graders | VERIFIED metadata-only request/node/model/tool hierarchy; SDK automatic content tracing disabled |
 | UI | Streamlit (local) | Demo interface and deployment evidence | Python-only; fast; AppTest available | IMPLEMENTED (initial) |
 | Data | Synthetic JSON fixtures + 7 Markdown policy documents | Records and corpus | Reproducible; no real customer data | IMPLEMENTED: frozen fixtures and seven corpus documents |
 
@@ -1121,16 +1121,16 @@ The Knowledge and Delivery-estimate tabs are hidden behind `UI_SHOW_DEFERRED=fal
 
 ### 14.4 Capability ladder (showing the evolution)
 
-The multi-agent ladder stages remain planned. The measured Phase 4 single-agent retrieval probe is preliminary evidence, not a completed final multi-agent stage.
+A retrospective ten-case ladder is recorded in artifacts/phase9/capability_ladder_development.md. The historical stages differ in identity/setup and evidence access, so this is an evolution comparison, not a controlled causal ablation. Candidate integration is pending; no stage-level semantic accuracy uplift is inferred.
 
 | Stage | Configuration | Source |
 |---|---|---|
 | 1 Baseline | Phase 2 rule-based agent | **MEASURED** (existing logs) |
 | 2 LLM | Phase 3 Prompt C, empty evidence | **MEASURED** (run `20261013T030651Z-b48a462e`) |
-| 3 + Retrieval | Multi-agent, `RETRIEVAL_ENABLED=true`, memory off | PLANNED |
-| 4 + Tools + multi-agent + guards | Full graph, memory off | PLANNED |
-| 5 + Memory | Full graph on the multi-turn set | PLANNED |
-| 6 + Adaptation | Full graph with an adapted profile | PLANNED |
+| 3 + Retrieval | Historical single-agent RAG on/off, same ten case IDs | MEASURED; not a multi-agent ablation |
+| 4 + Tools + multi-agent + guards | Frozen graph outputs with declared per-case setup | Development MEASURED; final candidate pending |
+| 5 + Memory | Five controlled conversations, on/off | MEASURED Phase 6 |
+| 6 + Adaptation | Same-question style before/after/reset plus safety subset | MEASURED Phase 7 and final-build real-question replay |
 
 The same 10-case subset (or multi-turn set for stages 5–6) is reported for each stage: outcome correctness, fabricated claims, escalation correctness, latency.
 
@@ -1211,7 +1211,7 @@ The [detailed task checklist](task_list.md) tracks completed, update-needed and 
 
 ### 16.2 Delivery schedule (targets; current status takes precedence)
 
-The original Day 1 implementation tasks were substantially completed on 2026-10-13. Phase 4 coverage and category follow-through are measured. Phase 5 tools/control are implemented and live validation is recorded; Phases 6 and 7 now implement bounded projection memory and controlled style adaptation; Phase 8 hosted metadata observability and local delivery checks now pass; Phase 9 frozen baseline is complete and the twenty-case local DeepEval sample is complete, with versioned case contexts and pending actual human review. The daily blocks below are planning targets, not claims of completion or guaranteed dates. No author/student identity or new repository is a dependency.
+The original Day 1 implementation tasks were substantially completed on 2026-10-13. Phase 4 coverage and category follow-through are measured. Phase 5 tools/control are implemented and live validation is recorded; Phases 6 and 7 now implement bounded projection memory and controlled style adaptation; Phase 8 hosted metadata observability and local delivery checks now pass; Phase 9 frozen baseline is complete and the twenty-case local DeepEval sample is complete, with versioned case contexts and completed actual baseline human calibration; candidate changed-output review remains open. The daily blocks below are planning targets, not claims of completion or guaranteed dates. No author/student identity or new repository is a dependency.
 
 **Day 0: Tuesday 2026-10-13 (evening, ~1.5 h)**
 - Freeze scope. Add feature flags for deferred components and hide deferred UI tabs.
@@ -1364,10 +1364,10 @@ These were explored or considered and deliberately excluded from evaluated scope
 
 - **Latency:** sequential multi-agent LLM calls make tool paths slower than a single prompt.
 - **Small evaluation sets:** strata of 15 cases mean coarse percentages (each case ≈6.7 points). Results are reported as counts and percentages.
-- **Self-judging:** the nine measured Phase 4 faithfulness scores use the generation model. Human calibration of twenty final judged outputs is PLANNED, not completed. An independent judge is optional.
+- **Self-judging:** current DeepEval judgments use the configured generation model unless an independent judge is supplied. Actual baseline calibration covers twenty cases/57 rating pairs with 84.21% threshold agreement. Those ratings do not transfer to changed candidate outputs.
 - **Retrieval threshold:** τ is calibrated on twenty development labels. Retained recall improved 80% → 100% with zero answerable full rejections; held-out and final integrated behavior are not yet measured.
-- **Memory (PLANNED):** in-process only, lost on restart; reset/TTL and exclusion of intermediate tool/evidence checkpoint payloads must be tested. No session memory is implemented yet.
-- **Adaptation (PLANNED):** style only, per customer, from small signal counts; no adaptive preference mechanism is implemented yet.
+- **Memory:** implemented in-process projection memory, lost on restart. Reset/TTL and intermediate checkpoint exclusion are tested; no durable or cross-device session guarantee.
+- **Adaptation:** implemented opt-in per-customer presentation preferences from bounded controlled signals. Small counts do not establish learned semantic quality or improve policy authority.
 - **Rule-based safety detection:** lexicon rules can miss novel phrasings (mitigated by OR-ing with LLM flags) and can over-trigger (accepted, since the cost is an unnecessary escalation).
 - **Identity:** customer identity is simulated by session selection; there is no authentication.
 - **Data:** all data is synthetic; real deployment would require access control, retention, and deletion policies for real personal data.
@@ -1386,34 +1386,37 @@ These were explored or considered and deliberately excluded from evaluated scope
 
 ## Appendix A: Repository Structure
 
-```
+```text
 capstone_agent/
-├── README.md  pyproject.toml  <lockfile>  .env.example  .gitignore  Makefile
-├── config/            app.yaml  safety_rules.yaml
-├── data/              orders.json  tracking_events.json  product_catalog.json  policy_rules.json
-│   ├── evaluation_cases.json (v1.0)  holdout_v1_1.json  retrieval_labels.json  multiturn_cases.json
-│   └── runtime/       prefs.json  feedback.jsonl  escalations.jsonl   (gitignored)
-├── knowledge/         raw/*.md (7 policy docs)  index/chroma_v1/  index_manifest.json
+├── README.md  pyproject.toml  constraints-dev.txt  .env.example  Makefile
+├── streamlit_app.py
+├── config/              safety_rules.json  retrieval.json
+├── data/                sample_orders.json  sample_tracking_events.json
+│                       product_catalog.json  policy_rules.json
+│                       evaluation_cases.json  holdout_v1_1.json
+│   └── runtime/         ignored local metadata, preferences and ticket database
+├── knowledge/           raw/*.md  index/chroma_v2/ (ignored)  index_manifest.json
 ├── src/capstone_agent/
-│   ├── application/   cli.py  ui_streamlit.py  session.py
-│   ├── orchestration/ graph.py  state.py  dispatch.py  budgets.py
-│   ├── agents/        supervisor.py  order_shipping.py  policy_product.py  escalation.py  composer.py
-│   ├── safety/        guard_in.py  guard_out.py  redaction.py  rules.py
-│   ├── tools/         registry.py  orders.py  tracking.py  policy_search.py  products.py
-│   │                  eligibility.py  escalation.py  faults.py
-│   ├── retrieval/     embeddings_voyage.py  ingest.py  chroma_store.py  conflict.py
-│   ├── memory/        slots.py  ttl.py
-│   ├── feedback/      signals.py  adaptation.py  prefs_store.py
-│   ├── prompts/       supervisor_v1.md  order_shipping_v1.md  policy_product_v1.md
-│   │                  escalation_v1.md  composer_v1.md  registry.py (versions + hashes)
-│   ├── observability/ jsonl_logger.py  langsmith_setup.py  metrics.py
-│   └── evaluation/    harness.py  deepeval_metrics.py  rubrics/  consistency.py  ladder.py  scan.py
-├── tests/             unit/  integration/  safety/  regression/
-├── artifacts/         prompt_runs/  eval_runs/  traces/  screenshots/  canary_reports/
-└── docs/              problem_framing.md  architecture_and_plan.md (this)  demo_script.md
-                       prompt_comparison.md  retrieval_design.md  evaluation_report.md
-                       engineering_justification.md
+│   ├── main.py          CLI adapter
+│   ├── baseline_agent.py  llm_agent.py  langchain_client.py  config.py
+│   ├── support/         graph.py  obligations.py  contracts.py  registry.py
+│   │                   services.py  guards.py  runtime.py  model.py
+│   │                   memory.py  preferences.py  privacy.py
+│   ├── retrieval/       corpus.py  embeddings_voyage.py  chroma_store.py
+│   │                   query_expansion.py  grounded_answer.py
+│   ├── observability/   support_tracing.py  langsmith_tracing.py
+│   ├── evaluation/      final_protocol.py  support_runner.py  export.py
+│   │                   deepeval_runner.py  calibration.py  prompt_comparison.py
+│   └── operations.py    startup and path-level measurements
+├── evaluation/phase9/   versioned contexts and protocol
+├── scripts/             recorders, comparisons, scan/read-back and review tools
+├── tests/unit/          offline regressions including Streamlit AppTest
+├── artifacts/           preserved experiments and acceptance evidence
+├── docs/                active design/status chapters; archive/ retains old plans
+└── submission/          history-free source snapshots (dated, not all current)
 ```
+
+The working support graph is not checkpointed. Only the separate bounded memory projection uses a checkpointer. Historical domain/delivery/knowledge-graph modules are deferred and excluded from the default support path.
 
 ## Appendix B: Key Configuration
 
