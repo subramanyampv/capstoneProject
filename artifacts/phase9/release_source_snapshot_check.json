@@ -1,0 +1,23 @@
+{
+  "archive": "capstone-source-review-candidate-33d8092.zip",
+  "commit": "33d8092ea5f326512c23773e3d7b9f0486ef1e19",
+  "files": 696,
+  "sha256": "ae72067994b2f4e207989b14e6d273163f694fa7384bbd9b83435ea1c776dddd",
+  "integrity_checked": true,
+  "current_credentials_found": false,
+  "history_included": false,
+  "release_accepted": false,
+  "source_import_verified": true,
+  "isolated_source_tests_passed": 242,
+  "isolated_source_tests_failed": 0,
+  "test_elapsed_seconds": 16.93,
+  "pre_test_exclusions_verified": [
+    ".git",
+    ".env",
+    ".venv",
+    "data/runtime",
+    "knowledge/index/manifest.json"
+  ],
+  "environment": "Existing project .venv reused, with PYTHONPATH set to extracted archive src; no new virtual environment or dependency installation.",
+  "limits": "History-free review-candidate source snapshot only. Clean-source tests passed, not a clean dependency install/cold model download. Human calibration and untouched holdout still pending; release_accepted remains false. Archive intentionally pins 33d8092; subsequent package-verification evidence does not alter the application."
+}
