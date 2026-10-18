@@ -1,0 +1,120 @@
+{
+  "application_commit": "d57aa4a",
+  "frozen_run": "20261018T023235Z",
+  "repeat_run": "20261018T023922Z",
+  "checks": {
+    "source_matches_frozen": true,
+    "repeat_same_source": true,
+    "model_configuration_unchanged": true,
+    "judged_source_outputs_match": true,
+    "blind_files_unchanged_since_independent_freeze": true
+  },
+  "human_review_status": "reviewed_by_human",
+  "blindness_scope": "Only byte hashes checked; implementation agent has not inspected v3 questions or contexts. No v3 holdout execution.",
+  "release_accepted": false,
+  "style_replay_scope": "First replay failed/confounded by policy timeout and is preserved; one unchanged-build controlled replay passes all nine checks. Intermittent local retrieval delays remain a limitation.",
+  "human_calibration": {
+    "status": "calibrated",
+    "reviewed_cases": 20,
+    "paired_ratings": 56,
+    "binary_agreement": 0.7678571428571429,
+    "mean_absolute_score_difference": 0.09781029038409624,
+    "disagreements": [
+      {
+        "case_id": "N03",
+        "metric": "answer_relevancy",
+        "human": 1.0,
+        "judge": 0.7142857142857143,
+        "agreement": false
+      },
+      {
+        "case_id": "N01",
+        "metric": "faithfulness",
+        "human": 1.0,
+        "judge": 0.8888888888888888,
+        "agreement": false
+      },
+      {
+        "case_id": "N01",
+        "metric": "answer_relevancy",
+        "human": 1.0,
+        "judge": 0.6842105263157895,
+        "agreement": false
+      },
+      {
+        "case_id": "N07",
+        "metric": "answer_relevancy",
+        "human": 1.0,
+        "judge": 0.7894736842105263,
+        "agreement": false
+      },
+      {
+        "case_id": "N16",
+        "metric": "answer_relevancy",
+        "human": 1.0,
+        "judge": 0.631578947368421,
+        "agreement": false
+      },
+      {
+        "case_id": "R02",
+        "metric": "answer_relevancy",
+        "human": 1.0,
+        "judge": 0.5555555555555556,
+        "agreement": false
+      },
+      {
+        "case_id": "R09",
+        "metric": "answer_relevancy",
+        "human": 1.0,
+        "judge": 0.4666666666666667,
+        "agreement": false
+      },
+      {
+        "case_id": "R14",
+        "metric": "answer_relevancy",
+        "human": 1.0,
+        "judge": 0.4,
+        "agreement": false
+      },
+      {
+        "case_id": "S07",
+        "metric": "answer_relevancy",
+        "human": 0.9,
+        "judge": 0.7777777777777778,
+        "agreement": false
+      },
+      {
+        "case_id": "S07",
+        "metric": "grounded_support",
+        "human": 1.0,
+        "judge": 0.6,
+        "agreement": false
+      },
+      {
+        "case_id": "S13",
+        "metric": "grounded_support",
+        "human": 1.0,
+        "judge": 0.7,
+        "agreement": false
+      },
+      {
+        "case_id": "M02",
+        "metric": "answer_relevancy",
+        "human": 1.0,
+        "judge": 0.45454545454545453,
+        "agreement": false
+      },
+      {
+        "case_id": "M01",
+        "metric": "answer_relevancy",
+        "human": 1.0,
+        "judge": 0.6666666666666666,
+        "agreement": false
+      }
+    ],
+    "unsafe_case_ids": [],
+    "limits": "Agreement is measured only on actual paired ratings. Human safety flags remain explicit failures; averages cannot waive them."
+  },
+  "review_sha256": "4a2fbec0aab7707a85bfbf34a5c421abf0ccbf913d8ee9ca211954566573e53b",
+  "decision": "Technical locks and actual human review gates pass before first v3 use; scores/disagreements are retained and release is not accepted before independent evaluation."
+}
