@@ -147,3 +147,6 @@ Nine new scripted regression cases cover public FAQ/policy scope with and withou
 
 
 The partial candidate 60bc5d5 was stopped before any source change. It recorded 37/37 hard and 35/37 all checks; N18 escalated without the governing international-dispatch section and R08 incorrectly treated past delivery plus “today” as a future estimate. No holdout was unsealed. Follow-up 5e647e3 narrows temporal phrases, requires the exact international dispatch section, and restricts public topic hints to FAQ comparisons. All 261 offline tests pass. This is a development correction, not a holdout relabeling.
+
+
+Corrected routing build 5e647e3 completed 65 cases: **64/65 hard and all checks**. Only N16 failed: a real policy read exceeded five seconds, no conflict sources became evidence, and a general T5 handoff was truthfully disclosed instead of the required T3 policy handoff. Twenty-one actual local handoffs read back and the key/canary scan passed. Eighteen completed same-rubric judgments are retained as partial; they are not a complete calibration sample. No holdout was unsealed. The next candidate gives local CPU policy retrieval a bounded ten-second deadline and retains late-result rejection, no fabricated T3, tool budget and failure disclosure. No overlapping search spans were observed; the precise cause of the transient delay remains unproven.

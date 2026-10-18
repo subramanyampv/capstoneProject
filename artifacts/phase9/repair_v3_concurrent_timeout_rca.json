@@ -1,0 +1,18 @@
+{
+  "case_id": "N16",
+  "source_run": "20261018T022338Z",
+  "observed_timeout_ms": [
+    5002.615
+  ],
+  "overlap": [
+    {
+      "failed_span": {
+        "start": "2026-10-18T02:25:07.294945+00:00",
+        "end": "2026-10-18T02:25:12.298139+00:00"
+      },
+      "overlapping_calls": []
+    }
+  ],
+  "interpretation": "One policy read exceeded the fixed five-second deadline (5002.615 ms). No overlapping search spans were observed for that interval, so queue contention is not established. Local inference/scheduling delay is possible but unproven. The runtime truthfully disclosed missing policy evidence and made a general handoff; it did not invent a T3 conflict or citation. The missed mandatory T3 remains a hard failure. A bounded CPU-retrieval deadline adjustment will be evaluated separately, without changing labels or consuming the blind holdout.",
+  "release_accepted": false
+}

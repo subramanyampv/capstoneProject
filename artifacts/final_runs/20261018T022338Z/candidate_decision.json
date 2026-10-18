@@ -1,0 +1,13 @@
+{
+  "application_commit": "5e647e3",
+  "release_accepted": false,
+  "runs": 65,
+  "hard_gate_case_passes": 64,
+  "all_case_passes": 64,
+  "failed_case_ids": [
+    "N16"
+  ],
+  "judging": "stopped_after_18_completed_partial_judgments",
+  "reason": "Actual five-second local policy timeout prevented verified conflict sources and required T3; preserve the failure. New bounded retrieval deadline requires new candidate evaluation.",
+  "blind_holdout_v3_unsealed": false
+}
