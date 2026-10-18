@@ -2,6 +2,8 @@
 
 > Current candidate and gate status: [Current status](current_status.md). Earlier candidate/run measurements below are historical and do not transfer to the current build.
 
+Future-version review decisions and prioritized tasks: [Review addendum](future_product_targets.md). These do not expand the current evaluated scope.
+
 ## Final Architecture Design and Project Plan
 
 | Field | Value |

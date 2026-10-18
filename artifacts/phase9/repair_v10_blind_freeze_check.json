@@ -1,0 +1,9 @@
+{
+  "hashes_match_original_freeze": true,
+  "checks": {
+    "data/holdout_v4_blind.json": true,
+    "evaluation/phase9/holdout_contexts_v4_blind.json": true,
+    "evaluation/phase9/holdout_v4_blind_freeze.json": true
+  },
+  "limits": "Byte hashes only; root has not read blind case contents. Evaluation not started."
+}

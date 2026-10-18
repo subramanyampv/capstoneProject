@@ -1,0 +1,18 @@
+{
+  "protocol": "response-prose-relevancy-v2",
+  "source_outputs_sha256": "c43f3893e200d7f3108224796bae5df766523c8198a2cc3dfdb387ce03ab9c01",
+  "recorder_sha256": "300928fa29c1ca31d068d5c6440e6663b1d9d680a4b709f877127f731e5cc1a9",
+  "judge_settings": {
+    "provider": "openai_compatible",
+    "model": "qwen3.7-max",
+    "timeout_seconds": 20.0,
+    "max_retries": 0,
+    "response_format": "json_object",
+    "temperature": 0,
+    "max_completion_tokens": 2400,
+    "enable_thinking": false
+  },
+  "judge_fingerprint": "152929b630388af39865403fc5acb89987f26be0b7af79e89330739ccb32b2b1",
+  "projection": "answer + why + next_steps; references/intent/outcome metadata omitted; declared prior conversation included",
+  "limits": "Additional diagnostic motivated by primary scores penalizing metadata. Primary v1 scores remain unchanged. Same-model judging is not independent human assessment. Streamlit displays prose plus separate sources; terminal JSON also exposes metadata. This diagnostic does not replace full-envelope groundedness or establish a causal improvement."
+}

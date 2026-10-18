@@ -1,5 +1,7 @@
 # Engineering and product justification — v3
 
+> Historical review provenance caveat (2026-10-18): the supplied project review explicitly discloses AI authorship of seventeen ratings in run `20261018T012141Z`. Existing status strings and scores do not verify human authorship. Do not cite that run as established actual-human calibration; its original files and calculations remain unchanged. Current candidate review is explicitly `ai_proxy`, separate from human calibration. See [review reconciliation](previous_reviews_reconciliation_2026-10-18.md).
+
 Authority: [Architecture and Plan v3](architecture_and_plan.md), sections 4, 18 and 19. Frozen/repeated measurements, quality judgments and actual current review are complete; independent v3 failed its safety gate, so product-illness repair and independent v4 validation remain.
 
 | Decision | Rationale |

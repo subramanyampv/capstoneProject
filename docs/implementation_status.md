@@ -1,9 +1,11 @@
 # Implementation status under v3
 
+> Historical review provenance caveat (2026-10-18): the supplied project review explicitly discloses AI authorship of seventeen ratings in run `20261018T012141Z`. Existing status strings and scores do not verify human authorship. Do not cite that run as established actual-human calibration; its original files and calculations remain unchanged. Current candidate review is explicitly `ai_proxy`, separate from human calibration. See [review reconciliation](previous_reviews_reconciliation_2026-10-18.md).
+
 > Current candidate and gate status: [Current status](current_status.md). Earlier candidate/run measurements below are historical and do not transfer to the current build.
 
 
-Authority: [Architecture and Plan v3](architecture_and_plan.md). Updated 2026-10-17.
+Authority: [Architecture and Plan v3](architecture_and_plan.md). Updated 2026-10-18.
 
 | Phase | Status | Evidence / next gate |
 |---|---|---|
@@ -15,7 +17,7 @@ Authority: [Architecture and Plan v3](architecture_and_plan.md). Updated 2026-10
 | 6 | Projection memory implemented; five-conversation comparison measured | Six-message window, scoped verified refs, reset/TTL/background deletion, fresh reads and privacy tests; phase6_memory.md |
 | 7 | Implemented; development validation recorded | Shared terminal/Streamlit feedback, consent, bounded preferences, rollback/deletion, live before/after and safety subset; phase7_adaptation.md |
 | 8 | Verified for local deployment and metadata observability | Hosted graph/canary read-back, invalid-key isolation, safe logs/startup, clean install/index rebuild, terminal/Streamlit and 204 tests; phase8_operations.md |
-| 9 | Human review complete; independent v3 failed; safety repair next | d57aa4a: 261 tests, 65/65 frozen, 45/45 repeats and actual 20-case calibration complete. V3 failed 9/10 on T1 illness classification. Independently sealed v4 and new-candidate validation remain. |
+| 9 | Current candidate evaluation incomplete | `7d10e67`:367 offline,65/65 frozen,45/45 repeated checks;20-case AI proxy review passed. Semantic threshold misses remain. First v4 completed 9/10 hard and 8/10 all checks; three major answer-review issues block acceptance. See current ledger. Earlier human-review wording is qualified by the provenance caveat above. |
 
 The first candidate (`ecb208e`) passed 65 frozen cases and 45 safety repeats, but its first untouched holdout passed only **8/10**: H02 missed refund T2; H07 missed privacy R2 and made an unnecessary handoff. No refund execution or private tracking/address disclosure was observed. These boundaries do not waive the hard failures. Its actual human calibration is complete: 20 cases, 56 pairs, 82.14% threshold agreement, no human unsafe flags. Results and labels remain unchanged.
 

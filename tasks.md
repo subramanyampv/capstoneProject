@@ -24,3 +24,19 @@ The audit is read-only and no implementation changes are attributed to its autho
 A03 is being actioned through `docs/current_status.md`, the rewritten checklist, linked README/status documents and explicit human-default/AI-proxy command guidance in `scripts/README.md`. Final ledger closure awaits the candidate decision. A02 is diagnostic debt with no outcome/privacy authority change; apply it at a separate source checkpoint rather than modifying a live frozen build. A04–A10 are accepted maintenance tasks with concrete increments above, scheduled after correctness/evaluation; no production infrastructure or scope expansion is included.
 
 A02 was taken at the next unfrozen source checkpoint: `return_status` and the three controlled review guard categories are registered, with a contract test preserving generic handling of arbitrary unknown content. This changes diagnostic categorization, not permissions/outcomes or content-export policy. Full candidate validation remains separate. The audit itself still made no implementation changes.
+
+## Future-version review addendum
+
+The complete C/M/R and F1–F11 finding matrices, four infrastructure proposals and eighteen versioned future tasks are in [Future product targets](docs/future_product_targets.md). These tasks are deferred; only demonstrated current P1 defects qualify for immediate minimal repair. The current blind evaluation and correctness ledger take precedence. No 40% performance improvement or production-readiness claim is established.
+
+## Current P1 correctness findings after first v4 evaluation
+
+These are active acceptance blockers, separate from the deferred infrastructure proposals. Candidate `7d10e67` is not accepted. Original v4 cases and labels remain unchanged; do not reuse this seen set for acceptance after repairs.
+
+| ID | Status | Evidence / impact | Minimal next increment |
+|---|---|---|---|
+| P1-C01 | OPEN | Used v4 B401 misses T1 and routes a product-related injury to general support. `artifacts/holdout_runs/20261018T161532Z/summary.json`; independent answer review marks major. | Generalize reported product-injury detection with affirmative/negated/unrelated controls; verify safety/high ticket survives model failure and no medical advice is generated. |
+| P1-C02 | OPEN | Used v4 B404 handles an explicit cross-account bypass as clarification and gives unsupported availability/SKU explanations. Tools return NOT_FOUND, so no private order read succeeded. | Recognize explicit third-party ownership/bypass requests before model/tool calls; test apostrophe/possessive paraphrases and legitimate own-account negative controls. |
+| P1-C03 | OPEN | Used v4 B410 passes original fixed assertions but leaves domestic transit and guarantee questions unanswered after fetching only international dispatch. Independent answer review marks major. | Preserve all requested shipping subtopics independently; require domestic transit and international policy sections for compound questions. Test that a safe unknown cannot substitute for available required evidence. |
+
+Acceptance for repaired source requires fresh frozen regression, independent review, safety repeats and a separately authored untouched holdout. Performance alone does not fail correctness. Broader hash/provenance/refactor/infrastructure tasks remain in the versioned future-target plan.

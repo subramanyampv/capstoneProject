@@ -1,0 +1,252 @@
+{
+  "application_commit": "7b2e33d",
+  "failed_run": "20261018T153338Z",
+  "source_unchanged": true,
+  "phases": [
+    {
+      "mode": "direct",
+      "records": [
+        {
+          "case_id": "R02",
+          "elapsed_ms": 119.514,
+          "reads": [
+            {
+              "name": "search_policy",
+              "status": "ok",
+              "error": null,
+              "duration_ms": 117.337
+            }
+          ]
+        },
+        {
+          "case_id": "R09",
+          "elapsed_ms": 81.485,
+          "reads": [
+            {
+              "name": "search_policy",
+              "status": "ok",
+              "error": null,
+              "duration_ms": 79.554
+            }
+          ]
+        },
+        {
+          "case_id": "R10",
+          "elapsed_ms": 76.79,
+          "reads": [
+            {
+              "name": "search_policy",
+              "status": "ok",
+              "error": null,
+              "duration_ms": 75.96
+            }
+          ]
+        }
+      ],
+      "search_timings": [
+        {
+          "started_at": "2026-10-18T15:41:43.819982+00:00",
+          "queue_ms": 0.02,
+          "search_execution_ms": 115.757,
+          "status": "ok"
+        },
+        {
+          "started_at": "2026-10-18T15:41:43.943608+00:00",
+          "queue_ms": 0.01,
+          "search_execution_ms": 79.144,
+          "status": "ok"
+        },
+        {
+          "started_at": "2026-10-18T15:41:44.031273+00:00",
+          "queue_ms": 0.012,
+          "search_execution_ms": 75.578,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "mode": "fresh_thread_each",
+      "records": [
+        {
+          "case_id": "R02",
+          "elapsed_ms": 102.076,
+          "reads": [
+            {
+              "name": "search_policy",
+              "status": "ok",
+              "error": null,
+              "duration_ms": 101.202
+            }
+          ]
+        },
+        {
+          "case_id": "R09",
+          "elapsed_ms": 81.139,
+          "reads": [
+            {
+              "name": "search_policy",
+              "status": "ok",
+              "error": null,
+              "duration_ms": 80.347
+            }
+          ]
+        },
+        {
+          "case_id": "R10",
+          "elapsed_ms": 85.721,
+          "reads": [
+            {
+              "name": "search_policy",
+              "status": "ok",
+              "error": null,
+              "duration_ms": 84.929
+            }
+          ]
+        }
+      ],
+      "search_timings": [
+        {
+          "started_at": "2026-10-18T15:41:44.115238+00:00",
+          "queue_ms": 0.014,
+          "search_execution_ms": 100.708,
+          "status": "ok"
+        },
+        {
+          "started_at": "2026-10-18T15:41:44.223230+00:00",
+          "queue_ms": 0.011,
+          "search_execution_ms": 79.949,
+          "status": "ok"
+        },
+        {
+          "started_at": "2026-10-18T15:41:44.310537+00:00",
+          "queue_ms": 0.012,
+          "search_execution_ms": 84.511,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "mode": "persistent_thread",
+      "records": [
+        {
+          "case_id": "R02",
+          "elapsed_ms": 103.891,
+          "reads": [
+            {
+              "name": "search_policy",
+              "status": "ok",
+              "error": null,
+              "duration_ms": 103.095
+            }
+          ]
+        },
+        {
+          "case_id": "R09",
+          "elapsed_ms": 105.275,
+          "reads": [
+            {
+              "name": "search_policy",
+              "status": "ok",
+              "error": null,
+              "duration_ms": 104.524
+            }
+          ]
+        },
+        {
+          "case_id": "R10",
+          "elapsed_ms": 98.633,
+          "reads": [
+            {
+              "name": "search_policy",
+              "status": "ok",
+              "error": null,
+              "duration_ms": 97.879
+            }
+          ]
+        }
+      ],
+      "search_timings": [
+        {
+          "started_at": "2026-10-18T15:41:44.402681+00:00",
+          "queue_ms": 0.01,
+          "search_execution_ms": 102.641,
+          "status": "ok"
+        },
+        {
+          "started_at": "2026-10-18T15:41:44.512424+00:00",
+          "queue_ms": 0.012,
+          "search_execution_ms": 104.152,
+          "status": "ok"
+        },
+        {
+          "started_at": "2026-10-18T15:41:44.623547+00:00",
+          "queue_ms": 0.02,
+          "search_execution_ms": 97.466,
+          "status": "ok"
+        }
+      ]
+    },
+    {
+      "mode": "concurrent_three",
+      "records": [
+        {
+          "case_id": "R02",
+          "elapsed_ms": 208.904,
+          "reads": [
+            {
+              "name": "search_policy",
+              "status": "ok",
+              "error": null,
+              "duration_ms": 205.155
+            }
+          ]
+        },
+        {
+          "case_id": "R09",
+          "elapsed_ms": 80.99,
+          "reads": [
+            {
+              "name": "search_policy",
+              "status": "ok",
+              "error": null,
+              "duration_ms": 78.734
+            }
+          ]
+        },
+        {
+          "case_id": "R10",
+          "elapsed_ms": 283.605,
+          "reads": [
+            {
+              "name": "search_policy",
+              "status": "ok",
+              "error": null,
+              "duration_ms": 282.424
+            }
+          ]
+        }
+      ],
+      "search_timings": [
+        {
+          "started_at": "2026-10-18T15:41:44.739144+00:00",
+          "queue_ms": 0.011,
+          "search_execution_ms": 77.263,
+          "status": "ok"
+        },
+        {
+          "started_at": "2026-10-18T15:41:44.742814+00:00",
+          "queue_ms": 73.676,
+          "search_execution_ms": 128.643,
+          "status": "ok"
+        },
+        {
+          "started_at": "2026-10-18T15:41:44.743162+00:00",
+          "queue_ms": 202.141,
+          "search_execution_ms": 79.899,
+          "status": "ok"
+        }
+      ]
+    }
+  ],
+  "limits": "Authored local retrieval diagnostic for three already-used frozen development cases; no provider LLM calls or holdout reads. Ordered phases reuse one warmed model. Queue and search execution boundaries are measured, not isolated inference or causal proof of a thread root cause. Not a replacement for failed frozen outputs."
+}

@@ -1,0 +1,187 @@
+{
+  "status": "awaiting_human_review",
+  "reviewer": "human-reviewer",
+  "rubric": "phase9-grounded-support-v1",
+  "cases": [
+    {
+      "case_id": "N03",
+      "faithfulness": null,
+      "answer_relevancy": null,
+      "grounded_support": null,
+      "not_applicable_metrics": [],
+      "unsafe_or_fabricated_claim": null,
+      "comment": ""
+    },
+    {
+      "case_id": "N01",
+      "faithfulness": null,
+      "answer_relevancy": null,
+      "grounded_support": null,
+      "not_applicable_metrics": [],
+      "unsafe_or_fabricated_claim": null,
+      "comment": ""
+    },
+    {
+      "case_id": "N07",
+      "faithfulness": null,
+      "answer_relevancy": null,
+      "grounded_support": null,
+      "not_applicable_metrics": [],
+      "unsafe_or_fabricated_claim": null,
+      "comment": ""
+    },
+    {
+      "case_id": "N10",
+      "faithfulness": null,
+      "answer_relevancy": null,
+      "grounded_support": null,
+      "not_applicable_metrics": [],
+      "unsafe_or_fabricated_claim": null,
+      "comment": ""
+    },
+    {
+      "case_id": "N16",
+      "faithfulness": null,
+      "answer_relevancy": null,
+      "grounded_support": null,
+      "not_applicable_metrics": [],
+      "unsafe_or_fabricated_claim": null,
+      "comment": ""
+    },
+    {
+      "case_id": "R02",
+      "faithfulness": null,
+      "answer_relevancy": null,
+      "grounded_support": null,
+      "not_applicable_metrics": [],
+      "unsafe_or_fabricated_claim": null,
+      "comment": ""
+    },
+    {
+      "case_id": "R03",
+      "faithfulness": null,
+      "answer_relevancy": null,
+      "grounded_support": null,
+      "not_applicable_metrics": [],
+      "unsafe_or_fabricated_claim": null,
+      "comment": ""
+    },
+    {
+      "case_id": "R05",
+      "faithfulness": null,
+      "answer_relevancy": null,
+      "grounded_support": null,
+      "not_applicable_metrics": [],
+      "unsafe_or_fabricated_claim": null,
+      "comment": ""
+    },
+    {
+      "case_id": "R09",
+      "faithfulness": null,
+      "answer_relevancy": null,
+      "grounded_support": null,
+      "not_applicable_metrics": [],
+      "unsafe_or_fabricated_claim": null,
+      "comment": ""
+    },
+    {
+      "case_id": "R14",
+      "faithfulness": null,
+      "answer_relevancy": null,
+      "grounded_support": null,
+      "not_applicable_metrics": [],
+      "unsafe_or_fabricated_claim": null,
+      "comment": ""
+    },
+    {
+      "case_id": "S01",
+      "faithfulness": null,
+      "answer_relevancy": null,
+      "grounded_support": null,
+      "not_applicable_metrics": [],
+      "unsafe_or_fabricated_claim": null,
+      "comment": ""
+    },
+    {
+      "case_id": "S04",
+      "faithfulness": null,
+      "answer_relevancy": null,
+      "grounded_support": null,
+      "not_applicable_metrics": [],
+      "unsafe_or_fabricated_claim": null,
+      "comment": ""
+    },
+    {
+      "case_id": "S07",
+      "faithfulness": null,
+      "answer_relevancy": null,
+      "grounded_support": null,
+      "not_applicable_metrics": [],
+      "unsafe_or_fabricated_claim": null,
+      "comment": ""
+    },
+    {
+      "case_id": "S13",
+      "faithfulness": null,
+      "answer_relevancy": null,
+      "grounded_support": null,
+      "not_applicable_metrics": [],
+      "unsafe_or_fabricated_claim": null,
+      "comment": ""
+    },
+    {
+      "case_id": "S15",
+      "faithfulness": null,
+      "answer_relevancy": null,
+      "grounded_support": null,
+      "not_applicable_metrics": [],
+      "unsafe_or_fabricated_claim": null,
+      "comment": ""
+    },
+    {
+      "case_id": "M02",
+      "faithfulness": null,
+      "answer_relevancy": null,
+      "grounded_support": null,
+      "not_applicable_metrics": [],
+      "unsafe_or_fabricated_claim": null,
+      "comment": ""
+    },
+    {
+      "case_id": "M01",
+      "faithfulness": null,
+      "answer_relevancy": null,
+      "grounded_support": null,
+      "not_applicable_metrics": [],
+      "unsafe_or_fabricated_claim": null,
+      "comment": ""
+    },
+    {
+      "case_id": "M05",
+      "faithfulness": null,
+      "answer_relevancy": null,
+      "grounded_support": null,
+      "not_applicable_metrics": [],
+      "unsafe_or_fabricated_claim": null,
+      "comment": ""
+    },
+    {
+      "case_id": "M11",
+      "faithfulness": null,
+      "answer_relevancy": null,
+      "grounded_support": null,
+      "not_applicable_metrics": [],
+      "unsafe_or_fabricated_claim": null,
+      "comment": ""
+    },
+    {
+      "case_id": "M14",
+      "faithfulness": null,
+      "answer_relevancy": null,
+      "grounded_support": null,
+      "not_applicable_metrics": [],
+      "unsafe_or_fabricated_claim": null,
+      "comment": ""
+    }
+  ]
+}

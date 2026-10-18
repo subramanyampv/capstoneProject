@@ -1,0 +1,11 @@
+{
+  "application_commit": "7d10e674c86cf63ed7f68e71bc7324ab9c4e3ac5",
+  "source_hashes_match_live_manifest": true,
+  "imported_source": "/tmp/capstone-final-clean-jA9mBY/src/capstone_agent/__init__.py",
+  "existing_venv_used": true,
+  "tests": 367,
+  "passed": true,
+  "elapsed_seconds": 26.12,
+  "test_log_sha256": "29eab61a8dcc7d20d1195d2828d7d2490058e7f7005d9ac795d3b1423b3732c3",
+  "limits": "Committed source extracted without Git history, local env/runtime/index/model caches. Existing project venv used; dependencies were not reinstalled in a fresh environment. Offline tests and Streamlit AppTest mock provider behavior; actual provider CLI checked separately."
+}

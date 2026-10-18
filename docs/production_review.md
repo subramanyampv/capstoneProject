@@ -1,5 +1,7 @@
 # First production review — deferred until core acceptance
 
+Current consolidated decisions, complete finding matrices and versioned tasks: [Future product targets and review addendum](future_product_targets.md). User proposal numbers are not P1 severity; no infrastructure/performance implementation is scheduled in the active correctness evaluation.
+
 User direction: fix the existing refund-intent and privacy-routing defects before adding infrastructure or features. The first holdout remains failed evidence (8/10 hard/all checks). A separately authored replacement set is frozen and kept blind while a new candidate is repaired. None of the four production extensions below is implemented by this discussion.
 
 | Review item | Recommended design | Required evidence before adoption |

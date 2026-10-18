@@ -1,0 +1,25 @@
+{
+  "checks": [
+    {
+      "case_id": "N01",
+      "unique_local_match": true,
+      "exported_uuid_pattern_masked": true
+    },
+    {
+      "case_id": "S13",
+      "unique_local_match": true,
+      "exported_uuid_pattern_masked": false
+    },
+    {
+      "case_id": "M08",
+      "unique_local_match": true,
+      "exported_uuid_pattern_masked": false
+    },
+    {
+      "case_id": "M11",
+      "unique_local_match": true,
+      "exported_uuid_pattern_masked": false
+    }
+  ],
+  "limits": "Actual content-free local records correlated using identically minimized trace ID plus exact latency/outcome; require unique match. No guessed correlation or source change."
+}

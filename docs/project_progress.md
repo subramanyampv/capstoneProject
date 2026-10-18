@@ -120,13 +120,13 @@ The [Memory Pad](memory_pad.md) adds an ecommerce feature comparison with Gorgia
 
 ## 5. Inputs from the user
 
-LangSmith credentials were supplied locally and hosted verification passed. No additional credentials are needed for the next evaluation work; later human calibration of final outputs remains required. Author/student identity and a new repository name are not requested.
+LangSmith credentials were supplied locally and hosted verification passed. No additional credentials are needed for the next evaluation work; current iterative review uses explicitly authorized AI proxies, without claiming actual human calibration. Author/student identity and a new repository name are not requested.
 
-A separate judge endpoint/model is optional. The first-candidate twenty-case review was supplied and calibrated. New materially changed outputs require actual review; earlier ratings are not automatically transferred.
+A separate judge endpoint/model is optional. The first-candidate twenty-case review was supplied and calibrated. New materially changed outputs require a fresh explicitly labeled review under the current policy; earlier ratings are not automatically transferred.
 
 ## 6. Current acceptance position
 
-The multi-agent system is implemented and locally verified, but final-system acceptance remains open. Prompt C is a development choice; a schema-valid output or a self-judge score does not prove grounded policy, authorization, coverage or a completed ticket. The submission target remains 2026-10-18, subject to the remaining implementation and evidence work.
+The multi-agent system is implemented and locally verified, but final-system acceptance remains open. Prompt C is a development choice; a schema-valid output or a self-judge score does not prove grounded policy, authorization, coverage or a completed ticket. The user removed the submission deadline; current correctness and evaluation gates take priority.
 
 Evidence links: [architecture](architecture_and_plan.md), [baseline closure](phase2_closure.md), [prompt comparison](prompt_comparison.md), [retrieval design](retrieval_design.md), [validation record](../artifacts/phase4_validation.md), [evaluation register](evaluation_report.md).
 

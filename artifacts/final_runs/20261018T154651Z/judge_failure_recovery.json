@@ -1,0 +1,33 @@
+{
+  "protocol": "single-missing-measurement-recovery-v1",
+  "case_id": "M09",
+  "metric": "faithfulness",
+  "original": {
+    "name": "faithfulness",
+    "score": null,
+    "pass": null,
+    "status": "judge_failed"
+  },
+  "recovered": {
+    "name": "faithfulness",
+    "score": 1.0,
+    "pass": true,
+    "status": "measured",
+    "reason": "The score is 1.00 because there are no contradictions; the actual output is perfectly aligned with the retrieval context. Great job maintaining complete faithfulness!"
+  },
+  "original_primary_sha256": "22eca9b4bb2e15cc237e6fe8af6974b807a758ba67edb4d1b8b6603706b30031",
+  "original_primary_file": "judgments_all_primary_original.jsonl",
+  "judge_settings": {
+    "provider": "openai_compatible",
+    "model": "qwen3.7-max",
+    "timeout_seconds": 20.0,
+    "max_retries": 0,
+    "response_format": "json_object",
+    "temperature": 0,
+    "max_completion_tokens": 2400,
+    "enable_thinking": false
+  },
+  "successful_completions": 4,
+  "tokens": 6133,
+  "limits": "One failed evaluator measurement retried once under the unchanged rubric. All successful original scores retained exactly; original primary bytes preserved. Not answer regeneration or retrying a low score."
+}

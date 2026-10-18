@@ -1,5 +1,7 @@
 # Evaluation report — repaired candidate
 
+> Historical review provenance caveat (2026-10-18): the supplied project review explicitly discloses AI authorship of seventeen ratings in run `20261018T012141Z`. Existing status strings and scores do not verify human authorship. Do not cite that run as established actual-human calibration; its original files and calculations remain unchanged. Current candidate review is explicitly `ai_proxy`, separate from human calibration. See [review reconciliation](previous_reviews_reconciliation_2026-10-18.md).
+
 > Current candidate and gate status: [Current status](current_status.md). Earlier candidate/run measurements below are historical and do not transfer to the current build.
 
 
