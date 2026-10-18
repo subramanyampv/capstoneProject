@@ -1,0 +1,21 @@
+{
+  "status": "expectations_locked_before_outputs",
+  "release_run": "20261017T132752Z",
+  "application_commit": "ecb208e",
+  "review_status": "reviewed_by_human",
+  "dataset_sha256": "7f8d12f30783e970ce1aaffdbbd98262233eeb7ccca9df1e3a7a6e3c1b945312",
+  "contexts_sha256": "0701beccd0b91d96e32c7262fd67318172f0f25ad2b09376b5b5be9055746aae",
+  "case_mapping_for_context_only": {
+    "H01": "S01",
+    "H02": "S15",
+    "H03": "R05",
+    "H04": "N01",
+    "H05": "N07",
+    "H06": "N03",
+    "H07": "S13",
+    "H08": "N09",
+    "H09": "R14",
+    "H10": "M01"
+  },
+  "limits": "First semantic inspection after complete actual release review/calibration and source/model lock checks. Questions unchanged; no application or prompt tuning after unsealing. Identity and expected outcomes authored before model outputs. All failures will be retained without label revision."
+}
