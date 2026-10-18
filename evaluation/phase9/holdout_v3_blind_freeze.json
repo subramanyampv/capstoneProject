@@ -1,0 +1,61 @@
+{
+  "schema_version": "1.0",
+  "freeze_id": "holdout_v3_blind",
+  "frozen_at_utc": "2026-10-18T02:11:55.067462+00:00",
+  "scenario_date": "2026-10-12",
+  "case_count": 10,
+  "algorithm": "sha256",
+  "files": {
+    "data/holdout_v3_blind.json": {
+      "sha256": "720ead6b2cd07fb5ae6db9efae19ee79007e6525298c2a5c2269647e173084b2"
+    },
+    "evaluation/phase9/holdout_contexts_v3_blind.json": {
+      "sha256": "045f8957741ab53e5ae268f42d8cc311223bdd8fd7eb71f330b1d7758eb55192"
+    }
+  },
+  "reference_snapshot_sha256": {
+    "docs/architecture_and_plan.md": "9eafd3111b666618dedd873a87c8ada02e1f597cae9030dabf472a9b616da916",
+    "data/evaluation_cases.json": "b3838a055e756d445934df6796de70b6ae69cd9fc0261e91932ec44d23d9aa94",
+    "data/sample_orders.json": "91eeff0665915588a70b7356a09b4981f8cefa4b2c78d13e8cd8249811e07332",
+    "data/sample_tracking_events.json": "4163c63c8c2f7022aaf6b43638b24e77e0f51ba4607864b8cff09cff04940a19",
+    "data/product_catalog.json": "4edc0280346e3be7d33364d7d21411300a799e68cdba44a64abdbafc64c38196",
+    "data/policy_rules.json": "83bed31dfad9cae5cfb3bc825874671617757564e6ceda66f192872b8e273acb",
+    "evaluation/phase9/frozen_contexts_v3.json": "3cd2c42e594f3c75ea504a79bfede766566e12d6c43cac5cbb0730c3d5184c19",
+    "knowledge/raw/return_policy.md": "7c837441121fded9e1a863b5da79928515dd9192a0311a41736759cb9156ebf0",
+    "knowledge/raw/faq.md": "050e68b2e08690ea7f7bf13d2f244e7841fed845abededbd077418960a0d5274",
+    "knowledge/raw/refund_policy.md": "38311d56e49138c4179d44fdc5b17b99152703e3456557ce13f059dde434ae00",
+    "knowledge/raw/shipping_policy.md": "9233b2e3348710830914c8d4824b40fda87d6e96779be59f7a4be90b8b77f7ad",
+    "knowledge/raw/cancellation_policy.md": "2967fc5a035b77c36fe809d83561129e2eb05ebc7165ec7974e15665ab03c5f8"
+  },
+  "reference_snapshot_note": "Uses the approved architecture, contexts and fixtures previously read for independent v2 authoring; no intervening source, repair discussion or failure reports were read.",
+  "previous_authored_dataset_sha256": "038fe7cdc302160b42382626df07de8c46c39a244fbcf4c5f62de698508cfbb9",
+  "independence": {
+    "independently_authored": true,
+    "contexts_and_synthetic_identities_selected_before_candidate_outputs": true,
+    "contexts_written_before_dataset": true,
+    "application_or_model_run_count": 0,
+    "network_access_count": 0,
+    "prohibited_sources_not_read": [
+      "artifacts/holdout_runs",
+      "holdout failure reports",
+      "latest repair source/diffs",
+      "parent repair discussion",
+      ".env",
+      "data/holdout_v1_1.json"
+    ],
+    "not_conditioned_on_specific_candidate_fixes": true,
+    "not_tuned_against_candidate_outputs": true,
+    "no_source_or_configuration_changes": true,
+    "information_only_transaction_scope": true
+  },
+  "validation": {
+    "case_count_and_unique_ids": "passed",
+    "dataset_context_id_alignment": "passed",
+    "synthetic_customer_identity_membership": "passed",
+    "context_field_and_tool_outcome_trigger_schema": "passed",
+    "all_cases_frozen_and_within_input_limit": "passed",
+    "unique_input_texts": "passed",
+    "no_reused_ids_or_input_texts_from_previous_authored_set": "passed",
+    "manual_architecture_and_fixture_semantics_review": "passed"
+  }
+}
