@@ -8,6 +8,15 @@ from capstone_agent.support.memory import command_result
 
 ROOT=Path(__file__).resolve().parents[2]
 
+def test_correctness_is_independent_of_response_latency():
+    result=command_result(False)
+    correct={'allowed_outcomes':['COMMAND_HANDLED']}
+    unexpected={'allowed_outcomes':['ANSWERED']}
+    for latency in [100,15000,60000]:
+        result['latency_ms']=latency
+        assert assess(result,correct)['case_checks_passed']
+        assert not assess(result,unexpected)['case_checks_passed']
+
 def test_declared_contexts_cover_exact_frozen_inputs_and_preserve_cross_account_case():
     protocol=json.loads((ROOT/'evaluation/phase9/protocol_v1.json').read_text())
     path=ROOT/'data/evaluation_cases.json';original=json.loads(path.read_text())['cases']

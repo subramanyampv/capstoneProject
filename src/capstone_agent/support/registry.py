@@ -40,9 +40,9 @@ class ToolContext:
 SPECS={
  'lookup_order':('order_shipping',OrderArgs,OrderResult,3.),
  'get_tracking_events':('order_shipping',OrderArgs,TrackingResult,3.),
- # Local CPU embeddings can exceed five seconds even without another active
- # search. Keep a bounded deadline; late results still cannot become evidence.
- 'search_policy':('policy_product',PolicyArgs,PolicyResult,10.),
+ # User-approved 20-second local retrieval budget. Latency is measured
+ # separately from correctness; results after the deadline cannot become evidence.
+ 'search_policy':('policy_product',PolicyArgs,PolicyResult,20.),
  'get_product_details':('policy_product',ProductArgs,ProductResult,2.),
  'check_return_eligibility':('policy_product',EligibilityArgs,EligibilityResult,2.),
  'create_escalation':('escalation',EscalationArgs,EscalationResult,3.),

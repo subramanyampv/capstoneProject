@@ -2,16 +2,17 @@
 
 Updated 2026-10-18 (America/New_York). This is the current-candidate ledger. Other run narratives are historical unless they name this candidate. **No final acceptance or permission to publish unused blind tests is implied by a frozen-suite pass.**
 
-- Application repair: **`b8a1ce2`**, frozen after **361 passing offline tests**, also passing in an extracted committed-source copy with matching candidate hashes.
-- Targeted affected-case smoke: **5/5 hard/all checks**, run `20261018T151346Z`; developer answer inspection confirms the negated disclaimer remains unchanged.
-- Current full run: **`20261018T151500Z`** — [manifest](../artifacts/final_runs/20261018T151500Z/manifest.json), [live summary](../artifacts/final_runs/20261018T151500Z/summary.json). The summary reports actual progress, not final acceptance.
-- Previous partial/failed candidates remain unaccepted and preserved. They do not establish current completion.
+- Application under validation: `7b2e33d` plus the user-approved policy-search timeout change from 10 to 20 seconds. **367 offline tests pass**; fresh live validation is required for this changed build.
+- Targeted live check `20261018T153210Z`: **4/4 hard/all checks**; cancellation wording inspected.
+- Current full run: **`20261018T153338Z`** — [manifest](../artifacts/final_runs/20261018T153338Z/manifest.json), [live summary](../artifacts/final_runs/20261018T153338Z/summary.json).
+- Prior `b8a1ce2` completed full run `20261018T151500Z`: **65/65 hard/all**, **45/45 safety repeats** (`20261018T152232Z`, 100% outcomes), 19 full/24 repeated mock tickets read back, and scans passed. It remains **blocked**, because its AI reviewer flagged N07's unsupported 'outdated' description of an empty record.
+- All 65 original judgments and the separate prose diagnostic completed for that prior candidate; those measurements do not transfer to changed source.
 
 
 | Gate | Current evidence / status |
 |---|---|
-| Frozen regression | Running `20261018T151500Z`; requires completed 65/65 hard and all case checks. |
-| All-65 DeepEval | Running against this exact full run with original rubric; prior scores remain historical. |
+| Frozen regression | Prior 10-second build completed `20261018T153338Z`: 65/65 hard, 62/65 all checks. R02/R09/R10 lack the expected answer and required policy citation after real search timeouts. The 20-second build requires fresh validation. |
+| All-65 DeepEval | Running on this exact run; prior all-65 scores remain historical and unchanged. |
 | Fresh independent answer review | Pending completed new packet; fresh context-free AI proxy required. Prior actual human ratings do not transfer. |
 | Repeated safety suite | Pending on this build. Earlier repeat run `20261018T144358Z` was stopped at 12/45 after its paired candidate was blocked; it is not completion evidence. |
 | Current ticket read-back/privacy checks | Pending on completed candidate exports. Earlier candidate scans do not transfer automatically. |
@@ -28,5 +29,9 @@ Updated 2026-10-18 (America/New_York). This is the current-candidate ledger. Oth
 - Used blind v1/v2/v3 failures and their actual-human reviews remain historical evidence. They cannot establish acceptance for this candidate.
 
 ## Review and publication policy
+
+User clarification (2026-10-18): evaluate correctness independently of latency. A correct answer taking 15 seconds passes correctness; a wrong, unsupported or unexpected answer fails regardless of speed. Record latency as an operational measurement and defer performance root-cause work until correctness is stable. Runtime deadlines remain bounded resource controls, not correctness thresholds. A timeout that prevents the required answer remains a functional miss; do not relabel it as a successful answer.
+
+The completed local retrieval probe (`artifacts/phase9/repair_v9_search_timing_probe.json`) succeeded in all twelve reads across direct, fresh-thread, persistent-thread and concurrent modes. It did not reproduce the full-run failures or establish their cause. Queue/execution timing instrumentation is available for the next controlled run. Performance tuning is deferred; missing required answers remain open correctness work.
 
 The user authorized iterative independent AI agents as human proxies. They are recorded as `reviewed_by_independent_ai` / `ai_proxy`, separate from actual human calibration. Exact packet/output/build/model locks, the predetermined twenty-case review, complete judging and no unresolved major/critical or unsupported-claim flags are required before the new blind evaluation. The default human pipeline is unchanged. New blind questions and expected outcomes may publish only **after first evaluation, with results**. Any changed application build requires its own validation. Scores below target and unavailable measures remain explicit limitations.

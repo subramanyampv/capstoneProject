@@ -54,10 +54,17 @@ def summarize(directory):
 
 class SerializedSearch:
     """Share one pinned model; serialize inference while model HTTP work overlaps."""
-    def __init__(self,inner):self.inner=inner;self.lock=threading.Lock()
+    def __init__(self,inner):self.inner=inner;self.lock=threading.Lock();self.timings=[]
     def __getattr__(self,name):return getattr(self.inner,name)
     def search(self,*args,**kwargs):
-        with self.lock:return self.inner.search(*args,**kwargs)
+        requested=time.perf_counter();started_at=datetime.now(timezone.utc).isoformat()
+        with self.lock:
+            acquired=time.perf_counter();status='error'
+            try:
+                result=self.inner.search(*args,**kwargs);status='ok';return result
+            finally:
+                self.timings.append({'started_at':started_at,'queue_ms':round((acquired-requested)*1000,3),
+                    'search_execution_ms':round((time.perf_counter()-acquired)*1000,3),'status':status})
 
 
 def execute_case(case,repeat,contexts,search,local,manifest,fingerprint):
@@ -125,6 +132,8 @@ def main():
             summarize(directory)
             print(record['case_id'],record['repeat'],result['outcome'],'hard',assessment['hard_gate_passed'],'all',assessment['case_checks_passed'],flush=True)
     EXPORTER.wait(10);summarize(directory)
+    (directory/'local_search_timing.json').write_text(json.dumps({'samples':search.timings,
+        'limits':'Evaluation shared-model lock wait and elapsed search execution, including initial warmup. No query text, arguments, credentials or customer references. Execution includes embedding/index work; not isolated embedding profiling or proof of a queue root cause.'},indent=2)+'\n')
     print('Completed:',directory,flush=True)
 
 if __name__=='__main__':main()
