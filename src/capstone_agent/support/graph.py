@@ -412,10 +412,34 @@ class SupportAgent:
                 except Exception:
                     gate_errors=['COMPOSER_FAILED']; draft=None; break
             fallback_used=draft is None
+            verified_tracking_render=False
             if fallback_used:
                 draft=safe_draft(state,computed,fallback_refs)
-                # A fallback omits substantive facts rather than claim a successful answer.
-                if computed=='ANSWERED': computed='INSUFFICIENT_EVIDENCE'; draft.outcome_claimed=computed
+                # A fully verified tracking-only request can be answered from the
+                # carrier envelope without repeating an invalid model conclusion.
+                # Mixed policy/action requests must still abstain, never lose intents.
+                tracking=next((f for f in facts if f['name']=='get_tracking_events'
+                    and f.get('args',{}).get('order_id')==obligations.order_id),None)
+                bounded_intents={'order_tracking','feedback_style'}
+                if (computed=='ANSWERED' and not state.get('refusals') and not ctx.triggers
+                    and obligations.tracking and tracking and tracking['data'].get('latest')
+                    and set(obligations.intents)<=bounded_intents and set(state['plan']['intents'])<=bounded_intents
+                    and gate_errors==['G3_UNSUPPORTED_NO_ACTION_NEEDED']):
+                    scan=tracking['data']['latest']
+                    answer=f"The latest carrier record reports {scan['status']} at {scan['ts']} in {scan['city']}. This is a carrier record, not independent confirmation of receipt."
+                    if tracking['data'].get('stale'):answer+=' The scan is stale and does not establish the current location.'
+                    if (memory_context or {}).get('feedback_signal'):answer+=' Your style feedback was saved.'
+                    draft=ResponseDraft(answer=answer,why=[],
+                        citations=[r for r in final_refs if r['source_id'].startswith(('order:','tracking:'))],
+                        next_steps=['Contact retailer support if you need further shipping assistance.'],
+                        intents_addressed=list(dict.fromkeys([*obligations.intents,*state['plan']['intents']])),outcome_claimed=computed)
+                    if final_errors(draft,refs=ctx.evidence,facts=facts,refusals=[],triggers=set(),ticket=None,intents=state['plan']['intents']):
+                        draft=safe_draft(state,computed,fallback_refs)
+                    else:
+                        verified_tracking_render=True
+                # Generic fallback abstains; the narrow verified renderer is still
+                # recorded as a fallback, but has complete tracking-only evidence.
+                if fallback_used and not verified_tracking_render and computed=='ANSWERED': computed='INSUFFICIENT_EVIDENCE'; draft.outcome_claimed=computed
             # G8 removes patterned sensitive values from every customer-facing field.
             verified_ids=(state['ticket']['ticket_id'],) if (state.get('ticket') or {}).get('status')=='created' else ()
             for name in ['answer']:

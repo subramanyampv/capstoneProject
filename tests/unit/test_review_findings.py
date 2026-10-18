@@ -61,3 +61,18 @@ def test_sensitive_identifier_refusal_addresses_storage_without_echoing_value():
 def test_delivered_record_never_establishes_no_more_support_needed(claim):
     assert 'G3_UNSUPPORTED_NO_ACTION_NEEDED' in errors(claim,[{'name':'lookup_order','data':{'status':'delivered'}}])
     assert 'G3_UNSUPPORTED_NO_ACTION_NEEDED' not in errors('The carrier record marks the order delivered. Contact support if you did not receive it.')
+
+
+def test_repeated_unsupported_delivery_conclusion_uses_only_verified_tracking_fallback(setup):
+    from test_support_graph import plan,result,draft
+    services,_=setup
+    bad=draft('The record is delivered and no further shipping action is needed.',intents=['order_tracking','feedback_style'])
+    replies=[plan(intents=['order_tracking','feedback_style']),result('order_shipping'),bad,bad]
+    response=asyncio.run(SupportAgent(services,ScriptedGateway(replies)).run('Make the answer shorter and track O-1001.',SessionIdentity('C-100'),memory_context={'feedback_signal':'too_long'}))
+    assert response['outcome']=='ANSWERED'
+    assert 'G3_UNSUPPORTED_NO_ACTION_NEEDED' in response['errors']
+    assert 'latest carrier record reports delivered' in response['response']['answer']
+    assert 'no further' not in response['response']['answer']
+    assert 'not independent confirmation of receipt' in response['response']['answer']
+    assert any(c['source_id'].startswith('tracking:') for c in response['response']['citations'])
+    assert set(response['response']['intents_addressed'])=={'order_tracking','feedback_style'}
