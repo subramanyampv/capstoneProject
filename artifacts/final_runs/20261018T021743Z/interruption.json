@@ -1,0 +1,28 @@
+{
+  "status": "stopped_development_candidate",
+  "application_commit": "60bc5d5",
+  "recorded_cases": 37,
+  "hard_gate_case_passes": 37,
+  "all_case_passes": 35,
+  "recorded_failures": [
+    {
+      "case_id": "N18",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "expected_terminal_outcome"
+      ]
+    },
+    {
+      "case_id": "R08",
+      "repeat": 0,
+      "outcome": "INSUFFICIENT_EVIDENCE",
+      "failed_checks": [
+        "expected_terminal_outcome"
+      ]
+    }
+  ],
+  "reason": "R08 past-delivery wording plus today incorrectly added a future-shipping obligation. N18 international shipping lacked exact governing dispatch section and escalated unnecessarily. Stop before changing the application; partial judgments retained, not a completed release evaluation.",
+  "blind_holdout_v3_unsealed": false,
+  "release_accepted": false
+}

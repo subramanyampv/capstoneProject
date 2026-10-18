@@ -2,9 +2,17 @@
   "policy": "keep_local_until_first_evaluation_then_publish_with_results",
   "authorization": "Explicit user choice in this conversation",
   "files": [
-    "data/holdout_v2_blind.json",
-    "evaluation/phase9/holdout_contexts_v2_blind.json"
+    "data/holdout_v3_blind.json",
+    "evaluation/phase9/holdout_contexts_v3_blind.json"
   ],
-  "current_action": "No GitHub push until first evaluation is complete. Existing committed questions remain unread by implementation agent.",
-  "limits": "Publication after evaluation does not imply release acceptance. Failed results remain preserved."
+  "current_action": "Keep unused v3 local until its first evaluation; then publish it with results. Its contents remain unread by the implementation agent.",
+  "limits": "Publication after evaluation does not imply release acceptance. Failed results remain preserved.",
+  "evaluated_and_published": {
+    "version": "v2",
+    "run": "20261018T020405Z",
+    "github_commit": "3c27d42",
+    "hard_gate_passes": 9,
+    "all_case_passes": 7,
+    "cases": 10
+  }
 }

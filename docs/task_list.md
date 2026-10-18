@@ -8,7 +8,7 @@ Authority: [Architecture revision 3.3](architecture_and_plan.md). This is the cu
 
 **Inventory:** 85 initial-product tasks — 76 done, 9 needing updates, 0 not started. 8 areas are deferred.
 
-**Immediate sequence:** complete actual review of seventeen changed packets in `20261018T012141Z`, then evaluate the independently frozen blind replacement holdout on unchanged cc0c3a8. This repair passes 248 offline tests, 65/65 frozen and 45/45 repeats with 100% consistency; all 65 fixed-rubric judgments are complete. The first holdout failed 8/10 and remains failed evidence. Production extensions stay deferred. GitHub publication timing for the blind set awaits user input after automatic review blocked the push.
+**Immediate sequence:** validate repair 5e647e3 (261 offline tests pass) on unchanged frozen inputs, repeat safety cases, complete judging and actual review of changed outputs, then first-evaluate independently sealed v3. The completed v2 human review has 56 pairs/85.71% agreement; v2 holdout failed 9/10 hard and 7/10 overall. Preserve both used holdouts. GitHub contains v2 results; v3 stays local until first evaluation. Production extensions stay deferred. DONE rows below retain their stated historical/component scope; they are not evidence for this new candidate.
 
 ## Scope, architecture and documentation
 
@@ -37,7 +37,7 @@ Authority: [Architecture revision 3.3](architecture_and_plan.md). This is the cu
 | B08 | DONE | P1 | Run and preserve A/B/C comparison | 195 finally schema-valid outputs, one C repair, measured latency/token totals; original comparison predates framework migration. | B07 |
 | B09 | DONE | P0 | Record deterministic DeepEval failures | 195 contract passes; seven escalation classification misses: A=3, B=2, C=2. | B08 |
 | B10 | DONE | P1 | Select development default C | Selection is documented under v3 and reflected in CLI; final safety is not accepted. | B09 |
-| B11 | UPDATE | P0 | Resolve known escalation and coverage defects in final build | Original frozen escalation/coverage defects pass first-candidate frozen/repeats, but untouched holdout exposed reimbursement-intent and third-party privacy-classification misses. New cc0c3a8 repairs pass regressions; independent final validation remains open. | G04,G08,G09 |
+| B11 | UPDATE | P0 | Resolve known escalation and coverage defects in final build | Both used holdouts expose generalization defects. Repair 5e647e3 covers public-policy routing, shipping evidence and fallback citations with 261 passing offline tests; fresh live validation and independent v3 remain. | G04,G08,G09 |
 
 ## Phase 4: corpus, embeddings and retrieval
 
@@ -128,15 +128,15 @@ Authority: [Architecture revision 3.3](architecture_and_plan.md). This is the cu
 | ID | Status | Priority | Task | Evidence / completion criterion | Dependencies |
 |---|---|---|---|---|---|
 | E01 | DONE | P0 | Build final-system evaluation harness | Frozen/holdout contexts, exact-input recorder, deterministic gates, local DeepEval, actual calibration and per-dataset single-use gates implemented/tested. Fresh independent holdout authoring is separated from implementation; actual review gate remains enforced. | G10 |
-| E02 | UPDATE | P0 | Evaluate frozen cases and untouched holdout | First candidate 65/65 frozen but first untouched holdout 8/10 with H02/H07 hard failures. Repaired cc0c3a8 frozen run passes 65/65; replacement independently authored ten-case holdout awaits changed-output human review. | E01,R06 |
-| E03 | UPDATE | P1 | Measure final judged quality and calibrate humans | Repaired all 65 fixed-rubric judgments complete; faithful .9964/relevant .7730/grounded .9523, skips explicit. Prior actual 20-case calibration has 56 pairs/82.14% agreement. Three identical complete packets carry real prior ratings; 17 changed packets require actual review. | E02 |
+| E02 | UPDATE | P0 | Evaluate frozen cases and untouched holdout | cc0c3a8 passed 65/65 frozen; independent v2 failed 9/10 hard, 7/10 overall after actual review. New repair frozen run underway; v3 stays sealed until new review. | E01,R06 |
+| E03 | UPDATE | P1 | Measure final judged quality and calibrate humans | Prior cc0c3a8 all-65 judgments retained; actual 20-case review has 56 pairs/85.71% agreement and no unsafe flags. New candidate needs unchanged-rubric judging and actual changed-output review. | E02 |
 | E04 | DONE | P0 | Measure repeated-run consistency and worst-case safety | Repaired run 20261018T012903Z passes 45/45 hard/all checks, 15/15 identical terminal outcomes across three repeats (100%), same source/model as full 65. First candidate lower-consistency experiments preserved; no production reliability extrapolation. | E02,G09 |
 | E05 | DONE | P0 | Run full canary and safe-failure scans | Current full/repeat key and canary scans pass; actual mock handoffs read back 19/24. Hosted repaired-build answer/privacy/withdrawal trees 16/3/3 spans pass. Current forced combined failure preserves T1/R3/intents and discloses no confirmed ticket. Patterned memory-name limits preserved. | O04,O05,T09 |
 | E06 | DONE | P1 | Run capability ladder and integration comparisons | Ten-case historical capability ladder plus current-build paired memory on/off recorded. Only R01 terminal outcome changes in current pair. Historical setup/confounding limits explicit; no causal end-to-end accuracy uplift claimed. | E02,M05,A04 |
-| E07 | UPDATE | P0 | Prove RCA before/after fixes | Controlled T3 and numeric-policy probes preserved. First holdout RCA identifies incomplete monetary-request recognition and bare third-party reference routing; broader repairs pass tests but require independent new-candidate validation. | E02,E04,G09 |
+| E07 | UPDATE | P0 | Prove RCA before/after fixes | Preserve both failed holdouts and monetary/privacy/public-policy/coverage RCA. New broad regressions pass; fresh frozen/repeated and independent validation remain. | E02,E04,G09 |
 | E08 | DONE | P1 | Report final latency, token and error measurements | repair_v2_operations.json/.md reports explicit path grouping, nearest-rank p50/p95 and all four observed targets met; 466151 reported final-turn tokens, 7 invalid args/2 not-found/1 injected timeout/1 step limit retained. Setup/judging/currency/SLA limitations explicit. | O06,E02 |
 | E09 | UPDATE | P1 | Complete final evaluation/governance report | Populate all metrics or explain absence; include human calibration, safety review, limitations, failed cases, RCA and roadmap. Current register is preliminary. | E03,E04,E05,E06,E07,E08 |
-| E10 | UPDATE | P0 | Run final acceptance and demo gate | First candidate acceptance explicitly rejected after two untouched-holdout hard failures. New repair and independent validation must pass; safe withholding/fallback cannot waive missed mandatory classification/handoff. | E09,G10,M05,A04,O09 |
+| E10 | UPDATE | P0 | Run final acceptance and demo gate | Acceptance rejected for both used holdouts. New repair and independent validation must pass; honest fallback cannot waive missing handoff or required-source coverage. | E09,G10,M05,A04,O09 |
 | E11 | DONE | P0 | Prepare first scanned history-free snapshot | Local source ZIP excludes .git, credentials, model weights and vector DB. Existing repository retained; snapshot requires refresh after changes. | D05 |
 | E12 | UPDATE | P0 | Refresh and validate final submission package | Source, final docs/tests/evidence, setup/rebuild commands and refreshed scanned archive; no new repository/name requirement. | E10,D07,D08 |
 
