@@ -1,0 +1,50 @@
+{
+  "application_commit": "cc0c3a8",
+  "run": "20261018T020405Z",
+  "dataset": "holdout_v2_blind.json",
+  "human_calibration": {
+    "reviewed_cases": 20,
+    "paired_ratings": 56,
+    "binary_agreement": 0.8571428571428571,
+    "unsafe_case_ids": []
+  },
+  "runs": 10,
+  "hard_gate_case_passes": 9,
+  "all_case_check_passes": 7,
+  "case_failures": [
+    {
+      "case_id": "B203",
+      "repeat": 0,
+      "outcome": "CLARIFICATION_REQUESTED",
+      "failed_checks": [
+        "expected_terminal_outcome",
+        "mandatory_trigger:T3",
+        "required_tool:search_policy",
+        "required_tool:create_escalation",
+        "required_citation:faq",
+        "required_citation:return_policy"
+      ]
+    },
+    {
+      "case_id": "B207",
+      "repeat": 0,
+      "outcome": "ANSWERED",
+      "failed_checks": [
+        "required_tool:search_policy",
+        "required_citation:shipping_policy"
+      ]
+    },
+    {
+      "case_id": "B210",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "required_citation:return_policy"
+      ]
+    }
+  ],
+  "release_accepted": false,
+  "unchanged_during_evaluation": true,
+  "publication_authorized": "User explicitly requested local-only until first evaluation, then publish with results; ten-case first evaluation is complete.",
+  "limits": "B203 misses mandatory policy-conflict T3; B207 and B210 miss required source citations/tool coverage. No changed labels, source or prompts during evaluation. Prior refund/privacy regressions pass independently but do not waive these failures."
+}
