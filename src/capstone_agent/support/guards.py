@@ -29,6 +29,15 @@ FAILURE='I could not confirm the handoff. Please contact the retailer support te
 NO_ACTION_NEEDED=re.compile(r'\bno\s+(?:further|additional|more)\s+(?:(?:shipping|delivery|tracking)\s+)?(?:action|steps?|support|assistance)\s+(?:is\s+|are\s+)?(?:needed|required|necessary)\b',re.I)
 
 
+def unsupported_action_conclusion(text,match):
+    # A disclaimer such as "does not confirm receipt or that no further action
+    # is needed" does not assert the nested proposition. Contrast/new conjuncts
+    # close the bounded negation scope; this is not unrestricted language parsing.
+    prefix=re.split(r'[.!?;\n]|\b(?:but|however|although|then|and)\b',text[:match.start()],flags=re.I)[-1][-180:]
+    disclaimer=r"\b(?:does not|do not|cannot|can't|doesn't|doesn’t|can’t)\s+(?:(?:necessarily|independently|fully|by itself)\s+)?(?:confirm|establish|mean|imply|prove|show|guarantee|determine)\b"
+    return not bool(re.search(disclaimer,prefix,re.I))
+
+
 def qualify_delivery_conclusion(draft):
     """Replace only the unsupported conclusion; preserve other claims and references.
 
@@ -37,9 +46,12 @@ def qualify_delivery_conclusion(draft):
     """
     replacement='the carrier record does not establish whether further assistance is needed'
     repaired=draft.model_copy(deep=True)
-    repaired.answer=NO_ACTION_NEEDED.sub(replacement,repaired.answer)
-    repaired.why=[NO_ACTION_NEEDED.sub(replacement,v) for v in repaired.why]
-    repaired.next_steps=[NO_ACTION_NEEDED.sub(replacement,v) for v in repaired.next_steps]
+    def qualify(text):
+        return NO_ACTION_NEEDED.sub(lambda m:replacement if unsupported_action_conclusion(text,m) else m.group(0),text)
+    repaired.answer=qualify(repaired.answer)
+    repaired.why=[qualify(v) for v in repaired.why]
+    repaired.next_steps=[qualify(v) for v in repaired.next_steps]
+    if repaired.model_dump()==draft.model_dump():return None
     repaired.why.append('Delivery statements describe the carrier record, not independent confirmation of receipt.')
     try:return type(draft).model_validate(repaired.model_dump())
     except ValueError:return None
@@ -56,7 +68,7 @@ def final_errors(draft, *, refs, facts, refusals, triggers, ticket, intents):
     if any(ref.source_id.startswith('doc:') and json.dumps(ref.model_dump(),sort_keys=True) not in retrieved for ref in draft.citations):
         errors.append('G4_POLICY_NOT_RETRIEVED')
     body=' '.join([draft.answer,*draft.why,*draft.next_steps])
-    if NO_ACTION_NEEDED.search(body):
+    if any(unsupported_action_conclusion(body,m) for m in NO_ACTION_NEEDED.finditer(body)):
         errors.append('G3_UNSUPPORTED_NO_ACTION_NEEDED')
     if refusals and not re.search(r"cannot|can't|unable|decline|not (?:able|allowed)",body,re.I): errors.append('G2_REFUSAL')
     if triggers:

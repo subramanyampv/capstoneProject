@@ -59,7 +59,12 @@ def test_wrong_owner_is_clarification_and_does_not_leak_record(setup):
     services,_=setup
     response=run(services,[plan(order='O-1002'),tools(('lookup_order',{'order_id':'O-1002'})),result('order_shipping'),draft(answer='Please confirm the order reference.',outcome='CLARIFICATION_REQUESTED')],query='Track O-1002')
     assert response['outcome']=='CLARIFICATION_REQUESTED' and response['tool_records'][0]['error']=='NOT_FOUND'
-    assert '149' not in json.dumps(response) and 'Alpine' not in json.dumps(response)
+    # Random execution IDs may contain the digits 149; they are not an amount leak.
+    # Check the denied payload/evidence and the customer-facing business response.
+    assert all(row['data'] is None and not row['evidence_refs'] for row in response['tool_records'] if row['name']=='lookup_order')
+    surface=json.dumps(response['response'])
+    assert '$149' not in surface and 'Alpine' not in surface
+    assert not any(f['name']=='lookup_order' for item in response['results'] for f in item['facts'].get('tools',[]))
 
 def test_tracking_timeout_forces_verified_handoff(setup):
     services,_=setup

@@ -121,3 +121,25 @@ def test_conclusion_repair_preserves_mixed_shipping_policy_and_never_waives_othe
     else:
         assert not response['bounded_claim_repair'] and response['answer_fallback']
         assert 'issued your refund' not in response['response']['answer']
+
+
+@pytest.mark.parametrize('body',[
+    'The scan does not confirm physical receipt or that no further shipping action is needed.',
+    'A delivered scan does not establish that no further action is required.',
+    'I cannot confirm that no additional support is necessary.',
+    'Delivery does not necessarily mean no further action is needed.',
+])
+def test_negated_no_action_proposition_is_not_an_unsupported_assertion(body):
+    from capstone_agent.support.guards import qualify_delivery_conclusion
+    assert 'G3_UNSUPPORTED_NO_ACTION_NEEDED' not in errors(body)
+    draft=ResponseDraft(answer=body,why=[],citations=[],next_steps=[],intents_addressed=['order_tracking'],outcome_claimed='ANSWERED')
+    assert qualify_delivery_conclusion(draft) is None
+
+
+@pytest.mark.parametrize('body',[
+    'It does not confirm physical receipt, but no further action is needed.',
+    'It cannot establish receipt and no further shipping support is required.',
+    'No further action is required. This does not confirm receipt.',
+])
+def test_new_assertion_after_disclaimer_still_requires_repair(body):
+    assert 'G3_UNSUPPORTED_NO_ACTION_NEEDED' in errors(body)
