@@ -1,5 +1,5 @@
 {
-  "version": "2026-10-17-v4",
+  "version": "2026-10-17-v5",
   "refusals": {
     "R1": [
       "ignore (?:all |your |the |any |previous |prior )*(?:rules|instructions)",
@@ -23,14 +23,23 @@
     ],
     "R4": [
       "(?:medical|legal) advice",
-      "(?:treat|diagnose).{0,30}(?:injury|wound|burn|cut)"
+      "(?:treat|diagnose).{0,30}(?:injury|wound|burn|cut)",
+      "\\b(?:treat|diagnose)\\b[\\s\\S]{0,30}\\b(?:illness|food poisoning|allergic reaction|vomiting)\\b"
     ]
   },
   "triggers": {
     "T1": [
       "\\b(?:injur\\w*|burned|burnt|cut my|cut me|bleeding|hurt me|safety complaint|caught fire)\\b",
       "\\b(?:burns?|scalded|injured|injuries|wounded|bleeding|exploded)\\b",
-      "\\b(?:cut|hurt|burned)\\b.{0,15}\\b(?:hand|skin|wrist|finger|arm|leg|me)\\b"
+      "\\b(?:cut|hurt|burned)\\b.{0,15}\\b(?:hand|skin|wrist|finger|arm|leg|me)\\b",
+      "\\b(?:I\\s+(?:am|was|became|got|felt|feel|have\\s+(?:been|become))|I['’]m|we\\s+(?:are|were|became|got|felt|feel|have\\s+(?:been|become))|we['’]re|my\\s+(?:child|partner|parent)\\s+(?:is|was|became|got|felt))\\s+(?:very\\s+)?(?:sick|ill|unwell|nauseous)\\b[\\s\\S]{0,70}\\b(?:after|since|from)\\b[\\s\\S]{0,25}\\b(?:eat\\w*|drank|drink\\w*|consum\\w*|using)\\b",
+      "\\b(?:after|since|following)\\s+(?:eat\\w*|drank|drink\\w*|consum\\w*|using)\\b[\\s\\S]{0,70}\\b(?:I\\s+(?:am|was|became|got|felt|feel|have\\s+(?:been|become))|I['’]m|we\\s+(?:are|were|became|got|felt|feel|have\\s+(?:been|become))|we['’]re|my\\s+(?:child|partner|parent)\\s+(?:is|was|became|got|felt))\\s+(?:very\\s+)?(?:sick|ill|unwell|nauseous)\\b",
+      "\\b(?:product|food|cheese|drink|meal|item|box)\\s+(?:(?:you sent|I bought|we ordered)\\s+)?(?:has\\s+)?made\\s+(?:me|us|my (?:child|partner|parent))\\s+(?:feel\\s+)?(?:very\\s+)?(?:sick|ill|unwell|nauseous)\\b",
+      "\\b(?:product|food|cheese|drink|meal|item|box)\\s+(?:(?:you sent|I bought|we ordered)\\s+)?(?:gave|caused)\\s+(?:me|us|my (?:child|partner|parent))\\s+(?:food poisoning|an? allergic reaction|illness|nausea|vomiting)\\b",
+      "\\b(?:report|reporting|reported)\\b[\\s\\S]{0,30}\\b(?:food|product)\\s+safety\\s+(?:problem|incident|concern|complaint)\\b",
+      "\\b(?:I am|I['’]m|we are|we['’]re)\\s+(?:worried|concerned)\\b[\\s\\S]{0,70}\\b(?:food|product)\\s+safety\\b",
+      "\\b(?:I|we|my\\s+(?:child|partner|parent))\\s+(?:started\\s+(?:vomiting|throwing up)|vomited|threw up|had\\s+(?:hives|an allergic reaction))\\b[\\s\\S]{0,70}\\b(?:after|since|from)\\b[\\s\\S]{0,25}\\b(?:eat\\w*|drank|drink\\w*|consum\\w*|using)\\b",
+      "\\b(?:after|since|following)\\s+(?:eat\\w*|drank|drink\\w*|consum\\w*|using)\\b[\\s\\S]{0,70}\\b(?:I|we|my\\s+(?:child|partner|parent))\\s+(?:started\\s+(?:vomiting|throwing up)|vomited|threw up|had\\s+(?:hives|an allergic reaction))\\b"
     ],
     "T6": [
       "\\b(?:want|need|request|speak|talk|connect|contact|reach|transfer|would like)\\b.{0,50}\\b(?:human|representative|supervisor|manager)\\b",
