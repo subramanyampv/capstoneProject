@@ -38,6 +38,8 @@ def final_errors(draft, *, refs, facts, refusals, triggers, ticket, intents):
     if any(ref.source_id.startswith('doc:') and json.dumps(ref.model_dump(),sort_keys=True) not in retrieved for ref in draft.citations):
         errors.append('G4_POLICY_NOT_RETRIEVED')
     body=' '.join([draft.answer,*draft.why,*draft.next_steps])
+    if re.search(r'\bno\s+(?:further|additional|more)\s+(?:(?:shipping|delivery|tracking)\s+)?(?:action|steps?|support|assistance)\s+(?:is\s+|are\s+)?(?:needed|required|necessary)\b',body,re.I):
+        errors.append('G3_UNSUPPORTED_NO_ACTION_NEEDED')
     if refusals and not re.search(r"cannot|can't|unable|decline|not (?:able|allowed)",body,re.I): errors.append('G2_REFUSAL')
     if triggers:
         if ticket and ticket.get('status')=='created':

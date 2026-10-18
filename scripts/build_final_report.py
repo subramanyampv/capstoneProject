@@ -47,8 +47,20 @@ def main():
         for name,group in metrics.items():
             values=group['values'];mean=round(sum(values)/len(values),4) if values else None
             lines.append(f"| {name} | {len(values)} | {mean} | {group['passed']} | {group['skipped']} | {group['failed']} |")
+    ai_path=directory/'independent_ai_agreement.json'
+    if ai_path.exists():
+        ai=json.loads(ai_path.read_text())
+        lines+=['','## Independent AI iteration review','',
+            f"Status: {ai['status']}; {ai['reviewed_cases']} cases, {ai.get('paired_ratings',0)} paired ratings, binary agreement {ai.get('binary_agreement')}.",
+            'User-authorized AI proxy review remains separate from actual human calibration; major/critical findings and unsupported-claim flags block iteration. Earlier human ratings are historical, not transferred to these outputs.']
+    diagnostic=directory/'relevancy_v2_summary.json'
+    if diagnostic.exists():
+        value=json.loads(diagnostic.read_text())
+        lines+=['','## Additional prose-relevancy diagnostic','',
+            f"{value['protocol']}: {value['measured']} measured, mean {value['mean']}, {value['above_threshold']} above threshold, {value['errors']} errors.",
+            value['limits']]
     lines+=['','## Release work still open','',
-        'Assess the separate same-build consistency, ladder, RCA, operational and demo evidence; obtain actual human ratings of these exact outputs before loading the untouched holdout; record the acceptance decision and refresh the accepted source package. Earlier failed runs remain historical evidence. No final acceptance is claimed.','']
+        'Assess the separate same-build consistency, ladder, RCA, operational and demo evidence; complete the explicitly recorded candidate review gate before loading an untouched holdout (actual human by default, or the user-authorized independent AI iteration policy); record the acceptance decision and refresh the accepted source package. Earlier failed runs remain historical evidence. No final acceptance is claimed.','']
     (directory/'report.md').write_text('\n'.join(lines))
     print(directory/'report.md')
 

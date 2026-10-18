@@ -55,3 +55,9 @@ def test_stale_tracking_requires_qualification_but_current_tracking_does_not():
 
 def test_sensitive_identifier_refusal_addresses_storage_without_echoing_value():
     assert 'save sensitive identifiers' in REFUSAL and 'Social Security' in REFUSAL
+
+
+@pytest.mark.parametrize('claim',['No further shipping action is needed.','No additional delivery support is necessary.','No more action required.'])
+def test_delivered_record_never_establishes_no_more_support_needed(claim):
+    assert 'G3_UNSUPPORTED_NO_ACTION_NEEDED' in errors(claim,[{'name':'lookup_order','data':{'status':'delivered'}}])
+    assert 'G3_UNSUPPORTED_NO_ACTION_NEEDED' not in errors('The carrier record marks the order delivered. Contact support if you did not receive it.')

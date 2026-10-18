@@ -103,7 +103,7 @@ def main():
         'context_sha256':hashlib.sha256(args.contexts.read_bytes()).hexdigest(),'protocol_sha256':hashlib.sha256(protocol.read_bytes()).hexdigest(),
         'source_sha256':source_hashes,'build_sha256':build_hashes(),'recorder_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
         'context_file':args.contexts.name,'model_settings':settings,'model_config_sha256':fingerprint(config),
-        'repeats':args.repeats,'workers':args.workers,'case_ids':[case['id'] for case in cases]}
+        'review_packet_format':'evidence-v2','repeats':args.repeats,'workers':args.workers,'case_ids':[case['id'] for case in cases]}
     if args.resume:
         previous=json.loads((directory/'manifest.json').read_text())
         for key in ['dataset_sha256','context_sha256','protocol_sha256','source_sha256','build_sha256','recorder_sha256','context_file','model_settings','model_config_sha256','repeats','workers','case_ids']:

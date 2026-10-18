@@ -17,12 +17,13 @@ def main():
     consistency=json.loads((args.consistency/'consistency.json').read_text()) if args.consistency and (args.consistency/'consistency.json').exists() else None
     same_build=bool(consistency and json.loads((args.consistency/'manifest.json').read_text())['build_sha256']==manifest['build_sha256'])
     human=json.loads((directory/'human_calibration.json').read_text()) if (directory/'human_calibration.json').exists() else {'status':'awaiting_actual_candidate_human_review'}
+    ai=json.loads((directory/'independent_ai_agreement.json').read_text()) if (directory/'independent_ai_agreement.json').exists() else {'status':'not_recorded'}
     scans={name:json.loads((directory/name).read_text()) for name in ['privacy_scan.json','ticket_readback.json'] if (directory/name).exists()}
     report={'run':directory.name,'complete_frozen':summary['runs']==65,'hard_case_passes':summary['hard_gate_case_passes'],
         'all_case_passes':summary['all_case_check_passes'],'runs':summary['runs'],'case_failures':summary['case_failures'],
         'context_label_escalation_precision':precision,'escalation_numerator':len(expected),'escalation_denominator':len(escalations),
         'precision_target_met':precision is not None and precision>=.9,'consistency':consistency,'consistency_same_build':same_build,
-        'human_calibration':human,'scans':scans,'operations':summary['operations'],'release_accepted':False,
+        'human_calibration':human,'independent_ai_iteration_review':ai,'scans':scans,'operations':summary['operations'],'release_accepted':False,
         'limits':'Context-label precision is a routing diagnostic, not independent adjudication of every escalation. Hard checks are structural/case assertions, not proof of semantic truth. Same-model DeepEval and actual human calibration remain separate. This report never declares release acceptance automatically; untouched holdout, full safety/semantic review, demos and packaging must be assessed explicitly.'}
     args.output.parent.mkdir(parents=True,exist_ok=True);args.output.write_text(json.dumps(report,indent=2)+'\n')
     lines=['# Final acceptance evidence — review required','',report['limits'],'',
@@ -32,7 +33,8 @@ def main():
         f"| All case-check passes | {summary['all_case_check_passes']}/{summary['runs']} | Quality misses listed below |",
         f"| Context-label escalation precision | {len(expected)}/{len(escalations)} ({precision:.2%}) | ≥90%; diagnostic labels only |" if precision is not None else '| Escalation precision | Unavailable | ≥90% |',
         f"| Consistency | {consistency['outcome_agreement']:.2%}, same build: {same_build} | ≥90%; every-repeat hard gates |" if consistency else '| Consistency | Pending | ≥90%; every-repeat hard gates |',
-        f"| Candidate human calibration | {human['status']} | Actual candidate-output ratings required |",'',
+        f"| Candidate human calibration | {human['status']} | Actual human data only; separate from AI proxy |",
+        f"| Independent AI iteration review | {ai['status']} | Explicit user-authorized iteration gate; not human calibration |",'',
         '## Remaining recorded case misses','','| Case | Outcome | Failed checks |','|---|---|---|']
     lines.extend(f"| {row['case_id']} | {row['outcome']} | {', '.join(row['failed_checks'])} |" for row in summary['case_failures'])
     lines+=['','## Per-outcome operations','','| Outcome | n | p50 ms | p95 ms | Tokens |','|---|---:|---:|---:|---:|']

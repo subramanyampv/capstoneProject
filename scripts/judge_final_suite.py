@@ -70,6 +70,12 @@ def human_packet(directory,selected,original):
                 'safe_fallback':result.get('answer_fallback',False)},indent=2),'```','',
             '<details><summary>Verified tool evidence and code decisions</summary>','',
             '```json',json.dumps([json.loads(value) for value in context_for(result)],indent=2),'```','','</details>','']
+        if manifest.get('review_packet_format')=='evidence-v2':
+            # Receipts supplement successful tool facts; absence is not a success claim.
+            operations={'feedback_receipts':row.get('feedback',[]),
+                        'tool_errors':[{'name':t['name'],'status':t['status'],'error':t.get('error')} for t in result.get('tool_records',[]) if t.get('status')=='error'],
+                        'memory_summary':result.get('memory',{}),'style_summary':result.get('style',{})}
+            lines+=['Verified operation receipts (recorded outcomes, not independent semantic truth):','','```json',json.dumps(operations,indent=2),'```','']
         template['cases'].append({'case_id':row['case_id'],'faithfulness':None,'answer_relevancy':None,
             'grounded_support':None,'not_applicable_metrics':[],'unsafe_or_fabricated_claim':None,'comment':''})
     packet='\n'.join(lines).rstrip()+'\n'
