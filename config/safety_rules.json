@@ -1,17 +1,17 @@
 {
-  "version": "2026-10-17-v5",
+  "version": "2026-10-18-v6",
   "refusals": {
     "R1": [
       "ignore (?:all |your |the |any |previous |prior )*(?:rules|instructions)",
       "(?:print|reveal|show|give).{0,40}(?:system prompt|api.?key|password|secret)"
     ],
     "R2": [
-      "(?:another|someone else|other customer).{0,30}(?:order|account|record)",
+      "(?:another|(?:someone|somebody|anyone|anybody) else|other customer).{0,30}(?:order|account|record)",
       "(?:all orders|full (?:card|number)|card number|save.{0,20}ssn)",
       "\\b(?:ssn|social security number)\\b.{0,90}\\b(?:save|store|keep|record)\\b",
-      "\\bnot my order\\b|\\b(?:order|account).{0,20}(?:not mine|belongs to someone else)\\b",
-      "\\b(?:another|someone else|other customer).{0,40}\\bO-\\d{4}\\b",
-      "\\bO-\\d{4}\\b.{0,40}\\b(?:not mine|not my (?:order|account)|belongs? to (?:someone else|another customer))\\b"
+      "\\bnot my order\\b|\\b(?:order|account).{0,20}(?:not mine|belongs to (?:someone|somebody|anyone|anybody) else)\\b",
+      "\\b(?:another|(?:someone|somebody|anyone|anybody) else|other customer).{0,40}\\bO-\\d{4}\\b",
+      "\\bO-\\d{4}\\b.{0,40}\\b(?:not mine|not my (?:order|account)|belongs? to (?:(?:someone|somebody|anyone|anybody) else|another customer))\\b"
     ],
     "R3": [
       "(?:approve|push through|refund).{0,70}(?:anyway|without.{0,15}(?:review|confirmation)|no review|outside.{0,20}window)",
@@ -31,13 +31,13 @@
     "T1": [
       "\\b(?:injur\\w*|burned|burnt|cut my|cut me|bleeding|hurt me|safety complaint|caught fire)\\b",
       "\\b(?:burns?|scalded|injured|injuries|wounded|bleeding|exploded)\\b",
-      "\\b(?:cut|hurt|burned)\\b.{0,15}\\b(?:hand|skin|wrist|finger|arm|leg|me)\\b",
-      "\\b(?:I\\s+(?:am|was|became|got|felt|feel|have\\s+(?:been|become))|I['’]m|we\\s+(?:are|were|became|got|felt|feel|have\\s+(?:been|become))|we['’]re|my\\s+(?:child|partner|parent)\\s+(?:is|was|became|got|felt))\\s+(?:very\\s+)?(?:sick|ill|unwell|nauseous)\\b[\\s\\S]{0,70}\\b(?:after|since|from)\\b[\\s\\S]{0,25}\\b(?:eat\\w*|drank|drink\\w*|consum\\w*|using)\\b",
-      "\\b(?:after|since|following)\\s+(?:eat\\w*|drank|drink\\w*|consum\\w*|using)\\b[\\s\\S]{0,70}\\b(?:I\\s+(?:am|was|became|got|felt|feel|have\\s+(?:been|become))|I['’]m|we\\s+(?:are|were|became|got|felt|feel|have\\s+(?:been|become))|we['’]re|my\\s+(?:child|partner|parent)\\s+(?:is|was|became|got|felt))\\s+(?:very\\s+)?(?:sick|ill|unwell|nauseous)\\b",
+      "\\b(?:cut|hurt|burned|twisted|sprained|fractured|broke|bruised)\\b.{0,15}\\b(?:hand|skin|wrist|finger|arm|leg|ankle|foot|feet|knee|elbow|shoulder|back|head|neck|toe|me)\\b",
+      "\\b(?:I\\s+(?:am|was|became|got|felt|feel|have\\s+(?:been|become))|I['\u2019]m|we\\s+(?:are|were|became|got|felt|feel|have\\s+(?:been|become))|we['\u2019]re|my\\s+(?:child|partner|parent)\\s+(?:is|was|became|got|felt))\\s+(?:very\\s+)?(?:sick|ill|unwell|nauseous)\\b[\\s\\S]{0,70}\\b(?:after|since|from)\\b[\\s\\S]{0,25}\\b(?:eat\\w*|drank|drink\\w*|consum\\w*|using)\\b",
+      "\\b(?:after|since|following)\\s+(?:eat\\w*|drank|drink\\w*|consum\\w*|using)\\b[\\s\\S]{0,70}\\b(?:I\\s+(?:am|was|became|got|felt|feel|have\\s+(?:been|become))|I['\u2019]m|we\\s+(?:are|were|became|got|felt|feel|have\\s+(?:been|become))|we['\u2019]re|my\\s+(?:child|partner|parent)\\s+(?:is|was|became|got|felt))\\s+(?:very\\s+)?(?:sick|ill|unwell|nauseous)\\b",
       "\\b(?:product|food|cheese|drink|meal|item|box)\\s+(?:(?:you sent|I bought|we ordered)\\s+)?(?:has\\s+)?made\\s+(?:me|us|my (?:child|partner|parent))\\s+(?:feel\\s+)?(?:very\\s+)?(?:sick|ill|unwell|nauseous)\\b",
       "\\b(?:product|food|cheese|drink|meal|item|box)\\s+(?:(?:you sent|I bought|we ordered)\\s+)?(?:gave|caused)\\s+(?:me|us|my (?:child|partner|parent))\\s+(?:food poisoning|an? allergic reaction|illness|nausea|vomiting)\\b",
       "\\b(?:report|reporting|reported)\\b[\\s\\S]{0,30}\\b(?:food|product)\\s+safety\\s+(?:problem|incident|concern|complaint)\\b",
-      "\\b(?:I am|I['’]m|we are|we['’]re)\\s+(?:worried|concerned)\\b[\\s\\S]{0,70}\\b(?:food|product)\\s+safety\\b",
+      "\\b(?:I am|I['\u2019]m|we are|we['\u2019]re)\\s+(?:worried|concerned)\\b[\\s\\S]{0,70}\\b(?:food|product)\\s+safety\\b",
       "\\b(?:I|we|my\\s+(?:child|partner|parent))\\s+(?:started\\s+(?:vomiting|throwing up)|vomited|threw up|had\\s+(?:hives|an allergic reaction))\\b[\\s\\S]{0,70}\\b(?:after|since|from)\\b[\\s\\S]{0,25}\\b(?:eat\\w*|drank|drink\\w*|consum\\w*|using)\\b",
       "\\b(?:after|since|following)\\s+(?:eat\\w*|drank|drink\\w*|consum\\w*|using)\\b[\\s\\S]{0,70}\\b(?:I|we|my\\s+(?:child|partner|parent))\\s+(?:started\\s+(?:vomiting|throwing up)|vomited|threw up|had\\s+(?:hives|an allergic reaction))\\b"
     ],

@@ -7,7 +7,7 @@ from dataclasses import dataclass, asdict
 import json
 import re
 
-VERSION = 'request-obligations-v2'
+VERSION = 'request-obligations-v3'
 ORDER = re.compile(r'\bO-\d{4}\b', re.I)
 RETURN = re.compile(r'\b(?:returns?|returning|retrun|restocking)\b|\bsend\b.{0,25}\bback\b', re.I)
 REFUND = re.compile(r'\brefund\w*\b', re.I)
@@ -122,8 +122,13 @@ def derive(query, context=None, *, services=None):
         or (not intents and re.search(r'\b(?:again|previous answer|earlier question)\b',query,re.I)))
     sections=[]
     if re.search(r'restock',query,re.I):sections.append('return_policy:restocking')
-    if 'shipping_policy' in docs and re.search(r'\b(?:international|canada)\b',query,re.I):
+    if 'shipping_policy' in docs and re.search(r'\b(?:international(?:ly)?|canada)\b',query,re.I):
         sections.append('shipping_policy:dispatch')
+    if 'shipping_policy' in docs and (delivery_future or re.search(
+            r'\b(?:standard|domestic|usual|usually|duration|days|long|take|time|estimates?)\b',query,re.I)):
+        sections.append('shipping_policy:transit-estimates')
+    if 'shipping_policy' in docs and re.search(r'\b(?:guarantee\w*|deadline|certain|promise\w*)\b',query,re.I):
+        sections.append('shipping_policy:guarantees')
     return Obligations(tuple(dict.fromkeys(intents)),resolved,tuple(requests),tuple(dict.fromkeys(docs)),
         tracking,status,product,len(ids)>1,product_ref.get('sku') if product_ref else None,
         needs_reference,tuple(sections))
@@ -223,10 +228,21 @@ async def fulfill(contract,agent,registry,query,context=None):
                 if 'faq' in missing and
                 re.search(r'\b'+word+r'\b',query,re.I)]
         text=' '.join(hints[doc] for doc in sorted(missing))+' '+' '.join(topics)
-        if 'return_policy:restocking' in contract.required_sections:text='opened electronics restocking fee'
-        elif 'shipping_policy:dispatch' in contract.required_sections:text='international shipping dispatch Canada supported'
+        section_queries={'return_policy:restocking':'opened electronics restocking fee',
+                         'shipping_policy:dispatch':'international shipping dispatch Canada supported',
+                         'shipping_policy:transit-estimates':'standard domestic shipping transit estimates duration days',
+                         'shipping_policy:guarantees':'shipping delivery guarantees deadline not guaranteed'}
+        relevant=[section_queries[s] for s in contract.required_sections if s in section_queries and s.split(':')[0] in missing]
+        if relevant:text=' '.join(relevant)
         category=next(iter(ctx.categories)) if len(ctx.categories)==1 else None
         await attempt('search_policy',{'query':text,'doc_types':sorted(missing),'category':category,'k':10})
+        # A compound query may retrieve only one topic. Fetch each still-missing
+        # required section independently; prior successes never erase other topics.
+        for section in contract.required_sections:
+            doc,heading=section.split(':',1)
+            current=[hit for fact in ctx.facts if fact['name']=='search_policy' for hit in fact['data']['results']]
+            if section in section_queries and not any(hit['doc_id']==doc and hit['section_id']==heading and hit['authority']=='policy' for hit in current):
+                await attempt('search_policy',{'query':section_queries[section],'doc_types':[doc],'category':category,'k':10})
 
 
 def audit(contract,facts):
@@ -275,4 +291,35 @@ def citation_errors(contract,facts,draft):
             for ref in fact['data']['policy_refs']:
                 if any(hit['doc_id']==ref['source_id'][4:] and hit['section_id']==ref['section'] and hit['version']==ref['record_version'] for hit in hits) and json.dumps(ref,sort_keys=True) not in cited:
                     errors.append('O2_RULE_CITATION:'+ref['source_id']+':'+ref['section'])
-    return sorted(set(errors))
+    return sorted(set(errors+shipping_answer_errors(contract,hits,draft)))
+
+
+def shipping_answer_errors(contract,hits,draft):
+    """Require bounded shipping facts in an answer, not citations alone.
+
+    Values come only from current retrieved policy; this is not a general
+    semantic evaluator. Safe non-answer outcomes still disclose missing evidence.
+    """
+    if draft.outcome_claimed!='ANSWERED':return []
+    required=set(contract.required_sections)
+    text=' '.join([draft.answer,*draft.why,*draft.next_steps])
+    sections={hit['section_id']:hit.get('text','') for hit in hits
+              if hit['doc_id']=='shipping_policy' and hit['authority']=='policy'}
+    errors=[]
+    if 'shipping_policy:transit-estimates' in required:
+        span=re.search(r'\b(\d+)\s*(?:to|[-–—])\s*(\d+)\s+days?\b',sections.get('transit-estimates',''),re.I)
+        if span:
+            words='zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty'.split()
+            def value(number):
+                n=int(number);return '(?:'+number+'|'+words[n]+')' if n<len(words) else number
+            phrase=r'\b'+value(span[1])+r'\s*(?:to|and|[-–—])\s*'+value(span[2])+r'[\s-]+days?\b'
+            if not re.search(phrase,text,re.I):errors.append('O3_SHIPPING_TRANSIT_ANSWER')
+    if ('shipping_policy:guarantees' in required
+        and re.search(r'\bnot guaranteed\b',sections.get('guarantees',''),re.I)
+        and not re.search(r"\b(?:not|no|never|cannot|can't|isn't|aren't)\b.{0,30}\bguarantee\w*\b",text,re.I)):
+        errors.append('O3_SHIPPING_GUARANTEE_ANSWER')
+    if ('shipping_policy:dispatch' in required
+        and re.search(r'international shipping is not supported',sections.get('dispatch',''),re.I)
+        and not re.search(r"\b(?:international(?:ly)?|canada)\b.{0,65}\b(?:not|never|unavailable|unsupported)\b|\b(?:do not|don't|cannot|can't)\b.{0,30}\b(?:ship|deliver|offer|support)\w*\b.{0,30}\b(?:international(?:ly)?|canada)\b",text,re.I)):
+        errors.append('O3_SHIPPING_INTERNATIONAL_ANSWER')
+    return errors

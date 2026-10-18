@@ -20,11 +20,28 @@ class SafetyRules:
         self.exception=[re.compile(p,re.I) for p in self.raw['exception']]
         self.version=self.raw['version']
     def match(self,text):
-        refusals=[k for k,ps in self.refusals.items() if any(p.search(text) for p in ps)]
-        triggers=[k for k,ps in self.triggers.items() if any(p.search(text) for p in ps)]
+        refusals=[k for k,ps in self.refusals.items() if any(
+            k!='R2' or affirmative_privacy_request(text,m)
+            for p in ps for m in p.finditer(text))]
+        triggers=[k for k,ps in self.triggers.items() if any(
+            k!='T1' or affirmative_safety_report(text,m.start())
+            for p in ps for m in p.finditer(text))]
         return refusals,triggers,any(p.search(text) for p in self.legal)
 
+def affirmative_privacy_request(text,match):
+    # "My order, not somebody else's account" is not a third-party request.
+    third=re.match(r'(?:another|other customer|someone|somebody|anyone|anybody)\b',match.group(),re.I)
+    return not (third and re.search(r"\b(?:not|isn't|isn’t)\s*$",text[:match.start()],re.I))
+
+def affirmative_safety_report(text,start):
+    """Bounded local denial/conditional filter; not general semantic parsing."""
+    prefix=re.split(r'[.!?;\n]|\b(?:but|however)\b',text[:start],flags=re.I)[-1]
+    return not (re.search(r"\b(?:did not|didn't|didn’t|was not|wasn't|wasn’t|not|no|never|without)\s+(?:\w+\s+){0,2}$",prefix,re.I)
+                or re.search(r'\b(?:nobody|no one|none of us)\s+(?:(?:was|were|is|are|got|became)\s+)?$',prefix,re.I)
+                or re.search(r'\b(?:what if|(?:might|could)\s+(?:this|that|the|your))\b[^,]{0,60}$',prefix,re.I))
+
 REFUSAL='I cannot follow requests to bypass rules, disclose private information, save sensitive identifiers such as Social Security numbers, or provide medical/legal advice. I can help with supported order and policy questions.'
+PRIVACY_REFUSAL='I cannot disclose private account or payment information, save sensitive identifiers, or bypass ownership checks. I can help with supported questions about your own orders after verification.'
 FAILURE='I could not confirm the handoff. Please contact the retailer support team directly; no ticket is confirmed.'
 NO_ACTION_NEEDED=re.compile(r'\bno\s+(?:further|additional|more)\s+(?:(?:shipping|delivery|tracking)\s+)?(?:action|steps?|support|assistance)\s+(?:is\s+|are\s+)?(?:needed|required|necessary)\b',re.I)
 

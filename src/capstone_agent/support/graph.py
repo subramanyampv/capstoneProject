@@ -11,7 +11,7 @@ from langchain_core.messages import AIMessage,HumanMessage,SystemMessage,ToolMes
 from langgraph.graph import StateGraph,START,END
 from langsmith import tracing_context
 from capstone_agent.support.contracts import *
-from capstone_agent.support.guards import SafetyRules,REFUSAL,FAILURE,final_errors,qualify_delivery_conclusion,qualify_empty_tracking
+from capstone_agent.support.guards import SafetyRules,REFUSAL,PRIVACY_REFUSAL,FAILURE,final_errors,qualify_delivery_conclusion,qualify_empty_tracking
 from capstone_agent.support.privacy import minimize,mask_sensitive
 from capstone_agent.support.registry import Registry,ToolContext,SessionIdentity
 from capstone_agent.safety.redaction import sanitize
@@ -167,8 +167,7 @@ class SupportAgent:
             # Original raw input lives only in this invocation, never in operational records.
             legitimate=bool(re.search(r'order|track|shipping|return|refund|warranty|product|cancel',query,re.I))
             privacy_only=('R2' in refusals and
-                bool(re.search(r'not (?:my|your)|not mine|someone else|another|other customer',query,re.I))
-                and not re.search(r'\b(?:also|separately|however)\b',query,re.I))
+                not re.search(r'\b(?:also|separately|however)\b',query,re.I))
             tampering_only='R3' in refusals and bool(re.search(r'\b(?:change|alter|fake|falsify)\b.{0,30}\b(?:delivery|delivered|record|date)\b',query,re.I)) and not re.search(r'\balso\b',query,re.I)
             withdrawal=bool(WITHDRAW_CANCELLATION.search(query)) and set(obligations.intents)=={'cancellation'}
             route=('return_status' if set(obligations.intents)=={'return_status'} and not triggers and not refusals else
@@ -455,7 +454,7 @@ class SupportAgent:
                     'stages':['composer','guard_out']}
 
         def refuse(state):
-            draft=ResponseDraft(answer=REFUSAL,why=state.get('refusals',[]),citations=[],next_steps=['Ask a supported order or policy question.'],
+            draft=ResponseDraft(answer=PRIVACY_REFUSAL if 'R2' in state.get('refusals',[]) else REFUSAL,why=state.get('refusals',[]),citations=[],next_steps=['Ask a supported order or policy question.'],
                 intents_addressed=['refused_request'],outcome_claimed='REFUSED')
             return {'draft':draft.model_dump(),'outcome':'REFUSED','stages':['refusal_responder','guard_out']}
 

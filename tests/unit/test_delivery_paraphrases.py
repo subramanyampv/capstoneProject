@@ -52,7 +52,9 @@ def test_tracking_and_delivery_questions_keep_both_evidence_requirements(query):
     assert contract.order_id == 'O-1001'
     assert {'order_tracking', 'policy_question'} <= set(contract.intents)
     rows = audit(contract, [])
-    assert {row['obligation'] for row in rows} == {'order_tracking', 'policy:shipping_policy'}
+    expected={'order_tracking','policy:shipping_policy','section:shipping_policy:transit-estimates'}
+    if 'guaranteed' in query:expected.add('section:shipping_policy:guarantees')
+    assert {row['obligation'] for row in rows} == expected
     assert all(not row['evidence_complete'] for row in rows)
 
 
