@@ -23,10 +23,13 @@ REIMBURSEMENT = re.compile(
 CANCEL = re.compile(r'\bcancel\w*\b', re.I)
 WITHDRAW_CANCELLATION = re.compile(r"\b(?:do not|don't|don’t)\s+cancel\b|\bkeep\s+(?:my|the|this|that)\s+order\b|\bstop\b.{0,20}\bcancellation\b",re.I)
 TRACK = re.compile(r'\btrack\w*\b|latest.{0,20}event|\bwhere.{0,35}\b(?:order|package)\b|\bwhen.{0,35}\b(?:ship|arriv|deliver)', re.I)
+RECENT_TRACKING = re.compile(r'\b(?:latest|most recent|last)\b.{0,30}\b(?:carrier|scan|event|tracking)\b|\bcarrier\s+(?:scan|update)\b', re.I)
+DELIVERY_SUBJECT = re.compile(r'\b(?:arriv\w*|deliver\w*|reach)\b|\bget here\b', re.I)
+DELIVERY_FUTURE = re.compile(r'\b(?:when|will|tomorrow|today|certain\w*|guarantee\w*|promis\w*|predict\w*|estimat\w*)\b', re.I)
 STATUS = re.compile(r'\b(?:order|package).{0,20}\bstatus\b|\b(?:has|did|hadn.t|hasn.t|it|not|never).{0,30}\bship\w*\b|\bdelivery email\b', re.I)
 PRODUCT = re.compile(r'material|\bsize\b|sizing|\bcare\b|\bwash\w*\b|\bclean\w*\b|weight|specification|\bwarrant\w*\b|opened', re.I)
 SHIPPING = re.compile(r'\bshipping\b|\bship\b.{0,35}\b(?:canada|international|usually|standard)\b|\barrive\b|\bdelivery estimate\b', re.I)
-GENERAL = re.compile(r'\bpolicy|\brule\b|\bwindow|\bdeadline|\blargest|\bthreshold|how many|\bdocument|\bfee|\bguarantee|how long', re.I)
+GENERAL = re.compile(r'\bpolicy|\brule\b|\bwindow|\bdeadline|\blargest|\bthreshold|how many|\bdocument|\bfee|\bguarantee|how long|\bfaq\b|\bhelp (?:page|center|centre)\b', re.I)
 
 @dataclass(frozen=True)
 class Obligations:
@@ -46,6 +49,11 @@ class Obligations:
     def public(self):
         return asdict(self)
 
+    def public_policy_question(self):
+        """Resolved public policy scope does not require a private order."""
+        return bool(self.policy_docs and not
+                    (self.order_id or self.needs_reference or self.ambiguous_orders))
+
     def agents(self):
         names=[]
         if self.order_id and (self.tracking or self.order_status or self.request_types or self.product):names.append('order_shipping')
@@ -58,7 +66,8 @@ def derive(query, context=None, *, services=None):
     ids=list(dict.fromkeys(value.upper() for value in ORDER.findall(query)))
     resolved=ids[0] if len(ids)==1 else context.get('resolved_order_id') if not ids else None
     if not resolved and not ids and STATUS.search(query):resolved=context.get('entities',{}).get('order_id')
-    tracking=bool(TRACK.search(query));status=bool(STATUS.search(query))
+    tracking=bool(TRACK.search(query) or RECENT_TRACKING.search(query));status=bool(STATUS.search(query))
+    delivery_future=bool(DELIVERY_SUBJECT.search(query) and DELIVERY_FUTURE.search(query))
     if re.search(r'what.{0,25}mean.{0,20}\b(?:my|the|that) order\b',query,re.I):
         status=True
         tracking=bool(set(context.get('last_intents',[])) & {'order_tracking','shipping_tracking'})
@@ -83,10 +92,11 @@ def derive(query, context=None, *, services=None):
     product=bool(PRODUCT.search(query))
     if product:intents.append('warranty' if re.search(r'warrant',query,re.I) else 'product_information')
     if re.search(r'warrant',query,re.I):docs.append('warranty_policy')
-    if SHIPPING.search(query) and (not resolved or re.search(r'estimat|arriv|guarantee|usually|standard',query,re.I)):
+    if delivery_future or (SHIPPING.search(query) and (not resolved or re.search(r'estimat|arriv|guarantee|usually|standard',query,re.I))):
         docs.append('shipping_policy');intents.append('policy_question')
     if refund_status:status=True
     if has_refund and re.search(r'window|deadline|footwear',query,re.I):docs.append('return_policy')
+    if has_return and re.search(r'\bfaq\b|\bhelp (?:page|center|centre)\b',query,re.I):docs.append('faq')
     product_ref=catalog_reference(query,services,context) if services else None
     # A public, conditional product-policy question does not require a private
     # order. An individual eligibility request does, even when retrieval succeeds.
@@ -137,7 +147,7 @@ def normalize_plan(parsed, contract):
     data['intents']=list(dict.fromkeys([*contract.intents,*data['intents']]))[:8]
     if contract.needs_reference:
         data['clarification']='Please provide a valid order reference or clarify the product and request so I can verify it.'
-    elif contract.order_id:data['clarification']=None
+    elif contract.order_id or contract.public_policy_question():data['clarification']=None
     return data
 
 
@@ -173,7 +183,8 @@ async def fulfill(contract,agent,registry,query,context=None):
     for fact in ctx.facts:
         if fact['name']=='check_return_eligibility':required_docs.update(ref['source_id'][4:] for ref in fact['data']['policy_refs'])
     hits=[hit for fact in ctx.facts if fact['name']=='search_policy' for hit in fact['data']['results']]
-    missing=required_docs-{hit['doc_id'] for hit in hits if hit['authority']=='policy'}
+    missing=required_docs-{hit['doc_id'] for hit in hits if hit['authority']=='policy' or
+                           (hit['doc_id']=='faq' and hit['authority']=='faq')}
     for fact in ctx.facts:
         if fact['name']=='check_return_eligibility':
             for ref in fact['data']['policy_refs']:
@@ -187,8 +198,13 @@ async def fulfill(contract,agent,registry,query,context=None):
                'refund_policy':'refund policy request review threshold delayed shipments',
                'cancellation_policy':'cancellation policy eligibility before dispatch human action',
                'shipping_policy':'shipping policy estimates standard international guaranteed',
-               'warranty_policy':'warranty policy product category duration coverage'}
-        text=' '.join(hints[doc] for doc in sorted(missing))
+               'warranty_policy':'warranty policy product category duration coverage',
+               'faq':'FAQ return policy source comparison'}
+        # Preserve bounded public topic hints without copying arbitrary customer
+        # text/identifiers into tool arguments. Hints never establish category authority.
+        topics=[word for word in ['electronics','footwear','apparel','home','perishable','grocery','speaker','jacket','shoes','pots']
+                if re.search(r'\b'+word+r'\b',query,re.I)]
+        text=' '.join(hints[doc] for doc in sorted(missing))+' '+' '.join(topics)
         if 'return_policy:restocking' in contract.required_sections:text='opened electronics restocking fee'
         category=next(iter(ctx.categories)) if len(ctx.categories)==1 else None
         await attempt('search_policy',{'query':text,'doc_types':sorted(missing),'category':category,'k':10})
@@ -212,7 +228,8 @@ def audit(contract,facts):
     required=set(contract.policy_docs)
     for fact in facts:
         if fact['name']=='check_return_eligibility':required.update(ref['source_id'][4:] for ref in fact['data']['policy_refs'])
-    for doc in sorted(required):add('policy:'+doc,any(hit['doc_id']==doc and hit['authority']=='policy' for hit in hits),['search_policy:'+doc])
+    for doc in sorted(required):add('policy:'+doc,any(hit['doc_id']==doc and
+        (hit['authority']=='policy' or (doc=='faq' and hit['authority']=='faq')) for hit in hits),['search_policy:'+doc])
     for section in contract.required_sections:
         doc,heading=section.split(':',1)
         add('section:'+section,any(hit['doc_id']==doc and hit['section_id']==heading and hit['authority']=='policy' for hit in hits),['search_policy:requested_section'])

@@ -139,11 +139,16 @@ class SupportAgent:
 
         def guard_in(state):
             refusals,triggers,legal=self.rules.match(query)
+            # Pronoun hints cannot override an explicit current reference or a
+            # catalog-resolved public policy question. Private eligibility still
+            # requires its own verified order/reference obligation.
+            memory_missing=bool(memory_context and memory_context.get('needs_clarification')) and not (
+                obligations.order_id or obligations.public_policy_question())
             if re.search(r'\b(?:attached|uploaded)\b.{0,45}\bpolicy\b.{0,30}\b(?:says|claims)\b',query,re.I):
                 # This product has no attachment reader. An asserted external
                 # entitlement is unresolved evidence, never a verified T3 pair.
                 triggers.append('T5')
-            if memory_context and memory_context.get('needs_clarification') and memory_context.get('previous_clarifications',0)>=1:
+            if memory_missing and memory_context.get('previous_clarifications',0)>=1:
                 triggers.append('T5')
             ctx.triggers.update(triggers); ctx.legal=legal
             # Original raw input lives only in this invocation, never in operational records.
@@ -154,7 +159,7 @@ class SupportAgent:
             tampering_only='R3' in refusals and bool(re.search(r'\b(?:change|alter|fake|falsify)\b.{0,30}\b(?:delivery|delivered|record|date)\b',query,re.I)) and not re.search(r'\balso\b',query,re.I)
             withdrawal=bool(WITHDRAW_CANCELLATION.search(query)) and set(obligations.intents)=={'cancellation'}
             route=('withdrawal' if withdrawal and not triggers and not refusals else
-                   'missing_reference' if ((memory_context and memory_context.get('needs_clarification')) or (obligations.needs_reference and not obligations.intents)) and not triggers and not refusals else
+                   'missing_reference' if (memory_missing or (obligations.needs_reference and not obligations.intents)) and not triggers and not refusals else
                    'unsupported_command' if query.lstrip().startswith('/') and not triggers else
                    'refuse' if refusals and not triggers and (not legitimate or privacy_only or tampering_only) else 'plan')
             return {'query':mask_sensitive(query,self.secrets),'refusals':refusals,'triggers':triggers,
@@ -341,7 +346,7 @@ class SupportAgent:
             if any(not row['evidence_complete'] for row in audit(obligations,ctx.facts)):return 'INSUFFICIENT_EVIDENCE'
             return 'ANSWERED'
 
-        def safe_draft(state,computed):
+        def safe_draft(state,computed,citations=()):
             parts=[]
             if state.get('refusals'): parts.append(REFUSAL)
             ticket=state.get('ticket')
@@ -350,7 +355,7 @@ class SupportAgent:
                 parts.append('I could not provide a fully verified response to every part of your request. Contact retailer support for actual review.')
             elif state['plan'].get('clarification'): parts.append(sanitize(state['plan']['clarification'],self.secrets))
             else: parts.append('I cannot provide a fully verified answer from the available evidence. Please confirm the order or product, or contact retailer support for review.')
-            return ResponseDraft(answer=' '.join(parts),why=['SAFE_FALLBACK'],citations=[],
+            return ResponseDraft(answer=' '.join(parts),why=['SAFE_FALLBACK'],citations=list(citations),
                 next_steps=['Contact retailer support if further help is needed.'],intents_addressed=list(dict.fromkeys([*obligations.intents,*state['plan']['intents']])),outcome_claimed=computed)
 
         async def compose(state):
@@ -359,6 +364,14 @@ class SupportAgent:
             retrieved={json.dumps({'source_id':'doc:'+h['doc_id'],'section':h['section_id'],'record_version':h['version']},sort_keys=True)
                 for f in facts if f['name']=='search_policy' for h in f['data']['results']}
             final_refs=[json.loads(r) for r in sorted(ctx.evidence) if not json.loads(r)['source_id'].startswith('doc:') or r in retrieved]
+            conflict_refs={json.dumps({'source_id':'doc:'+r['doc_id'],'section':r['section_id'],'record_version':r['version']},sort_keys=True)
+                for f in facts if f['name']=='search_policy' and f['data']['conflict'] for r in f['data']['results']
+                if r['chunk_id'] in {i for d in f['data']['conflict_details'] for i in d['sources']}}
+            rule_refs={json.dumps(ref,sort_keys=True) for fact in facts if fact['name']=='check_return_eligibility'
+                       for ref in fact['data']['policy_refs']}
+            policy_ids={'doc:'+doc for doc in obligations.policy_docs}
+            fallback_refs=[ref for ref in final_refs if ref['source_id'] in policy_ids
+                           or json.dumps(ref,sort_keys=True) in rule_refs|conflict_refs][:40]
             data={'request':state['query'],'intents':state['plan']['intents'],'code_facts':facts,
                   'feedback_signal':(memory_context or {}).get('feedback_signal'),
                   'request_obligations':obligations.public(),'obligation_audit':audit(obligations,facts),
@@ -380,9 +393,6 @@ class SupportAgent:
                     if not set(obligations.intents)<=set(draft.intents_addressed):gate_errors.append('O1_REQUEST_COVERAGE')
                     gate_errors+=citation_errors(obligations,facts,draft)
                     # Every declared conflicting source is mandatory, not simply any two refs.
-                    conflict_refs={json.dumps({'source_id':'doc:'+r['doc_id'],'section':r['section_id'],'record_version':r['version']},sort_keys=True)
-                        for f in facts if f['name']=='search_policy' and f['data']['conflict'] for r in f['data']['results']
-                        if r['chunk_id'] in {i for d in f['data']['conflict_details'] for i in d['sources']}}
                     if not conflict_refs<={json.dumps(r.model_dump(),sort_keys=True) for r in draft.citations}: gate_errors.append('G4_CONFLICT_CITATIONS')
                     if not gate_errors: break
                     repairs+=1; data['repair_errors']=gate_errors; draft=None
@@ -390,7 +400,7 @@ class SupportAgent:
                     gate_errors=['COMPOSER_FAILED']; draft=None; break
             fallback_used=draft is None
             if fallback_used:
-                draft=safe_draft(state,computed)
+                draft=safe_draft(state,computed,fallback_refs)
                 # A fallback omits substantive facts rather than claim a successful answer.
                 if computed=='ANSWERED': computed='INSUFFICIENT_EVIDENCE'; draft.outcome_claimed=computed
             # G8 removes patterned sensitive values from every customer-facing field.
