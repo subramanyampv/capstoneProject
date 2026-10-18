@@ -37,6 +37,7 @@ def main():
     release=args.release_run.resolve();manifest=json.loads((release/'manifest.json').read_text())
     summary=json.loads((release/'summary.json').read_text());locked=build_hashes()
     if summary['runs']!=65 or summary['hard_gate_case_passes']!=65:raise ValueError('COMPLETE_HARD_GATE_PASS_REQUIRED_BEFORE_HOLDOUT')
+    if summary.get('all_case_check_passes')!=65:raise ValueError('COMPLETE_FUNCTIONAL_CHECK_PASS_REQUIRED_BEFORE_HOLDOUT')
     if manifest['build_sha256']!=locked:raise ValueError('RELEASE_BUILD_CHANGED')
     if args.review.resolve().parent!=release:raise ValueError('HUMAN_REVIEW_MUST_BELONG_TO_THIS_RELEASE_RUN')
     protocol=json.loads((ROOT/'evaluation/phase9/protocol_v1.json').read_text())

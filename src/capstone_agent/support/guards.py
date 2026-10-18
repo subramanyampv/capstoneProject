@@ -26,6 +26,24 @@ class SafetyRules:
 
 REFUSAL='I cannot follow requests to bypass rules, disclose private information, save sensitive identifiers such as Social Security numbers, or provide medical/legal advice. I can help with supported order and policy questions.'
 FAILURE='I could not confirm the handoff. Please contact the retailer support team directly; no ticket is confirmed.'
+NO_ACTION_NEEDED=re.compile(r'\bno\s+(?:further|additional|more)\s+(?:(?:shipping|delivery|tracking)\s+)?(?:action|steps?|support|assistance)\s+(?:is\s+|are\s+)?(?:needed|required|necessary)\b',re.I)
+
+
+def qualify_delivery_conclusion(draft):
+    """Replace only the unsupported conclusion; preserve other claims and references.
+
+    Callers must require verified current tracking and replay every final gate.
+    This is not a general semantic correction or permission to assert receipt.
+    """
+    replacement='the carrier record does not establish whether further assistance is needed'
+    repaired=draft.model_copy(deep=True)
+    repaired.answer=NO_ACTION_NEEDED.sub(replacement,repaired.answer)
+    repaired.why=[NO_ACTION_NEEDED.sub(replacement,v) for v in repaired.why]
+    repaired.next_steps=[NO_ACTION_NEEDED.sub(replacement,v) for v in repaired.next_steps]
+    repaired.why.append('Delivery statements describe the carrier record, not independent confirmation of receipt.')
+    try:return type(draft).model_validate(repaired.model_dump())
+    except ValueError:return None
+
 
 
 def final_errors(draft, *, refs, facts, refusals, triggers, ticket, intents):
@@ -38,7 +56,7 @@ def final_errors(draft, *, refs, facts, refusals, triggers, ticket, intents):
     if any(ref.source_id.startswith('doc:') and json.dumps(ref.model_dump(),sort_keys=True) not in retrieved for ref in draft.citations):
         errors.append('G4_POLICY_NOT_RETRIEVED')
     body=' '.join([draft.answer,*draft.why,*draft.next_steps])
-    if re.search(r'\bno\s+(?:further|additional|more)\s+(?:(?:shipping|delivery|tracking)\s+)?(?:action|steps?|support|assistance)\s+(?:is\s+|are\s+)?(?:needed|required|necessary)\b',body,re.I):
+    if NO_ACTION_NEEDED.search(body):
         errors.append('G3_UNSUPPORTED_NO_ACTION_NEEDED')
     if refusals and not re.search(r"cannot|can't|unable|decline|not (?:able|allowed)",body,re.I): errors.append('G2_REFUSAL')
     if triggers:

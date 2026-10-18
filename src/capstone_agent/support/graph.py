@@ -11,7 +11,7 @@ from langchain_core.messages import AIMessage,HumanMessage,SystemMessage,ToolMes
 from langgraph.graph import StateGraph,START,END
 from langsmith import tracing_context
 from capstone_agent.support.contracts import *
-from capstone_agent.support.guards import SafetyRules,REFUSAL,FAILURE,final_errors
+from capstone_agent.support.guards import SafetyRules,REFUSAL,FAILURE,final_errors,qualify_delivery_conclusion
 from capstone_agent.support.privacy import minimize,mask_sensitive
 from capstone_agent.support.registry import Registry,ToolContext,SessionIdentity
 from capstone_agent.safety.redaction import sanitize
@@ -34,6 +34,7 @@ class SupportState(TypedDict,total=False):
     repairs:int
     stages:Annotated[list[str],operator.add]
     answer_fallback:bool
+    bounded_claim_repair:bool
 
 SYSTEM_PLAN='''You are a support supervisor. Plan all supported intents, including feedback/follow-up.
 Only three specialists exist: order_shipping (order lookup/tracking), policy_product
@@ -393,7 +394,7 @@ class SupportAgent:
                   'refusals':sorted(set(state.get('refusals',[]))),'triggers':sorted(ctx.triggers),'ticket':state.get('ticket'),
                   'clarification':state['plan'].get('clarification'),'computed_outcome':computed,
                   'schema':ResponseDraft.model_json_schema()}
-            draft=None; gate_errors=[]; repairs=0
+            draft=None; rejected_draft=None; gate_errors=[]; repairs=0
             for attempt in range(2):
                 try:
                     if ctx.faults.get('composer'): raise ValueError('INJECTED_MODEL_FAILURE')
@@ -408,38 +409,35 @@ class SupportAgent:
                     # Every declared conflicting source is mandatory, not simply any two refs.
                     if not conflict_refs<={json.dumps(r.model_dump(),sort_keys=True) for r in draft.citations}: gate_errors.append('G4_CONFLICT_CITATIONS')
                     if not gate_errors: break
-                    repairs+=1; data['repair_errors']=gate_errors; draft=None
+                    repairs+=1; data['repair_errors']=gate_errors; rejected_draft=draft; draft=None
                 except Exception:
                     gate_errors=['COMPOSER_FAILED']; draft=None; break
+            bounded_claim_repair=False
+            tracking=next((f for f in facts if f['name']=='get_tracking_events'
+                and f.get('args',{}).get('order_id')==obligations.order_id),None)
+            if (draft is None and rejected_draft is not None and computed=='ANSWERED'
+                and not state.get('refusals') and not ctx.triggers and obligations.tracking
+                and tracking and tracking['data'].get('latest')
+                and gate_errors==['G3_UNSUPPORTED_NO_ACTION_NEEDED']):
+                repaired=qualify_delivery_conclusion(rejected_draft)
+                if repaired is not None:
+                    existing={json.dumps(r.model_dump(),sort_keys=True) for r in repaired.citations}
+                    for ref in final_refs:
+                        if ref['source_id'] in {'order:'+obligations.order_id,'tracking:'+obligations.order_id} and json.dumps(ref,sort_keys=True) not in existing:
+                            repaired.citations.append(EvidenceRef.model_validate(ref))
+                    try:repaired=ResponseDraft.model_validate(repaired.model_dump())
+                    except ValueError:repaired=None
+                if repaired is not None:
+                    remaining=final_errors(repaired,refs=ctx.evidence,facts=facts,refusals=[],
+                        triggers=set(),ticket=None,intents=state['plan']['intents'])
+                    remaining+=citation_errors(obligations,facts,repaired)
+                    if not set(obligations.intents)<=set(repaired.intents_addressed):remaining.append('O1_REQUEST_COVERAGE')
+                    if not conflict_refs<={json.dumps(r.model_dump(),sort_keys=True) for r in repaired.citations}:remaining.append('G4_CONFLICT_CITATIONS')
+                    if not remaining:draft=repaired;bounded_claim_repair=True
             fallback_used=draft is None
-            verified_tracking_render=False
             if fallback_used:
                 draft=safe_draft(state,computed,fallback_refs)
-                # A fully verified tracking-only request can be answered from the
-                # carrier envelope without repeating an invalid model conclusion.
-                # Mixed policy/action requests must still abstain, never lose intents.
-                tracking=next((f for f in facts if f['name']=='get_tracking_events'
-                    and f.get('args',{}).get('order_id')==obligations.order_id),None)
-                bounded_intents={'order_tracking','feedback_style'}
-                if (computed=='ANSWERED' and not state.get('refusals') and not ctx.triggers
-                    and obligations.tracking and tracking and tracking['data'].get('latest')
-                    and set(obligations.intents)<=bounded_intents and set(state['plan']['intents'])<=bounded_intents
-                    and gate_errors==['G3_UNSUPPORTED_NO_ACTION_NEEDED']):
-                    scan=tracking['data']['latest']
-                    answer=f"The latest carrier record reports {scan['status']} at {scan['ts']} in {scan['city']}. This is a carrier record, not independent confirmation of receipt."
-                    if tracking['data'].get('stale'):answer+=' The scan is stale and does not establish the current location.'
-                    if (memory_context or {}).get('feedback_signal'):answer+=' Your style feedback was saved.'
-                    draft=ResponseDraft(answer=answer,why=[],
-                        citations=[r for r in final_refs if r['source_id'].startswith(('order:','tracking:'))],
-                        next_steps=['Contact retailer support if you need further shipping assistance.'],
-                        intents_addressed=list(dict.fromkeys([*obligations.intents,*state['plan']['intents']])),outcome_claimed=computed)
-                    if final_errors(draft,refs=ctx.evidence,facts=facts,refusals=[],triggers=set(),ticket=None,intents=state['plan']['intents']):
-                        draft=safe_draft(state,computed,fallback_refs)
-                    else:
-                        verified_tracking_render=True
-                # Generic fallback abstains; the narrow verified renderer is still
-                # recorded as a fallback, but has complete tracking-only evidence.
-                if fallback_used and not verified_tracking_render and computed=='ANSWERED': computed='INSUFFICIENT_EVIDENCE'; draft.outcome_claimed=computed
+                if computed=='ANSWERED':computed='INSUFFICIENT_EVIDENCE';draft.outcome_claimed=computed
             # G8 removes patterned sensitive values from every customer-facing field.
             verified_ids=(state['ticket']['ticket_id'],) if (state.get('ticket') or {}).get('status')=='created' else ()
             for name in ['answer']:
@@ -448,7 +446,7 @@ class SupportAgent:
                 draft.answer+=' This assistant has not started a return. I cannot verify whether a return was started elsewhere; contact retailer support to confirm its actual status. Eligibility does not establish return status.'
             draft.why=[mask_sensitive(v,self.secrets,verified_ticket_ids=verified_ids) for v in draft.why]
             draft.next_steps=[mask_sensitive(v,self.secrets,verified_ticket_ids=verified_ids) for v in draft.next_steps]
-            return {'draft':draft.model_dump(),'outcome':computed,'repairs':min(repairs,1),'errors':gate_errors,'answer_fallback':fallback_used,
+            return {'draft':draft.model_dump(),'outcome':computed,'repairs':min(repairs,1),'errors':gate_errors,'answer_fallback':fallback_used,'bounded_claim_repair':bounded_claim_repair,
                     'stages':['composer','guard_out']}
 
         def refuse(state):
@@ -501,7 +499,7 @@ class SupportAgent:
         return {'response':final['draft'],'outcome':final['outcome'],'ticket':final.get('ticket'),
             'refusals':sorted(set(final.get('refusals',[]))),'triggers':sorted(ctx.triggers),
             'obligation_contract':obligations.public(),'obligation_audit':audit(obligations,ctx.facts),
-            'answer_fallback':final.get('answer_fallback',False),
+            'answer_fallback':final.get('answer_fallback',False),'bounded_claim_repair':final.get('bounded_claim_repair',False),
             'tool_records':ctx.records,'results':final.get('results',[]),'stages':final.get('stages',[]),
             'errors':final.get('errors',[]),'model_calls':self.gateway.calls,'tool_calls':ctx.calls,
             'handoffs':final.get('handoffs',0),'replans':final.get('replans',0),'repairs':final.get('repairs',0),'tokens':getattr(self.gateway,'tokens',0),

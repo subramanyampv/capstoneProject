@@ -107,3 +107,15 @@ def test_ticket_storage_uses_generated_reasons_instead_of_freeform_names(setup):
     assert result.status=='ok'
     with sqlite3.connect(services.ticket_path) as db:content=db.execute('SELECT payload FROM tickets').fetchone()[0]
     assert 'Canary Jordan' not in content and 'T1' in content
+
+
+def test_known_return_boundary_and_review_guard_codes_keep_safe_trace_identity():
+    from capstone_agent.observability.support_tracing import safe_error
+    trace=SupportTrace('a'*32)
+    with trace.span('return_status'):pass
+    assert trace.spans[0]['name']=='return_status'
+    for code in ['G3_UNSUPPORTED_NO_ACTION_NEEDED','G3_UNSUPPORTED_WARRANTY_START','G3_STALE_TRACKING_DISCLOSURE']:
+        assert safe_error(code)==code
+    assert safe_error('untrusted arbitrary error containing customer content')=='OTHER_ERROR'
+    with trace.span('untrusted-node-name'):pass
+    assert trace.spans[-1]['name']=='unknown_tool'

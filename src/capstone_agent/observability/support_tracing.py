@@ -13,7 +13,7 @@ from urllib3.util.retry import Retry
 
 CURRENT=contextvars.ContextVar('support_trace',default=None)
 PARENT=contextvars.ContextVar('support_parent',default=None)
-NODES=frozenset({'guard_in','plan','dispatch','order_shipping','policy_product','escalation','replan','compose','refuse','unsupported_command','missing_reference','withdrawal','command_handler'})
+NODES=frozenset({'guard_in','plan','dispatch','order_shipping','policy_product','escalation','replan','compose','refuse','unsupported_command','missing_reference','withdrawal','return_status','command_handler'})
 TOOLS=frozenset({'lookup_order','get_tracking_events','search_policy','get_product_details','check_return_eligibility','create_escalation'})
 COUNTERS=frozenset({'model_calls','tool_calls','handoffs','replans','repairs','tokens','latency_ms','input_tokens','output_tokens','total_tokens','style_version','word_count'})
 OUTCOMES=frozenset({'ANSWERED','CLARIFICATION_REQUESTED','INSUFFICIENT_EVIDENCE','REFUSED','ESCALATED','ESCALATION_FAILED_DISCLOSED','TOOL_ERROR_DISCLOSED','BUDGET_EXHAUSTED_ESCALATED','COMMAND_HANDLED'})
@@ -112,7 +112,8 @@ ERROR_CODES=frozenset({'BUDGET_EXCEEDED','UNKNOWN_TOOL','PERMISSION_DENIED','INV
     'PII_REJECTED','UNRESOLVED_EVIDENCE','UNVERIFIED_TRIGGER','TOO_MANY_CONFLICTING_SOURCES','SUPERVISOR_FAILED',
     'REPLAN_FAILED','COMPOSER_FAILED','SPECIALIST_FAILED','SPECIALIST_STEP_LIMIT','WRONG_AGENT_RESULT',
     'INVALID_TOOL_CALL','INJECTED_MODEL_FAILURE','UNRESOLVED_AGENT_EVIDENCE','G1_TICKET_MISSING','G1_FAILURE_DISCLOSURE',
-    'G2_REFUSAL','G3_UNSUPPORTED_NUMBER','G4_UNRESOLVED_CITATION','G4_POLICY_NOT_RETRIEVED','G4_POLICY_CITATION_REQUIRED',
+    'G2_REFUSAL','G3_UNSUPPORTED_NUMBER','G3_UNSUPPORTED_NO_ACTION_NEEDED','G3_UNSUPPORTED_WARRANTY_START','G3_STALE_TRACKING_DISCLOSURE',
+    'G4_UNRESOLVED_CITATION','G4_POLICY_NOT_RETRIEVED','G4_POLICY_CITATION_REQUIRED',
     'G4_EVIDENCE_REQUIRED','G4_CONFLICT_CITATIONS','G5_INTENT_COVERAGE','FALSE_TRANSACTION_CLAIM','FALSE_TICKET_CLAIM',
     'SPECIALIST_model_unavailable','SPECIALIST_model_output_truncated','SPECIALIST_model_budget_exhausted'})
 def safe_error(value):

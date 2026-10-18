@@ -1,5 +1,6 @@
 """Independent review regressions verify scope and evidence, not model wording."""
 import asyncio
+import json
 import pytest
 from capstone_agent.support.contracts import ResponseDraft
 from capstone_agent.support.guards import final_errors,REFUSAL
@@ -71,8 +72,52 @@ def test_repeated_unsupported_delivery_conclusion_uses_only_verified_tracking_fa
     response=asyncio.run(SupportAgent(services,ScriptedGateway(replies)).run('Make the answer shorter and track O-1001.',SessionIdentity('C-100'),memory_context={'feedback_signal':'too_long'}))
     assert response['outcome']=='ANSWERED'
     assert 'G3_UNSUPPORTED_NO_ACTION_NEEDED' in response['errors']
-    assert 'latest carrier record reports delivered' in response['response']['answer']
+    assert 'record is delivered' in response['response']['answer']
+    assert response['bounded_claim_repair'] and not response['answer_fallback']
     assert 'no further' not in response['response']['answer']
-    assert 'not independent confirmation of receipt' in response['response']['answer']
+    assert any('not independent confirmation of receipt' in reason for reason in response['response']['why'])
     assert any(c['source_id'].startswith('tracking:') for c in response['response']['citations'])
     assert set(response['response']['intents_addressed'])=={'order_tracking','feedback_style'}
+
+
+def test_qualifier_keeps_policy_sources_and_other_claims_for_final_validation():
+    from capstone_agent.support.guards import qualify_delivery_conclusion
+    draft=ResponseDraft(answer='The order shipped on September 28 and no further action is needed.',
+        why=['Standard shipping is an estimate.'],citations=[{'source_id':'doc:shipping_policy','section':'guarantees','record_version':'v1'}],
+        next_steps=['Contact support.'],intents_addressed=['order_tracking','policy_question'],outcome_claimed='ANSWERED')
+    patched=qualify_delivery_conclusion(draft)
+    assert 'September 28' in patched.answer and 'does not establish' in patched.answer
+    assert patched.citations==draft.citations and patched.intents_addressed==draft.intents_addressed
+    assert patched.next_steps==draft.next_steps and patched.why[0]==draft.why[0]
+    assert 'no further action is needed' in draft.answer
+
+
+def test_qualifier_cannot_overflow_closed_response_bounds():
+    from capstone_agent.support.guards import qualify_delivery_conclusion
+    draft=ResponseDraft(answer='No further action is needed.',why=['A reason.']*20,citations=[],next_steps=[],intents_addressed=['order_tracking'],outcome_claimed='ANSWERED')
+    assert qualify_delivery_conclusion(draft) is None
+
+
+@pytest.mark.parametrize('extra,expected',[('', 'ANSWERED'),(' I issued your refund.', 'INSUFFICIENT_EVIDENCE')])
+def test_conclusion_repair_preserves_mixed_shipping_policy_and_never_waives_other_errors(setup,extra,expected):
+    from test_public_policy_and_fallback import PolicyEvidence
+    from capstone_agent.retrieval.corpus import load_corpus
+    from test_support_graph import plan,result,draft
+    services,_=setup;services.search=PolicyEvidence(services.root)
+    chunks,_,_=load_corpus(services.root/'knowledge/raw')
+    services.search.chunks=[c for c in chunks if c['metadata']['doc_id']=='shipping_policy']
+    def bad(messages):
+        data=json.loads(messages[-1].content)
+        return draft('The order shipped on 2026-09-28 and was recorded delivered on 2026-09-30. No further shipping action is needed.'+extra,
+            intents=data['intents'],citations=data['allowed_citations'])
+    response=asyncio.run(SupportAgent(services,ScriptedGateway([plan(),result('order_shipping'),result('policy_product'),bad,bad])).run(
+        'When did order O-1001 ship and when did it arrive?',SessionIdentity('C-100')))
+    assert response['outcome']==expected, {k:response[k] for k in ['errors','obligation_audit','stages','model_calls']}
+    if expected=='ANSWERED':
+        assert response['bounded_claim_repair'] and not response['answer_fallback']
+        assert {'order_tracking','policy_question'}<=set(response['response']['intents_addressed'])
+        assert any(c['source_id']=='doc:shipping_policy' for c in response['response']['citations'])
+        assert '2026-09-28' in response['response']['answer'] and '2026-09-30' in response['response']['answer']
+    else:
+        assert not response['bounded_claim_repair'] and response['answer_fallback']
+        assert 'issued your refund' not in response['response']['answer']
