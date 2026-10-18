@@ -1,0 +1,21 @@
+{
+  "library": "deepeval",
+  "rubric": "phase9-grounded-support-v1",
+  "judge_settings": {
+    "provider": "openai_compatible",
+    "model": "qwen3.7-max",
+    "timeout_seconds": 20.0,
+    "max_retries": 0,
+    "response_format": "json_object",
+    "temperature": 0,
+    "max_completion_tokens": 2400,
+    "enable_thinking": false
+  },
+  "same_model_self_evaluation": true,
+  "source_outputs_sha256": "e3092cb91e8373b660713ef9908ee17f14116ef03e81916b87680dcecb9c6ffc",
+  "judged_cases": 20,
+  "requested_cases": 20,
+  "source_judge_manifest": "judge_all_manifest.json",
+  "selection_note": "Exact fixed twenty-case subset copied from all-65 judgments; no regrading or extra model calls. Usage is recorded for the all-case process, not attributed separately to this subset.",
+  "human_calibration": "awaiting_actual_review_of_changed_case_packets"
+}

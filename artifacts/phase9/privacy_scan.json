@@ -1,8 +1,8 @@
 {
   "passed": true,
-  "phase9_files": 40,
+  "phase9_files": 55,
   "runtime_files": 6,
-  "source_files": 720,
+  "source_files": 751,
   "findings": [],
   "limits": "Configured keys in nonignored files; known canaries in Phase 9 exports and local runtime. Authored input canaries in tests/datasets intentionally excluded from canary scan. Not a universal PII or hosted-content guarantee. Safety/false-success acceptance is separate."
 }

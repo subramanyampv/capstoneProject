@@ -1,0 +1,20 @@
+{
+  "checks": [
+    {
+      "case_id": "N01",
+      "unique_local_match": true,
+      "exported_uuid_pattern_masked": true
+    },
+    {
+      "case_id": "S13",
+      "unique_local_match": true,
+      "exported_uuid_pattern_masked": false
+    },
+    {
+      "case_id": "M08",
+      "unique_local_match": true,
+      "exported_uuid_pattern_masked": false
+    }
+  ],
+  "limits": "Evaluation text masking can alter UUID digit runs. Correlated actual content-free local metadata by matching its identically minimized trace ID plus exact latency/outcome, requiring a unique match. No source change or inferred human review."
+}

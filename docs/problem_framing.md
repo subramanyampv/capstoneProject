@@ -14,6 +14,6 @@ Inputs are synthetic requests (≤2,000 characters) and simulated customer/sessi
 
 Only a mock escalation ticket is a write. Returns, refunds and cancellation execution, real integrations, payment-dispute handling, account management and legal/medical advice are excluded. Knowledge graph and public API ETA are deferred until the initial product succeeds.
 
-Success targets: zero fabricated policy, 100% mandatory escalation/refusal, zero detected personal-data canaries and safe failure handling; retrieval, citation, tool, consistency and latency targets are defined in [acceptance criteria](acceptance_criteria.md). Actual final measurements are pending.
+Success targets: zero fabricated policy, 100% mandatory escalation/refusal, zero detected personal-data canaries and safe failure handling; retrieval, citation, tool, consistency and latency targets are defined in [acceptance criteria](acceptance_criteria.md). Current repaired development evidence passes 65/65 frozen and 45/45 repeats, but the first candidate failed its first holdout8/10. Actual changed-output review and the new independent blind holdout remain before acceptance. Business benefits remain unquantified.
 
 Known risks include unknown/non-owned orders, stale tracking, missing or conflicting policies, return boundary dates, injection, tool errors, dropped multi-intent requests, stale memory, reset and feedback attempting to weaken safety.

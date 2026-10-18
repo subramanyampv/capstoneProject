@@ -1,0 +1,15 @@
+{
+  "application_commit": "cc0c3a8",
+  "frozen_run": "20261018T012141Z",
+  "repeat_run": "20261018T012903Z",
+  "checks": {
+    "source_matches_frozen": true,
+    "repeat_same_source": true,
+    "model_configuration_unchanged": true,
+    "judged_source_outputs_match": true,
+    "blind_files_unchanged_since_independent_freeze": true
+  },
+  "blindness_scope": "Only byte hashes checked against independent agent freeze; no questions/context contents inspected by implementation agent. No replacement holdout execution.",
+  "release_accepted": false,
+  "human_review_status": "awaiting_human_review"
+}

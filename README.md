@@ -13,7 +13,7 @@ The core now implements a LangGraph supervisor, three LangChain specialists and 
 | 6 | Bounded projection memory, follow-ups and reset/expiry implemented; five-conversation comparison measured |
 | 7 | Implemented: controlled style feedback, versioning/reset/deletion in terminal and Streamlit; development evidence |
 | 8 | Verified: hosted metadata hierarchy/masking/failure isolation, safe logs/startup and clean local deployment |
-| 9 | Release candidate: 65/65 frozen checks, 45/45 safety repeats, all-65 DeepEval judgments; changed-output human review, untouched holdout and acceptance pending |
+| 9 | Repaired candidate: 248 tests, 65/65 frozen, 45/45 repeats; 17 changed human reviews and new blind holdout remain. First holdout failure preserved. |
 
 ## Local setup
 
@@ -52,7 +52,7 @@ Style feedback works in terminal and Streamlit: `/feedback too_long`, `/feedback
 
 Local retrieval commands: `make ingest`, `make eval-retrieval`, and `.venv/bin/capstone-agent search-policy "footwear return window"`. [Retrieval design and results](docs/retrieval_design.md) record measured coverage and limitations.
 
-LangSmith defaults off. Configure its key/project in ignored `.env` to verify hosted tracing later. Current hidden-input metadata spans are implemented; final masked hierarchical agent/tool traces and failure isolation remain planned.
+LangSmith defaults off in the example configuration. Hosted content-free hierarchy, canary exclusion and exporter-failure isolation are verified; configure credentials only in ignored `.env`. Local JSONL remains primary evidence.
 
 ## Evidence and submission
 

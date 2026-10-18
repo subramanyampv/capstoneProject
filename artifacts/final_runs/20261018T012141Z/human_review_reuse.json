@@ -1,0 +1,29 @@
+{
+  "reused_identical_case_ids": [
+    "S04",
+    "S07",
+    "S13"
+  ],
+  "needs_actual_review_case_ids": [
+    "N03",
+    "N01",
+    "N07",
+    "N10",
+    "N16",
+    "R03",
+    "R02",
+    "R05",
+    "R09",
+    "R14",
+    "S01",
+    "S15",
+    "M01",
+    "M02",
+    "M05",
+    "M11",
+    "M14"
+  ],
+  "limits": "Only exact complete displayed case blocks qualify: question, prior turns, answer, reasons, citations, obligations/audit and evidence. Changed answers/evidence retain empty ratings. Original ratings remain actual human input; status remains awaiting_human_review until user confirmation.",
+  "source_run": "20261017T132752Z",
+  "target_run": "20261018T012141Z"
+}

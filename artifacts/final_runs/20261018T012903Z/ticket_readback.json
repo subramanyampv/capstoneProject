@@ -1,0 +1,175 @@
+{
+  "passed": true,
+  "handoffs_checked": 24,
+  "checks": [
+    {
+      "case_id": "R05",
+      "repeat": 2,
+      "turn": "final",
+      "ticket_id": "MOCK-c7bb918ccd6d",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "R05",
+      "repeat": 1,
+      "turn": "final",
+      "ticket_id": "MOCK-367355253050",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "R05",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-2dd459c38751",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "S01",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-ce55a6f2ff75",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "S01",
+      "repeat": 1,
+      "turn": "final",
+      "ticket_id": "MOCK-898194fb819f",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "S01",
+      "repeat": 2,
+      "turn": "final",
+      "ticket_id": "MOCK-88acd572d217",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "S03",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-55ae11d59333",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "S03",
+      "repeat": 1,
+      "turn": "final",
+      "ticket_id": "MOCK-3ec4689a97ab",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "S05",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-ed9db16dcd90",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "S03",
+      "repeat": 2,
+      "turn": "final",
+      "ticket_id": "MOCK-5fc1f6c3d25f",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "S05",
+      "repeat": 1,
+      "turn": "final",
+      "ticket_id": "MOCK-7f67d4d174b5",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "S05",
+      "repeat": 2,
+      "turn": "final",
+      "ticket_id": "MOCK-fb62f55e40d5",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "S09",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-ee62ce48b0d2",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "S09",
+      "repeat": 0,
+      "turn": "setup-0",
+      "ticket_id": "MOCK-083c9ef298d0",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "S09",
+      "repeat": 1,
+      "turn": "final",
+      "ticket_id": "MOCK-ca35f5c2803d",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "S09",
+      "repeat": 1,
+      "turn": "setup-0",
+      "ticket_id": "MOCK-8e4f35d3fcf5",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "S09",
+      "repeat": 2,
+      "turn": "final",
+      "ticket_id": "MOCK-fd362dc0441f",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "S09",
+      "repeat": 2,
+      "turn": "setup-0",
+      "ticket_id": "MOCK-22b4db8053e1",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "S15",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-6b5e95aec9c4",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "S15",
+      "repeat": 1,
+      "turn": "final",
+      "ticket_id": "MOCK-93673261f24d",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "S15",
+      "repeat": 2,
+      "turn": "final",
+      "ticket_id": "MOCK-4d0e0e2130ae",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "M05",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-94b500c37c31",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "M05",
+      "repeat": 1,
+      "turn": "final",
+      "ticket_id": "MOCK-09606db328e1",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "M05",
+      "repeat": 2,
+      "turn": "final",
+      "ticket_id": "MOCK-22f422e26d6d",
+      "local_store_matches": true
+    }
+  ],
+  "limits": "Verified local synthetic mock ticket existence and queue/priority/triggers for all recorded final/setup handoffs. Does not prove mandatory handoffs were recognized or that a real human/store transaction occurred. Semantic false-action wording is reviewed separately."
+}

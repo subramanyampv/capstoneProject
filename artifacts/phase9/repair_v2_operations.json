@@ -1,0 +1,49 @@
+{
+  "run": "20261018T012141Z",
+  "application_commit": "cc0c3a8",
+  "paths": {
+    "single_specialist": {
+      "n": 22,
+      "p50_ms": 11117.822,
+      "p95_ms": 18136.887,
+      "target_ms": 30000,
+      "target_met": true,
+      "individual_over_target": []
+    },
+    "multi_specialist_or_escalation": {
+      "n": 23,
+      "p50_ms": 24870.139,
+      "p95_ms": 34797.654,
+      "target_ms": 45000,
+      "target_met": true,
+      "individual_over_target": []
+    },
+    "clarification": {
+      "n": 14,
+      "p50_ms": 11269.514,
+      "p95_ms": 13234.228,
+      "target_ms": 15000,
+      "target_met": true,
+      "individual_over_target": []
+    },
+    "deterministic_refusal_or_command": {
+      "n": 6,
+      "p50_ms": 9.89,
+      "p95_ms": 32.102,
+      "target_ms": 2000,
+      "target_met": true,
+      "individual_over_target": []
+    }
+  },
+  "limits": "Zero-model refusal/command, then clarification, then two or more distinct result agents or escalation, then one specialist; other paths unassigned. Final turns only, nearest-rank percentiles. Three case workers with serialized embeddings and concurrent judging; setup/warmup/judges excluded. Not production SLA.",
+  "provider_reported_final_tokens": 466151,
+  "currency_cost": "Unavailable: endpoint pricing not configured; setup/judging/failed transport usage separate.",
+  "tool_errors": {
+    "INVALID_ARGUMENT": 7,
+    "NOT_FOUND": 2,
+    "TIMEOUT": 1
+  },
+  "runtime_errors": {
+    "SPECIALIST_STEP_LIMIT": 1
+  }
+}
