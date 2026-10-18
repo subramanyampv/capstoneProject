@@ -1,0 +1,64 @@
+{
+  "schema_version": "1.0",
+  "freeze_id": "holdout_v4_blind",
+  "frozen_at_utc": "2026-10-18T03:07:01.008231+00:00",
+  "scenario_date": "2026-10-12",
+  "case_count": 10,
+  "algorithm": "sha256",
+  "files": {
+    "data/holdout_v4_blind.json": {
+      "sha256": "29b3ff7a5d75492b85c1d096990b57017545908e9b32b3f22f1c374349c74b39"
+    },
+    "evaluation/phase9/holdout_contexts_v4_blind.json": {
+      "sha256": "5fac3665a07f5e690712add2011626d1a7fa08aa5b939d22495d64237175f170"
+    }
+  },
+  "approved_authoring_reference_sha256": {
+    "docs/archive/v3/architecture_and_plan_supplied_20261013.md": "a4275a01b4f92ece581caa14a58d1d61239fb535f7275a61dd39b2d5fa7e4c3f",
+    "evaluation/phase9/protocol_v1.json": "ecc8c0524a7c8b0a951874b5d2ac8a0d7f547c323daa1eeeb57c669900cc477e",
+    "data/evaluation_cases.json": "b3838a055e756d445934df6796de70b6ae69cd9fc0261e91932ec44d23d9aa94",
+    "evaluation/phase9/frozen_contexts_v3.json": "3cd2c42e594f3c75ea504a79bfede766566e12d6c43cac5cbb0730c3d5184c19",
+    "data/sample_orders.json": "91eeff0665915588a70b7356a09b4981f8cefa4b2c78d13e8cd8249811e07332",
+    "data/sample_tracking_events.json": "4163c63c8c2f7022aaf6b43638b24e77e0f51ba4607864b8cff09cff04940a19",
+    "data/product_catalog.json": "4edc0280346e3be7d33364d7d21411300a799e68cdba44a64abdbafc64c38196",
+    "data/policy_rules.json": "83bed31dfad9cae5cfb3bc825874671617757564e6ceda66f192872b8e273acb",
+    "knowledge/raw/return_policy.md": "7c837441121fded9e1a863b5da79928515dd9192a0311a41736759cb9156ebf0",
+    "knowledge/raw/refund_policy.md": "38311d56e49138c4179d44fdc5b17b99152703e3456557ce13f059dde434ae00",
+    "knowledge/raw/faq.md": "050e68b2e08690ea7f7bf13d2f244e7841fed845abededbd077418960a0d5274",
+    "knowledge/raw/cancellation_policy.md": "2967fc5a035b77c36fe809d83561129e2eb05ebc7165ec7974e15665ab03c5f8",
+    "knowledge/raw/shipping_policy.md": "9233b2e3348710830914c8d4824b40fda87d6e96779be59f7a4be90b8b77f7ad"
+  },
+  "independence": {
+    "independently_authored_from_original_product_requirements": true,
+    "contexts_and_synthetic_identities_selected_before_candidate_outputs": true,
+    "contexts_written_before_dataset": true,
+    "application_or_model_run_count": 0,
+    "network_access_count": 0,
+    "not_conditioned_on_used_holdout_outputs_or_specific_candidate_fixes": true,
+    "prohibited_sources_not_read_during_v4_authoring": [
+      "artifacts/holdout_runs",
+      "artifacts/final_runs",
+      "holdout failure reports",
+      "current source or configuration safety changes",
+      "current architecture or status amendments",
+      "holdout_v3_blind dataset and contexts",
+      "parent repair or failure analysis",
+      ".env"
+    ],
+    "no_source_or_configuration_changes": true,
+    "information_only_transaction_scope": true
+  },
+  "validation": {
+    "case_count_and_unique_ids": "passed",
+    "dataset_context_id_alignment": "passed",
+    "synthetic_customer_identity_membership": "passed",
+    "context_field_and_tool_outcome_trigger_schema": "passed",
+    "required_policy_document_membership": "passed",
+    "all_cases_frozen_and_within_input_limit": "passed",
+    "unique_input_texts_and_no_exact_canonical_input_reuse": "passed",
+    "manual_original_v3_requirements_review": "passed",
+    "manual_fixture_and_tool_semantics_review": "passed",
+    "no_unsupported_transaction_write_expectations": "passed",
+    "no_genuine_requirement_ambiguity_identified": true
+  }
+}
