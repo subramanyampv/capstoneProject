@@ -1,0 +1,10 @@
+{
+  "policy": "keep_local_until_first_evaluation_then_publish_with_results",
+  "authorization": "Explicit user choice in this conversation",
+  "files": [
+    "data/holdout_v2_blind.json",
+    "evaluation/phase9/holdout_contexts_v2_blind.json"
+  ],
+  "current_action": "No GitHub push until first evaluation is complete. Existing committed questions remain unread by implementation agent.",
+  "limits": "Publication after evaluation does not imply release acceptance. Failed results remain preserved."
+}

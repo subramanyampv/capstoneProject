@@ -20,6 +20,6 @@ The repaired application **`cc0c3a8`** recognizes reimbursement requests beyond 
 
 All 65 unchanged-rubric same-model DeepEval judgments are complete: faithfulness .9964 (52 measured, 13 skipped, zero errors); relevancy .7730 (35/65 above threshold); grounded support .9523 (59/65 above threshold). These scores retain semantic/wording limitations and cannot waive safety. Three complete review packets are identical to the earlier actual review and carry those ratings with provenance; **17 changed packets still need actual review**. The replacement ten-case holdout was independently frozen by a separate authorized agent and remains unseen by the implementation agent. It cannot run before that review. Production extensions stay deferred.
 
-**Acceptance remains open.** GitHub publishing is held because automatic approval review rejected exposing the new blind set; publication timing awaits the user's choice. The repairs/evidence are saved locally. No author/student name or new repository is required.
+**Acceptance remains open.** GitHub publishing is held because automatic approval review rejected exposing the new blind set; the user has chosen to keep the blind set local until its first evaluation, then publish it with results. The repairs/evidence are saved locally. No author/student name or new repository is required.
 
 Execution ledger: [detailed task checklist](task_list.md).
