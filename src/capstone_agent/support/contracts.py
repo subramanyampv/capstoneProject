@@ -62,7 +62,8 @@ class TrackingEvent(Closed):
 class TrackingResult(Closed):
     events: list[TrackingEvent]; latest: TrackingEvent | None
     carrier_estimate: str | None = None
-    stale: bool; record_version: str
+    stale: bool = Field(description='Age flag for an existing in-transit scan. Missing scans have no age; use latest/events to determine availability.')
+    record_version: str
 
 class ProductResult(Closed):
     sku: str; name: str; category: str; return_category: str

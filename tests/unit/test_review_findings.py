@@ -48,7 +48,7 @@ def test_duration_does_not_establish_warranty_start():
 
 
 def test_stale_tracking_requires_qualification_but_current_tracking_does_not():
-    facts=[{'name':'get_tracking_events','data':{'stale':True,'carrier_estimate':None}}]
+    facts=[{'name':'get_tracking_events','data':{'stale':True,'carrier_estimate':None,'latest':{'ts':'2026-10-05T10:00:00Z'}}}]
     assert 'G3_STALE_TRACKING_DISCLOSURE' in errors('The package remains in transit.',facts)
     assert 'G3_STALE_TRACKING_DISCLOSURE' not in errors('The scan is stale; current location is unknown.',facts)
     assert 'G3_STALE_TRACKING_DISCLOSURE' not in errors('The package is in transit.',[{'name':'get_tracking_events','data':{'stale':False}}])

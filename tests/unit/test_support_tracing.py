@@ -114,7 +114,7 @@ def test_known_return_boundary_and_review_guard_codes_keep_safe_trace_identity()
     trace=SupportTrace('a'*32)
     with trace.span('return_status'):pass
     assert trace.spans[0]['name']=='return_status'
-    for code in ['G3_UNSUPPORTED_NO_ACTION_NEEDED','G3_UNSUPPORTED_WARRANTY_START','G3_STALE_TRACKING_DISCLOSURE']:
+    for code in ['G3_UNSUPPORTED_NO_ACTION_NEEDED','G3_UNSUPPORTED_WARRANTY_START','G3_STALE_TRACKING_DISCLOSURE','G3_EMPTY_TRACKING_AGE_CLAIM']:
         assert safe_error(code)==code
     assert safe_error('untrusted arbitrary error containing customer content')=='OTHER_ERROR'
     with trace.span('untrusted-node-name'):pass

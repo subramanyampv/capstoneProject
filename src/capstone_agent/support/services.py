@@ -66,7 +66,8 @@ class Services:
         latest=events[-1] if events else None
         gap=(ctx.today-date.fromisoformat(latest.ts[:10])).days if latest else None
         # A completed delivery does not become a stale in-transit shipment.
-        stale=order['status']!='delivered' and (gap is None or gap>=5)
+        # Missing scans have no age; absence is represented by latest=None/events=[].
+        stale=order['status']!='delivered' and gap is not None and gap>=5
         return TrackingResult(events=events,latest=latest,stale=stale,carrier_estimate=estimate,record_version=raw['version'])
 
     def get_product_details(self,args,ctx):

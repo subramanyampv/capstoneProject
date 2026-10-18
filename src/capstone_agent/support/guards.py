@@ -29,6 +29,8 @@ FAILURE='I could not confirm the handoff. Please contact the retailer support te
 NO_ACTION_NEEDED=re.compile(r'\bno\s+(?:further|additional|more)\s+(?:(?:shipping|delivery|tracking)\s+)?(?:action|steps?|support|assistance)\s+(?:is\s+|are\s+)?(?:needed|required|necessary)\b',re.I)
 
 
+EMPTY_TRACKING_AGE=re.compile(r'\b(?:tracking(?:\s+(?:information|data|events|scans|records))?|(?:carrier\s+)?scans)\s+(?:is|are|was|were)\s+(?:stale|outdated|old)\b',re.I)
+
 def unsupported_action_conclusion(text,match):
     # A disclaimer such as "does not confirm receipt or that no further action
     # is needed" does not assert the nested proposition. Contrast/new conjuncts
@@ -38,24 +40,30 @@ def unsupported_action_conclusion(text,match):
     return not bool(re.search(disclaimer,prefix,re.I))
 
 
-def qualify_delivery_conclusion(draft):
-    """Replace only the unsupported conclusion; preserve other claims and references.
-
-    Callers must require verified current tracking and replay every final gate.
-    This is not a general semantic correction or permission to assert receipt.
-    """
-    replacement='the carrier record does not establish whether further assistance is needed'
+def _qualify_claim(draft,pattern,replacement,explanation):
     repaired=draft.model_copy(deep=True)
     def qualify(text):
-        return NO_ACTION_NEEDED.sub(lambda m:replacement if unsupported_action_conclusion(text,m) else m.group(0),text)
+        return pattern.sub(lambda m:replacement if unsupported_action_conclusion(text,m) else m.group(0),text)
     repaired.answer=qualify(repaired.answer)
     repaired.why=[qualify(v) for v in repaired.why]
     repaired.next_steps=[qualify(v) for v in repaired.next_steps]
     if repaired.model_dump()==draft.model_dump():return None
-    repaired.why.append('Delivery statements describe the carrier record, not independent confirmation of receipt.')
+    repaired.why.append(explanation)
     try:return type(draft).model_validate(repaired.model_dump())
     except ValueError:return None
 
+
+def qualify_delivery_conclusion(draft):
+    """Correct only the recognized conclusion; callers replay every final gate."""
+    return _qualify_claim(draft,NO_ACTION_NEEDED,
+        'the available tracking does not establish whether further assistance is needed',
+        'Delivery statements describe the carrier record, not independent confirmation of receipt.')
+
+
+def qualify_empty_tracking(draft):
+    """No dated scan exists; absence must not be represented as age."""
+    return _qualify_claim(draft,EMPTY_TRACKING_AGE,'no tracking events are available',
+        'No tracking scan is recorded; its age cannot be established.')
 
 
 def final_errors(draft, *, refs, facts, refusals, triggers, ticket, intents):
@@ -106,7 +114,10 @@ def final_errors(draft, *, refs, facts, refusals, triggers, ticket, intents):
         clause=re.split(r'[.!?;]',body[:warranty_start.end()])[-1]
         if not re.search(r"not (?:specif|defin|establish)|unknown|cannot (?:confirm|determine)|does not (?:specif|defin|establish)",clause,re.I):
             errors.append('G3_UNSUPPORTED_WARRANTY_START')
-    if any(f['name']=='get_tracking_events' and f['data'].get('stale') for f in facts):
+    empty_tracking=any(f['name']=='get_tracking_events' and f['data'].get('latest') is None and not f['data'].get('events') for f in facts)
+    if empty_tracking and any(unsupported_action_conclusion(body,m) for m in EMPTY_TRACKING_AGE.finditer(body)):
+        errors.append('G3_EMPTY_TRACKING_AGE_CLAIM')
+    if any(f['name']=='get_tracking_events' and f['data'].get('stale') and f['data'].get('latest') for f in facts):
         if not re.search(r'\bstale\b|\boutdated\b|\bnot current\b|\bnot (?:a )?live\b|\bmay have changed\b',body,re.I):
             errors.append('G3_STALE_TRACKING_DISCLOSURE')
     def normalize(value):

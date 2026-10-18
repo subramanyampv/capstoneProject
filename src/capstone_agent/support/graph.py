@@ -11,7 +11,7 @@ from langchain_core.messages import AIMessage,HumanMessage,SystemMessage,ToolMes
 from langgraph.graph import StateGraph,START,END
 from langsmith import tracing_context
 from capstone_agent.support.contracts import *
-from capstone_agent.support.guards import SafetyRules,REFUSAL,FAILURE,final_errors,qualify_delivery_conclusion
+from capstone_agent.support.guards import SafetyRules,REFUSAL,FAILURE,final_errors,qualify_delivery_conclusion,qualify_empty_tracking
 from capstone_agent.support.privacy import minimize,mask_sensitive
 from capstone_agent.support.registry import Registry,ToolContext,SessionIdentity
 from capstone_agent.safety.redaction import sanitize
@@ -91,8 +91,10 @@ customer to wait for a team response. Direct them to retailer support for actual
 Address all intents, explicitly including unknowns/clarification.
 Warranty duration alone does not establish when coverage begins. Never add 'from purchase'
 or 'from delivery' unless the retrieved warranty policy explicitly establishes that event.
-If tracking has stale=true, explicitly say that the scan is stale or outdated and cannot
-establish the parcel's current location. Do not present it as live status.
+If a dated tracking scan has stale=true, explicitly say it is stale or outdated and cannot
+establish the parcel's current location. If events is empty and latest is null, say no tracking
+scans are available; do not describe nonexistent scans as old, stale or outdated. Missing is
+different from old. Do not present either as live location evidence.
 Return initiation/status is unavailable: eligibility does not establish whether a return
 has started. State this assistant has not started a return and direct to retailer support
 to verify actual return status; never request an order solely to check unavailable status.
@@ -367,8 +369,10 @@ class SupportAgent:
                 parts.append('I could not provide a fully verified response to every part of your request. Contact retailer support for actual review.')
             elif state['plan'].get('clarification'): parts.append(sanitize(state['plan']['clarification'],self.secrets))
             else: parts.append('I cannot provide a fully verified answer from the available evidence. Please confirm the order or product, or contact retailer support for review.')
-            if any(f['name']=='get_tracking_events' and f['data'].get('stale') for f in ctx.facts):
+            if any(f['name']=='get_tracking_events' and f['data'].get('stale') and f['data'].get('latest') for f in ctx.facts):
                 parts.append('The tracking scan is stale and does not establish the current location.')
+            elif any(f['name']=='get_tracking_events' and f['data'].get('latest') is None and not f['data'].get('events') for f in ctx.facts):
+                parts.append('No tracking scans are available; current location cannot be established.')
             return ResponseDraft(answer=' '.join(parts),why=['SAFE_FALLBACK'],citations=list(citations),
                 next_steps=['Contact retailer support if further help is needed.'],intents_addressed=list(dict.fromkeys([*obligations.intents,*state['plan']['intents']])),outcome_claimed=computed)
 
@@ -415,11 +419,12 @@ class SupportAgent:
             bounded_claim_repair=False
             tracking=next((f for f in facts if f['name']=='get_tracking_events'
                 and f.get('args',{}).get('order_id')==obligations.order_id),None)
-            if (draft is None and rejected_draft is not None and computed=='ANSWERED'
-                and not state.get('refusals') and not ctx.triggers and obligations.tracking
-                and tracking and tracking['data'].get('latest')
-                and gate_errors==['G3_UNSUPPORTED_NO_ACTION_NEEDED']):
-                repaired=qualify_delivery_conclusion(rejected_draft)
+            repairable={'G3_UNSUPPORTED_NO_ACTION_NEEDED','G3_EMPTY_TRACKING_AGE_CLAIM'}
+            if (draft is None and rejected_draft is not None and tracking and gate_errors
+                and set(gate_errors)<=repairable):
+                repaired=rejected_draft
+                if 'G3_UNSUPPORTED_NO_ACTION_NEEDED' in gate_errors:repaired=qualify_delivery_conclusion(repaired)
+                if repaired is not None and 'G3_EMPTY_TRACKING_AGE_CLAIM' in gate_errors:repaired=qualify_empty_tracking(repaired)
                 if repaired is not None:
                     existing={json.dumps(r.model_dump(),sort_keys=True) for r in repaired.citations}
                     for ref in final_refs:
@@ -428,8 +433,8 @@ class SupportAgent:
                     try:repaired=ResponseDraft.model_validate(repaired.model_dump())
                     except ValueError:repaired=None
                 if repaired is not None:
-                    remaining=final_errors(repaired,refs=ctx.evidence,facts=facts,refusals=[],
-                        triggers=set(),ticket=None,intents=state['plan']['intents'])
+                    remaining=final_errors(repaired,refs=ctx.evidence,facts=facts,refusals=state.get('refusals',[]),
+                        triggers=ctx.triggers,ticket=state.get('ticket'),intents=state['plan']['intents'])
                     remaining+=citation_errors(obligations,facts,repaired)
                     if not set(obligations.intents)<=set(repaired.intents_addressed):remaining.append('O1_REQUEST_COVERAGE')
                     if not conflict_refs<={json.dumps(r.model_dump(),sort_keys=True) for r in repaired.citations}:remaining.append('G4_CONFLICT_CITATIONS')
