@@ -38,6 +38,14 @@ def agreement(judgments,review,packet,expected_ids):
     report=validate_review(review,packet,expected_ids)
     ids=[r['case_id'] for r in judgments]
     if len(ids)!=len(set(ids)) or set(ids)!=set(expected_ids):raise ValueError('EXACT_JUDGE_SAMPLE_REQUIRED')
+    for row in judgments:
+        metrics=row.get('metrics',[])
+        if len(metrics)!=len(METRICS) or {m['name'] for m in metrics}!=set(METRICS):raise ValueError('COMPLETE_JUDGE_METRICS_REQUIRED')
+        for metric in metrics:
+            if metric.get('status')=='skipped_no_context' and metric['name']=='faithfulness' and metric.get('score') is None:continue
+            score=metric.get('score')
+            if metric.get('status')!='measured' or type(score) not in {int,float} or not math.isfinite(score) or not 0<=score<=1:
+                raise ValueError('COMPLETE_VALID_JUDGE_METRICS_REQUIRED')
     judges={r['case_id']:r for r in judgments};pairs=[]
     for row in review['cases']:
         for name,threshold in METRICS.items():

@@ -50,3 +50,9 @@ def test_comparison_preserves_ai_role_and_judge_disagreement():
     assert report['paired_ratings']==3 and report['binary_agreement']==0
     assert all('ai_proxy' in r and 'human' not in r for r in report['disagreements'])
     with pytest.raises(ValueError):agreement(judges*2,review(),b'packet',['C'])
+
+
+@pytest.mark.parametrize('metrics',[[],[{'name':n,'status':'error','score':None} for n in ['faithfulness','answer_relevancy','grounded_support']]])
+def test_missing_or_failed_judging_cannot_pass_iteration_gate(metrics):
+    with pytest.raises(ValueError,match='JUDGE_METRICS'):
+        agreement([{'case_id':'C','metrics':metrics}],review(),b'packet',['C'])
