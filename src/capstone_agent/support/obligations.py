@@ -11,6 +11,15 @@ VERSION = 'request-obligations-v2'
 ORDER = re.compile(r'\bO-\d{4}\b', re.I)
 RETURN = re.compile(r'\b(?:returns?|returning|retrun|restocking)\b|\bsend\b.{0,25}\bback\b', re.I)
 REFUND = re.compile(r'\brefund\w*\b', re.I)
+# A monetary reimbursement remains a refund obligation even when the customer
+# never uses the word "refund". Item-return wording alone is not enough.
+REIMBURSEMENT = re.compile(
+    r'\breimburs\w*\b|\b(?:my |the )?money\s+back\b|'
+    r'\b(?:pay|credit)\s+(?:me\s+)?back\b|'
+    r'\b(?:send|give|pay|credit|return)\s+(?:me\s+)?(?:back\s+)?'
+    r'(?:(?:the|my|entire|full|whole|all|of|amount|sum|payment)\s+){0,5}'
+    r'(?:[$€£]\s*\d[\d,.]*|\d[\d,.]*\s*(?:dollars?|USD|EUR|GBP)\b)'
+    r'(?=\s*(?:[.!?;]|$|\b(?:for|to|back|and|on)\b))', re.I)
 CANCEL = re.compile(r'\bcancel\w*\b', re.I)
 WITHDRAW_CANCELLATION = re.compile(r"\b(?:do not|don't|don’t)\s+cancel\b|\bkeep\s+(?:my|the|this|that)\s+order\b|\bstop\b.{0,20}\bcancellation\b",re.I)
 TRACK = re.compile(r'\btrack\w*\b|latest.{0,20}event|\bwhere.{0,35}\b(?:order|package)\b|\bwhen.{0,35}\b(?:ship|arriv|deliver)', re.I)
@@ -55,7 +64,7 @@ def derive(query, context=None, *, services=None):
         tracking=bool(set(context.get('last_intents',[])) & {'order_tracking','shipping_tracking'})
     # Named return/refund discussions may include a historic delivery date without
     # asking a new tracking question. Only explicit tracking wording creates it.
-    has_return=bool(RETURN.search(query));has_refund=bool(REFUND.search(query));withdraw=bool(WITHDRAW_CANCELLATION.search(query))
+    has_return=bool(RETURN.search(query));has_refund=bool(REFUND.search(query) or REIMBURSEMENT.search(query));withdraw=bool(WITHDRAW_CANCELLATION.search(query))
     has_cancel=bool(CANCEL.search(query)) and not withdraw
     individual=re.search(r'\b(?:can I|can you|I want|I need)\s+(?:please\s+)?(?:return|refund|cancel|start|request)\b|\b(?:start|approve|cancel)\s+(?:my|this|that|order|O-)',query,re.I)
     general=bool(GENERAL.search(query)) and not individual

@@ -148,7 +148,9 @@ class SupportAgent:
             ctx.triggers.update(triggers); ctx.legal=legal
             # Original raw input lives only in this invocation, never in operational records.
             legitimate=bool(re.search(r'order|track|shipping|return|refund|warranty|product|cancel',query,re.I))
-            privacy_only='R2' in refusals and bool(re.search(r'not my order|not (?:my|your) (?:order|account)',query,re.I)) and not re.search(r'\balso\b',query,re.I)
+            privacy_only=('R2' in refusals and
+                bool(re.search(r'not (?:my|your)|not mine|someone else|another|other customer',query,re.I))
+                and not re.search(r'\b(?:also|separately|however)\b',query,re.I))
             tampering_only='R3' in refusals and bool(re.search(r'\b(?:change|alter|fake|falsify)\b.{0,30}\b(?:delivery|delivered|record|date)\b',query,re.I)) and not re.search(r'\balso\b',query,re.I)
             withdrawal=bool(WITHDRAW_CANCELLATION.search(query)) and set(obligations.intents)=={'cancellation'}
             route=('withdrawal' if withdrawal and not triggers and not refusals else

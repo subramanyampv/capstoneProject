@@ -21,10 +21,15 @@ from capstone_agent.observability.support_tracing import EXPORTER
 
 ROOT=Path(__file__).resolve().parents[1]
 
+def already_unsealed(parent,dataset_sha256):
+    return any(json.loads(path.read_text()).get('dataset_sha256')==dataset_sha256
+               for path in parent.glob('*/manifest.json'))
+
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('--allow-holdout',action='store_true')
     parser.add_argument('--release-run',required=True,type=Path);parser.add_argument('--review',required=True,type=Path)
-    parser.add_argument('--contexts',required=True,type=Path);parser.add_argument('--resume',type=Path);args=parser.parse_args()
+    parser.add_argument('--contexts',required=True,type=Path);parser.add_argument('--resume',type=Path)
+    parser.add_argument('--dataset',type=Path,default=ROOT/'data/holdout_v1_1.json');args=parser.parse_args()
     if not args.allow_holdout:raise ValueError('HOLDOUT_REQUIRES_EXPLICIT_OPT_IN')
     release=args.release_run.resolve();manifest=json.loads((release/'manifest.json').read_text())
     summary=json.loads((release/'summary.json').read_text());locked=build_hashes()
@@ -44,14 +49,17 @@ def main():
     if fingerprint(app)!=manifest['model_config_sha256']:raise ValueError('RELEASE_MODEL_CONFIGURATION_CHANGED')
     # No holdout bytes are read before the above gates. Contexts must be authored
     # from the sealed questions/requirements before observing generated outputs.
-    dataset=ROOT/'data/holdout_v1_1.json';contexts=json.loads(args.contexts.read_text())
+    dataset=args.dataset.resolve()
+    if dataset.parent!=ROOT/'data' or not dataset.name.startswith('holdout_') or dataset.suffix!='.json':raise ValueError('VERSIONED_HOLDOUT_DATASET_REQUIRED')
+    dataset_sha256=hashlib.sha256(dataset.read_bytes()).hexdigest()
+    contexts=json.loads(args.contexts.read_text())
     cases=load_cases(dataset,contexts=contexts,allow_holdout=True)
     if len(cases)!=10:raise ValueError('EXPECTED_TEN_FROZEN_HOLDOUT_CASES')
     parent=ROOT/'artifacts/holdout_runs'
-    if not args.resume and any(parent.glob('*/manifest.json')):raise ValueError('HOLDOUT_ALREADY_UNSEALED_USE_UNCHANGED_RESUME_ONLY')
+    if not args.resume and already_unsealed(parent,dataset_sha256):raise ValueError('HOLDOUT_ALREADY_UNSEALED_USE_UNCHANGED_RESUME_ONLY')
     directory=args.resume or parent/datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')
     info={'recorded_at':datetime.now(timezone.utc).isoformat(),'release_run':release.name,
-        'dataset_sha256':hashlib.sha256(dataset.read_bytes()).hexdigest(),'context_sha256':hashlib.sha256(args.contexts.read_bytes()).hexdigest(),
+        'dataset_file':dataset.name,'dataset_sha256':dataset_sha256,'context_sha256':hashlib.sha256(args.contexts.read_bytes()).hexdigest(),
         'review_sha256':hashlib.sha256(args.review.read_bytes()).hexdigest(),'build_sha256':locked,
         'model_settings':app.public_settings(),'model_config_sha256':fingerprint(app),'case_ids':[case['id'] for case in cases],
         'recorder_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),

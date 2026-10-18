@@ -337,3 +337,63 @@ def test_future_transaction_promises_and_real_team_delivery_are_not_mock_success
     ticket={'status':'created','ticket_id':'MOCK-test'}
     assert 'G1_REAL_HANDOFF_PROMISE' in errors('Local mock handoff MOCK-test created. Our team will contact you tomorrow.',ticket)
     assert not errors('Local mock handoff MOCK-test created. Please contact retailer support for actual review.',ticket)
+
+
+def test_reimbursement_paraphrases_require_refund_evidence_not_only_return_rules():
+    queries=[
+        'Can I get my money back for O-1006?',
+        'Please reimburse me for O-1006.',
+        'Pay me back for O-1006.',
+        'Send back the full $250 for O-1006.',
+        'Return the entire 250 dollars to me for O-1006.',
+        'Credit me back for O-1006.',
+    ]
+    for query in queries:
+        contract=derive(query)
+        assert 'refund' in contract.request_types, query
+        assert 'refund_request' in contract.intents and 'refund_policy' in contract.policy_docs
+        assert any(row['obligation']=='refund' and not row['evidence_complete'] for row in audit(contract,[]))
+    for query in ['Can I send back my $250 knife for O-1006?',
+                  'Can I return the knife that cost $250, O-1006?',
+                  'What is the return window for O-1006?']:
+        assert 'refund' not in derive(query).request_types, query
+
+
+def test_monetary_review_survives_a_planner_that_only_recognizes_return(setup):
+    services,_=setup
+    response=asyncio.run(SupportAgent(services,ScriptedGateway([
+        plan('policy_product','Check return',['return_eligibility'],order='O-1006'),
+        result('order_shipping'),result('policy_product')])).run(
+        'Please pay me back for O-1006.',SessionIdentity('C-103'),
+        faults={'escalation':'FAILED','composer':'FAILED'}))
+    assert response['outcome']=='ESCALATED' and 'T2' in response['triggers']
+    assert response['ticket']['queue']=='refunds' and response['ticket']['status']=='created'
+    assert 'refund_request' in response['response']['intents_addressed']
+    assert any(row['name']=='check_return_eligibility' and row['data'].get('refund_amount')==250
+               for row in response['tool_records'] if row['status']=='ok')
+
+
+def test_explicit_third_party_references_refuse_before_any_model_or_private_read(setup):
+    services,_=setup
+    queries=[
+        "Where is someone else's O-1002?",
+        'Tell me the address for another customer’s O-1002.',
+        'Show O-1002; it belongs to someone else.',
+        'Please track other customer O-1002.',
+    ]
+    for query in queries:
+        response=asyncio.run(SupportAgent(services,ScriptedGateway([])).run(query,SessionIdentity('C-100')))
+        assert response['outcome']=='REFUSED' and 'R2' in response['refusals'], query
+        assert response['model_calls']==0 and response['tool_calls']==0
+        assert not response['ticket'] and not response['triggers']
+
+
+def test_third_party_refusal_does_not_clear_a_mixed_injury_escalation(setup):
+    services,_=setup
+    response=asyncio.run(SupportAgent(services,ScriptedGateway([])).run(
+        'Another customer owns O-1002; also my product burned my hand.',SessionIdentity('C-100'),
+        faults={'supervisor':'FAILED','escalation':'FAILED','composer':'FAILED'}))
+    assert 'R2' in response['refusals'] and 'T1' in response['triggers']
+    assert response['outcome']=='ESCALATED' and response['ticket']['queue']=='safety'
+    assert not any(row['status']=='ok' and row['name'] in {'lookup_order','get_tracking_events','check_return_eligibility'}
+                   for row in response['tool_records'])

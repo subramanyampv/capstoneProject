@@ -48,3 +48,13 @@ def test_changed_judged_outputs_cannot_unseal_holdout(tmp_path,monkeypatch):
     monkeypatch.setattr(sys,'argv',['run_holdout.py','--allow-holdout','--release-run',str(release),
         '--review',str(review),'--contexts',str(tmp_path/'not_created.json')])
     with pytest.raises(ValueError,match='JUDGED_OUTPUTS_MUST_MATCH_REVIEWED_RELEASE'):runner.main()
+
+
+def test_each_holdout_version_is_single_use_without_blocking_fresh_unseen_versions(tmp_path):
+    root=Path(__file__).resolve().parents[2]
+    spec=importlib.util.spec_from_file_location('versioned_holdout_under_test',root/'scripts/run_holdout.py')
+    runner=importlib.util.module_from_spec(spec);spec.loader.exec_module(runner)
+    used=tmp_path/'first';used.mkdir()
+    (used/'manifest.json').write_text(json.dumps({'dataset_sha256':'old-dataset'}))
+    assert runner.already_unsealed(tmp_path,'old-dataset')
+    assert not runner.already_unsealed(tmp_path,'new-independent-dataset')
