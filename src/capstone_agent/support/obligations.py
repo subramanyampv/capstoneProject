@@ -22,11 +22,18 @@ REIMBURSEMENT = re.compile(
     r'(?=\s*(?:[.!?;]|$|\b(?:for|to|back|and|on)\b))', re.I)
 CANCEL = re.compile(r'\bcancel\w*\b', re.I)
 WITHDRAW_CANCELLATION = re.compile(r"\b(?:do not|don't|don’t)\s+cancel\b|\bkeep\s+(?:my|the|this|that)\s+order\b|\bstop\b.{0,20}\bcancellation\b",re.I)
+RETURN_STATUS = re.compile(
+    r'\b(?:is|was|has|did)\b.{0,20}\b(?:my|the|that)\s+return\s+'
+    r'(?:(?:been|is|was|already|yet|actually)\s+){0,4}'
+    r'(?:start(?:ed)?|initiat(?:e|ed)|creat(?:e|ed)|opened|status)\b|'
+    r'\breturn\s+(?:status|initiation)\b', re.I)
 TRACK = re.compile(r'\btrack\w*\b|latest.{0,20}event|\bwhere.{0,35}\b(?:order|package)\b|\bwhen.{0,35}\b(?:ship|arriv|deliver)', re.I)
 RECENT_TRACKING = re.compile(r'\b(?:latest|most recent|last)\b.{0,30}\b(?:carrier|scan|event|tracking)\b|\bcarrier\s+(?:scan|update)\b', re.I)
 DELIVERY_FUTURE = re.compile(
     r'\b(?:will|when (?:will|does))\b.{0,40}\b(?:arrive|reach|be delivered|get here)\b|'
-    r'\b(?:arrive|reach|get here)\b.{0,30}\b(?:tomorrow|today)\b|'
+    # Present-tense date questions ("arrives today", "reaches us tomorrow")
+    # need the same estimate policy; exclude historic "arrived"/"reached".
+    r'\b(?:arrives?|reach(?:es)?|gets? here)\b.{0,30}\b(?:tomorrow|today)\b|'
     r'\b(?:arrival|delivery)\s+(?:date|estimate|time|guarantee)\b|'
     r'\b(?:guarantee\w*|promis\w*|predict\w*|estimat\w*)\b.{0,40}\b(?:arrival|delivery|arrive|get here)\b', re.I)
 STATUS = re.compile(r'\b(?:order|package).{0,20}\bstatus\b|\b(?:has|did|hadn.t|hasn.t|it|not|never).{0,30}\bship\w*\b|\bdelivery email\b', re.I)
@@ -81,6 +88,7 @@ def derive(query, context=None, *, services=None):
     individual=re.search(r'\b(?:can I|can you|I want|I need)\s+(?:please\s+)?(?:return|refund|cancel|start|request)\b|\b(?:start|approve|cancel)\s+(?:my|this|that|order|O-)',query,re.I)
     general=bool(GENERAL.search(query)) and not individual
     refund_status=has_refund and bool(re.search(r'refund.{0,25}(?:approved yet|arriv|status|processed)',query,re.I))
+    return_status=has_return and bool(RETURN_STATUS.search(query))
     requests=[];docs=[];intents=[]
     if tracking or status:intents.append('order_tracking')
     if withdraw:intents.append('cancellation')
@@ -89,6 +97,9 @@ def derive(query, context=None, *, services=None):
                                 (has_refund,'refund','refund_policy','refund_request'),
                                 (has_return,'return','return_policy','return_eligibility')]:
         if flag:
+            if kind=='return' and return_status:
+                intents.append('return_status')
+                continue
             intents.append('refund_status' if refund_status and kind=='refund' else intent)
             if not refund_status:docs.append(doc)
             if resolved and not general and not refund_status:requests.append(kind)
@@ -106,7 +117,7 @@ def derive(query, context=None, *, services=None):
     conditional=bool(product_ref and re.search(r'\bif\b',query,re.I))
     unknown_policy_subject=has_return and bool(re.search(r'policy\s+for\b',query,re.I)) and not product_ref and not re.search(r'footwear|apparel|home|electronics|perishable|grocery',query,re.I)
     needs_reference=not resolved and not conditional and bool(
-        ((has_return or has_refund or has_cancel or tracking or status) and not general)
+        (((has_return and not return_status) or has_refund or has_cancel or tracking or status) and not general)
         or unknown_policy_subject
         or (not intents and re.search(r'\b(?:again|previous answer|earlier question)\b',query,re.I)))
     sections=[]
@@ -232,6 +243,7 @@ def audit(contract,facts):
         sku=contract.sku or (owned['data']['items'][0]['sku'] if owned and len(owned['data']['items'])==1 else None)
         add('product_information',sku and matching_fact(facts,'get_product_details',sku=sku),['get_product_details:requested_product'])
     if 'refund_status' in contract.intents:add('refund_status',False,['refund_state_not_available_in_tool_contract'])
+    if 'return_status' in contract.intents:add('return_status',False,['return_state_not_available_in_tool_contract'])
     hits=[hit for fact in facts if fact['name']=='search_policy' for hit in fact['data']['results']]
     required=set(contract.policy_docs)
     for fact in facts:

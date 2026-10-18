@@ -24,7 +24,7 @@ class SafetyRules:
         triggers=[k for k,ps in self.triggers.items() if any(p.search(text) for p in ps)]
         return refusals,triggers,any(p.search(text) for p in self.legal)
 
-REFUSAL='I cannot follow requests to bypass rules, disclose private information or provide medical/legal advice. I can help with supported order and policy questions.'
+REFUSAL='I cannot follow requests to bypass rules, disclose private information, save sensitive identifiers such as Social Security numbers, or provide medical/legal advice. I can help with supported order and policy questions.'
 FAILURE='I could not confirm the handoff. Please contact the retailer support team directly; no ticket is confirmed.'
 
 
@@ -67,6 +67,16 @@ def final_errors(draft, *, refs, facts, refusals, triggers, ticket, intents):
                 if json.dumps(ref,sort_keys=True) in cited: support.append(hit['text'])
         else: support.append(json.dumps(record['data']))
     source=' '.join(support)
+    # A duration alone never establishes the event at which coverage begins.
+    warranty_start=re.search(r'\bwarrant\w*\b.{0,100}\b(?:from|after|since|starting|begins?|starts?)\b.{0,30}\b(?:purchas\w*|deliver\w*|receipt|registration)\b',body,re.I)
+    if warranty_start and not re.search(r'\b(?:from|after|since|starting|begins?|starts?)\b.{0,30}\b(?:purchas\w*|deliver\w*|receipt|registration)\b',source,re.I):
+        # Explicitly unknown coverage starts do not assert a start event.
+        clause=re.split(r'[.!?;]',body[:warranty_start.end()])[-1]
+        if not re.search(r"not (?:specif|defin|establish)|unknown|cannot (?:confirm|determine)|does not (?:specif|defin|establish)",clause,re.I):
+            errors.append('G3_UNSUPPORTED_WARRANTY_START')
+    if any(f['name']=='get_tracking_events' and f['data'].get('stale') for f in facts):
+        if not re.search(r'\bstale\b|\boutdated\b|\bnot current\b|\bnot (?:a )?live\b|\bmay have changed\b',body,re.I):
+            errors.append('G3_STALE_TRACKING_DISCLOSURE')
     def normalize(value):
         # Grammar-only equivalence: 90-day and 90 days, never a unit conversion.
         value=re.sub(r'[-\s]+',' ',value.lower()).strip()

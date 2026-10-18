@@ -6,6 +6,7 @@ import tempfile
 from datetime import datetime,timezone
 from pathlib import Path
 from run_final_suite import build_hashes,summarize
+from independent_review_gate import agreement
 from capstone_agent.config import LLMConfig,load_environment
 from capstone_agent.evaluation.calibration import calibrate
 from capstone_agent.evaluation.export import minimized_json,verified_tickets
@@ -29,6 +30,8 @@ def main():
     parser=argparse.ArgumentParser();parser.add_argument('--allow-holdout',action='store_true')
     parser.add_argument('--release-run',required=True,type=Path);parser.add_argument('--review',required=True,type=Path)
     parser.add_argument('--contexts',required=True,type=Path);parser.add_argument('--resume',type=Path)
+    parser.add_argument('--review-type',choices=['human','independent_ai'],default='human')
+    parser.add_argument('--review-policy',type=Path)
     parser.add_argument('--dataset',type=Path,default=ROOT/'data/holdout_v1_1.json');args=parser.parse_args()
     if not args.allow_holdout:raise ValueError('HOLDOUT_REQUIRES_EXPLICIT_OPT_IN')
     release=args.release_run.resolve();manifest=json.loads((release/'manifest.json').read_text())
@@ -39,9 +42,23 @@ def main():
     protocol=json.loads((ROOT/'evaluation/phase9/protocol_v1.json').read_text())
     judgments=[json.loads(line) for line in (release/'judgments_calibration.jsonl').read_text().splitlines()]
     if len(judgments)!=20 or {row['case_id'] for row in judgments}!=set(protocol['human_review_ids']):raise ValueError('COMPLETE_PREDETERMINED_JUDGE_SAMPLE_REQUIRED')
-    review=json.loads(args.review.read_text());calibration=calibrate(judgments,review,expected_ids=protocol['human_review_ids'])
-    if calibration.get('status')!='calibrated':raise ValueError('ACTUAL_COMPLETE_HUMAN_REVIEW_REQUIRED')
-    if calibration.get('unsafe_case_ids'):raise ValueError('UNRESOLVED_HUMAN_SAFETY_FINDING')
+    review=json.loads(args.review.read_text());review_lock={'review_type':args.review_type}
+    if args.review_type=='human':
+        calibration=calibrate(judgments,review,expected_ids=protocol['human_review_ids'])
+        if calibration.get('status')!='calibrated':raise ValueError('ACTUAL_COMPLETE_HUMAN_REVIEW_REQUIRED')
+        if calibration.get('unsafe_case_ids'):raise ValueError('UNRESOLVED_HUMAN_SAFETY_FINDING')
+    else:
+        policy=ROOT/'evaluation/phase9/iteration_review_policy_v2.json'
+        if not args.review_policy or args.review_policy.resolve()!=policy:raise ValueError('EXPLICIT_AI_ITERATION_POLICY_REQUIRED')
+        packet=release/'human_review.md'
+        packet_lock=json.loads((release/'review_packet_manifest.json').read_text())
+        if packet_lock!={'source_outputs_sha256':hashlib.sha256((release/'outputs.jsonl').read_bytes()).hexdigest(),
+                        'review_packet_sha256':hashlib.sha256(packet.read_bytes()).hexdigest(),
+                        'build_sha256':locked}:raise ValueError('REVIEW_PACKET_OUTPUT_LOCK_MISMATCH')
+        calibration=agreement(judgments,review,packet.read_bytes(),protocol['human_review_ids'])
+        (release/'independent_ai_agreement.json').write_text(json.dumps(calibration,indent=2)+'\n')
+        if calibration['status']!='iteration_review_passed':raise ValueError('UNRESOLVED_INDEPENDENT_AI_FINDING')
+        review_lock.update(review_policy_sha256=hashlib.sha256(policy.read_bytes()).hexdigest(),review_packet_sha256=calibration['review_packet_sha256'])
     judged=json.loads((release/'judge_calibration_manifest.json').read_text())
     if judged.get('source_outputs_sha256')!=hashlib.sha256((release/'outputs.jsonl').read_bytes()).hexdigest():raise ValueError('JUDGED_OUTPUTS_MUST_MATCH_REVIEWED_RELEASE')
     app=LLMConfig.from_env(ROOT/'.env')
@@ -58,12 +75,12 @@ def main():
     parent=ROOT/'artifacts/holdout_runs'
     if not args.resume and already_unsealed(parent,dataset_sha256):raise ValueError('HOLDOUT_ALREADY_UNSEALED_USE_UNCHANGED_RESUME_ONLY')
     directory=args.resume or parent/datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')
-    info={'recorded_at':datetime.now(timezone.utc).isoformat(),'release_run':release.name,
+    info={**review_lock,'recorded_at':datetime.now(timezone.utc).isoformat(),'release_run':release.name,
         'dataset_file':dataset.name,'dataset_sha256':dataset_sha256,'context_sha256':hashlib.sha256(args.contexts.read_bytes()).hexdigest(),
         'review_sha256':hashlib.sha256(args.review.read_bytes()).hexdigest(),'build_sha256':locked,
         'model_settings':app.public_settings(),'model_config_sha256':fingerprint(app),'case_ids':[case['id'] for case in cases],
         'recorder_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
-        'limits':'First held-out assessment of a locked, actually human-reviewed development candidate. Report failures without tuning against this holdout; a changed build requires a newly authored holdout. A resume preserves build/model/contexts and completed outputs.'}
+        'limits':'First held-out assessment of a locked development candidate under the explicitly recorded review type. AI-proxy review is not actual human calibration. Report failures without tuning against this holdout; a changed build requires a newly authored holdout. A resume preserves build/model/contexts and completed outputs.'}
     if args.resume:
         old=json.loads((directory/'manifest.json').read_text())
         if any(old.get(key)!=value for key,value in info.items() if key!='recorded_at'):raise ValueError('HOLDOUT_RESUME_LOCK_MISMATCH')

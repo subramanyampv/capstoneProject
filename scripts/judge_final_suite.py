@@ -72,7 +72,14 @@ def human_packet(directory,selected,original):
             '```json',json.dumps([json.loads(value) for value in context_for(result)],indent=2),'```','','</details>','']
         template['cases'].append({'case_id':row['case_id'],'faithfulness':None,'answer_relevancy':None,
             'grounded_support':None,'not_applicable_metrics':[],'unsafe_or_fabricated_claim':None,'comment':''})
-    if not (directory/'human_review.md').exists():(directory/'human_review.md').write_text('\n'.join(lines).rstrip()+'\n')
+    packet='\n'.join(lines).rstrip()+'\n'
+    path=directory/'human_review.md'
+    if path.exists() and path.read_text()!=packet:raise ValueError('EXISTING_REVIEW_PACKET_DOES_NOT_MATCH_OUTPUTS')
+    if not path.exists():path.write_text(packet)
+    lock={'source_outputs_sha256':hashlib.sha256((directory/'outputs.jsonl').read_bytes()).hexdigest(),
+          'review_packet_sha256':hashlib.sha256(path.read_bytes()).hexdigest(),
+          'build_sha256':manifest['build_sha256']}
+    (directory/'review_packet_manifest.json').write_text(json.dumps(lock,indent=2)+'\n')
     if not (directory/'human_review_template.json').exists():(directory/'human_review_template.json').write_text(json.dumps(template,indent=2)+'\n')
 
 

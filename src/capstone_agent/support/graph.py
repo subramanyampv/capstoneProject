@@ -85,6 +85,13 @@ retailer delivery. If it failed, say 'I could not confirm the handoff' and direc
 A mock ticket is not delivered to a real team. Never promise future review/contact or ask the
 customer to wait for a team response. Direct them to retailer support for actual review/action.
 Address all intents, explicitly including unknowns/clarification.
+Warranty duration alone does not establish when coverage begins. Never add 'from purchase'
+or 'from delivery' unless the retrieved warranty policy explicitly establishes that event.
+If tracking has stale=true, explicitly say that the scan is stale or outdated and cannot
+establish the parcel's current location. Do not present it as live status.
+Return initiation/status is unavailable: eligibility does not establish whether a return
+has started. State this assistant has not started a return and direct to retailer support
+to verify actual return status; never request an order solely to check unavailable status.
 If feedback_signal is supplied, acknowledge that the style feedback was saved.
 It does not mean a previous response was edited or a new style threshold was reached.
 Write concise, plain customer prose, usually at most 140 words. Source references belong in
@@ -158,7 +165,8 @@ class SupportAgent:
                 and not re.search(r'\b(?:also|separately|however)\b',query,re.I))
             tampering_only='R3' in refusals and bool(re.search(r'\b(?:change|alter|fake|falsify)\b.{0,30}\b(?:delivery|delivered|record|date)\b',query,re.I)) and not re.search(r'\balso\b',query,re.I)
             withdrawal=bool(WITHDRAW_CANCELLATION.search(query)) and set(obligations.intents)=={'cancellation'}
-            route=('withdrawal' if withdrawal and not triggers and not refusals else
+            route=('return_status' if set(obligations.intents)=={'return_status'} and not triggers and not refusals else
+                   'withdrawal' if withdrawal and not triggers and not refusals else
                    'missing_reference' if (memory_missing or (obligations.needs_reference and not obligations.intents)) and not triggers and not refusals else
                    'unsupported_command' if query.lstrip().startswith('/') and not triggers else
                    'refuse' if refusals and not triggers and (not legitimate or privacy_only or tampering_only) else 'plan')
@@ -355,6 +363,8 @@ class SupportAgent:
                 parts.append('I could not provide a fully verified response to every part of your request. Contact retailer support for actual review.')
             elif state['plan'].get('clarification'): parts.append(sanitize(state['plan']['clarification'],self.secrets))
             else: parts.append('I cannot provide a fully verified answer from the available evidence. Please confirm the order or product, or contact retailer support for review.')
+            if any(f['name']=='get_tracking_events' and f['data'].get('stale') for f in ctx.facts):
+                parts.append('The tracking scan is stale and does not establish the current location.')
             return ResponseDraft(answer=' '.join(parts),why=['SAFE_FALLBACK'],citations=list(citations),
                 next_steps=['Contact retailer support if further help is needed.'],intents_addressed=list(dict.fromkeys([*obligations.intents,*state['plan']['intents']])),outcome_claimed=computed)
 
@@ -407,6 +417,8 @@ class SupportAgent:
             verified_ids=(state['ticket']['ticket_id'],) if (state.get('ticket') or {}).get('status')=='created' else ()
             for name in ['answer']:
                 setattr(draft,name,mask_sensitive(getattr(draft,name),self.secrets,verified_ticket_ids=verified_ids))
+            if 'return_status' in obligations.intents:
+                draft.answer+=' This assistant has not started a return. I cannot verify whether a return was started elsewhere; contact retailer support to confirm its actual status. Eligibility does not establish return status.'
             draft.why=[mask_sensitive(v,self.secrets,verified_ticket_ids=verified_ids) for v in draft.why]
             draft.next_steps=[mask_sensitive(v,self.secrets,verified_ticket_ids=verified_ids) for v in draft.next_steps]
             return {'draft':draft.model_dump(),'outcome':computed,'repairs':min(repairs,1),'errors':gate_errors,'answer_fallback':fallback_used,
@@ -434,6 +446,13 @@ class SupportAgent:
                 why=[],citations=[],next_steps=[],intents_addressed=list(obligations.intents),outcome_claimed='CLARIFICATION_REQUESTED')
             return {'draft':draft.model_dump(),'outcome':'CLARIFICATION_REQUESTED','stages':['cancellation_withdrawal','guard_out']}
 
+        def return_status(state):
+            draft=ResponseDraft(answer='This assistant has not started a return. I cannot verify whether a return was started elsewhere; contact retailer support to confirm its actual status. Eligibility does not establish return status.',
+                why=['Return status is unavailable in the connected tools.'],citations=[],
+                next_steps=['Contact retailer support to check whether a return exists.'],
+                intents_addressed=['return_status'],outcome_claimed='INSUFFICIENT_EVIDENCE')
+            return {'draft':draft.model_dump(),'outcome':'INSUFFICIENT_EVIDENCE','stages':['return_status_boundary','guard_out']}
+
         from capstone_agent.observability.support_tracing import observed_node
         graph=StateGraph(SupportState)
         graph.add_node('guard_in',observed_node('guard_in',guard_in)); graph.add_node('plan',observed_node('plan',plan)); graph.add_node('dispatch',observed_node('dispatch',dispatch))
@@ -445,7 +464,8 @@ class SupportAgent:
         graph.add_edge('unsupported_command',END)
         graph.add_node('missing_reference',observed_node('missing_reference',missing_reference));graph.add_edge('missing_reference',END)
         graph.add_node('withdrawal',observed_node('withdrawal',withdrawal));graph.add_edge('withdrawal',END)
-        graph.add_edge(START,'guard_in'); graph.add_conditional_edges('guard_in',lambda s:s['route'],{'plan':'plan','refuse':'refuse','unsupported_command':'unsupported_command','missing_reference':'missing_reference','withdrawal':'withdrawal'})
+        graph.add_node('return_status',observed_node('return_status',return_status));graph.add_edge('return_status',END)
+        graph.add_edge(START,'guard_in'); graph.add_conditional_edges('guard_in',lambda s:s['route'],{'plan':'plan','refuse':'refuse','unsupported_command':'unsupported_command','missing_reference':'missing_reference','withdrawal':'withdrawal','return_status':'return_status'})
         graph.add_edge('plan','dispatch')
         graph.add_conditional_edges('dispatch',lambda s:s['route'],{a:a for a in ['order_shipping','policy_product','escalation','compose']})
         graph.add_edge('compose',END); graph.add_edge('refuse',END)

@@ -1,0 +1,9 @@
+{
+  "version": "iteration-review-v2",
+  "authorization": "User requested an iterative fresh agent without shared conversation context to act as a human proxy.",
+  "reviewer_type": "ai_proxy",
+  "allowed_use": "Independent answer review gate for iterative blind evaluation; actual human reviews remain separate and unchanged.",
+  "requirements": ["Fresh reviewer without conversation history", "Only locked candidate answer/evidence packet", "All twenty predetermined cases", "No unresolved major or critical issues or unsupported-claim flags", "Same source, model, outputs and packet locks"],
+  "human_calibration_established": false,
+  "publication": "Unused blind cases remain local until first evaluation, then publish with results."
+}
