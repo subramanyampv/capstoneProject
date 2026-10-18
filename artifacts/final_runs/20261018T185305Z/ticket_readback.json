@@ -1,0 +1,140 @@
+{
+  "passed": true,
+  "handoffs_checked": 19,
+  "checks": [
+    {
+      "case_id": "N07",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-1e6bbcf4a1ae",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "N09",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-740fb6ce4fe9",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "N16",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-9b767e40352d",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "R05",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-d74269c73841",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "S02",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-dfada1f003da",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "S01",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-358d2c06a5ec",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "S03",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-0380cdf36140",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "S05",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-a3f4d727271f",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "S08",
+      "repeat": 0,
+      "turn": "setup-0",
+      "ticket_id": "MOCK-6c2158a3a31c",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "S09",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-3590aea7c00f",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "S09",
+      "repeat": 0,
+      "turn": "setup-0",
+      "ticket_id": "MOCK-6f51aabc539a",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "S10",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-bdf698e0627e",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "S10",
+      "repeat": 0,
+      "turn": "setup-0",
+      "ticket_id": "MOCK-bdf698e0627e",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "S11",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-0520c1676c05",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "S11",
+      "repeat": 0,
+      "turn": "setup-0",
+      "ticket_id": "MOCK-0520c1676c05",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "S15",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-9d7f70fd5c0b",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "M01",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-f1dd05f469a7",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "M05",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-959e0b03b9a5",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "M08",
+      "repeat": 0,
+      "turn": "setup-0",
+      "ticket_id": "MOCK-e7a96f79fd97",
+      "local_store_matches": true
+    }
+  ],
+  "limits": "Verified local synthetic mock ticket existence and queue/priority/triggers for all recorded final/setup handoffs. Does not prove mandatory handoffs were recognized or that a real human/store transaction occurred. Semantic false-action wording is reviewed separately."
+}

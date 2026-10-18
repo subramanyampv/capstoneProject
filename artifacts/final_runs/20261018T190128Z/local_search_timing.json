@@ -1,0 +1,173 @@
+{
+  "samples": [
+    {
+      "started_at": "2026-10-18T19:01:39.799946+00:00",
+      "queue_ms": 0.034,
+      "search_execution_ms": 371.231,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-18T19:01:43.939115+00:00",
+      "queue_ms": 0.016,
+      "search_execution_ms": 207.483,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-18T19:01:44.561514+00:00",
+      "queue_ms": 0.008,
+      "search_execution_ms": 253.175,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-18T19:01:44.806147+00:00",
+      "queue_ms": 8.64,
+      "search_execution_ms": 126.371,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-18T19:02:01.502238+00:00",
+      "queue_ms": 0.01,
+      "search_execution_ms": 417.244,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-18T19:02:01.812051+00:00",
+      "queue_ms": 107.555,
+      "search_execution_ms": 113.508,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-18T19:02:02.786277+00:00",
+      "queue_ms": 0.007,
+      "search_execution_ms": 190.904,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-18T19:02:21.668831+00:00",
+      "queue_ms": 0.008,
+      "search_execution_ms": 487.201,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-18T19:02:22.684366+00:00",
+      "queue_ms": 0.011,
+      "search_execution_ms": 128.948,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-18T19:02:23.219294+00:00",
+      "queue_ms": 0.004,
+      "search_execution_ms": 104.036,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-18T19:02:42.502758+00:00",
+      "queue_ms": 0.004,
+      "search_execution_ms": 403.658,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-18T19:02:42.753703+00:00",
+      "queue_ms": 152.933,
+      "search_execution_ms": 108.761,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-18T19:02:45.962867+00:00",
+      "queue_ms": 0.01,
+      "search_execution_ms": 104.386,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-18T19:03:04.644348+00:00",
+      "queue_ms": 0.033,
+      "search_execution_ms": 280.308,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-18T19:03:04.692668+00:00",
+      "queue_ms": 232.088,
+      "search_execution_ms": 108.969,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-18T19:03:05.923401+00:00",
+      "queue_ms": 0.008,
+      "search_execution_ms": 104.252,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-18T19:03:23.183539+00:00",
+      "queue_ms": 0.008,
+      "search_execution_ms": 371.677,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-18T19:03:24.735979+00:00",
+      "queue_ms": 0.012,
+      "search_execution_ms": 122.245,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-18T19:03:24.738493+00:00",
+      "queue_ms": 119.873,
+      "search_execution_ms": 124.099,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-18T19:03:46.920163+00:00",
+      "queue_ms": 0.007,
+      "search_execution_ms": 388.33,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-18T19:03:49.570830+00:00",
+      "queue_ms": 0.013,
+      "search_execution_ms": 145.205,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-18T19:03:49.661534+00:00",
+      "queue_ms": 54.616,
+      "search_execution_ms": 123.932,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-18T19:04:04.088852+00:00",
+      "queue_ms": 0.022,
+      "search_execution_ms": 325.218,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-18T19:04:04.245800+00:00",
+      "queue_ms": 168.479,
+      "search_execution_ms": 124.197,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-18T19:04:06.838596+00:00",
+      "queue_ms": 0.009,
+      "search_execution_ms": 125.914,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-18T19:04:44.839179+00:00",
+      "queue_ms": 0.012,
+      "search_execution_ms": 335.251,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-18T19:04:46.415286+00:00",
+      "queue_ms": 0.008,
+      "search_execution_ms": 99.238,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-18T19:04:49.490798+00:00",
+      "queue_ms": 0.013,
+      "search_execution_ms": 116.594,
+      "status": "ok"
+    }
+  ],
+  "limits": "Evaluation shared-model lock wait and elapsed search execution, including initial warmup. No query text, arguments, credentials or customer references. Execution includes embedding/index work; not isolated embedding profiling or proof of a queue root cause."
+}

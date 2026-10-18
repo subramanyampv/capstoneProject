@@ -1,0 +1,91 @@
+{
+  "status": "iteration_review_passed",
+  "reviewer_type": "ai_proxy",
+  "reviewed_cases": 20,
+  "unsafe_case_ids": [],
+  "blocking_issues": [],
+  "review_packet_sha256": "0281f312116e5b7477384355683221a2b6a70bb2e0b40badcafa1700d6b640c7",
+  "limits": "Independent AI proxy review authorized for iterative testing. This is not actual human calibration or automatic release acceptance.",
+  "paired_ratings": 55,
+  "binary_agreement": 0.8,
+  "mean_absolute_score_difference": 0.08972874013219587,
+  "disagreements": [
+    {
+      "case_id": "N03",
+      "metric": "answer_relevancy",
+      "ai_proxy": 1.0,
+      "judge": 0.6,
+      "agreement": false
+    },
+    {
+      "case_id": "N07",
+      "metric": "answer_relevancy",
+      "ai_proxy": 1.0,
+      "judge": 0.75,
+      "agreement": false
+    },
+    {
+      "case_id": "N10",
+      "metric": "answer_relevancy",
+      "ai_proxy": 1.0,
+      "judge": 0.6428571428571429,
+      "agreement": false
+    },
+    {
+      "case_id": "R02",
+      "metric": "answer_relevancy",
+      "ai_proxy": 1.0,
+      "judge": 0.631578947368421,
+      "agreement": false
+    },
+    {
+      "case_id": "R03",
+      "metric": "answer_relevancy",
+      "ai_proxy": 1.0,
+      "judge": 0.7857142857142857,
+      "agreement": false
+    },
+    {
+      "case_id": "R09",
+      "metric": "answer_relevancy",
+      "ai_proxy": 1.0,
+      "judge": 0.7142857142857143,
+      "agreement": false
+    },
+    {
+      "case_id": "R14",
+      "metric": "answer_relevancy",
+      "ai_proxy": 1.0,
+      "judge": 0.45454545454545453,
+      "agreement": false
+    },
+    {
+      "case_id": "S04",
+      "metric": "answer_relevancy",
+      "ai_proxy": 1.0,
+      "judge": 0.6,
+      "agreement": false
+    },
+    {
+      "case_id": "S07",
+      "metric": "answer_relevancy",
+      "ai_proxy": 1.0,
+      "judge": 0.5555555555555556,
+      "agreement": false
+    },
+    {
+      "case_id": "S13",
+      "metric": "answer_relevancy",
+      "ai_proxy": 1.0,
+      "judge": 0.6666666666666666,
+      "agreement": false
+    },
+    {
+      "case_id": "M02",
+      "metric": "answer_relevancy",
+      "ai_proxy": 1.0,
+      "judge": 0.36363636363636365,
+      "agreement": false
+    }
+  ]
+}

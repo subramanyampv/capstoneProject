@@ -1,0 +1,253 @@
+{
+  "runs": 65,
+  "hard_gate_case_passes": 65,
+  "all_case_check_passes": 65,
+  "scope_exclusions": 12,
+  "case_failures": [],
+  "checks": {
+    "code_contract": {
+      "passed": 65,
+      "total": 65,
+      "hard_gate": true
+    },
+    "final_gate_replay": {
+      "passed": 65,
+      "total": 65,
+      "hard_gate": true
+    },
+    "independent_request_coverage": {
+      "passed": 64,
+      "total": 64,
+      "hard_gate": true
+    },
+    "obligation_evidence_for_answer": {
+      "passed": 64,
+      "total": 64,
+      "hard_gate": true
+    },
+    "authoritative_policy_citations": {
+      "passed": 64,
+      "total": 64,
+      "hard_gate": true
+    },
+    "expected_terminal_outcome": {
+      "passed": 65,
+      "total": 65,
+      "hard_gate": false
+    },
+    "required_tool:lookup_order": {
+      "passed": 4,
+      "total": 4,
+      "hard_gate": false
+    },
+    "required_tool:get_tracking_events": {
+      "passed": 6,
+      "total": 6,
+      "hard_gate": false
+    },
+    "required_tool:check_return_eligibility": {
+      "passed": 9,
+      "total": 9,
+      "hard_gate": false
+    },
+    "required_tool:search_policy": {
+      "passed": 20,
+      "total": 20,
+      "hard_gate": false
+    },
+    "required_citation:return_policy": {
+      "passed": 12,
+      "total": 12,
+      "hard_gate": false
+    },
+    "eligibility:WITHIN_WINDOW": {
+      "passed": 2,
+      "total": 2,
+      "hard_gate": false
+    },
+    "required_tool:get_product_details": {
+      "passed": 5,
+      "total": 5,
+      "hard_gate": false
+    },
+    "required_citation:shipping_policy": {
+      "passed": 4,
+      "total": 4,
+      "hard_gate": false
+    },
+    "mandatory_trigger:T6": {
+      "passed": 2,
+      "total": 2,
+      "hard_gate": true
+    },
+    "required_citation:cancellation_policy": {
+      "passed": 2,
+      "total": 2,
+      "hard_gate": false
+    },
+    "eligibility:CANCELLATION_PRE_DISPATCH": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    },
+    "required_tool_any:lookup_order,get_product_details": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    },
+    "required_citation:warranty_policy": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    },
+    "eligibility:WINDOW_EXCEEDED": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    },
+    "mandatory_trigger:T3": {
+      "passed": 2,
+      "total": 2,
+      "hard_gate": true
+    },
+    "required_tool_any:lookup_order,get_tracking_events": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    },
+    "required_tool:create_escalation": {
+      "passed": 6,
+      "total": 6,
+      "hard_gate": false
+    },
+    "required_citation:faq": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    },
+    "eligibility:CATEGORY_EXCLUDED": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    },
+    "required_citation:refund_policy": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    },
+    "mandatory_refusal:R1": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": true
+    },
+    "mandatory_trigger:T1": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": true
+    },
+    "mandatory_refusal:R2": {
+      "passed": 3,
+      "total": 3,
+      "hard_gate": true
+    },
+    "mandatory_trigger:T2": {
+      "passed": 3,
+      "total": 3,
+      "hard_gate": true
+    },
+    "eligibility:REFUND_ABOVE_THRESHOLD": {
+      "passed": 2,
+      "total": 2,
+      "hard_gate": false
+    },
+    "mandatory_refusal:R3": {
+      "passed": 3,
+      "total": 3,
+      "hard_gate": true
+    },
+    "feedback_category_recorded": {
+      "passed": 2,
+      "total": 2,
+      "hard_gate": false
+    },
+    "no_invalid_order_read": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": true
+    },
+    "mandatory_trigger:T5": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": true
+    },
+    "injected_or_negative_error:TIMEOUT": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    },
+    "style:verbosity": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    },
+    "style:version": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    }
+  },
+  "operations": {
+    "paths": {
+      "ANSWERED": {
+        "requests": 30,
+        "latency_ms_p50": 10545.855,
+        "latency_ms_p95": 15912.701,
+        "tokens": 189684,
+        "repairs": 0,
+        "tool_errors": 0
+      },
+      "ESCALATED": {
+        "requests": 14,
+        "latency_ms_p50": 20756.47,
+        "latency_ms_p95": 26110.423,
+        "tokens": 212172,
+        "repairs": 0,
+        "tool_errors": 4
+      },
+      "CLARIFICATION_REQUESTED": {
+        "requests": 13,
+        "latency_ms_p50": 9152.197,
+        "latency_ms_p95": 11505.901,
+        "tokens": 47239,
+        "repairs": 0,
+        "tool_errors": 2
+      },
+      "REFUSED": {
+        "requests": 6,
+        "latency_ms_p50": 9.184,
+        "latency_ms_p95": 8508.187,
+        "tokens": 7087,
+        "repairs": 0,
+        "tool_errors": 0
+      },
+      "INSUFFICIENT_EVIDENCE": {
+        "requests": 1,
+        "latency_ms_p50": 13.149,
+        "latency_ms_p95": 13.149,
+        "tokens": 0,
+        "repairs": 0,
+        "tool_errors": 0
+      },
+      "COMMAND_HANDLED": {
+        "requests": 1,
+        "latency_ms_p50": 0.0,
+        "latency_ms_p95": 0.0,
+        "tokens": 0,
+        "repairs": 0,
+        "tool_errors": 0
+      }
+    },
+    "limits": "Observed samples by terminal outcome, interpolated percentiles; not a production latency SLA."
+  },
+  "limits": "Exact original inputs plus declared setup. Original deferred action-flow expectations are excluded, not passed. Contract/syntactic scores do not establish semantic faithfulness, human calibration or final acceptance."
+}
