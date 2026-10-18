@@ -6,13 +6,11 @@ The [detailed task checklist](task_list.md) translates this summary into tracked
 
 ## Current checkpoint — 2026-10-17
 
-Application source `ecb208e` is pushed to the existing repository. The locked release run [20261017T132752Z](../artifacts/final_runs/20261017T132752Z/report.md) passes **65/65 hard gates and 65/65 in-scope case checks**. The matching-build [15 × 3 safety run](../artifacts/final_runs/20261017T133645Z/consistency.json) passes **45/45** with **15/15 identical terminal outcomes**. The full offline suite passes 242 tests, including both holdout-review/hash-gate tests. Earlier failed and interrupted runs are preserved as development history.
+The first human-reviewed candidate (`ecb208e`) passed 65 frozen cases and 45 safety repeats but **failed its first untouched holdout: 8/10 hard/all checks**. H02 missed mandatory refund T2; H07 missed privacy R2 and took an unnecessary handoff. No refund execution or private tracking/address disclosure was observed. Those safe boundaries do not waive the failed hard gates. Actual calibration of that candidate is complete: 20 cases,56 applicable pairs,82.14% threshold agreement,no human unsafe flags. All original results are preserved.
 
-All 65 outputs have same-model DeepEval judgments: faithfulness mean .9932 (51 measured, 13 skipped, one error), relevancy .7647 (32/65 above threshold), grounded support .9446 (57/65 above threshold). These are indicative scores, not universal semantic passes. Baseline actual human calibration covers only the original answers: 20 cases, 57 paired ratings, 84.21% agreement. **Actual review of the changed release answers is pending**, then the untouched ten-case holdout can run on the unchanged build. The recorder blocks unsealing when review, judged-output hash, or build/model identity is invalid.
+New repair commit **`cc0c3a8`** adds reimbursement intent beyond the literal word refund and R2 handling for explicit third-party bare order references. Broader positive/negative regressions and mixed injury/privacy safety tests pass. The full offline suite now passes **248 tests**. New frozen run `20261018T012141Z` and unchanged-rubric all-case DeepEval are in progress; do not infer a complete run from partial output. Matching-build repeats and actual review of changed candidate outputs precede any new holdout.
 
-Current supporting evidence includes 19 full-run and 24 repeat-run local ticket read-backs; hosted answer/safety/withdrawal trace read-backs; all-nine-check memory/style/reset replay (55 → 40 words, identical citations, style rollback); paired current-build ten-case memory on/off; conflict and unsupported-number probes; five protected demo paths and per-path latency/error measurements. See [release evidence](phase9_evaluation.md). Pattern masking is not universal name detection: unmatched names may remain in bounded process memory until reset/expiry; conversation text is excluded from operational logs/hosted spans.
-
-**Still open:** actual release-output human calibration, untouched holdout, final acceptance decision and accepted-source package refresh. No author/student name or new repository is required. Knowledge graphs and external commerce/weather tools remain deferred.
+The user authorized a separate agent to independently author/freeze ten replacement cases while repair proceeds. Their questions are still unseen by the implementation agent. The first holdout will not be retuned or rerun for acceptance. Production persistence, parallel execution, ONNX/normalization and OTel are [deferred discussion items](production_review.md); user priority is existing defects first. No author/student name or new repository is required. GitHub publishing is currently held because automatic approval review rejected publishing the fresh blind set; publication timing is awaiting the user's choice.
 
 ## 1. Current scope and architecture
 
@@ -107,9 +105,9 @@ A clean temporary venv with copied source installed matching dependencies, passe
 
 ### Phase 9 — final evaluation and submission in progress
 
-The locked release frozen run passes all 65 hard and in-scope case checks; the matching-build repeated subset passes all 45 with 100% exact terminal consistency. All-65 DeepEval judgments, capability ladder, controlled RCA probes, memory/style/reset, per-path operations and five protected demos are complete within their disclosed scopes. See [Phase 9 evaluation](phase9_evaluation.md) for exact artifacts, score limitations and preserved development failures.
+The first candidate frozen run passes all 65 hard and in-scope case checks; its matching-build repeated subset passes all 45 with 100% exact terminal consistency, but the subsequent first holdout passes only 8/10 and blocks acceptance. All-65 DeepEval judgments, capability ladder, controlled RCA probes, memory/style/reset, per-path operations and five protected demos are complete within their disclosed scopes. See [Phase 9 evaluation](phase9_evaluation.md) for exact artifacts, score limitations and preserved development failures.
 
-Actual changed-output human review and calibration are required before the untouched ten-case holdout. After that, report all holdout results without tuning, decide acceptance and refresh the accepted history-free package. The existing repository remains in use.
+Actual first-candidate human review/calibration and first holdout are complete; its two failures require a new candidate and new independent blind holdout. Preserve the failed result, review changed answers and refresh packaging only with accurate acceptance status. The existing repository remains in use.
 
 The [Memory Pad](memory_pad.md) adds an ecommerce feature comparison with Gorgias and nineteen stable core/extension idea IDs. The [market comparison](market_comparison.md) contrasts implemented/planned capabilities with Intercom Fin, Zendesk AI agents and Salesforce Agentforce using official documentation. No vendor trial or scope expansion was performed.
 
@@ -117,7 +115,7 @@ The [Memory Pad](memory_pad.md) adds an ecommerce feature comparison with Gorgia
 
 LangSmith credentials were supplied locally and hosted verification passed. No additional credentials are needed for the next evaluation work; later human calibration of final outputs remains required. Author/student identity and a new repository name are not requested.
 
-A separate judge endpoint/model is optional. The release [twenty-case human review packet](../artifacts/final_runs/20261017T132752Z/human_review.md) is ready; fill its adjacent JSON template. Earlier baseline ratings cannot be reused for changed outputs.
+A separate judge endpoint/model is optional. The first-candidate twenty-case review was supplied and calibrated. New materially changed outputs require actual review; earlier ratings are not automatically transferred.
 
 ## 6. Current acceptance position
 

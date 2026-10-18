@@ -19,7 +19,7 @@
 | [Framework integration](framework_integration.md) | Existing adapters, evaluation and tracing setup |
 | [Safety and privacy](safety_and_privacy.md) | Current controls and planned v3 safeguards |
 | [Demo script](demo_script.md) | Five protected paths linked to measured release evidence |
-| [Evaluation report](evaluation_report.md) | Release metrics and limits; human/holdout acceptance pending |
+| [Evaluation report](evaluation_report.md) | First holdout failure and new-candidate evidence/limits; acceptance pending |
 | [Engineering justification](engineering_justification.md) | Decisions and deferred scope |
 | [Plan review](plan_review.md) | Reconciliation decisions and issues to resolve |
 | [Archive](archive/v1-v2/) | Superseded designs and earlier assumptions, retained for history |
@@ -33,3 +33,5 @@ Existing dated run evidence is preserved. Historical reports describe the code a
 - [Phase 9 evaluation](phase9_evaluation.md): frozen baseline, versioned context review, local DeepEval judging and actual human-calibration requirements.
 
 - [Independent obligation contract](obligation_contract.md): request coverage, evidence and citation safeguards introduced by Phase 9 repairs.
+
+- [Production review](production_review.md): four deferred infrastructure/hardening suggestions; existing defects take priority.

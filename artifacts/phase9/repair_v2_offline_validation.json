@@ -1,0 +1,16 @@
+{
+  "application_commit": "cc0c3a8",
+  "full_suite_passed": 248,
+  "full_suite_failed": 0,
+  "elapsed_seconds": 19.78,
+  "command": "env DEEPEVAL_DISABLE_DOTENV=1 DEEPEVAL_TELEMETRY_OPT_OUT=YES .venv/bin/python -m pytest -q --tb=short",
+  "coverage": [
+    "reimbursement paraphrases and non-refund item returns",
+    "planner-omitted monetary obligation produces verified refund-review handoff",
+    "explicit third-party bare references refuse before tools/model",
+    "mixed privacy/injury retains safety escalation",
+    "per-holdout-version single use",
+    "actual rating carry-forward only for identical complete displayed case packets"
+  ],
+  "limits": "Existing project .venv; offline component/integration/CLI/Streamlit tests. Not new blind-holdout acceptance or a fresh dependency install."
+}

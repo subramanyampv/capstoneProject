@@ -8,9 +8,7 @@ Authority: [Architecture revision 3.3](architecture_and_plan.md). This is the cu
 
 **Inventory:** 85 initial-product tasks — 75 done, 10 needing updates, 0 not started. 8 areas are deferred.
 
-**Immediate sequence:** review the twenty blinded release outputs, calibrate against the already recorded fixed DeepEval subset, then unseal the untouched holdout on the unchanged application build. Finally record the acceptance decision and refresh the accepted source package. Earlier failed/interrupted runs remain preserved.
-
-Current application commit `ecb208e` is pushed. Full offline suite: 242 passes, including both holdout gate tests. Frozen release: 65/65 hard and all checks. Safety repeat: 45/45 checks, 15/15 consistent outcomes. Baseline human review is complete; updated release-output review remains pending. No author/student name or new repository is required.
+**Immediate sequence:** finish the cc0c3a8 frozen/judged/repeated evaluation, review materially changed outputs, then evaluate the new independently authored blind holdout. The first holdout failed8/10 and remains failed evidence; no hard gate is waived. The full offline suite passes248 tests. Production extensions remain deferred; GitHub publication timing for the new blind set awaits user input after automatic review blocked pushing it.
 
 ## Scope, architecture and documentation
 
@@ -39,7 +37,7 @@ Current application commit `ecb208e` is pushed. Full offline suite: 242 passes, 
 | B08 | DONE | P1 | Run and preserve A/B/C comparison | 195 finally schema-valid outputs, one C repair, measured latency/token totals; original comparison predates framework migration. | B07 |
 | B09 | DONE | P0 | Record deterministic DeepEval failures | 195 contract passes; seven escalation classification misses: A=3, B=2, C=2. | B08 |
 | B10 | DONE | P1 | Select development default C | Selection is documented under v3 and reflected in CLI; final safety is not accepted. | B09 |
-| B11 | UPDATE | P0 | Resolve known escalation and coverage defects in final build | R05/S01/S15 need deterministic triggers and verified handoff; M02 needs feedback intent coverage. Do not erase original failures. | G04,G08,G09 |
+| B11 | UPDATE | P0 | Resolve known escalation and coverage defects in final build | Original frozen escalation/coverage defects pass first-candidate frozen/repeats, but untouched holdout exposed reimbursement-intent and third-party privacy-classification misses. New cc0c3a8 repairs pass regressions; independent final validation remains open. | G04,G08,G09 |
 
 ## Phase 4: corpus, embeddings and retrieval
 
@@ -129,16 +127,16 @@ Current application commit `ecb208e` is pushed. Full offline suite: 242 passes, 
 
 | ID | Status | Priority | Task | Evidence / completion criterion | Dependencies |
 |---|---|---|---|---|---|
-| E01 | UPDATE | P0 | Build final-system evaluation harness | Versioned 65-case identity/setup contexts, exact-input recorder, per-case tool/citation/outcome checks, separate DeepEval semantic judging and human-calibration tooling implemented. Initial baseline is complete; context corrections are separately versioned. Holdout context review remains deferred until the release is locked. | G10 |
-| E02 | UPDATE | P0 | Evaluate frozen cases and untouched holdout | Frozen release 20261017T132752Z passes 65/65 hard and all in-scope case checks. Untouched ten-case holdout remains pending after actual changed-output human calibration; never tune against it. | E01,R06 |
-| E03 | UPDATE | P1 | Measure final judged quality and calibrate humans | All 65 release outputs judged with fixed same-model rubrics; fixed twenty-case subset retained unchanged. Baseline actual calibration: 20 cases/57 pairs, 84.21% agreement. Actual release-output ratings remain pending; scores/labels cannot substitute for human review. | E02 |
+| E01 | UPDATE | P0 | Build final-system evaluation harness | Versioned frozen and holdout contexts, exact-input recorder, deterministic gates, local DeepEval and actual human calibration implemented. Per-dataset single-use guard allows a separately frozen new holdout without rerunning the failed old set. | G10 |
+| E02 | UPDATE | P0 | Evaluate frozen cases and untouched holdout | First candidate65/65 frozen; first untouched holdout8/10 with H02/H07 hard failures. New cc0c3a8 full frozen run in progress; independently authored ten-case replacement remains blind. | E01,R06 |
+| E03 | UPDATE | P1 | Measure final judged quality and calibrate humans | First candidate all65 judged; actual supplied review20 cases/56 pairs,82.14% agreement,no unsafe flags. New candidate same-rubric judging in progress; changed outputs need actual review. | E02 |
 | E04 | DONE | P0 | Measure repeated-run consistency and worst-case safety | Matching-build run 20261017T133645Z passes 45/45 hard and all checks; 15/15 predetermined cases have identical outcomes across three repeats (100%). Original below-target 86.67% run preserved; no production reliability extrapolation. | E02,G09 |
 | E05 | DONE | P0 | Run full canary and safe-failure scans | Release/repeat key and known-canary scans pass, local handoffs read back (19/24), three actual hosted trace trees pass, forced combined failure discloses no confirmed ticket. Initial name-retention finding and scoped follow-up preserved; masking is not universal PII detection. | O04,O05,T09 |
 | E06 | DONE | P1 | Run capability ladder and integration comparisons | Ten-case historical capability ladder plus current-build paired memory on/off recorded. Only R01 terminal outcome changes in current pair. Historical setup/confounding limits explicit; no causal end-to-end accuracy uplift claimed. | E02,M05,A04 |
-| E07 | UPDATE | P0 | Prove RCA before/after fixes | Real-retrieval T3 ablation 0/3 versus 3/3 handoffs; actual final R01 accepted and unsupported 500-day mutation rejected three times. Before/after common checks: 40 to 65 all-case, 57 to 65 hard, zero regressions. Repeated development safety proof complete; untouched holdout still pending. | E02,E04,G09 |
+| E07 | UPDATE | P0 | Prove RCA before/after fixes | Controlled T3 and numeric-policy probes preserved. First holdout RCA identifies incomplete monetary-request recognition and bare third-party reference routing; broader repairs pass tests but require independent new-candidate validation. | E02,E04,G09 |
 | E08 | DONE | P1 | Report final latency, token and error measurements | release_operations.json/.md reports explicit path classification, nearest-rank p50/p95 versus all four targets (met), 448777 provider-reported final-turn tokens, six tool error codes and one step-limit code. Setup/judging/concurrency and unavailable currency costs disclosed; no production SLA. | O06,E02 |
 | E09 | UPDATE | P1 | Complete final evaluation/governance report | Populate all metrics or explain absence; include human calibration, safety review, limitations, failed cases, RCA and roadmap. Current register is preliminary. | E03,E04,E05,E06,E07,E08 |
-| E10 | UPDATE | P0 | Run final acceptance and demo gate | All protected demos and hard safety gates evidenced; review quality misses explicitly. Prompt choice and component tests alone do not satisfy this gate. | E09,G10,M05,A04,O09 |
+| E10 | UPDATE | P0 | Run final acceptance and demo gate | First candidate acceptance explicitly rejected after two untouched-holdout hard failures. New repair and independent validation must pass; safe withholding/fallback cannot waive missed mandatory classification/handoff. | E09,G10,M05,A04,O09 |
 | E11 | DONE | P0 | Prepare first scanned history-free snapshot | Local source ZIP excludes .git, credentials, model weights and vector DB. Existing repository retained; snapshot requires refresh after changes. | D05 |
 | E12 | UPDATE | P0 | Refresh and validate final submission package | Source, final docs/tests/evidence, setup/rebuild commands and refreshed scanned archive; no new repository/name requirement. | E10,D07,D08 |
 

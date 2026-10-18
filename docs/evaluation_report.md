@@ -1,5 +1,15 @@
 # Evaluation report — current evidence register
 
+## Current acceptance position
+
+The first human-reviewed candidate (`ecb208e`) passed 65 frozen cases and 45 safety repeats but **failed its first untouched holdout: 8/10 hard/all checks**. H02 missed mandatory refund T2; H07 missed privacy R2 and took an unnecessary handoff. No refund execution or private tracking/address disclosure was observed. Those safe boundaries do not waive the failed hard gates. Actual calibration of that candidate is complete: 20 cases,56 applicable pairs,82.14% threshold agreement,no human unsafe flags. All original results are preserved.
+
+New repair commit **`cc0c3a8`** adds reimbursement intent beyond the literal word refund and R2 handling for explicit third-party bare order references. Broader positive/negative regressions and mixed injury/privacy safety tests pass. The full offline suite now passes **248 tests**. New frozen run `20261018T012141Z` and unchanged-rubric all-case DeepEval are in progress; do not infer a complete run from partial output. Matching-build repeats and actual review of changed candidate outputs precede any new holdout.
+
+The user authorized a separate agent to independently author/freeze ten replacement cases while repair proceeds. Their questions are still unseen by the implementation agent. The first holdout will not be retuned or rerun for acceptance. Production persistence, parallel execution, ONNX/normalization and OTel are [deferred discussion items](production_review.md); user priority is existing defects first. No author/student name or new repository is required. GitHub publishing is currently held because automatic approval review rejected publishing the fresh blind set; publication timing is awaiting the user's choice.
+
+## Preserved first-candidate evidence
+
 Authority: [Architecture and Plan v3](architecture_and_plan.md), section 14. Release frozen/repeated evaluation is complete; actual changed-output human calibration, untouched holdout and acceptance remain pending; targets are in [acceptance criteria](acceptance_criteria.md). No safety gate is waived by a development prompt selection or a judge score.
 
 | Evidence | Measured result | Limits |
