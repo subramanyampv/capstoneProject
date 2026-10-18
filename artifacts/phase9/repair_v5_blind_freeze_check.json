@@ -1,0 +1,10 @@
+{
+  "checks": {
+    "data/holdout_v4_blind.json": true,
+    "evaluation/phase9/holdout_contexts_v4_blind.json": true,
+    "evaluation/phase9/holdout_v4_blind_freeze.json": true
+  },
+  "independent_commit": "82522a9",
+  "semantic_content_inspected_by_implementation_agent": false,
+  "holdout_evaluated": false
+}

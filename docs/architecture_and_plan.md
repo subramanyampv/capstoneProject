@@ -1,14 +1,17 @@
 # Multi-Agent E-commerce Support Resolution Agent
+
+> Current candidate and gate status: [Current status](current_status.md). Earlier candidate/run measurements below are historical and do not transfer to the current build.
+
 ## Final Architecture Design and Project Plan
 
 | Field | Value |
 |---|---|
 | Document | Final Architecture Design & Project Plan |
 | Version | 3.3 — explicit unknown/reference outcomes and decision-specific citations; retains the approved v3 scope |
-| Date | Updated 2026-10-17 (America/New_York); original revision 2026-10-13 |
+| Date | Updated 2026-10-18 (America/New_York); original revision 2026-10-13 |
 | Industry scenario | Scenario 3: Customer Support, AI Support Resolution Agent |
 | Framework track | Track A, framework-based: LangChain (with LangGraph, LangChain's orchestration library) |
-| Submission target | 2026-10-18 |
+| Delivery priority | Correctness and evaluation first; submission deadline removed by user |
 
 **Status labels used throughout**
 
@@ -1491,3 +1494,15 @@ The twenty-case baseline human review is supplied: 57 paired ratings, 84.21% thr
 Repair 60bc5d5 reconciles projection-memory hints with the current immutable contract before routing: public policy questions can proceed without a private order, while individual eligibility still needs a valid reference. Explicit FAQ comparisons preserve both source obligations; verified retrieval establishes conflicts. Delivery-certainty language requires shipping-policy evidence in addition to current tracking where requested. Composition failure retains only canonically verified references to policies actually retrieved this turn and continues to disclose unverified answers. [Contract details and limits](obligation_contract.md). These are core correctness repairs; durable memory, parallel dispatch, ONNX and OpenTelemetry remain deferred. The complete offline suite passes 257 tests; new-candidate live acceptance remains open.
 
 The five-second local policy-search deadline caused a recorded N16 hard miss in development run 20261018T022338Z (64/65 hard and all checks). The CPU read deadline is now ten seconds; the eight-call/handoff budget and all late-result rejection/failure-disclosure controls are retained. This adjustment needs a fresh unchanged-source run and does not erase the earlier failure or establish a latency SLA. No overlapping search span was observed in that failed interval; queue contention is unproven.
+
+
+### Product-related illness safety correction — 1cc0068
+
+The used v3 holdout exposed a T1 recognition gap: a reported food-related illness received a normal general T5 ticket. The product-illness rule family now covers reported post-consumption/use illness, causative illness, allergic reactions and explicit food/product-safety reports, with generic/negative controls. Medical-advice refusal can coexist with T1; high-priority safety routing cannot be overridden by grocery return exclusions, timing or model failure. Twenty-two new regressions bring the offline suite to 283 passes, including actual stored safety-ticket verification and failed-write disclosure. New frozen/repeated/judged/human and independent v4 validation remain required. [Submission critical path](submission_checklist.md).
+
+
+### Correctness review amendment — 2026-10-18
+
+The approved product scope remains information and verified local mock handoffs. Return-initiation status is unavailable in connected tools and is now a distinct obligation, rather than return eligibility. The assistant discloses no local execution and unknown external status; it does not infer an initiated return from eligibility. Final composition explicitly qualifies stale tracking and cannot infer a warranty start event from duration alone. Present-tense delivery questions retain shipping-policy evidence requirements. These are bounded correctness repairs, not new transaction capabilities.
+
+The user authorized context-free independent AI reviewers as iteration proxies. Their ratings, safety flags and issues remain explicitly AI-authored, separate from actual human calibration. Review artifacts bind to the exact answer/evidence packet, outputs and candidate build. Unresolved major/critical issues or unsupported claims block first evaluation of the independently authored blind holdout. Unused blind data remains local until its first evaluation; the test set and results may then be published together. Earlier human reviews and failed holdout assessments remain historical evidence. Current candidate `2e2e60c` passes 335 offline tests; live evaluation is in progress and final acceptance is not claimed.

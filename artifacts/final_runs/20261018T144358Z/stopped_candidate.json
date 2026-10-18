@@ -1,0 +1,6 @@
+{
+  "status": "stopped_before_completion",
+  "reason": "Independent review flagged unsupported no-further-shipping-action claim in paired full candidate; no holdout opened. Preserve completed repeats without claiming a complete consistency suite.",
+  "completed": 12,
+  "hard_case_passes": 12
+}

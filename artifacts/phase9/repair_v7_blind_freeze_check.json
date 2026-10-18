@@ -1,0 +1,12 @@
+{
+  "application_commit": "ce64d4e",
+  "frozen_run": "20261018T145739Z",
+  "checks": {
+    "data/holdout_v4_blind.json": true,
+    "evaluation/phase9/holdout_contexts_v4_blind.json": true,
+    "evaluation/phase9/holdout_v4_blind_freeze.json": true
+  },
+  "semantic_content_inspected_by_implementation_agent": false,
+  "holdout_evaluated": false,
+  "source_matches_current_frozen_run": true
+}

@@ -1,4 +1,7 @@
-# Detailed project task checklist — updated 2026-10-17
+# Detailed project task checklist — updated 2026-10-18
+
+> Current candidate and gate status: [Current status](current_status.md). Earlier candidate/run measurements below are historical and do not transfer to the current build.
+
 
 Authority: [Architecture revision 3.3](architecture_and_plan.md). This is the current work ledger, supported by the [progress report](project_progress.md) and recorded artifacts. Update a task only after its completion criterion has evidence.
 
@@ -6,9 +9,9 @@ Authority: [Architecture revision 3.3](architecture_and_plan.md). This is the cu
 
 **P0** = protects correctness, safety or a required delivery gate. **P1** = required capability or evaluation work. Dependencies are task IDs, not permission requests. Task counts do not represent a completion percentage because effort differs substantially.
 
-**Inventory:** 85 initial-product tasks — 77 done, 8 needing updates, 0 not started. 8 areas are deferred.
+**Inventory:** 85 initial-product tasks — 75 done, 10 needing updates, 0 not started. 8 areas are deferred.
 
-**Immediate sequence:** actual current review and all-65 judging are complete, but independent v3 failed 9/10 on reported product-related illness missing T1/high-priority routing. Repair that safety class, preserve the failed run, freeze/revalidate, then use independently prepared v4 after actual review. Current d57aa4a passes 261 tests, 65/65 frozen and 45/45 repeats. Production work stays deferred. Used v3 may now publish with results; unused v4 stays local.
+**Immediate sequence:** follow [Current status](current_status.md) for the exact candidate and pending gates. Complete its frozen/judged outputs, fresh AI review and safety repeats before unsealing v4. Superseded or partial runs do not establish current completion.
 
 ## Scope, architecture and documentation
 
@@ -21,7 +24,7 @@ Authority: [Architecture revision 3.3](architecture_and_plan.md). This is the cu
 | D05 | DONE | P1 | Remove identity and new-repository requirements | No author/student name or new GitHub repository is needed; continue using the existing repository. | D01 |
 | D06 | UPDATE | P1 | Keep architecture and status synchronized | Update statuses from artifacts as tools, guards, memory and evaluation land; never promote a planned path without evidence. | G10,M05,A04,E10 |
 | D07 | UPDATE | P1 | Finalize submission framing and justification | Existing concise documents need final-build results, trade-offs and limits; retain framing within the required 1–2 pages. | E10 |
-| D08 | DONE | P1 | Finalize five-demo script with actual evidence | Current repair protected-demo index links exact frozen N01/M01/S04/S13/S01, actual forced failure and nine-check current memory/style/reset replay (58 to 44 words). Earlier UI/terminal screenshots illustrate older builds; shared-runtime CLI/Streamlit tests pass. | G10,M05,A04,O06 |
+| D08 | UPDATE | P1 | Finalize five-demo script with actual evidence | Current repair protected-demo index links exact frozen N01/M01/S04/S13/S01, actual forced failure and nine-check current memory/style/reset replay (58 to 44 words). Earlier UI/terminal screenshots illustrate older builds; shared-runtime CLI/Streamlit tests pass. | G10,M05,A04,O06 |
 
 ## Phases 1–3: fixtures, baseline and LLM experiment
 
@@ -37,7 +40,7 @@ Authority: [Architecture revision 3.3](architecture_and_plan.md). This is the cu
 | B08 | DONE | P1 | Run and preserve A/B/C comparison | 195 finally schema-valid outputs, one C repair, measured latency/token totals; original comparison predates framework migration. | B07 |
 | B09 | DONE | P0 | Record deterministic DeepEval failures | 195 contract passes; seven escalation classification misses: A=3, B=2, C=2. | B08 |
 | B10 | DONE | P1 | Select development default C | Selection is documented under v3 and reflected in CLI; final safety is not accepted. | B09 |
-| B11 | UPDATE | P0 | Resolve known escalation and coverage defects in final build | Both used holdouts expose generalization defects. Repair d57aa4a covers public-policy routing, shipping evidence and fallback citations with 261 passing offline tests; fresh live validation and independent v3 remain. | G04,G08,G09 |
+| B11 | UPDATE | P0 | Resolve escalation and coverage defects in final build | Used holdout failures and subsequent independent AI findings are preserved. Current correctness repairs and exact pending regression/review gates are tracked in [Current status](current_status.md); offline passes alone do not establish final generalization. | G04,G08,G09 |
 
 ## Phase 4: corpus, embeddings and retrieval
 
@@ -129,7 +132,7 @@ Authority: [Architecture revision 3.3](architecture_and_plan.md). This is the cu
 |---|---|---|---|---|---|
 | E01 | DONE | P0 | Build final-system evaluation harness | Frozen/holdout contexts, exact-input recorder, deterministic gates, local DeepEval, actual calibration and per-dataset single-use gates implemented/tested. Fresh independent holdout authoring is separated from implementation; actual review gate remains enforced. | G10 |
 | E02 | UPDATE | P0 | Evaluate frozen cases and untouched holdout | d57aa4a passed 65/65 frozen, but independent v3 failed 9/10 on product-illness T1. All three used holdouts remain failed evidence. V4 stays sealed for the next locked/reviewed candidate. | E01,R06 |
-| E03 | DONE | P1 | Measure current judged quality and calibrate humans | All 65 fixed-rubric judgments complete; FA .9867 (53 measured,12 skipped), AR .7583, GS .9585. Actual 20-case review:56 pairs/76.79% agreement,13 disagreements,no unsafe flags. Scores/limitations retained; changed future outputs need fresh ratings. | E02 |
+| E03 | UPDATE | P1 | Measure candidate judged quality and independent review | Prior actual human calibration and judgments remain historical evidence. Current repaired outputs require fresh all-65 judging and context-free AI proxy review under the user-authorized iteration policy; AI review never becomes human calibration. | E02 |
 | E04 | DONE | P0 | Measure repeated-run consistency and worst-case safety | Current d57aa4a run 20261018T023922Z passes 45/45 hard/all checks, 15/15 identical outcomes across three repeats (100%), same source/model as full 65. Historical failures retained; no reliability extrapolation. | E02,G09 |
 | E05 | DONE | P0 | Run full canary and safe-failure scans | Current full/repeat scans pass and actual mock handoffs read back 21/24. Hosted answer/privacy/withdrawal trees pass. Current combined-failure proof preserves T1/R3/intents and discloses no confirmed ticket, zero model calls. Universal PII limits remain. | O04,O05,T09 |
 | E06 | DONE | P1 | Run capability ladder and integration comparisons | Ten-case historical capability ladder plus current-build paired memory on/off recorded. Only R01 terminal outcome changes in current pair. Historical setup/confounding limits explicit; no causal end-to-end accuracy uplift claimed. | E02,M05,A04 |

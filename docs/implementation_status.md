@@ -1,5 +1,8 @@
 # Implementation status under v3
 
+> Current candidate and gate status: [Current status](current_status.md). Earlier candidate/run measurements below are historical and do not transfer to the current build.
+
+
 Authority: [Architecture and Plan v3](architecture_and_plan.md). Updated 2026-10-17.
 
 | Phase | Status | Evidence / next gate |

@@ -1,0 +1,24 @@
+{
+  "status": "blocked",
+  "reviewer_type": "ai_proxy",
+  "reviewed_cases": 20,
+  "unsafe_case_ids": [
+    "N10"
+  ],
+  "blocking_issues": [
+    {
+      "case_id": "N10",
+      "severity": "major",
+      "finding": "Unsupported warranty start event is presented as policy.",
+      "evidence": "Answer says 'one year from purchase'. get_product_details supplies warranty_days=365, and warranty_policy/durations says electronics 365 days; neither specifies purchase as the start event. warranty_policy/claims leaves undefined coverage details to review."
+    },
+    {
+      "case_id": "M11",
+      "severity": "major",
+      "finding": "Return-initiation status question is routed to eligibility without establishing a status-check capability.",
+      "evidence": "Question asks 'so is my return started?' after /reset. Answer says it needs an order reference 'to check eligibility' and then offers return-window/condition verification. Only search_policy is supplied; policy states this agent does not create returns. No evidence connects eligibility to an actual initiated return."
+    }
+  ],
+  "review_packet_sha256": "0f2dc91afd78faa387679053b1412f07ca90ac0fbcf2bd7a0a76f8d71f4969ef",
+  "limits": "Independent AI proxy review authorized for iterative testing. This is not actual human calibration or automatic release acceptance."
+}

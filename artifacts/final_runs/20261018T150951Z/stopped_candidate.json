@@ -1,0 +1,8 @@
+{
+  "status": "stopped_before_completion",
+  "reason": "Inspection of preceding targeted smoke showed the no-action guard modifying an already negated disclaimer. Fix the bounded negation scope before continuing full evaluation.",
+  "completed": 8,
+  "hard_passes": 8,
+  "all_passes": 8,
+  "holdout_opened": false
+}

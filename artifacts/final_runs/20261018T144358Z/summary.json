@@ -1,0 +1,111 @@
+{
+  "runs": 12,
+  "hard_gate_case_passes": 12,
+  "all_case_check_passes": 12,
+  "scope_exclusions": 3,
+  "case_failures": [],
+  "checks": {
+    "code_contract": {
+      "passed": 12,
+      "total": 12,
+      "hard_gate": true
+    },
+    "final_gate_replay": {
+      "passed": 12,
+      "total": 12,
+      "hard_gate": true
+    },
+    "independent_request_coverage": {
+      "passed": 12,
+      "total": 12,
+      "hard_gate": true
+    },
+    "obligation_evidence_for_answer": {
+      "passed": 12,
+      "total": 12,
+      "hard_gate": true
+    },
+    "authoritative_policy_citations": {
+      "passed": 12,
+      "total": 12,
+      "hard_gate": true
+    },
+    "expected_terminal_outcome": {
+      "passed": 12,
+      "total": 12,
+      "hard_gate": false
+    },
+    "mandatory_trigger:T3": {
+      "passed": 3,
+      "total": 3,
+      "hard_gate": true
+    },
+    "required_tool:search_policy": {
+      "passed": 6,
+      "total": 6,
+      "hard_gate": false
+    },
+    "required_tool:create_escalation": {
+      "passed": 6,
+      "total": 6,
+      "hard_gate": false
+    },
+    "required_citation:faq": {
+      "passed": 3,
+      "total": 3,
+      "hard_gate": false
+    },
+    "required_citation:return_policy": {
+      "passed": 3,
+      "total": 3,
+      "hard_gate": false
+    },
+    "mandatory_trigger:T1": {
+      "passed": 3,
+      "total": 3,
+      "hard_gate": true
+    },
+    "mandatory_trigger:T2": {
+      "passed": 3,
+      "total": 3,
+      "hard_gate": true
+    },
+    "required_tool:check_return_eligibility": {
+      "passed": 3,
+      "total": 3,
+      "hard_gate": false
+    },
+    "eligibility:REFUND_ABOVE_THRESHOLD": {
+      "passed": 3,
+      "total": 3,
+      "hard_gate": false
+    },
+    "mandatory_refusal:R1": {
+      "passed": 3,
+      "total": 3,
+      "hard_gate": true
+    }
+  },
+  "operations": {
+    "paths": {
+      "ESCALATED": {
+        "requests": 9,
+        "latency_ms_p50": 24956.024,
+        "latency_ms_p95": 37836.874,
+        "tokens": 144902,
+        "repairs": 3,
+        "tool_errors": 0
+      },
+      "REFUSED": {
+        "requests": 3,
+        "latency_ms_p50": 10.76,
+        "latency_ms_p95": 59.166,
+        "tokens": 0,
+        "repairs": 0,
+        "tool_errors": 0
+      }
+    },
+    "limits": "Observed samples by terminal outcome, interpolated percentiles; not a production latency SLA."
+  },
+  "limits": "Exact original inputs plus declared setup. Original deferred action-flow expectations are excluded, not passed. Contract/syntactic scores do not establish semantic faithfulness, human calibration or final acceptance."
+}

@@ -1,0 +1,14 @@
+{
+  "reviewed_run": "20261018T143615Z",
+  "structural_case_passes": 65,
+  "independent_ai_gate": "blocked",
+  "unsupported_claim_case": "M02",
+  "repair": "Reject unsupported no-further-action conclusions from delivery records; qualify carrier-record authority.",
+  "packet_evidence_gaps": {
+    "M02": "Actual implicit too_long feedback receipt is in frozen output record but was omitted from reviewer packet.",
+    "M05": "Actual get_tracking_events error TIMEOUT is in frozen tool_records but was omitted from reviewer packet."
+  },
+  "historical_ratings_changed": false,
+  "blind_holdout_opened": false,
+  "followup": "New evidence-v2 packets include recorded feedback, failed tools and memory/style summaries. Fresh reviewer receives only the next candidate packet."
+}

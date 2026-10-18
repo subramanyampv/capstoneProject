@@ -1,0 +1,70 @@
+{
+  "passed": true,
+  "handoffs_checked": 9,
+  "checks": [
+    {
+      "case_id": "R05",
+      "repeat": 2,
+      "turn": "final",
+      "ticket_id": "MOCK-787fdbd764ef",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "R05",
+      "repeat": 1,
+      "turn": "final",
+      "ticket_id": "MOCK-287ae653f01c",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "R05",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-d7a6ffb48467",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "S01",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-099b3d47afd7",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "S01",
+      "repeat": 1,
+      "turn": "final",
+      "ticket_id": "MOCK-8bb98a65fa1a",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "S01",
+      "repeat": 2,
+      "turn": "final",
+      "ticket_id": "MOCK-b73e868668e2",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "S03",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-40879bd5d392",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "S03",
+      "repeat": 2,
+      "turn": "final",
+      "ticket_id": "MOCK-584eca13e58c",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "S03",
+      "repeat": 1,
+      "turn": "final",
+      "ticket_id": "MOCK-db7a3f5bceb5",
+      "local_store_matches": true
+    }
+  ],
+  "limits": "Verified local synthetic mock ticket existence and queue/priority/triggers for all recorded final/setup handoffs. Does not prove mandatory handoffs were recognized or that a real human/store transaction occurred. Semantic false-action wording is reviewed separately."
+}

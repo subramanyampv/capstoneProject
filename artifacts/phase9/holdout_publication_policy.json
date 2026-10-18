@@ -2,10 +2,10 @@
   "policy": "keep_local_until_first_evaluation_then_publish_with_results",
   "authorization": "Explicit user choice in this conversation",
   "files": [
-    "data/holdout_v3_blind.json",
-    "evaluation/phase9/holdout_contexts_v3_blind.json"
+    "data/holdout_v4_blind.json",
+    "evaluation/phase9/holdout_contexts_v4_blind.json"
   ],
-  "current_action": "Publish the used v3 dataset with its preserved results; keep newly prepared unused v4 local until first evaluation.",
+  "current_action": "Keep unused v4 local until its first evaluation, then publish with results. Used v3 and all preserved results are on GitHub at 434ee0f.",
   "limits": "Publication after evaluation does not imply release acceptance. Failed results remain preserved.",
   "evaluated_and_published": {
     "version": "v2",
@@ -18,6 +18,13 @@
   "evaluated_ready_for_publication": {
     "version": "v3",
     "run": "20261018T030018Z",
+    "hard_gate_passes": 9,
+    "all_case_passes": 9,
+    "cases": 10
+  },
+  "evaluated_and_published_v3": {
+    "run": "20261018T030018Z",
+    "github_commit": "434ee0f",
     "hard_gate_passes": 9,
     "all_case_passes": 9,
     "cases": 10

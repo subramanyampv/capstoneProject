@@ -1,0 +1,12 @@
+{
+  "status": "blocked",
+  "reviewer_type": "ai_proxy",
+  "reviewed_cases": 20,
+  "unsafe_case_ids": [
+    "M02",
+    "M05"
+  ],
+  "blocking_issues": [],
+  "review_packet_sha256": "ee9fdbd3aa3f68c077f808121d57f1810aaf8e2a73a76344426763e245aa6cff",
+  "limits": "Independent AI proxy review authorized for iterative testing. This is not actual human calibration or automatic release acceptance."
+}

@@ -1,5 +1,8 @@
 # E-commerce Support Resolution Agent
 
+> Current candidate and pending acceptance gates: [Current status](docs/current_status.md). Frozen regression completion alone is not final acceptance.
+
+
 The authoritative [Architecture and Plan v3.3](docs/architecture_and_plan.md) supersedes all earlier designs. See the [document index](docs/README.md), [implementation status](docs/implementation_status.md), and [detailed progress summary](docs/project_progress.md), and [task checklist](docs/task_list.md). The [Memory Pad](docs/memory_pad.md) compares ecommerce agents and tracks possible extensions; the earlier [market comparison](docs/market_comparison.md) remains available.
 
 The core now implements a LangGraph supervisor, three LangChain specialists and six typed tools. Policy retrieval uses local Voyage-4-nano and Chroma. Deterministic guards decide safety, eligibility and verified mock escalation. Return/refund/cancellation writes, the knowledge graph and external API ETA are deferred until the initial product succeeds. Synthetic data only.
@@ -13,7 +16,7 @@ The core now implements a LangGraph supervisor, three LangChain specialists and 
 | 6 | Bounded projection memory, follow-ups and reset/expiry implemented; five-conversation comparison measured |
 | 7 | Implemented: controlled style feedback, versioning/reset/deletion in terminal and Streamlit; development evidence |
 | 8 | Verified: hosted metadata hierarchy/masking/failure isolation, safe logs/startup and clean local deployment |
-| 9 | 261 tests, 65/65 frozen and 45/45 repeats; actual review complete. Independent v3 failed 9/10 on product-illness T1; safety repair and sealed v4 remain. |
+| 9 | Correctness/evaluation in progress; exact current candidate and each pending gate are recorded in [Current status](docs/current_status.md). Earlier 65/65 passes do not establish final acceptance. |
 
 ## Local setup
 

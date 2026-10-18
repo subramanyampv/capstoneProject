@@ -1,0 +1,9 @@
+{
+  "status": "stopped_before_completion",
+  "reason": "N17 hit the same unsupported no-further-action conclusion after two model attempts. Narrow tracking-only renderer could not preserve mixed shipping-policy intent. Repair the recognized conclusion without dropping other verified content, then revalidate.",
+  "completed": 42,
+  "hard_passes": 42,
+  "all_passes": 41,
+  "holdout_opened": false,
+  "judge_status": "partial preserved; follower stopped with superseded run"
+}

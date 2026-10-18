@@ -1,0 +1,8 @@
+{
+  "application_commit": "b8a1ce2",
+  "passed": 361,
+  "failed": 0,
+  "elapsed_seconds": 26.86,
+  "command": ".venv/bin/python -m pytest -q",
+  "scope": "Offline full suite, separate from live gates."
+}

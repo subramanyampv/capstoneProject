@@ -1,10 +1,13 @@
 # Project progress and remaining work — 2026-10-17
 
+> Current candidate and gate status: [Current status](current_status.md). Earlier candidate/run measurements below are historical and do not transfer to the current build.
+
+
 The project has a tested baseline, a completed LLM prompt comparison, framework integration and a working local policy-retrieval layer and a smoke-verified bounded multi-agent support core. The **complete initial product is still pending** final evaluation and acceptance. Architecture revision 3.3 records this distinction. The initial v3/Phase 4 implementation was recorded in `1fe4976`; later commits contain the documented follow-through; the existing GitHub repository remains the working repository.
 
 The [detailed task checklist](task_list.md) translates this summary into tracked work items with done/update/not-started states.
 
-## Current checkpoint — 2026-10-17
+## Historical checkpoint — 2026-10-17
 
 The first candidate (`ecb208e`) passed 65 frozen cases and 45 safety repeats, but its first untouched holdout passed only **8/10**: H02 missed refund T2; H07 missed privacy R2 and made an unnecessary handoff. No refund execution or private tracking/address disclosure was observed. These boundaries do not waive the hard failures. Its actual human calibration is complete: 20 cases, 56 pairs, 82.14% threshold agreement, no human unsafe flags. Results and labels remain unchanged.
 

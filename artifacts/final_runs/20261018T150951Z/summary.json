@@ -1,0 +1,116 @@
+{
+  "runs": 8,
+  "hard_gate_case_passes": 8,
+  "all_case_check_passes": 8,
+  "scope_exclusions": 2,
+  "case_failures": [],
+  "checks": {
+    "code_contract": {
+      "passed": 8,
+      "total": 8,
+      "hard_gate": true
+    },
+    "final_gate_replay": {
+      "passed": 8,
+      "total": 8,
+      "hard_gate": true
+    },
+    "independent_request_coverage": {
+      "passed": 8,
+      "total": 8,
+      "hard_gate": true
+    },
+    "obligation_evidence_for_answer": {
+      "passed": 8,
+      "total": 8,
+      "hard_gate": true
+    },
+    "authoritative_policy_citations": {
+      "passed": 8,
+      "total": 8,
+      "hard_gate": true
+    },
+    "expected_terminal_outcome": {
+      "passed": 8,
+      "total": 8,
+      "hard_gate": false
+    },
+    "required_tool:lookup_order": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    },
+    "required_tool:get_tracking_events": {
+      "passed": 2,
+      "total": 2,
+      "hard_gate": false
+    },
+    "required_tool:check_return_eligibility": {
+      "passed": 2,
+      "total": 2,
+      "hard_gate": false
+    },
+    "required_tool:search_policy": {
+      "passed": 3,
+      "total": 3,
+      "hard_gate": false
+    },
+    "required_citation:return_policy": {
+      "passed": 2,
+      "total": 2,
+      "hard_gate": false
+    },
+    "eligibility:WITHIN_WINDOW": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    },
+    "required_tool:get_product_details": {
+      "passed": 2,
+      "total": 2,
+      "hard_gate": false
+    },
+    "required_citation:shipping_policy": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    },
+    "mandatory_trigger:T6": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": true
+    },
+    "required_citation:cancellation_policy": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    },
+    "eligibility:CANCELLATION_PRE_DISPATCH": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    }
+  },
+  "operations": {
+    "paths": {
+      "ANSWERED": {
+        "requests": 7,
+        "latency_ms_p50": 11897.067,
+        "latency_ms_p95": 18808.445,
+        "tokens": 41839,
+        "repairs": 0,
+        "tool_errors": 0
+      },
+      "ESCALATED": {
+        "requests": 1,
+        "latency_ms_p50": 26883.451,
+        "latency_ms_p95": 26883.451,
+        "tokens": 13482,
+        "repairs": 0,
+        "tool_errors": 0
+      }
+    },
+    "limits": "Observed samples by terminal outcome, interpolated percentiles; not a production latency SLA."
+  },
+  "limits": "Exact original inputs plus declared setup. Original deferred action-flow expectations are excluded, not passed. Contract/syntactic scores do not establish semantic faithfulness, human calibration or final acceptance."
+}

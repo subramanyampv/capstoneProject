@@ -1,0 +1,24 @@
+{
+  "library": "deepeval",
+  "rubric": "phase9-grounded-support-v1",
+  "judge_settings": {
+    "provider": "openai_compatible",
+    "model": "qwen3.7-max",
+    "timeout_seconds": 20.0,
+    "max_retries": 0,
+    "response_format": "json_object",
+    "temperature": 0,
+    "max_completion_tokens": 2400,
+    "enable_thinking": false
+  },
+  "same_model_self_evaluation": true,
+  "judged_cases": 65,
+  "requested_cases": 65,
+  "successful_completions_this_process": 464,
+  "tokens_this_process": 498860,
+  "workers": 3,
+  "source_outputs_sha256": "a598b21d61f7f52c47b59f62fe316de89918801d5bff7fe08906caba1830ba87",
+  "usage_scope": "Successful completions in this process; failed transport usage and prior-process work are not fully counted.",
+  "human_calibration": "awaiting_actual_human_ratings",
+  "limits": "Same-model results are indicative, not independent safety acceptance. Missing context and judge failures are skipped, never passed. No Confident AI uploads; model requests go only to the configured endpoint."
+}

@@ -1,0 +1,12 @@
+{
+  "application_commit": "b8a1ce2",
+  "frozen_run": "20261018T151500Z",
+  "recorded_at": "2026-10-18T15:17:14.035932+00:00",
+  "passed": true,
+  "tests_passed": 361,
+  "elapsed_seconds": 23.87,
+  "source_hashes_match_frozen_candidate": true,
+  "import_resolves_to_extracted_source": true,
+  "venv": "Existing project .venv/bin/python reused; no global install or new environment.",
+  "limits": "Git-archive committed-source test using existing dependencies. Not a fresh dependency install, live LLM evaluation, production load test or final acceptance."
+}
