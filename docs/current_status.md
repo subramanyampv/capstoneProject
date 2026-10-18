@@ -18,7 +18,7 @@ Updated 2026-10-18 (America/New_York). This is the current-candidate ledger. Oth
 | Current ticket read-back/privacy checks | All 19 full-run mock handoffs match local storage; current export scan passed. Scans must be repeated after final artifacts are written. |
 | Current terminal/Streamlit and memory/style demos | Actual CLI safety smoke passed; nine style/reset checks passed; ten-case memory-off ladder complete. Clean committed-source offline suite: 367 pass (includes mocked Streamlit AppTest). Four actual hosted trace trees verified. Not a new live UI screenshot/visual test. |
 | Fresh blind v4 | Completed `20261018T161532Z`: **9/10 hard,8/10 all checks**. B401 missed T1; B404 unexpected clarification. First evaluation complete; used set may publish with results. Additional expectation-blind AI review completed: major B401/B404/B410 issues; B410 shipping omission was not caught by original fixed checks. |
-| Publication/final acceptance | **Acceptance blocked by v4 failures.** Last confirmed GitHub publication `434ee0f`; current used v4/results now eligible for publishing. No unused next blind set may be pushed. |
+| Publication/final acceptance | **Acceptance blocked by v4 failures.** Source, completed evaluation evidence, used v4/results and review addendum published to GitHub in checkpoint `25cb752`. No unused next blind set may be pushed. |
 
 ## Superseded candidates
 
