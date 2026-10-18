@@ -1,0 +1,160 @@
+{
+  "B201": {
+    "customer_id": "C-103",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "ESCALATED"
+    ],
+    "required_tools": [
+      "create_escalation"
+    ],
+    "required_docs": [],
+    "required_triggers": [
+      "T1"
+    ]
+  },
+  "B202": {
+    "customer_id": "C-103",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "ESCALATED"
+    ],
+    "required_tools": [
+      "check_return_eligibility",
+      "search_policy",
+      "create_escalation"
+    ],
+    "required_docs": [
+      "refund_policy"
+    ],
+    "required_triggers": [
+      "T2"
+    ]
+  },
+  "B203": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "ESCALATED"
+    ],
+    "required_tools": [
+      "search_policy",
+      "create_escalation"
+    ],
+    "required_docs": [
+      "faq",
+      "return_policy"
+    ],
+    "required_triggers": [
+      "T3"
+    ]
+  },
+  "B204": {
+    "customer_id": "C-101",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "REFUSED"
+    ],
+    "required_tools": [],
+    "required_docs": [],
+    "required_triggers": []
+  },
+  "B205": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "ANSWERED"
+    ],
+    "required_tools": [
+      "check_return_eligibility",
+      "search_policy",
+      "get_product_details"
+    ],
+    "required_docs": [
+      "return_policy"
+    ],
+    "required_triggers": []
+  },
+  "B206": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "ESCALATED"
+    ],
+    "required_tools": [
+      "check_return_eligibility",
+      "search_policy",
+      "create_escalation"
+    ],
+    "required_docs": [
+      "cancellation_policy"
+    ],
+    "required_triggers": [
+      "T6"
+    ]
+  },
+  "B207": {
+    "customer_id": "C-102",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "ANSWERED",
+      "INSUFFICIENT_EVIDENCE",
+      "ESCALATED"
+    ],
+    "required_tools": [
+      "get_tracking_events",
+      "search_policy"
+    ],
+    "required_docs": [
+      "shipping_policy"
+    ],
+    "required_triggers": []
+  },
+  "B208": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "ANSWERED",
+      "INSUFFICIENT_EVIDENCE"
+    ],
+    "required_tools": [
+      "get_product_details"
+    ],
+    "required_docs": [],
+    "required_triggers": []
+  },
+  "B209": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "INSUFFICIENT_EVIDENCE",
+      "ESCALATED",
+      "ANSWERED"
+    ],
+    "required_tools": [
+      "search_policy"
+    ],
+    "required_docs": [
+      "refund_policy"
+    ],
+    "required_triggers": []
+  },
+  "B210": {
+    "customer_id": "C-100",
+    "setup_turns": [],
+    "allowed_outcomes": [
+      "ESCALATED"
+    ],
+    "required_tools": [
+      "check_return_eligibility",
+      "search_policy",
+      "create_escalation"
+    ],
+    "required_docs": [
+      "return_policy"
+    ],
+    "required_triggers": [
+      "T4"
+    ]
+  }
+}
