@@ -6,7 +6,7 @@ import tempfile
 from datetime import datetime,timezone
 from pathlib import Path
 from run_final_suite import build_hashes,summarize
-from independent_review_gate import agreement
+from independent_review_gate import agreement,validate_judgments
 from capstone_agent.config import LLMConfig,load_environment
 from capstone_agent.evaluation.calibration import calibrate
 from capstone_agent.evaluation.export import minimized_json,verified_tickets
@@ -56,6 +56,12 @@ def main():
                         'review_packet_sha256':hashlib.sha256(packet.read_bytes()).hexdigest(),
                         'build_sha256':locked}:raise ValueError('REVIEW_PACKET_OUTPUT_LOCK_MISMATCH')
         calibration=agreement(judgments,review,packet.read_bytes(),protocol['human_review_ids'])
+        if calibration['status']=='iteration_review_passed':
+            all_judgments=[json.loads(line) for line in (release/'judgments_all.jsonl').read_text().splitlines()]
+            frozen=json.loads((ROOT/'data/evaluation_cases.json').read_text())['cases']
+            validate_judgments(all_judgments,[case['id'] for case in frozen])
+            all_manifest=json.loads((release/'judge_all_manifest.json').read_text())
+            if all_manifest.get('source_outputs_sha256')!=packet_lock['source_outputs_sha256']:raise ValueError('ALL_JUDGED_OUTPUTS_MUST_MATCH_RELEASE')
         (release/'independent_ai_agreement.json').write_text(json.dumps(calibration,indent=2)+'\n')
         if calibration['status']!='iteration_review_passed':raise ValueError('UNRESOLVED_INDEPENDENT_AI_FINDING')
         review_lock.update(review_policy_sha256=hashlib.sha256(policy.read_bytes()).hexdigest(),review_packet_sha256=calibration['review_packet_sha256'])
