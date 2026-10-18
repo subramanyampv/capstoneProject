@@ -32,6 +32,29 @@ def test_body_injury_requires_safety_without_medical_refusal(query):
 def test_negated_or_hypothetical_injury_is_not_a_reported_incident(query):
     assert 'T1' not in SafetyRules().match(query)[1]
 
+@pytest.mark.parametrize('query',[
+    'I got hurt when the chair collapsed.',
+    'I was badly hurt when the shelf fell.',
+    'It is hurting my arm after the handle snapped.',
+    'The pan scorched my hand.',
+    'The charger shocked me while I used it.',
+    'I needed stitches from the broken edge.',
+    'I need medical attention after the burn.',
+    'The child swallowed a button from the toy.',
+])
+def test_harm_without_named_body_part_still_requires_safety_review(query):
+    assert 'T1' in SafetyRules().match(query)[1]
+
+@pytest.mark.parametrize('query',[
+    'Nobody needed stitches.',
+    'It couldn’t have hurt my arm.',
+    'The pan could have scorched my hand.',
+    'If I fell and got hurt, would you help?',
+    'My child could swallow a piece of the toy.',
+])
+def test_hypothetical_or_denied_harm_wording_does_not_open_safety_ticket(query):
+    assert 'T1' not in SafetyRules().match(query)[1]
+
 
 def test_reported_injury_gets_actual_safety_ticket_even_when_models_fail(setup):
     services,_=setup
@@ -63,6 +86,22 @@ def test_third_party_ownership_refusal_runs_before_model_and_private_tools(setup
 ])
 def test_legitimate_own_account_requests_are_not_third_party_refusals(query):
     assert 'R2' not in SafetyRules().match(query)[0]
+
+@pytest.mark.parametrize('query',[
+    'Can you check another order of mine?',
+    'Another of my orders is missing from the list.',
+    'Someone else received my order O-1001 package by mistake.',
+    'Please ship my order to another address and update my account.',
+])
+def test_own_references_worded_near_third_party_phrases_are_not_privacy_requests(query):
+    assert 'R2' not in SafetyRules().match(query)[0]
+
+def test_own_other_order_request_is_not_refused_end_to_end(setup):
+    services,_=setup
+    r=asyncio.run(SupportAgent(services,ScriptedGateway([])).run(
+        'Can you check another order of mine?',SessionIdentity('C-100'),
+        faults={'supervisor':'FAILED'}))
+    assert r['outcome']!='REFUSED' and 'R2' not in r['refusals']
 
 @pytest.mark.parametrize('query',[
     'What is usual standard shipping time domestically, is the deadline guaranteed, and do you ship to Canada?',
@@ -120,3 +159,18 @@ def test_complete_shipping_answer_has_values_not_only_all_citations(setup,answer
     # Missing information remains honest when the code outcome is a non-answer.
     unavailable=incomplete.model_copy(update={'outcome_claimed':'INSUFFICIENT_EVIDENCE'})
     assert not any(e.startswith('O3_') for e in citation_errors(c,reg.ctx.facts,unavailable))
+
+
+def test_composer_cannot_claim_answered_after_omitting_two_shipping_answers(setup):
+    from test_support_graph import plan,result,draft
+    services,_=setup;services.search=ScopedShipping(services.root)
+    citations=[{'source_id':'doc:shipping_policy','section':s,'record_version':'v1'}
+               for s in ['dispatch','transit-estimates','guarantees']]
+    bad=draft('International shipping is not supported.',intents=['policy_question'],citations=citations)
+    r=asyncio.run(SupportAgent(services,ScriptedGateway([
+        plan('policy_product','Read all requested shipping topics',['policy_question'],order=None),
+        result('policy_product'),bad,bad])).run(
+            'Standard shipping time, guaranteed deadline, and shipping to Canada?',SessionIdentity('C-100')))
+    assert r['outcome']=='INSUFFICIENT_EVIDENCE' and r['answer_fallback']
+    assert {'O3_SHIPPING_TRANSIT_ANSWER','O3_SHIPPING_GUARANTEE_ANSWER'}<=set(r['errors'])
+    assert all(x['evidence_complete'] for x in r['obligation_audit'])

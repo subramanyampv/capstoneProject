@@ -31,14 +31,24 @@ class SafetyRules:
 def affirmative_privacy_request(text,match):
     # "My order, not somebody else's account" is not a third-party request.
     third=re.match(r'(?:another|other customer|someone|somebody|anyone|anybody)\b',match.group(),re.I)
-    return not (third and re.search(r"\b(?:not|isn't|isn’t)\s*$",text[:match.start()],re.I))
+    if not third:return True
+    neg_before=bool(re.search(r"\b(?:not|isn't|isn’t)\s*$",text[:match.start()],re.I))
+    # A match whose object is possessively the requester's own ("another order
+    # of mine", "someone else received my order") is a service request, not a
+    # third-party data request; ownership remains enforced by the tools.
+    group=match.group()
+    own=(not re.search(r"\b(?:else|customer|person|party)['’]s\b",group,re.I)
+        and (re.search(r"\b(?:my|our)\s+(?:order|account|package|record)\b|\bof\s+(?:mine|my own)\b",group,re.I)
+             or re.match(r"^[,.]?\s*(?:of\s+(?:mine|my own)|that(?:'|’)?s\s+mine)\b",text[match.end():match.end()+14],re.I)))
+    return not (neg_before or own)
 
 def affirmative_safety_report(text,start):
     """Bounded local denial/conditional filter; not general semantic parsing."""
     prefix=re.split(r'[.!?;\n]|\b(?:but|however)\b',text[:start],flags=re.I)[-1]
-    return not (re.search(r"\b(?:did not|didn't|didn’t|was not|wasn't|wasn’t|not|no|never|without)\s+(?:\w+\s+){0,2}$",prefix,re.I)
+    return not (re.search(r"\b(?:did not|didn't|didn’t|was not|wasn't|wasn’t|could not|couldn't|couldn’t|would not|wouldn't|wouldn’t|should not|shouldn't|shouldn’t|not|no|never|without)\s+(?:\w+\s+){0,2}$",prefix,re.I)
                 or re.search(r'\b(?:nobody|no one|none of us)\s+(?:(?:was|were|is|are|got|became)\s+)?$',prefix,re.I)
-                or re.search(r'\b(?:what if|(?:might|could)\s+(?:this|that|the|your))\b[^,]{0,60}$',prefix,re.I))
+                or re.match(r'(?:what\s+if|if)\b',prefix,re.I)
+                or re.search(r'\b(?:might|could|would|may)\b\s+(?:\w+\s+){0,2}$',prefix,re.I))
 
 REFUSAL='I cannot follow requests to bypass rules, disclose private information, save sensitive identifiers such as Social Security numbers, or provide medical/legal advice. I can help with supported order and policy questions.'
 PRIVACY_REFUSAL='I cannot disclose private account or payment information, save sensitive identifiers, or bypass ownership checks. I can help with supported questions about your own orders after verification.'
