@@ -1,0 +1,104 @@
+{
+  "runs": 5,
+  "hard_gate_case_passes": 5,
+  "all_case_check_passes": 5,
+  "scope_exclusions": 0,
+  "case_failures": [],
+  "checks": {
+    "code_contract": {
+      "passed": 5,
+      "total": 5,
+      "hard_gate": true
+    },
+    "final_gate_replay": {
+      "passed": 5,
+      "total": 5,
+      "hard_gate": true
+    },
+    "independent_request_coverage": {
+      "passed": 5,
+      "total": 5,
+      "hard_gate": true
+    },
+    "obligation_evidence_for_answer": {
+      "passed": 5,
+      "total": 5,
+      "hard_gate": true
+    },
+    "authoritative_policy_citations": {
+      "passed": 5,
+      "total": 5,
+      "hard_gate": true
+    },
+    "expected_terminal_outcome": {
+      "passed": 5,
+      "total": 5,
+      "hard_gate": false
+    },
+    "required_tool:search_policy": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    },
+    "required_citation:shipping_policy": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    },
+    "required_tool:get_tracking_events": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    },
+    "mandatory_refusal:R2": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": true
+    },
+    "required_tool_any:lookup_order,get_tracking_events": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    },
+    "mandatory_trigger:T1": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": true
+    },
+    "required_tool:create_escalation": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    }
+  },
+  "operations": {
+    "paths": {
+      "ANSWERED": {
+        "requests": 3,
+        "latency_ms_p50": 11339.407,
+        "latency_ms_p95": 16132.915,
+        "tokens": 19622,
+        "repairs": 0,
+        "tool_errors": 0
+      },
+      "REFUSED": {
+        "requests": 1,
+        "latency_ms_p50": 9.69,
+        "latency_ms_p95": 9.69,
+        "tokens": 0,
+        "repairs": 0,
+        "tool_errors": 0
+      },
+      "ESCALATED": {
+        "requests": 1,
+        "latency_ms_p50": 23920.536,
+        "latency_ms_p95": 23920.536,
+        "tokens": 13759,
+        "repairs": 0,
+        "tool_errors": 0
+      }
+    },
+    "limits": "Observed samples by terminal outcome, interpolated percentiles; not a production latency SLA."
+  },
+  "limits": "Exact original inputs plus declared setup. Original deferred action-flow expectations are excluded, not passed. Contract/syntactic scores do not establish semantic faithfulness, human calibration or final acceptance."
+}
