@@ -1,0 +1,42 @@
+{
+  "passed": true,
+  "handoffs_checked": 5,
+  "checks": [
+    {
+      "case_id": "H01",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-6222ca8c70e7",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "H03",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-b82e1f402483",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "H05",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-3ab781b74b65",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "H07",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-84b0e1bb2a93",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "H10",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-c1108c36fcd5",
+      "local_store_matches": true
+    }
+  ],
+  "limits": "Verified local synthetic mock ticket existence and queue/priority/triggers for all recorded final/setup handoffs. Does not prove mandatory handoffs were recognized or that a real human/store transaction occurred. Semantic false-action wording is reviewed separately."
+}

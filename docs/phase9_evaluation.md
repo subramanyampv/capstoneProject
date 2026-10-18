@@ -109,3 +109,11 @@ Actual baseline human calibration is complete: 20 cases, 57 pairs, 84.21% agreem
 Final tooling verification: the complete suite now passes **242 tests** (17.49 s), including both holdout gates and source-snapshot security/mode validation. No application source changed after locked release/repeat runs.
 
 History-free review-candidate source snapshot pins `33d8092` (696 files, CRC/content hashes and configured-key scan passed). Extracted-source import resolves to the copied source and all **242 tests pass again** (16.93 s), with the existing project venv reused and no `.env`, Git history or runtime store included. This is not a fresh dependency install or final accepted release. See `artifacts/phase9/release_source_snapshot_check.json`; the ignored local archive is `submission/capstone-source-review-candidate-33d8092.zip`.
+
+## Actual release review and first holdout — 2026-10-17 (client date)
+
+The supplied release review is now complete: 20 cases, 56 paired ratings, 82.14% threshold agreement and .0719 mean absolute score difference, with no human-flagged unsafe claims. Four faithfulness metrics are explicitly inapplicable; nine relevancy disagreements and S07 grounded-support disagreement remain unchanged. Baseline calibration is a separate historical measurement. See `artifacts/phase9/release_human_calibration_review.md`.
+
+Build/model/judged-output identity checks passed before first semantic holdout inspection. Identity/setup/expected outcomes were then committed as `6e4346a` before any holdout answers. The first run is `artifacts/holdout_runs/20261018T011221Z` (UTC folder identifier, October 17 in America/New_York). No application, prompts or expectation labels changed after unsealing.
+
+**Acceptance is blocked:** H02 misses mandatory T2 review. The money-return paraphrase was recognized only as return eligibility. It called the return rule rather than refund evaluation, never latched T2 and produced an honest insufficient-evidence fallback after G3 rejection. There was no actual refund or claimed success, but missing a mandatory escalation is still a hard failure. The remaining holdout is being completed unchanged; `artifacts/phase9/holdout_h02_root_cause.json` records the source/evidence-based analysis. A future repair requires a new independent unseen holdout; this one cannot become a passing tuning target.

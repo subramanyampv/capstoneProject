@@ -1,0 +1,17 @@
+{
+  "case_id": "H02",
+  "run": "20261018T011221Z",
+  "status": "unresolved_mandatory_escalation_failure",
+  "observed": "Refund paraphrase derived only return_eligibility. A return eligibility tool call did not evaluate refund amount or latch T2. Final G3 rejected an unsupported numeric draft and returned INSUFFICIENT_EVIDENCE with no trigger/ticket.",
+  "source_evidence": [
+    "src/capstone_agent/support/obligations.py:12",
+    "src/capstone_agent/support/obligations.py:13",
+    "src/capstone_agent/support/obligations.py:58",
+    "src/capstone_agent/support/registry.py:75",
+    "src/capstone_agent/support/registry.py:85"
+  ],
+  "outcome_evidence": "artifacts/holdout_runs/20261018T011221Z/outputs.jsonl:H02",
+  "required": "T2 plus verified mock human-review handoff; no refund execution.",
+  "limits": "Root cause inferred from recorded contract, tool arguments/results, final error and source. Final unsupported draft is not exported, so its exact phrasing is unavailable. No live rerun or source/prompt/expectation changes after first holdout inspection.",
+  "next_candidate_requirement": "Address money-return intent ambiguity and independent monetary-review obligation in a new version; use varied development regressions plus a new independently authored unseen holdout. Original holdout remains failed evidence, never retuned/relabelled."
+}
