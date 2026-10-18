@@ -61,9 +61,20 @@ def test_delivery_certainty_has_independent_shipping_policy_obligation(query):
     if 'scan' in query or 'tracking' in query:assert contract.tracking
 
 
-def test_past_delivery_return_question_does_not_become_an_arrival_prediction():
-    contract=derive('O-1001 was delivered twelve days ago. Can I return it?')
+@pytest.mark.parametrize('query',[
+    'O-1001 was delivered twelve days ago. Can I return it?',
+    'If delivery was thirty days ago today, is the return window still open?',
+    'My delivery was today. What is the return policy?',
+])
+def test_past_delivery_return_question_does_not_become_an_arrival_prediction(query):
+    contract=derive(query)
     assert 'return_policy' in contract.policy_docs and 'shipping_policy' not in contract.policy_docs
+
+
+@pytest.mark.parametrize('query',['Do you ship products to Canada?','What is your international shipping policy?'])
+def test_international_shipping_requires_the_governing_dispatch_section(query):
+    contract=derive(query)
+    assert 'shipping_policy:dispatch' in contract.required_sections
 
 
 @pytest.mark.parametrize('empty',[False,True])

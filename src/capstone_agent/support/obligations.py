@@ -24,8 +24,11 @@ CANCEL = re.compile(r'\bcancel\w*\b', re.I)
 WITHDRAW_CANCELLATION = re.compile(r"\b(?:do not|don't|don’t)\s+cancel\b|\bkeep\s+(?:my|the|this|that)\s+order\b|\bstop\b.{0,20}\bcancellation\b",re.I)
 TRACK = re.compile(r'\btrack\w*\b|latest.{0,20}event|\bwhere.{0,35}\b(?:order|package)\b|\bwhen.{0,35}\b(?:ship|arriv|deliver)', re.I)
 RECENT_TRACKING = re.compile(r'\b(?:latest|most recent|last)\b.{0,30}\b(?:carrier|scan|event|tracking)\b|\bcarrier\s+(?:scan|update)\b', re.I)
-DELIVERY_SUBJECT = re.compile(r'\b(?:arriv\w*|deliver\w*|reach)\b|\bget here\b', re.I)
-DELIVERY_FUTURE = re.compile(r'\b(?:when|will|tomorrow|today|certain\w*|guarantee\w*|promis\w*|predict\w*|estimat\w*)\b', re.I)
+DELIVERY_FUTURE = re.compile(
+    r'\b(?:will|when (?:will|does))\b.{0,40}\b(?:arrive|reach|be delivered|get here)\b|'
+    r'\b(?:arrive|reach|get here)\b.{0,30}\b(?:tomorrow|today)\b|'
+    r'\b(?:arrival|delivery)\s+(?:date|estimate|time|guarantee)\b|'
+    r'\b(?:guarantee\w*|promis\w*|predict\w*|estimat\w*)\b.{0,40}\b(?:arrival|delivery|arrive|get here)\b', re.I)
 STATUS = re.compile(r'\b(?:order|package).{0,20}\bstatus\b|\b(?:has|did|hadn.t|hasn.t|it|not|never).{0,30}\bship\w*\b|\bdelivery email\b', re.I)
 PRODUCT = re.compile(r'material|\bsize\b|sizing|\bcare\b|\bwash\w*\b|\bclean\w*\b|weight|specification|\bwarrant\w*\b|opened', re.I)
 SHIPPING = re.compile(r'\bshipping\b|\bship\b.{0,35}\b(?:canada|international|usually|standard)\b|\barrive\b|\bdelivery estimate\b', re.I)
@@ -67,7 +70,7 @@ def derive(query, context=None, *, services=None):
     resolved=ids[0] if len(ids)==1 else context.get('resolved_order_id') if not ids else None
     if not resolved and not ids and STATUS.search(query):resolved=context.get('entities',{}).get('order_id')
     tracking=bool(TRACK.search(query) or RECENT_TRACKING.search(query));status=bool(STATUS.search(query))
-    delivery_future=bool(DELIVERY_SUBJECT.search(query) and DELIVERY_FUTURE.search(query))
+    delivery_future=bool(DELIVERY_FUTURE.search(query))
     if re.search(r'what.{0,25}mean.{0,20}\b(?:my|the|that) order\b',query,re.I):
         status=True
         tracking=bool(set(context.get('last_intents',[])) & {'order_tracking','shipping_tracking'})
@@ -106,10 +109,13 @@ def derive(query, context=None, *, services=None):
         ((has_return or has_refund or has_cancel or tracking or status) and not general)
         or unknown_policy_subject
         or (not intents and re.search(r'\b(?:again|previous answer|earlier question)\b',query,re.I)))
-    sections=('return_policy:restocking',) if re.search(r'restock',query,re.I) else ()
+    sections=[]
+    if re.search(r'restock',query,re.I):sections.append('return_policy:restocking')
+    if 'shipping_policy' in docs and re.search(r'\b(?:international|canada)\b',query,re.I):
+        sections.append('shipping_policy:dispatch')
     return Obligations(tuple(dict.fromkeys(intents)),resolved,tuple(requests),tuple(dict.fromkeys(docs)),
         tracking,status,product,len(ids)>1,product_ref.get('sku') if product_ref else None,
-        needs_reference,sections)
+        needs_reference,tuple(sections))
 
 
 def catalog_reference(query, services, context=None):
@@ -203,9 +209,11 @@ async def fulfill(contract,agent,registry,query,context=None):
         # Preserve bounded public topic hints without copying arbitrary customer
         # text/identifiers into tool arguments. Hints never establish category authority.
         topics=[word for word in ['electronics','footwear','apparel','home','perishable','grocery','speaker','jacket','shoes','pots']
-                if re.search(r'\b'+word+r'\b',query,re.I)]
+                if 'faq' in missing and
+                re.search(r'\b'+word+r'\b',query,re.I)]
         text=' '.join(hints[doc] for doc in sorted(missing))+' '+' '.join(topics)
         if 'return_policy:restocking' in contract.required_sections:text='opened electronics restocking fee'
+        elif 'shipping_policy:dispatch' in contract.required_sections:text='international shipping dispatch Canada supported'
         category=next(iter(ctx.categories)) if len(ctx.categories)==1 else None
         await attempt('search_policy',{'query':text,'doc_types':sorted(missing),'category':category,'k':10})
 
