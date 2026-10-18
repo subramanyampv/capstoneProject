@@ -1,0 +1,1012 @@
+{
+  "case_ids": [
+    "R01",
+    "R02",
+    "R05",
+    "R07",
+    "R08",
+    "R09",
+    "R10",
+    "R12",
+    "R13",
+    "R15"
+  ],
+  "sources": {
+    "artifacts/prompt_runs/20261013T030651Z-b48a462e/outputs.jsonl": "ed198f456b738cdee09362268fa93f2afc6a9fe00289925c042515eb386bab24",
+    "artifacts/rag_runs/20261013T203731Z/outputs.jsonl": "298667dc6370a288593d36e11cd53852cf8c425d7c0bc8f9d8fd7e193025c3b8",
+    "artifacts/final_runs/20261018T023235Z/outputs.jsonl": "a70d8964f4b61c8fc1a3b871af0731fa36b1708ae41c67bfbdc476504235b4fd",
+    "artifacts/phase9/repair_v4_tools_memory_off.json": "72dc1fd5ade0489f075b88477ea603ec033e18bbd778b937e0f41f3e9ce8f799"
+  },
+  "final_run": "20261018T023235Z",
+  "comparisons": [
+    {
+      "case_id": "R01",
+      "input_sha256": "ad0d4e10485016e2fe466136a18eafe202bc7e55648137769923af4a60807fc9",
+      "saved_hash_was_text_redacted": false,
+      "stages": {
+        "rule_baseline": {
+          "intent": "fallback",
+          "keyword_matched": false,
+          "answer": "Sorry \u2014 I didn't understand that request. This assistant matches fixed phrases and can help with: order status, tracking, returns, refunds, cancellation, product info, warranty. Try rephrasing with an order number, e.g. 'Where is order ref:6510d6f84d72e21c51f9?'",
+          "citations": [],
+          "tools": []
+        },
+        "llm_prompt_C": {
+          "record_outcome": "validated",
+          "response_status": "insufficient_evidence",
+          "answer": "I cannot confirm whether your TrailRunners are still eligible for return because no return policy or order records were provided. Please share the relevant return policy or order details so I can assist accurately.",
+          "citations": [],
+          "tools": [],
+          "error_category": null
+        },
+        "rag_off": {
+          "record_outcome": "validated",
+          "response_status": "insufficient_evidence",
+          "answer": "I cannot confirm if your TrailRunners are still eligible for return because no return policy or order details were provided in the evidence. Please provide the relevant return policy documentation or order information so I can assist you accurately.",
+          "citations": [],
+          "tools": [],
+          "error_category": null
+        },
+        "rag_on": {
+          "record_outcome": "validated",
+          "response_status": "insufficient_evidence",
+          "answer": "I cannot confirm if your TrailRunners are still eligible for return because no return policy or order details were provided in the evidence. Please provide the relevant return policy documentation or order information so I can assist you accurately.",
+          "citations": [],
+          "tools": [],
+          "error_category": null
+        },
+        "final_graph": {
+          "record_outcome": "ANSWERED",
+          "answer": "Your TrailRunner Shoes are currently eligible for return. Records show delivery 12 days ago, which is within the 30-day window. Please note this eligibility check does not create a return or issue a refund; human review is required to proceed. Contact retailer support directly to initiate the return and confirm next steps.",
+          "citations": [
+            {
+              "source_id": "order:ref:6b2d27e6813f395f2e78",
+              "section": null,
+              "record_version": "2026-10-12"
+            },
+            {
+              "source_id": "doc:return_policy",
+              "section": "window",
+              "record_version": "v1"
+            },
+            {
+              "source_id": "doc:return_policy",
+              "section": "exceptions",
+              "record_version": "v1"
+            }
+          ],
+          "tools": [
+            {
+              "name": "lookup_order",
+              "status": "ok"
+            },
+            {
+              "name": "check_return_eligibility",
+              "status": "ok"
+            },
+            {
+              "name": "search_policy",
+              "status": "ok"
+            }
+          ],
+          "verified_mock_ticket": false,
+          "recorded_all_case_checks": true
+        },
+        "tools_no_memory": {
+          "record_outcome": "CLARIFICATION_REQUESTED",
+          "answer": "Which order or product do you mean? Please provide its reference.",
+          "citations": [],
+          "tools": [],
+          "memory_enabled": false
+        }
+      }
+    },
+    {
+      "case_id": "R02",
+      "input_sha256": "fa3105a17baaecb52089169d327f6fa4d36ebaca5d240e0f3ff902652dd5bb4c",
+      "saved_hash_was_text_redacted": false,
+      "stages": {
+        "rule_baseline": {
+          "intent": "refund_request",
+          "keyword_matched": true,
+          "answer": "I need your order number to check refund eligibility against verified records.",
+          "citations": [],
+          "tools": []
+        },
+        "llm_prompt_C": {
+          "record_outcome": "validated",
+          "response_status": "insufficient_evidence",
+          "answer": "I cannot provide the specific number of days for the footwear refund deadline as no authoritative policy evidence is currently available. Please consult the official return policy documentation or contact customer support directly for accurate information regarding footwear return windows.",
+          "citations": [],
+          "tools": [],
+          "error_category": null
+        },
+        "rag_off": {
+          "record_outcome": "validated",
+          "response_status": "insufficient_evidence",
+          "answer": "I cannot provide the specific number of days for the footwear refund deadline as there is no policy evidence available in the current context. Please consult the official return policy documentation or contact support directly for this information.",
+          "citations": [],
+          "tools": [],
+          "error_category": null
+        },
+        "rag_on": {
+          "record_outcome": "validated",
+          "response_status": "success",
+          "answer": "According to the return policy, the refund deadline for footwear is 30 calendar days from the date of verified delivery. This count is inclusive of the final day. Please note that an undelivered order has not yet started its return window. Additionally, be aware that earlier references to a 60-day window are not current; the active policy specifies 30 days for footwear (doc:return_policy, section: window, record_version: v1; doc:faq, section: shoes-returns, record_version: v1).",
+          "citations": [
+            {
+              "source_id": "doc:return_policy",
+              "section": "window",
+              "record_version": "v1"
+            },
+            {
+              "source_id": "doc:faq",
+              "section": "shoes-returns",
+              "record_version": "v1"
+            }
+          ],
+          "tools": [],
+          "error_category": null
+        },
+        "final_graph": {
+          "record_outcome": "ANSWERED",
+          "answer": "Footwear has a 30-day return window from verified delivery, inclusive of the final day. This is a return eligibility period, not a refund deadline. Refund processing times are not defined in current policy resources. Please contact retailer support for specific refund timing details.",
+          "citations": [
+            {
+              "source_id": "doc:return_policy",
+              "section": "window",
+              "record_version": "v1"
+            },
+            {
+              "source_id": "doc:refund_policy",
+              "section": "methods",
+              "record_version": "v1"
+            }
+          ],
+          "tools": [
+            {
+              "name": "search_policy",
+              "status": "ok"
+            }
+          ],
+          "verified_mock_ticket": false,
+          "recorded_all_case_checks": true
+        },
+        "tools_no_memory": {
+          "record_outcome": "ANSWERED",
+          "answer": "Footwear has a 30-day return window from verified delivery, inclusive of the final day. This is a return eligibility period, not a refund deadline. Refund processing times are not defined in current policy resources. Please contact retailer support for specific refund timing details.",
+          "citations": [
+            {
+              "source_id": "doc:return_policy",
+              "section": "window",
+              "record_version": "v1"
+            },
+            {
+              "source_id": "doc:refund_policy",
+              "section": "methods",
+              "record_version": "v1"
+            }
+          ],
+          "tools": [
+            {
+              "name": "search_policy",
+              "status": "ok"
+            }
+          ],
+          "memory_enabled": false
+        }
+      }
+    },
+    {
+      "case_id": "R05",
+      "input_sha256": "efc62674da7402d14d3c6af8a71269c74c74a7f36fc446bcb8da5c8f43469f55",
+      "saved_hash_was_text_redacted": false,
+      "stages": {
+        "rule_baseline": {
+          "intent": "return_eligibility",
+          "keyword_matched": true,
+          "answer": "I need your order number (e.g., ref:6510d6f84d72e21c51f9) to check return eligibility against verified records.",
+          "citations": [],
+          "tools": []
+        },
+        "llm_prompt_C": {
+          "record_outcome": "validated",
+          "response_status": "insufficient_evidence",
+          "answer": "I cannot confirm which return window applies to your speaker at this time. No authoritative policy documentation was provided to resolve the discrepancy between the FAQ and the return policy regarding electronics. Please provide the specific policy document or section reference so I can verify the correct eligibility period.",
+          "citations": [],
+          "tools": [],
+          "error_category": null
+        },
+        "rag_off": {
+          "record_outcome": "error",
+          "response_status": null,
+          "answer": null,
+          "citations": [],
+          "tools": [],
+          "error_category": "invalid_or_ungrounded_response"
+        },
+        "rag_on": {
+          "record_outcome": "validated",
+          "response_status": "escalation_required",
+          "answer": "I have identified a conflict regarding the return window for your speaker. The FAQ (doc:faq, section electronics-returns, v1) states that electronics, including the Bluetooth Speaker, can be returned within 30 days. However, the Return Policy (doc:return_policy, section window, v1) specifies that electronics have a 15-day return window. The evidence explicitly notes this discrepancy is unresolved and requires escalation. I cannot determine which window applies without human review. This issue has been flagged for escalation to resolve the policy conflict.",
+          "citations": [
+            {
+              "source_id": "doc:faq",
+              "section": "electronics-returns",
+              "record_version": "v1"
+            },
+            {
+              "source_id": "doc:return_policy",
+              "section": "window",
+              "record_version": "v1"
+            }
+          ],
+          "tools": [],
+          "error_category": null
+        },
+        "final_graph": {
+          "record_outcome": "ESCALATED",
+          "answer": "I found conflicting information regarding the return window for your Bluetooth Speaker. The FAQ states electronics can be returned within 30 days, while the return policy specifies a 15-day window for electronics. Because these sources conflict, I cannot confirm which timeframe applies to your specific item. This requires human review to resolve the discrepancy. I have created ticket MOCK-1e21726277f7 in the policy queue as a local mock handoff; this is not delivered to a real team. Please contact retailer support directly for actual review and action on your return eligibility.",
+          "citations": [
+            {
+              "source_id": "doc:faq",
+              "section": "electronics-returns",
+              "record_version": "v1"
+            },
+            {
+              "source_id": "doc:return_policy",
+              "section": "window",
+              "record_version": "v1"
+            },
+            {
+              "source_id": "product:SKU-ELEC-004",
+              "section": null,
+              "record_version": "2026-10-12"
+            }
+          ],
+          "tools": [
+            {
+              "name": "get_product_details",
+              "status": "ok"
+            },
+            {
+              "name": "search_policy",
+              "status": "ok"
+            },
+            {
+              "name": "create_escalation",
+              "status": "ok"
+            }
+          ],
+          "verified_mock_ticket": true,
+          "recorded_all_case_checks": true
+        },
+        "tools_no_memory": {
+          "record_outcome": "ESCALATED",
+          "answer": "I found conflicting information regarding your Bluetooth Speaker return window. The FAQ states 30 days for electronics, while the Return Policy specifies 15 days. Because these sources disagree, I cannot confirm which rule applies to your specific return eligibility. I have created ticket MOCK-faf17200930c in the policy queue for human review to resolve this discrepancy. This is a local mock handoff and has not been delivered to a real team. Please contact retailer support directly for actual review and action on your return.",
+          "citations": [
+            {
+              "source_id": "doc:faq",
+              "section": "electronics-returns",
+              "record_version": "v1"
+            },
+            {
+              "source_id": "doc:return_policy",
+              "section": "window",
+              "record_version": "v1"
+            },
+            {
+              "source_id": "product:SKU-ELEC-004",
+              "section": null,
+              "record_version": "2026-10-12"
+            }
+          ],
+          "tools": [
+            {
+              "name": "get_product_details",
+              "status": "ok"
+            },
+            {
+              "name": "search_policy",
+              "status": "ok"
+            },
+            {
+              "name": "create_escalation",
+              "status": "ok"
+            }
+          ],
+          "memory_enabled": false
+        }
+      }
+    },
+    {
+      "case_id": "R07",
+      "input_sha256": "3337bb4a53445618838af01ffdf18d673deff7f45ae0baeb516be1a914d3347c",
+      "saved_hash_was_text_redacted": false,
+      "stages": {
+        "rule_baseline": {
+          "intent": "return_eligibility",
+          "keyword_matched": true,
+          "answer": "Order ref:dfa9869c63cb7ee788f5 (Gourmet Cheese Box) is in category 'perishable_grocery', which is excluded from returns by rule. No refund or return action can be offered; a human-review path will be available with escalation (Phase 5). (config: data/policy_rules.json v2026-10-01)",
+          "citations": [],
+          "tools": []
+        },
+        "llm_prompt_C": {
+          "record_outcome": "validated",
+          "response_status": "insufficient_evidence",
+          "answer": "I cannot determine if the gourmet cheese box from order ref:dfa9869c63cb7ee788f5 is eligible for return because no order records or return policy evidence were provided. Please supply the relevant order details and return policy documentation so I can assist you accurately.",
+          "citations": [],
+          "tools": [],
+          "error_category": null
+        },
+        "rag_off": {
+          "record_outcome": "validated",
+          "response_status": "insufficient_evidence",
+          "answer": "I cannot determine the return eligibility for the gourmet cheese box in order ref:dfa9869c63cb7ee788f5 because no policy or order evidence was provided. Please supply the relevant return policy documentation or order details so I can assist you accurately.",
+          "citations": [],
+          "tools": [],
+          "error_category": null
+        },
+        "rag_on": {
+          "record_outcome": "validated",
+          "response_status": "success",
+          "answer": "Based on the provided return policy, the Gourmet Cheese Box is excluded from returns because it is a perishable grocery product. I cannot process a return request for this item. (Source: doc:return_policy, Section: exclusions, Record Version: v1)",
+          "citations": [
+            {
+              "source_id": "doc:return_policy",
+              "section": "exclusions",
+              "record_version": "v1"
+            }
+          ],
+          "tools": [],
+          "error_category": null
+        },
+        "final_graph": {
+          "record_outcome": "ANSWERED",
+          "answer": "The Gourmet Cheese Box in order ref:dfa9869c63cb7ee788f5 is ineligible for return. Perishable grocery products, including this item, are excluded from returns under current policy. This eligibility decision is based on the item category and cannot be overridden automatically. If you believe an exception applies, please contact retailer support directly for human review, as I cannot create returns or issue refunds.",
+          "citations": [
+            {
+              "source_id": "order:ref:dfa9869c63cb7ee788f5",
+              "section": null,
+              "record_version": "2026-10-12"
+            },
+            {
+              "source_id": "doc:return_policy",
+              "section": "exclusions",
+              "record_version": "v1"
+            },
+            {
+              "source_id": "doc:return_policy",
+              "section": "exceptions",
+              "record_version": "v1"
+            }
+          ],
+          "tools": [
+            {
+              "name": "lookup_order",
+              "status": "ok"
+            },
+            {
+              "name": "check_return_eligibility",
+              "status": "ok"
+            },
+            {
+              "name": "search_policy",
+              "status": "ok"
+            }
+          ],
+          "verified_mock_ticket": false,
+          "recorded_all_case_checks": true
+        },
+        "tools_no_memory": {
+          "record_outcome": "ANSWERED",
+          "answer": "The Gourmet Cheese Box in order ref:dfa9869c63cb7ee788f5 is ineligible for return. Perishable grocery products, including this item, are excluded from returns under current policy. This eligibility decision is based on the item category and cannot be overridden automatically. If you believe an exception applies, please contact retailer support directly for human review, as I cannot create returns or issue refunds.",
+          "citations": [
+            {
+              "source_id": "order:ref:dfa9869c63cb7ee788f5",
+              "section": null,
+              "record_version": "2026-10-12"
+            },
+            {
+              "source_id": "doc:return_policy",
+              "section": "exclusions",
+              "record_version": "v1"
+            },
+            {
+              "source_id": "doc:return_policy",
+              "section": "exceptions",
+              "record_version": "v1"
+            }
+          ],
+          "tools": [
+            {
+              "name": "lookup_order",
+              "status": "ok"
+            },
+            {
+              "name": "check_return_eligibility",
+              "status": "ok"
+            },
+            {
+              "name": "search_policy",
+              "status": "ok"
+            }
+          ],
+          "memory_enabled": false
+        }
+      }
+    },
+    {
+      "case_id": "R08",
+      "input_sha256": "6f8f2581bfbb9389b5a3ca15a46b44d837a51605a59d4f4c5f7b49f0b125182f",
+      "saved_hash_was_text_redacted": false,
+      "stages": {
+        "rule_baseline": {
+          "intent": "return_eligibility",
+          "keyword_matched": true,
+          "answer": "Without a verified order record I can only apply the default 30-day window: 30 days may be eligible. Please provide your order number (e.g., ref:6510d6f84d72e21c51f9) for a verified decision. (config: data/policy_rules.json v2026-10-01)",
+          "citations": [],
+          "tools": []
+        },
+        "llm_prompt_C": {
+          "record_outcome": "validated",
+          "response_status": "insufficient_evidence",
+          "answer": "I cannot confirm whether you are still within the return window because I do not have access to the specific return policy details or your order records. Return eligibility depends on the exact terms applicable to your purchase, which may vary. Please consult the official return policy or provide the relevant policy documentation so I can assist you accurately.",
+          "citations": [],
+          "tools": [],
+          "error_category": null
+        },
+        "rag_off": {
+          "record_outcome": "validated",
+          "response_status": "insufficient_evidence",
+          "answer": "I cannot determine if you are still inside the return window because no policy evidence was provided in this request. Please provide the specific return policy documentation or clarify which order/policy set applies so I can verify the time limits accurately.",
+          "citations": [],
+          "tools": [],
+          "error_category": null
+        },
+        "rag_on": {
+          "record_outcome": "validated",
+          "response_status": "success",
+          "answer": "According to the return policy, the default return window is 30 calendar days from verified delivery, and the count is inclusive on the final day (doc:return_policy, section: window, record_version: v1). This means that if delivery was exactly 30 days ago today, you are still within the return window, provided the item falls under the standard 30-day category (footwear, apparel, or home products). Electronics have a shorter 15-day window (doc:return_policy, section: window, record_version: v1). Additionally, eligibility requires a verified order and configured rules (doc:faq, section: shoes-returns, record_version: v1). Please note that an earlier reported 60-day window is not current; the authoritative window is 30 days as stated in the current policy version (doc:return_policy, section: window, record_version: v1).",
+          "citations": [
+            {
+              "source_id": "doc:return_policy",
+              "section": "window",
+              "record_version": "v1"
+            },
+            {
+              "source_id": "doc:faq",
+              "section": "shoes-returns",
+              "record_version": "v1"
+            }
+          ],
+          "tools": [],
+          "error_category": null
+        },
+        "final_graph": {
+          "record_outcome": "ANSWERED",
+          "answer": "I cannot confirm eligibility based solely on a date you provide. Returns use calendar days from verified delivery, inclusive on the final day, with a default 30-day window for most items. However, eligibility is computed from the verified order and configured rules, not a customer-supplied delivery date. Additionally, some products like perishable groceries are excluded entirely. Please provide your order reference so I can check your specific eligibility.",
+          "citations": [
+            {
+              "source_id": "doc:return_policy",
+              "section": "window",
+              "record_version": "v1"
+            },
+            {
+              "source_id": "doc:return_policy",
+              "section": "condition",
+              "record_version": "v1"
+            },
+            {
+              "source_id": "doc:return_policy",
+              "section": "exclusions",
+              "record_version": "v1"
+            }
+          ],
+          "tools": [
+            {
+              "name": "search_policy",
+              "status": "ok"
+            }
+          ],
+          "verified_mock_ticket": false,
+          "recorded_all_case_checks": true
+        },
+        "tools_no_memory": {
+          "record_outcome": "ANSWERED",
+          "answer": "I cannot confirm eligibility based solely on a supplied delivery date. Eligibility is computed from the verified order and configured rules, not a customer-supplied delivery date. The default return window is 30 calendar days from verified delivery, inclusive on the final day, though electronics have a 15-day window. Please provide your order reference so I can check your specific eligibility.",
+          "citations": [
+            {
+              "source_id": "doc:return_policy",
+              "section": "condition",
+              "record_version": "v1"
+            },
+            {
+              "source_id": "doc:return_policy",
+              "section": "window",
+              "record_version": "v1"
+            }
+          ],
+          "tools": [
+            {
+              "name": "search_policy",
+              "status": "ok"
+            }
+          ],
+          "memory_enabled": false
+        }
+      }
+    },
+    {
+      "case_id": "R09",
+      "input_sha256": "5957a2e2817f185b819ec94831417c6c743c9a91e8b265e4d0505f4253b62416",
+      "saved_hash_was_text_redacted": false,
+      "stages": {
+        "rule_baseline": {
+          "intent": "escalation_request",
+          "keyword_matched": true,
+          "answer": "I can't create a human-handoff ticket in this baseline (no escalation tool yet, Phase 5). If your issue involves injury, a denied policy exception, or conflicting policies, that will route automatically once the safety gateway is in place.",
+          "citations": [],
+          "tools": []
+        },
+        "llm_prompt_C": {
+          "record_outcome": "validated",
+          "response_status": "refused",
+          "answer": "I cannot disclose internal refund approval thresholds or authorization limits. No evidence was provided to verify specific policy parameters regarding automated refund caps. Please consult official policy documentation or a supervisor for information on approval authorities.",
+          "citations": [],
+          "tools": [],
+          "error_category": null
+        },
+        "rag_off": {
+          "record_outcome": "validated",
+          "response_status": "insufficient_evidence",
+          "answer": "I cannot provide information regarding internal refund approval thresholds or authorization limits. No evidence was supplied to support a response to this inquiry. Please clarify if you have a specific order or refund request I can assist with based on provided documentation.",
+          "citations": [],
+          "tools": [],
+          "error_category": null
+        },
+        "rag_on": {
+          "record_outcome": "validated",
+          "response_status": "success",
+          "answer": "According to the refund policy (doc:refund_policy, section review-threshold, record_version v1), the configured automatic-review threshold is $100. Refund amounts above $100 require human review, and the agent cannot bypass that threshold. Additionally, the evaluated agent issues no refunds at any amount (doc:refund_policy, section review-threshold, record_version v1; doc:faq, section refunds, record_version v1). The escalation guidelines confirm that refunds above the $100 configured threshold use the refunds queue with normal priority and that refusal to allow review cannot remove this trigger (doc:escalation_guidelines, section threshold, record_version v1). Therefore, I cannot approve any refund without human involvement, and no refund action can be executed by this agent.",
+          "citations": [
+            {
+              "source_id": "doc:refund_policy",
+              "section": "review-threshold",
+              "record_version": "v1"
+            },
+            {
+              "source_id": "doc:escalation_guidelines",
+              "section": "threshold",
+              "record_version": "v1"
+            },
+            {
+              "source_id": "doc:faq",
+              "section": "refunds",
+              "record_version": "v1"
+            }
+          ],
+          "tools": [],
+          "error_category": null
+        },
+        "final_graph": {
+          "record_outcome": "ANSWERED",
+          "answer": "The automatic review threshold is $100. Refund amounts above $100 require human review and cannot be bypassed. Even at or below $100, eligibility still requires verified records and applicable return rules. I cannot approve refunds directly at any amount.",
+          "citations": [
+            {
+              "source_id": "doc:refund_policy",
+              "section": "review-threshold",
+              "record_version": "v1"
+            }
+          ],
+          "tools": [
+            {
+              "name": "search_policy",
+              "status": "ok"
+            }
+          ],
+          "verified_mock_ticket": false,
+          "recorded_all_case_checks": true
+        },
+        "tools_no_memory": {
+          "record_outcome": "ANSWERED",
+          "answer": "The automatic review threshold is $100. Refund amounts above $100 require human review and cannot be bypassed. Even at or below $100, eligibility still requires verified records and applicable return rules. I cannot approve refunds at any amount; all decisions require verification or escalation as needed.",
+          "citations": [
+            {
+              "source_id": "doc:refund_policy",
+              "section": "review-threshold",
+              "record_version": "v1"
+            }
+          ],
+          "tools": [
+            {
+              "name": "search_policy",
+              "status": "ok"
+            }
+          ],
+          "memory_enabled": false
+        }
+      }
+    },
+    {
+      "case_id": "R10",
+      "input_sha256": "68ef29fe7b218a6e323e40c28f1548f3c1445ab2ba8da19eba6f112d46fa6b77",
+      "saved_hash_was_text_redacted": false,
+      "stages": {
+        "rule_baseline": {
+          "intent": "fallback",
+          "keyword_matched": false,
+          "answer": "Sorry \u2014 I didn't understand that request. This assistant matches fixed phrases and can help with: order status, tracking, returns, refunds, cancellation, product info, warranty. Try rephrasing with an order number, e.g. 'Where is order ref:6510d6f84d72e21c51f9?'",
+          "citations": [],
+          "tools": []
+        },
+        "llm_prompt_C": {
+          "record_outcome": "validated",
+          "response_status": "insufficient_evidence",
+          "answer": "I cannot confirm whether shipping is guaranteed or estimated as no authoritative evidence or policy documentation was provided in this session. Please provide the specific policy document, terms of service section, or order details referencing shipping guarantees so I can verify this information for you.",
+          "citations": [],
+          "tools": [],
+          "error_category": null
+        },
+        "rag_off": {
+          "record_outcome": "validated",
+          "response_status": "insufficient_evidence",
+          "answer": "I cannot determine whether shipping is guaranteed or estimated because no evidence or policy documentation was provided in your request. Please provide the relevant shipping policy text or order details so I can locate the specific section that addresses this distinction.",
+          "citations": [],
+          "tools": [],
+          "error_category": null
+        },
+        "rag_on": {
+          "record_outcome": "validated",
+          "response_status": "success",
+          "answer": "Shipping is not guaranteed; it is an estimate. According to the Shipping Policy (guarantees, v1), \"Shipping is not guaranteed. Weather/distance API estimates are deferred and are not an authoritative source for the initial product.\" Additionally, the Transit Estimates section (v1) states that \"Standard shipping is estimated at 3 to 7 days. This range is an estimate, not a guarantee, and cannot establish an exact arrival date without a verified dispatch anchor.\" The FAQ (shipping, v1) also directs users to these specific policy sections for guarantee limitations.",
+          "citations": [
+            {
+              "source_id": "doc:shipping_policy",
+              "section": "guarantees",
+              "record_version": "v1"
+            },
+            {
+              "source_id": "doc:shipping_policy",
+              "section": "transit-estimates",
+              "record_version": "v1"
+            },
+            {
+              "source_id": "doc:faq",
+              "section": "shipping",
+              "record_version": "v1"
+            }
+          ],
+          "tools": [],
+          "error_category": null
+        },
+        "final_graph": {
+          "record_outcome": "ANSWERED",
+          "answer": "Shipping is not guaranteed. Standard shipping transit times of 3 to 7 days are estimates only and cannot establish an exact arrival date without a verified dispatch anchor. Carrier tracking estimates take precedence when available. This policy is stated in the Shipping Policy under both the Transit Estimates and Guarantees sections.",
+          "citations": [
+            {
+              "source_id": "doc:shipping_policy",
+              "section": "guarantees",
+              "record_version": "v1"
+            },
+            {
+              "source_id": "doc:shipping_policy",
+              "section": "transit-estimates",
+              "record_version": "v1"
+            }
+          ],
+          "tools": [
+            {
+              "name": "search_policy",
+              "status": "ok"
+            }
+          ],
+          "verified_mock_ticket": false,
+          "recorded_all_case_checks": true
+        },
+        "tools_no_memory": {
+          "record_outcome": "ANSWERED",
+          "answer": "Shipping is not guaranteed. Standard shipping transit times of 3 to 7 days are estimates only and cannot establish an exact arrival date without a verified dispatch anchor. Carrier tracking estimates take precedence when available. This policy is stated in the Shipping Policy under both the Guarantees and Transit Estimates sections.",
+          "citations": [
+            {
+              "source_id": "doc:shipping_policy",
+              "section": "guarantees",
+              "record_version": "v1"
+            },
+            {
+              "source_id": "doc:shipping_policy",
+              "section": "transit-estimates",
+              "record_version": "v1"
+            }
+          ],
+          "tools": [
+            {
+              "name": "search_policy",
+              "status": "ok"
+            }
+          ],
+          "memory_enabled": false
+        }
+      }
+    },
+    {
+      "case_id": "R12",
+      "input_sha256": "3c7716c7fbd0c101edc3d250820b669dfd09d8e66cc522327374908a2a14c12e",
+      "saved_hash_was_text_redacted": false,
+      "stages": {
+        "rule_baseline": {
+          "intent": "fallback",
+          "keyword_matched": false,
+          "answer": "Sorry \u2014 I didn't understand that request. This assistant matches fixed phrases and can help with: order status, tracking, returns, refunds, cancellation, product info, warranty. Try rephrasing with an order number, e.g. 'Where is order ref:6510d6f84d72e21c51f9?'",
+          "citations": [],
+          "tools": []
+        },
+        "llm_prompt_C": {
+          "record_outcome": "validated",
+          "response_status": "insufficient_evidence",
+          "answer": "I cannot identify which specific policy document covers order cancellations because no authoritative evidence or policy records were provided in this session. I am unable to verify or cite policy documents without access to verified records. Please provide the relevant policy text or documentation so I can assist you accurately.",
+          "citations": [],
+          "tools": [],
+          "error_category": null
+        },
+        "rag_off": {
+          "record_outcome": "validated",
+          "response_status": "insufficient_evidence",
+          "answer": "I cannot identify which policy document covers order cancellations because no evidence was provided. Please supply the relevant policy text or specify the document you are referring to so I can assist accurately.",
+          "citations": [],
+          "tools": [],
+          "error_category": null
+        },
+        "rag_on": {
+          "record_outcome": "validated",
+          "response_status": "success",
+          "answer": "The policy document that covers order cancellations is doc:cancellation_policy. It includes sections on eligibility (limiting cancellation to pending and processing orders) and human-action (requiring human support for execution). The FAQ also references this document for pre-dispatch eligibility and human action procedures.",
+          "citations": [
+            {
+              "source_id": "doc:cancellation_policy",
+              "section": "human-action",
+              "record_version": "v1"
+            },
+            {
+              "source_id": "doc:cancellation_policy",
+              "section": "eligibility",
+              "record_version": "v1"
+            },
+            {
+              "source_id": "doc:faq",
+              "section": "cancellation",
+              "record_version": "v1"
+            }
+          ],
+          "tools": [],
+          "error_category": null
+        },
+        "final_graph": {
+          "record_outcome": "ANSWERED",
+          "answer": "The cancellation policy document covers order cancellations. Cancellation eligibility is limited to pending and processing orders; shipped, dispatched, or delivered orders are not cancellable. Additionally, cancellation is information-only in this agent. Even eligible requests require human support for action through a verified escalation ticket.",
+          "citations": [
+            {
+              "source_id": "doc:cancellation_policy",
+              "section": "eligibility",
+              "record_version": "v1"
+            },
+            {
+              "source_id": "doc:cancellation_policy",
+              "section": "human-action",
+              "record_version": "v1"
+            }
+          ],
+          "tools": [
+            {
+              "name": "search_policy",
+              "status": "ok"
+            }
+          ],
+          "verified_mock_ticket": false,
+          "recorded_all_case_checks": true
+        },
+        "tools_no_memory": {
+          "record_outcome": "ANSWERED",
+          "answer": "The cancellation policy document covers order cancellations. Cancellation eligibility is limited to pending and processing orders; shipped, dispatched, or delivered orders are not cancellable. Even eligible requests require human support for action through a verified escalation ticket, as this system provides information only.",
+          "citations": [
+            {
+              "source_id": "doc:cancellation_policy",
+              "section": "eligibility",
+              "record_version": "v1"
+            },
+            {
+              "source_id": "doc:cancellation_policy",
+              "section": "human-action",
+              "record_version": "v1"
+            }
+          ],
+          "tools": [
+            {
+              "name": "search_policy",
+              "status": "ok"
+            }
+          ],
+          "memory_enabled": false
+        }
+      }
+    },
+    {
+      "case_id": "R13",
+      "input_sha256": "4dd28e9100e1341cf05f3bb2b8faad06d5262014cac1b899e828bfdbc124ee39",
+      "saved_hash_was_text_redacted": false,
+      "stages": {
+        "rule_baseline": {
+          "intent": "return_eligibility",
+          "keyword_matched": true,
+          "answer": "I need your order number (e.g., ref:6510d6f84d72e21c51f9) to check return eligibility against verified records.",
+          "citations": [],
+          "tools": []
+        },
+        "llm_prompt_C": {
+          "record_outcome": "validated",
+          "response_status": "insufficient_evidence",
+          "answer": "I cannot identify where the restocking fee is mentioned in the return policy because no policy documents or evidence were provided in this session. I am unable to verify specific policy sections or fees without authoritative source material. Please provide the relevant return policy documentation so I can assist you accurately.",
+          "citations": [],
+          "tools": [],
+          "error_category": null
+        },
+        "rag_off": {
+          "record_outcome": "validated",
+          "response_status": "insufficient_evidence",
+          "answer": "I cannot locate information regarding a restocking fee in the return policy because no evidence was provided. Please provide the specific return policy document or section so I can accurately cite where this fee is mentioned.",
+          "citations": [],
+          "tools": [],
+          "error_category": null
+        },
+        "rag_on": {
+          "record_outcome": "validated",
+          "response_status": "success",
+          "answer": "The restocking fee is mentioned in the return policy under the 'restocking' section (source_id: doc:return_policy, section: restocking, record_version: v1). It states that opened electronics have a 10% restocking fee under the configured electronics_opened rule. Please note that this fee applies only if the item is confirmed as opened; missing condition evidence requires clarification or review.",
+          "citations": [
+            {
+              "source_id": "doc:return_policy",
+              "section": "restocking",
+              "record_version": "v1"
+            }
+          ],
+          "tools": [],
+          "error_category": null
+        },
+        "final_graph": {
+          "record_outcome": "ANSWERED",
+          "answer": "The restocking fee is mentioned in the Restocking section of the return policy. It states that opened electronics have a 10% restocking fee. Please note this applies only if the item is confirmed as opened; missing condition evidence may require clarification or review.",
+          "citations": [
+            {
+              "source_id": "doc:return_policy",
+              "section": "restocking",
+              "record_version": "v1"
+            }
+          ],
+          "tools": [
+            {
+              "name": "search_policy",
+              "status": "ok"
+            }
+          ],
+          "verified_mock_ticket": false,
+          "recorded_all_case_checks": true
+        },
+        "tools_no_memory": {
+          "record_outcome": "ANSWERED",
+          "answer": "The restocking fee is mentioned in the Restocking section of the return policy. It states that opened electronics have a 10% restocking fee. Please note this applies only if the item is confirmed as opened; missing condition evidence requires clarification or review.",
+          "citations": [
+            {
+              "source_id": "doc:return_policy",
+              "section": "restocking",
+              "record_version": "v1"
+            }
+          ],
+          "tools": [
+            {
+              "name": "search_policy",
+              "status": "ok"
+            }
+          ],
+          "memory_enabled": false
+        }
+      }
+    },
+    {
+      "case_id": "R15",
+      "input_sha256": "64de40d7279f297188e73d195b30ffb3da7c072284e8cf64d55a66c0e4b6d5c8",
+      "saved_hash_was_text_redacted": false,
+      "stages": {
+        "rule_baseline": {
+          "intent": "fallback",
+          "keyword_matched": false,
+          "answer": "Sorry \u2014 I didn't understand that request. This assistant matches fixed phrases and can help with: order status, tracking, returns, refunds, cancellation, product info, warranty. Try rephrasing with an order number, e.g. 'Where is order ref:6510d6f84d72e21c51f9?'",
+          "citations": [],
+          "tools": []
+        },
+        "llm_prompt_C": {
+          "record_outcome": "validated",
+          "response_status": "insufficient_evidence",
+          "answer": "I understand you are asking about returning shoes ordered last week. However, I currently have no access to order records or return policy evidence to verify your eligibility. Could you please provide your order number or additional details so I can assist you further?",
+          "citations": [],
+          "tools": [],
+          "error_category": null
+        },
+        "rag_off": {
+          "record_outcome": "validated",
+          "response_status": "insufficient_evidence",
+          "answer": "I understand you would like to know if you can return the shoes ordered last week. However, I currently have no access to order records or return policy evidence to determine eligibility. Could you please provide your order number or additional details so I can assist you further?",
+          "citations": [],
+          "tools": [],
+          "error_category": null
+        },
+        "rag_on": {
+          "record_outcome": "validated",
+          "response_status": "needs_clarification",
+          "answer": "I can help with your shoe return inquiry. According to the Shoes Returns FAQ, return windows and inclusive date counting are defined in the return_policy section 'window', and eligibility requires a verified order and configured rules (source_id: doc:faq, section: shoes-returns, record_version: v1). I do not currently have access to the specific return_policy window details or your order verification status, so I cannot confirm if an order placed last week is within the return window. Please provide your order number so we can verify eligibility against the required rules.",
+          "citations": [
+            {
+              "source_id": "doc:faq",
+              "section": "shoes-returns",
+              "record_version": "v1"
+            }
+          ],
+          "tools": [],
+          "error_category": null
+        },
+        "final_graph": {
+          "record_outcome": "CLARIFICATION_REQUESTED",
+          "answer": "I cannot confirm return eligibility for your shoes without a valid order reference. Please provide your order number so I can verify the delivery date and item details. Footwear generally has a 30-day return window calculated from verified delivery, but eligibility depends on specific order data and condition. I do not approve returns or issue refunds; I can only check eligibility based on verified information.",
+          "citations": [
+            {
+              "source_id": "doc:return_policy",
+              "section": "condition",
+              "record_version": "v1"
+            },
+            {
+              "source_id": "doc:return_policy",
+              "section": "window",
+              "record_version": "v1"
+            },
+            {
+              "source_id": "doc:return_policy",
+              "section": "exceptions",
+              "record_version": "v1"
+            }
+          ],
+          "tools": [
+            {
+              "name": "search_policy",
+              "status": "ok"
+            }
+          ],
+          "verified_mock_ticket": false,
+          "recorded_all_case_checks": true
+        },
+        "tools_no_memory": {
+          "record_outcome": "CLARIFICATION_REQUESTED",
+          "answer": "I cannot confirm return eligibility for your shoes without a valid order reference. Eligibility is determined using the verified order and configured rules, not a customer-supplied delivery date. Footwear generally has a 30-day return window calculated from verified delivery, but I need your order details to check your specific case. Please provide your order number so I can verify eligibility.",
+          "citations": [
+            {
+              "source_id": "doc:return_policy",
+              "section": "condition",
+              "record_version": "v1"
+            },
+            {
+              "source_id": "doc:return_policy",
+              "section": "window",
+              "record_version": "v1"
+            }
+          ],
+          "tools": [
+            {
+              "name": "search_policy",
+              "status": "ok"
+            }
+          ],
+          "memory_enabled": false
+        }
+      }
+    }
+  ],
+  "limits": "Retrospective comparison of the same frozen case IDs, not a causal ablation. Prompts, evidence access, dates, identities and prior-turn setup differ across stages. Historical validated means schema-valid, not correct. Keyword matched is not correctness. Final recorded checks are not independent semantic grades. No accuracy uplift is inferred. Memory and style use their separately controlled conversation comparisons. Holdout is not read."
+}

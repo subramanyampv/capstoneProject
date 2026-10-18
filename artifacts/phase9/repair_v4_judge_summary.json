@@ -1,0 +1,78 @@
+{
+  "run": "20261018T023235Z",
+  "rubric": "phase9-grounded-support-v1",
+  "same_model_self_evaluation": true,
+  "cases": 65,
+  "metrics": {
+    "faithfulness": {
+      "measured": 53,
+      "above_threshold": 51,
+      "skipped": 12,
+      "errors": 0,
+      "below_threshold_case_ids": [
+        "N01",
+        "S02"
+      ],
+      "mean": 0.986654105025505
+    },
+    "answer_relevancy": {
+      "measured": 65,
+      "above_threshold": 31,
+      "skipped": 0,
+      "errors": 0,
+      "below_threshold_case_ids": [
+        "N03",
+        "N02",
+        "N01",
+        "N04",
+        "N07",
+        "N11",
+        "N14",
+        "N15",
+        "N17",
+        "N16",
+        "N20",
+        "N19",
+        "R02",
+        "R06",
+        "R04",
+        "R01",
+        "R08",
+        "R07",
+        "R09",
+        "R11",
+        "R12",
+        "R13",
+        "R14",
+        "R15",
+        "S07",
+        "S02",
+        "S05",
+        "S14",
+        "S09",
+        "M02",
+        "M01",
+        "M08",
+        "M10",
+        "M12"
+      ],
+      "mean": 0.758281233899678
+    },
+    "grounded_support": {
+      "measured": 65,
+      "above_threshold": 59,
+      "skipped": 0,
+      "errors": 0,
+      "below_threshold_case_ids": [
+        "S07",
+        "S13",
+        "S12",
+        "M08",
+        "M15",
+        "M13"
+      ],
+      "mean": 0.9584615384615384
+    }
+  },
+  "limits": "Original scores and threshold misses retained; no regrading. Prior-turn setup is separate from current-question judge context. Actual human calibration and independent holdout are distinct gates."
+}

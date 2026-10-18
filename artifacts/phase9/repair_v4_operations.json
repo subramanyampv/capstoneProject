@@ -1,0 +1,52 @@
+{
+  "run": "20261018T023235Z",
+  "application_commit": "d57aa4a",
+  "paths": {
+    "single_specialist": {
+      "n": 22,
+      "p50_ms": 10782.53,
+      "p95_ms": 16984.415,
+      "target_ms": 30000,
+      "target_met": true,
+      "individual_over_target": []
+    },
+    "multi_specialist_or_escalation": {
+      "n": 25,
+      "p50_ms": 22957.443,
+      "p95_ms": 31629.689,
+      "target_ms": 45000,
+      "target_met": true,
+      "individual_over_target": []
+    },
+    "clarification": {
+      "n": 12,
+      "p50_ms": 10469.917,
+      "p95_ms": 13299.517,
+      "target_ms": 15000,
+      "target_met": true,
+      "individual_over_target": []
+    },
+    "deterministic_refusal_or_command": {
+      "n": 6,
+      "p50_ms": 11.533,
+      "p95_ms": 36.576,
+      "target_ms": 2000,
+      "target_met": true,
+      "individual_over_target": []
+    }
+  },
+  "provider_reported_final_tokens": 471325,
+  "currency_cost": "Unavailable: endpoint pricing not configured; setup/judging/failed transport usage separate.",
+  "tool_errors": {
+    "INVALID_ARGUMENT": 7,
+    "NOT_FOUND": 2,
+    "TIMEOUT": 1,
+    "UNEXPECTED_ORDER": 1
+  },
+  "runtime_errors": {
+    "SPECIALIST_STEP_LIMIT": 1,
+    "O2_AUTHORITATIVE_CITATION:refund_policy": 1,
+    "SPECIALIST_model_unavailable": 1
+  },
+  "limits": "Final turns only, nearest-rank percentiles. Three case workers with serialized embeddings; DeepEval judging began after this full run. Separate offline-test/hosted-readback activity may affect host latency. Setup/warmup/judging excluded. Group zero-model refusal/command paths first, then clarification, then multiple distinct result agents or escalation, then one specialist. Not production SLA."
+}

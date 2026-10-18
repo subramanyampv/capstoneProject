@@ -1,0 +1,16 @@
+{
+  "application_commit": "d57aa4a",
+  "frozen_run": "20261018T023235Z",
+  "repeat_run": "20261018T023922Z",
+  "checks": {
+    "source_matches_frozen": true,
+    "repeat_same_source": true,
+    "model_configuration_unchanged": true,
+    "judged_source_outputs_match": true,
+    "blind_files_unchanged_since_independent_freeze": true
+  },
+  "human_review_status": "awaiting_human_review",
+  "blindness_scope": "Only byte hashes checked; implementation agent has not inspected v3 questions or contexts. No v3 holdout execution.",
+  "release_accepted": false,
+  "style_replay_scope": "First replay failed/confounded by policy timeout and is preserved; one unchanged-build controlled replay passes all nine checks. Intermittent local retrieval delays remain a limitation."
+}

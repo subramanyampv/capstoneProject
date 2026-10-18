@@ -1,0 +1,132 @@
+
+
+
+
+
+
+N03 [('faithfulness', 1.0, 'measured'), ('answer_relevancy', 0.7142857142857143, 'measured'), ('grounded_support', 1.0, 'measured')]
+
+N02 [('faithfulness', 1.0, 'measured'), ('answer_relevancy', 0.7142857142857143, 'measured'), ('grounded_support', 1.0, 'measured')]
+
+
+N01 [('faithfulness', 0.8888888888888888, 'measured'), ('answer_relevancy', 0.6842105263157895, 'measured'), ('grounded_support', 1.0, 'measured')]
+
+
+
+
+N05 [('faithfulness', 1.0, 'measured'), ('answer_relevancy', 1.0, 'measured'), ('grounded_support', 1.0, 'measured')]
+
+
+N04 [('faithfulness', 1.0, 'measured'), ('answer_relevancy', 0.6, 'measured'), ('grounded_support', 1.0, 'measured')]
+
+
+
+N06 [('faithfulness', 1.0, 'measured'), ('answer_relevancy', 1.0, 'measured'), ('grounded_support', 1.0, 'measured')]
+
+
+
+
+N08 [('faithfulness', 0.9, 'measured'), ('answer_relevancy', 0.9090909090909091, 'measured'), ('grounded_support', 1.0, 'measured')]
+
+
+
+N07 [('faithfulness', 1.0, 'measured'), ('answer_relevancy', 0.7894736842105263, 'measured'), ('grounded_support', 1.0, 'measured')]
+
+
+N10 [('faithfulness', 1.0, 'measured'), ('answer_relevancy', 0.8, 'measured'), ('grounded_support', 1.0, 'measured')]
+
+
+
+
+
+N12 [('faithfulness', 1.0, 'measured'), ('answer_relevancy', 1.0, 'measured'), ('grounded_support', 1.0, 'measured')]
+
+
+N11 [('faithfulness', 0.9333333333333333, 'measured'), ('answer_relevancy', 0.7222222222222222, 'measured'), ('grounded_support', 1.0, 'measured')]
+
+
+
+N09 [('faithfulness', 1.0, 'measured'), ('answer_relevancy', 1.0, 'measured'), ('grounded_support', 0.9, 'measured')]
+
+
+
+N14 [('faithfulness', 1.0, 'measured'), ('answer_relevancy', 0.5, 'measured'), ('grounded_support', 1.0, 'measured')]
+
+
+N13 [('faithfulness', 1.0, 'measured'), ('answer_relevancy', 1.0, 'measured'), ('grounded_support', 1.0, 'measured')]
+
+
+
+
+
+N15 [('faithfulness', 1.0, 'measured'), ('answer_relevancy', 0.7142857142857143, 'measured'), ('grounded_support', 1.0, 'measured')]
+
+
+N17 [('faithfulness', 1.0, 'measured'), ('answer_relevancy', 0.4, 'measured'), ('grounded_support', 1.0, 'measured')]
+
+
+N16 [('faithfulness', 1.0, 'measured'), ('answer_relevancy', 0.631578947368421, 'measured'), ('grounded_support', 1.0, 'measured')]
+
+
+
+
+N18 [('faithfulness', 1.0, 'measured'), ('answer_relevancy', 1.0, 'measured'), ('grounded_support', 1.0, 'measured')]
+
+
+N20 [('faithfulness', 1.0, 'measured'), ('answer_relevancy', 0.6153846153846154, 'measured'), ('grounded_support', 1.0, 'measured')]
+
+
+
+
+
+N19 [('faithfulness', 1.0, 'measured'), ('answer_relevancy', 0.7333333333333333, 'measured'), ('grounded_support', 1.0, 'measured')]
+
+
+R02 [('faithfulness', 1.0, 'measured'), ('answer_relevancy', 0.5555555555555556, 'measured'), ('grounded_support', 1.0, 'measured')]
+
+
+R03 [('faithfulness', 1.0, 'measured'), ('answer_relevancy', 1.0, 'measured'), ('grounded_support', 1.0, 'measured')]
+
+
+
+R06 [('faithfulness', None, 'skipped_no_context'), ('answer_relevancy', 0.6666666666666666, 'measured'), ('grounded_support', 0.9, 'measured')]
+
+
+
+R04 [('faithfulness', 1.0, 'measured'), ('answer_relevancy', 0.7272727272727273, 'measured'), ('grounded_support', 1.0, 'measured')]
+
+
+
+R01 [('faithfulness', 1.0, 'measured'), ('answer_relevancy', 0.75, 'measured'), ('grounded_support', 1.0, 'measured')]
+
+
+R08 [('faithfulness', 1.0, 'measured'), ('answer_relevancy', 0.7058823529411765, 'measured'), ('grounded_support', 1.0, 'measured')]
+
+
+
+
+
+R07 [('faithfulness', 1.0, 'measured'), ('answer_relevancy', 0.5263157894736842, 'measured'), ('grounded_support', 1.0, 'measured')]
+
+
+R05 [('faithfulness', 1.0, 'measured'), ('answer_relevancy', 0.875, 'measured'), ('grounded_support', 1.0, 'measured')]
+
+
+R09 [('faithfulness', 1.0, 'measured'), ('answer_relevancy', 0.4666666666666667, 'measured'), ('grounded_support', 1.0, 'measured')]
+
+
+
+
+R10 [('faithfulness', 1.0, 'measured'), ('answer_relevancy', 0.8, 'measured'), ('grounded_support', 1.0, 'measured')]
+
+
+
+R11 [('faithfulness', 1.0, 'measured'), ('answer_relevancy', 0.7142857142857143, 'measured'), ('grounded_support', 1.0, 'measured')]
+
+
+
+R12 [('faithfulness', 1.0, 'measured'), ('answer_relevancy', 0.2857142857142857, 'measured'), ('grounded_support', 1.0, 'measured')]
+
+
+
+R13 [('faithfulness', 1.0, 'measured'), ('answer_relevancy', 0.2857142857142857, 'measured'), ('grounded_support', 1.0, 'measured')]

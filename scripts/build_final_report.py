@@ -27,7 +27,7 @@ def main():
         '## Observed graph operations','', '| Outcome | Requests | p50 ms | p95 ms | Tokens | Repairs | Tool errors |','|---|---:|---:|---:|---:|---:|---:|']
     for name,row in summary['operations']['paths'].items():
         lines.append(f"| {name} | {row['requests']} | {row['latency_ms_p50']} | {row['latency_ms_p95']} | {row['tokens']} | {row['repairs']} | {row['tool_errors']} |")
-    lines+=['','Graph measurements exclude separate judge calls and setup turns. Cold-index setup, user wait and end-to-end case duration differ; per-case elapsed_ms is recorded separately. Token counts are provider-reported; no currency cost is inferred. A separate judge process ran concurrently and may affect provider latency. Small-sample percentiles are not production SLAs.','']
+    lines+=['','Graph measurements exclude separate judge calls and setup turns. Cold-index setup, user wait and end-to-end case duration differ; per-case elapsed_ms is recorded separately. Token counts are provider-reported; no currency cost is inferred. Consult the accompanying operations evidence for judge timing and other host load; this report does not infer concurrency. Small-sample percentiles are not production SLAs.','']
     errors=Counter(code for row in records for code in row['result'].get('errors',[]))
     tool_errors=Counter(tool.get('error') or 'UNSPECIFIED' for row in records for tool in row['result']['tool_records'] if tool['status']=='error')
     lines+=['## Recorded error categories','','Final runtime codes: '+json.dumps(dict(errors),sort_keys=True),

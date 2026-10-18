@@ -13,7 +13,7 @@ The core now implements a LangGraph supervisor, three LangChain specialists and 
 | 6 | Bounded projection memory, follow-ups and reset/expiry implemented; five-conversation comparison measured |
 | 7 | Implemented: controlled style feedback, versioning/reset/deletion in terminal and Streamlit; development evidence |
 | 8 | Verified: hosted metadata hierarchy/masking/failure isolation, safe logs/startup and clean local deployment |
-| 9 | Core repair in progress: 261 tests pass; fresh frozen evaluation underway. Completed human review preceded v2 holdout (9/10 hard, 7/10 overall); failures preserved; sealed v3 remains. |
+| 9 | 261 tests, 65/65 frozen and 45/45 repeats; actual review complete. Independent v3 failed 9/10 on product-illness T1; safety repair and sealed v4 remain. |
 
 ## Local setup
 

@@ -1,0 +1,17 @@
+{
+  "application_commit": "d57aa4a",
+  "first_replay": "repair_v4_style_reset.json",
+  "first_replay_passed": false,
+  "observed_failure": "standard answer policy search TIMEOUT after 10003.037ms; concise answer policy read succeeded after 1812.852ms",
+  "comparison_limitation": "Different evidence availability confounds answer-outcome/citation comparison; no causal style regression or fix established. All first replay checks/results are retained.",
+  "isolated_probe": "repair_v4_embedding_thread_probe.json",
+  "probe_observation": "Identical public query completed in .104\u20131.168s across fresh/persistent worker threads; no reproduced deterministic worker-thread stall.",
+  "next_check": "One unchanged-build controlled replay with current evidence available to both answers; no repeated acceptance runs or label changes. Report both attempts.",
+  "blind_holdout_v3_unsealed": false,
+  "release_accepted": false,
+  "controlled_replay": "repair_v4_controlled_style_reset.json",
+  "controlled_replay_passed": true,
+  "application_changed_between_attempts": false,
+  "failed_attempt_retained": true,
+  "interpretation": "The unchanged-build controlled replay passes all nine checks. The first comparison remains failed/confounded by a real policy timeout. This demonstrates style/reset under available evidence, not immunity to intermittent retrieval delays."
+}

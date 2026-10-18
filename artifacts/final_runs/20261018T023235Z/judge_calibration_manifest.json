@@ -1,0 +1,25 @@
+{
+  "library": "deepeval",
+  "rubric": "phase9-grounded-support-v1",
+  "judge_settings": {
+    "provider": "openai_compatible",
+    "model": "qwen3.7-max",
+    "timeout_seconds": 20.0,
+    "max_retries": 0,
+    "response_format": "json_object",
+    "temperature": 0,
+    "max_completion_tokens": 2400,
+    "enable_thinking": false
+  },
+  "same_model_self_evaluation": true,
+  "judged_cases": 20,
+  "requested_cases": 20,
+  "successful_completions_this_process": 212,
+  "tokens_this_process": 234765,
+  "workers": 3,
+  "source_outputs_sha256": "a70d8964f4b61c8fc1a3b871af0731fa36b1708ae41c67bfbdc476504235b4fd",
+  "usage_scope": "Successful completions in this process; failed transport usage and prior-process work are not fully counted.",
+  "human_calibration": "awaiting_actual_human_ratings",
+  "limits": "Same-model results are indicative, not independent safety acceptance. Missing context and judge failures are skipped, never passed. No Confident AI uploads; model requests go only to the configured endpoint.",
+  "subset_note": "Exact predetermined twenty records copied from all-case judgments without regrading. Successful completion usage belongs to the resumed all-case process, not this subset; earlier-process and failed-transport usage is not fully counted."
+}

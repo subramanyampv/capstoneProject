@@ -1,0 +1,46 @@
+{
+  "application_commit": "d57aa4a",
+  "frozen_run": "20261018T023235Z",
+  "status": "independent_evidence_complete_actual_human_review_required",
+  "release_accepted": false,
+  "review_reuse": {
+    "reused_identical_case_ids": [
+      "S04",
+      "S07",
+      "S13",
+      "M14"
+    ],
+    "needs_actual_review_case_ids": [
+      "N03",
+      "N01",
+      "N07",
+      "N10",
+      "N16",
+      "R02",
+      "R03",
+      "R05",
+      "R09",
+      "R14",
+      "S01",
+      "S15",
+      "M02",
+      "M01",
+      "M05",
+      "M11"
+    ],
+    "limits": "Only exact complete displayed case blocks qualify: question, prior turns, answer, reasons, citations, obligations/audit and evidence. Changed answers/evidence retain empty ratings. Original ratings remain actual human input; status remains awaiting_human_review until user confirmation.",
+    "source_run": "20261018T012141Z",
+    "target_run": "20261018T023235Z"
+  },
+  "judge_pid": 92349,
+  "repeat_run": "20261018T023922Z",
+  "controlled_style_passed": true,
+  "initial_wrapper_failure": {
+    "script": "replay_final_style.py",
+    "exit_code": 1
+  },
+  "judge_resumed_without_regrading": true,
+  "judge_all_cases": 65,
+  "source_still_locked": true,
+  "blind_holdout_v3_unsealed": false
+}

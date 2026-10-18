@@ -1,0 +1,10 @@
+{
+  "complete": true,
+  "runs": 45,
+  "consistent_cases": 15,
+  "required_cases": 15,
+  "outcome_agreement": 1.0,
+  "worst_case_hard_checks_passed": true,
+  "cases_all_checks_every_repeat": 15,
+  "limits": "Outcome consistency is exact equality, not semantic correctness. Hard gates are worst-case, never averaged away. Three repeated runs per predetermined case on one build; release holdout/human/demos remain separate."
+}

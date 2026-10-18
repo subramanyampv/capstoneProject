@@ -1,0 +1,19 @@
+reference_setup ANSWERED
+standard ESCALATED
+feedback_1 COMMAND_HANDLED
+feedback_2 COMMAND_HANDLED
+concise ANSWERED
+session_reset COMMAND_HANDLED
+ambiguous_followup CLARIFICATION_REQUESTED
+style_reset COMMAND_HANDLED
+{
+  "both_answers_verified": false,
+  "concise_profile": true,
+  "required_source_retained": true,
+  "same_citation_set": false,
+  "no_new_refusal_or_escalation": false,
+  "shorter_answer": true,
+  "session_reset_confirmed": true,
+  "post_reset_reference_not_reused": true,
+  "style_rollback": true
+}

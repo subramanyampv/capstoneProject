@@ -1,0 +1,11 @@
+{
+  "application_commit": "d57aa4a",
+  "passed": true,
+  "tests_passed": 261,
+  "elapsed_seconds": 27.57,
+  "snapshot_import_verified": true,
+  "source_matches_active_frozen_manifest": true,
+  "verification": "git archive d57aa4a extracted to an isolated temporary directory; PYTHONPATH points at extracted src; assert imported capstone_agent.__file__ is inside extracted checkout before running pytest there.",
+  "environment": "Existing project .venv Python 3.12.12; no installation or venv creation.",
+  "limits": "Isolated committed-source test run using existing dependencies, not a new clean dependency installation or final acceptance."
+}

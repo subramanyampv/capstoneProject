@@ -1,0 +1,5 @@
+{
+  "passed": true,
+  "handoffs_checked": 24,
+  "limits": "Verified local synthetic mock ticket existence and queue/priority/triggers for all recorded final/setup handoffs. Does not prove mandatory handoffs were recognized or that a real human/store transaction occurred. Semantic false-action wording is reviewed separately."
+}

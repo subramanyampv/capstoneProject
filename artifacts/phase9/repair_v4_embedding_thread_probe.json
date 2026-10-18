@@ -1,0 +1,40 @@
+{
+  "rows": [
+    {
+      "stage": "main_thread_warmup",
+      "seconds": 0.69,
+      "hits": 4
+    },
+    {
+      "stage": "new_async_executor_0",
+      "seconds": 0.114,
+      "hits": 4
+    },
+    {
+      "stage": "new_async_executor_1",
+      "seconds": 0.11,
+      "hits": 4
+    },
+    {
+      "stage": "new_async_executor_2",
+      "seconds": 0.104,
+      "hits": 4
+    },
+    {
+      "stage": "persistent_executor_0",
+      "seconds": 0.101,
+      "hits": 4
+    },
+    {
+      "stage": "persistent_executor_1",
+      "seconds": 0.167,
+      "hits": 4
+    },
+    {
+      "stage": "persistent_executor_2",
+      "seconds": 1.168,
+      "hits": 4
+    }
+  ],
+  "limits": "Public identical query and fixed category, actual pinned local embeddings/index; no customer requests, no model API or holdout. Repeated calls are timing diagnostics, not acceptance or isolation of all OS load."
+}

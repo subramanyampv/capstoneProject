@@ -1,0 +1,144 @@
+{
+  "completed": true,
+  "receipt": {
+    "trace_id": "cd657eed-1f1e-4d2b-b1cc-9aff3598165f",
+    "status": "exported",
+    "error_category": null,
+    "span_count": 16
+  },
+  "inputs_exported": false,
+  "response_bodies_exported": false,
+  "passed": true,
+  "hosted_runs": [
+    {
+      "id": "ba05c209-8ac7-4ce7-8ef8-585c7f303ee9",
+      "parent_run_id": "ffe89981-47f1-4395-ad54-38ebc7dd09b7",
+      "name": "model",
+      "run_type": "llm",
+      "inputs_empty": true,
+      "outputs_match": true
+    },
+    {
+      "id": "ffe89981-47f1-4395-ad54-38ebc7dd09b7",
+      "parent_run_id": "cd657eed-1f1e-4d2b-b1cc-9aff3598165f",
+      "name": "compose",
+      "run_type": "chain",
+      "inputs_empty": true,
+      "outputs_match": true
+    },
+    {
+      "id": "50b13b12-e35f-4bb9-9e84-8521168d675c",
+      "parent_run_id": "cd657eed-1f1e-4d2b-b1cc-9aff3598165f",
+      "name": "dispatch",
+      "run_type": "chain",
+      "inputs_empty": true,
+      "outputs_match": true
+    },
+    {
+      "id": "5333c479-b4fb-4290-8231-a4b6f6663526",
+      "parent_run_id": "a1115ded-1606-45bb-a9ad-87fd6a86e04b",
+      "name": "model",
+      "run_type": "llm",
+      "inputs_empty": true,
+      "outputs_match": true
+    },
+    {
+      "id": "f5c28a4c-b489-4308-ae18-30de70bd5375",
+      "parent_run_id": "a1115ded-1606-45bb-a9ad-87fd6a86e04b",
+      "name": "search_policy",
+      "run_type": "tool",
+      "inputs_empty": true,
+      "outputs_match": true
+    },
+    {
+      "id": "62073cd1-bff6-4785-9ec8-e5bd18bf5085",
+      "parent_run_id": "a1115ded-1606-45bb-a9ad-87fd6a86e04b",
+      "name": "check_return_eligibility",
+      "run_type": "tool",
+      "inputs_empty": true,
+      "outputs_match": true
+    },
+    {
+      "id": "a1115ded-1606-45bb-a9ad-87fd6a86e04b",
+      "parent_run_id": "cd657eed-1f1e-4d2b-b1cc-9aff3598165f",
+      "name": "policy_product",
+      "run_type": "chain",
+      "inputs_empty": true,
+      "outputs_match": true
+    },
+    {
+      "id": "b8744cf8-36e8-4102-a25f-b3f84e6e69bc",
+      "parent_run_id": "cd657eed-1f1e-4d2b-b1cc-9aff3598165f",
+      "name": "dispatch",
+      "run_type": "chain",
+      "inputs_empty": true,
+      "outputs_match": true
+    },
+    {
+      "id": "52596d82-23ce-4379-8fe9-d67bf4ecf458",
+      "parent_run_id": "03bfdba3-369a-4cc7-a550-21f3c3b8767c",
+      "name": "model",
+      "run_type": "llm",
+      "inputs_empty": true,
+      "outputs_match": true
+    },
+    {
+      "id": "0c2535aa-ff36-4be9-8ca7-1e4cd6e6c815",
+      "parent_run_id": "03bfdba3-369a-4cc7-a550-21f3c3b8767c",
+      "name": "lookup_order",
+      "run_type": "tool",
+      "inputs_empty": true,
+      "outputs_match": true
+    },
+    {
+      "id": "03bfdba3-369a-4cc7-a550-21f3c3b8767c",
+      "parent_run_id": "cd657eed-1f1e-4d2b-b1cc-9aff3598165f",
+      "name": "order_shipping",
+      "run_type": "chain",
+      "inputs_empty": true,
+      "outputs_match": true
+    },
+    {
+      "id": "81928a6f-ce26-4aa2-b019-9077436a58eb",
+      "parent_run_id": "cd657eed-1f1e-4d2b-b1cc-9aff3598165f",
+      "name": "dispatch",
+      "run_type": "chain",
+      "inputs_empty": true,
+      "outputs_match": true
+    },
+    {
+      "id": "722c4141-b5e9-4a2a-a842-b856199dcb22",
+      "parent_run_id": "47b78af0-e2b5-4115-9023-048357977504",
+      "name": "model",
+      "run_type": "llm",
+      "inputs_empty": true,
+      "outputs_match": true
+    },
+    {
+      "id": "47b78af0-e2b5-4115-9023-048357977504",
+      "parent_run_id": "cd657eed-1f1e-4d2b-b1cc-9aff3598165f",
+      "name": "plan",
+      "run_type": "chain",
+      "inputs_empty": true,
+      "outputs_match": true
+    },
+    {
+      "id": "9adbce28-cbb8-4c5f-b8b6-6ba1ecfc409b",
+      "parent_run_id": "cd657eed-1f1e-4d2b-b1cc-9aff3598165f",
+      "name": "guard_in",
+      "run_type": "chain",
+      "inputs_empty": true,
+      "outputs_match": true
+    },
+    {
+      "id": "cd657eed-1f1e-4d2b-b1cc-9aff3598165f",
+      "parent_run_id": null,
+      "name": "support_request",
+      "run_type": "chain",
+      "inputs_empty": true,
+      "outputs_match": true
+    }
+  ],
+  "hosted_payload_canaries_absent": true,
+  "limits": "Invalid credential/access failure isolation is separate from successful hosted ingestion. A 403 can reflect API authorization or an intermediary access policy."
+}

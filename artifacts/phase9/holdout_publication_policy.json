@@ -5,7 +5,7 @@
     "data/holdout_v3_blind.json",
     "evaluation/phase9/holdout_contexts_v3_blind.json"
   ],
-  "current_action": "Keep unused v3 local until its first evaluation; then publish it with results. Its contents remain unread by the implementation agent.",
+  "current_action": "Publish the used v3 dataset with its preserved results; keep newly prepared unused v4 local until first evaluation.",
   "limits": "Publication after evaluation does not imply release acceptance. Failed results remain preserved.",
   "evaluated_and_published": {
     "version": "v2",
@@ -13,6 +13,13 @@
     "github_commit": "3c27d42",
     "hard_gate_passes": 9,
     "all_case_passes": 7,
+    "cases": 10
+  },
+  "evaluated_ready_for_publication": {
+    "version": "v3",
+    "run": "20261018T030018Z",
+    "hard_gate_passes": 9,
+    "all_case_passes": 9,
     "cases": 10
   }
 }

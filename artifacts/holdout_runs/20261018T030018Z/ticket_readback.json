@@ -1,0 +1,28 @@
+{
+  "passed": true,
+  "handoffs_checked": 3,
+  "checks": [
+    {
+      "case_id": "B301",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-2aa1df51d01c",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "B302",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-d44d794503e9",
+      "local_store_matches": true
+    },
+    {
+      "case_id": "B303",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-3bb6210154f8",
+      "local_store_matches": true
+    }
+  ],
+  "limits": "Verified local synthetic mock ticket existence and queue/priority/triggers for all recorded final/setup handoffs. Does not prove mandatory handoffs were recognized or that a real human/store transaction occurred. Semantic false-action wording is reviewed separately."
+}
