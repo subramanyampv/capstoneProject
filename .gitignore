@@ -21,7 +21,7 @@ data/runtime/
 data/holdout_*_blind.json
 evaluation/phase9/holdout_contexts_*_blind.json
 evaluation/phase9/holdout_*_blind_freeze.json
-submission/
+/submission/
 .cache/
 
 # Generated knowledge artifacts (rebuilt by scripts/; keep the folder markers)
