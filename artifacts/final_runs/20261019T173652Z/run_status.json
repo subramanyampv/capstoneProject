@@ -1,0 +1,6 @@
+{
+  "status": "interrupted_source_superseded",
+  "recorded_cases": 0,
+  "reason": "Fresh independent review of completed120208 exposed additional timestamp/fallback/condition defects. Stopped targeted R09/N09/S15 before further validation on changing source. No acceptance.",
+  "submission_ready": false
+}

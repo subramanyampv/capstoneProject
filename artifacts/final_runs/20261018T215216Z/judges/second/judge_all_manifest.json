@@ -1,0 +1,24 @@
+{
+  "library": "deepeval",
+  "rubric": "phase9-grounded-support-v1",
+  "judge_settings": {
+    "provider": "openai_compatible",
+    "model": "deepseek-flash",
+    "timeout_seconds": 60.0,
+    "max_retries": 0,
+    "response_format": "json_object",
+    "temperature": 0,
+    "max_completion_tokens": 2400,
+    "enable_thinking": true
+  },
+  "same_model_self_evaluation": false,
+  "judged_cases": 65,
+  "requested_cases": 65,
+  "successful_completions_this_process": 440,
+  "tokens_this_process": 880787,
+  "workers": 2,
+  "source_outputs_sha256": "0d08812831afc78306ba0fa0c0ad44039befa8e468a94a7aa17baf6d51d98123",
+  "usage_scope": "Successful completions in this process; failed transport usage and prior-process work are not fully counted.",
+  "human_calibration": "awaiting_actual_human_ratings",
+  "limits": "Same-model results are indicative, not independent safety acceptance. Missing context and judge failures are skipped, never passed. No Confident AI uploads; model requests go only to the configured endpoint."
+}

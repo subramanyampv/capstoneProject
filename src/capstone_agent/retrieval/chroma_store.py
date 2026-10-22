@@ -8,7 +8,7 @@ from datetime import date, datetime, timezone
 from pathlib import Path
 
 from capstone_agent.retrieval.corpus import CATEGORIES, METADATA_PROFILE, check_rule_consistency, load_corpus
-from capstone_agent.retrieval.embeddings_voyage import DIMENSION, MODEL_ID, REVISION, ROOT
+from capstone_agent.retrieval.configured_embeddings import ROOT
 from capstone_agent.retrieval.query_expansion import PROFILE, expand_query
 
 SCENARIO_DATE = date(2026, 10, 12)
@@ -36,7 +36,8 @@ def ingest(embeddings, *, root=ROOT, version="v1"):
     check_rule_consistency(chunks, rules)
     path = root / "knowledge/index" / f"chroma_{version}"
     manifest_path = path / "index_manifest.json"
-    identity = {"model_id": MODEL_ID, "model_revision": REVISION,
+    identity = {"model_id": embeddings.model_id, "model_revision": embeddings.revision,
+                "embedding_backend": embeddings.backend,
                 "dimension": embeddings.dimension, "normalized": True, "distance": "cosine",
                 "collection": f"policies_{version}", "document_sha256": hashes,
                 "chunking": "authored-heading-sections-max-2400-bytes-v1",
@@ -44,7 +45,7 @@ def ingest(embeddings, *, root=ROOT, version="v1"):
                 "rule_version": rules["version"]}
     if manifest_path.exists():
         old = json.loads(manifest_path.read_text())
-        if any(old.get(key) != value for key, value in identity.items()):
+        if any(old.get(key,'local' if key=='embedding_backend' else None) != value for key, value in identity.items()):
             raise ValueError("Index inputs changed; select a new index version.")
         store = open_store(path, embeddings, identity["collection"], create=False)
         if store._collection.count() != len(chunks):
@@ -87,12 +88,13 @@ class PolicySearch:
             check_rule_consistency(chunks, json.loads((root / "data/policy_rules.json").read_text()))
         except (ValueError, KeyError):
             raise ValueError("MANIFEST_MISMATCH") from None
-        required = {"model_id": MODEL_ID, "model_revision": REVISION,
+        required = {"model_id": embeddings.model_id, "model_revision": embeddings.revision,
+                    "embedding_backend": embeddings.backend,
                     "dimension": embeddings.dimension, "normalized": True, "distance": "cosine",
                     "collection": f"policies_{version}", "document_sha256": hashes,
                     "metadata_profile": METADATA_PROFILE,
                     "rule_version": json.loads((root / "data/policy_rules.json").read_text())["version"]}
-        if any(manifest.get(key) != value for key, value in required.items()) or quarantined:
+        if any(manifest.get(key,'local' if key=='embedding_backend' else None) != value for key, value in required.items()) or quarantined:
             raise ValueError("MANIFEST_MISMATCH")
         self.store = open_store(path, embeddings, manifest["collection"], create=False)
         if self.store._collection.count() != manifest["chunk_count"]:

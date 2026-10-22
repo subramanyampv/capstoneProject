@@ -1,0 +1,6 @@
+{
+  "model_preflight": "failed",
+  "category": "MODEL_http_401",
+  "retryable": false,
+  "http_status": 401
+}

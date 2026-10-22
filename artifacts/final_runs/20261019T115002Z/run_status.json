@@ -1,0 +1,8 @@
+{
+  "status": "failed_connectivity",
+  "runs": 65,
+  "hard_gate_case_passes": 58,
+  "all_case_check_passes": 24,
+  "diagnostic": "45 model-dependent cases recorded provider_connection_error at supervisor/specialist/composer boundaries. Restricted-session execution; does not establish provider outage. No judging or acceptance. Originals preserved.",
+  "next_step": "Escalated network preflight before new authorized public run."
+}

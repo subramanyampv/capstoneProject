@@ -12,7 +12,7 @@ from capstone_agent.support.privacy import minimize,opaque
 from capstone_agent.support.registry import SessionIdentity
 from capstone_agent.support.services import Services,ROOT
 from capstone_agent.support.memory import SessionMemory,command_result
-from capstone_agent.support.preferences import PreferenceStore,StyleProfile,is_preference_command,implicit_signal
+from capstone_agent.support.preferences import PreferenceStore,StyleProfile,is_preference_command,implicit_signal,explicit_feedback_signal
 from capstone_agent.support.guards import SafetyRules
 
 MEMORY=SessionMemory(background=True)
@@ -40,7 +40,11 @@ def _run_support(query,customer_id='C-100',*,search=None,identity=None,faults=No
     if is_preference_command(query):
         if identity.customer_id not in Services(root=root).customers():raise ValueError('UNKNOWN_SYNTHETIC_CUSTOMER')
         command=query.strip()
-        if command=='/forget-preferences':
+        explicit=explicit_feedback_signal(query)
+        if explicit:
+            profile=preferences.apply(identity.customer_id,explicit,kind='explicit',request_id=request_id)
+            answer='Feedback saved for your response style preferences.'
+        elif command=='/forget-preferences':
             preferences.forget(identity.customer_id)
             answer='Saved style preferences and feedback deleted. Automatic style learning is off.'
             profile=StyleProfile()

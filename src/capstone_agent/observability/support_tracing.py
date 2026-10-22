@@ -116,9 +116,20 @@ ERROR_CODES=frozenset({'BUDGET_EXCEEDED','UNKNOWN_TOOL','PERMISSION_DENIED','INV
     'G4_UNRESOLVED_CITATION','G4_POLICY_NOT_RETRIEVED','G4_POLICY_CITATION_REQUIRED',
     'G4_EVIDENCE_REQUIRED','G4_CONFLICT_CITATIONS','G5_INTENT_COVERAGE','FALSE_TRANSACTION_CLAIM','FALSE_TICKET_CLAIM',
     'O3_SHIPPING_TRANSIT_ANSWER','O3_SHIPPING_GUARANTEE_ANSWER','O3_SHIPPING_INTERNATIONAL_ANSWER',
-    'SPECIALIST_model_unavailable','SPECIALIST_model_output_truncated','SPECIALIST_model_budget_exhausted'})
+    'SPECIALIST_model_unavailable','SPECIALIST_model_output_truncated','SPECIALIST_model_budget_exhausted',
+    'CAPACITY_EXHAUSTED','TICKET_INTEGRITY_FAILED','G3_UNVERIFIED_INDIVIDUAL_ELIGIBILITY','G3_ELIGIBILITY_DECISION_MISMATCH',
+    'G3_UNLABELED_UTC_TIME','G3_UNSUPPORTED_MEDICAL_HANDOFF','G1_MOCK_SCOPE_MISSTATED',
+    'G3_UNSUPPORTED_AMOUNT_REVIEW_CAUSE','G1_MOCK_HUMAN_PROCESSING','G1_MOCK_EXTERNAL_USE'})
 def safe_error(value):
     if value is None:return None
     if value in ERROR_CODES:return value
+    if isinstance(value,str):
+        from capstone_agent.support.model import MODEL_ERROR_CATEGORIES
+        for stage in ('SUPERVISOR','SPECIALIST','COMPOSER','REPLAN','MODEL'):
+            prefix=stage+'_'
+            if value.startswith(prefix):
+                category=value[len(prefix):]
+                if category in MODEL_ERROR_CATEGORIES:return value
+                if category.startswith('http_') and len(category)==8 and category[5:].isdigit() and 400<=int(category[5:])<=599:return value
     if isinstance(value,str) and value.startswith('SPECIALIST_SCHEMA:'):return 'SPECIALIST_SCHEMA'
     return 'OTHER_ERROR'

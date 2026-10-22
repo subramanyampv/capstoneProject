@@ -1,5 +1,6 @@
 """Minimize textual evidence before serialization, preserving numeric JSON types."""
 import json
+import re
 from capstone_agent.support.privacy import minimize
 
 
@@ -18,6 +19,9 @@ def minimized_json(value, secrets=(), *, verified_ticket_ids=()):
     def clean(item):
         if isinstance(item,str):return minimize(item,secrets,verified_ticket_ids=verified_ticket_ids)
         if isinstance(item,list):return [clean(part) for part in item]
-        if isinstance(item,dict):return {minimize(key,secrets):clean(part) for key,part in item.items()}
+        if isinstance(item,dict):return {minimize(key,secrets):
+            part if key in {'summary_hash','packet_hash'} and isinstance(part,str) and re.fullmatch(r'[0-9a-f]{64}',part)
+                and not any(secret and secret in part for secret in secrets) else clean(part)
+            for key,part in item.items()}
         return item
     return json.dumps(clean(value),allow_nan=False)

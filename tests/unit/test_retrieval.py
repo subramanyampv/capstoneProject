@@ -8,7 +8,7 @@ from datetime import date
 import pytest
 
 from capstone_agent.retrieval.corpus import check_rule_consistency, load_corpus
-from capstone_agent.retrieval.embeddings_voyage import ROOT, VoyageNanoEmbeddings
+from capstone_agent.retrieval.configured_embeddings import ROOT, ConfiguredEmbeddings
 
 
 class FakeModel:
@@ -25,7 +25,7 @@ class FakeModel:
 
 
 def embeddings():
-    return VoyageNanoEmbeddings(model=FakeModel(), dimension=256)
+    return ConfiguredEmbeddings(model=FakeModel(), dimension=256)
 
 
 @pytest.fixture
@@ -38,7 +38,7 @@ def corpus_root(tmp_path):
 
 def test_embedding_modes_dimensions_and_normalization():
     fake = FakeModel()
-    wrapper = VoyageNanoEmbeddings(model=fake, dimension=256)
+    wrapper = ConfiguredEmbeddings(model=fake, dimension=256)
     docs = wrapper.embed_documents(["first", "second"])
     query = wrapper.embed_query("question")
     assert fake.calls == ["document", "query"]

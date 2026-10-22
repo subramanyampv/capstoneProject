@@ -1,6 +1,6 @@
 """Case-specific final-agent checks; scope exclusions are reported separately from passes."""
 import json
-from capstone_agent.support.contracts import ResponseDraft
+from capstone_agent.support.contracts import ResponseDraft, evidence_ref_key
 from capstone_agent.support.guards import final_errors
 from capstone_agent.evaluation.support_runner import SupportContractMetric
 from deepeval.test_case import LLMTestCase
@@ -14,7 +14,7 @@ def assess(result,context,*,feedback=(),profile=None):
     try:
         draft=ResponseDraft.model_validate(result['response'])
         facts=[fact for item in result['results'] for fact in item['facts'].get('tools',[])]
-        refs={json.dumps(ref,sort_keys=True) for row in result['tool_records'] for ref in row['evidence_refs']}
+        refs={evidence_ref_key(ref) for row in result['tool_records'] for ref in row['evidence_refs']}
         errors=final_errors(draft,refs=refs,facts=facts,refusals=result['refusals'],triggers=result['triggers'],ticket=result['ticket'],intents=draft.intents_addressed)
     except (ValueError,KeyError,TypeError):errors=['INVALID_FINAL_RECORD'];facts=[]
     check('final_gate_replay',not errors,hard=True)

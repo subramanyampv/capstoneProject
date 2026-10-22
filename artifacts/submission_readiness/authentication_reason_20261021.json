@@ -1,0 +1,5 @@
+{
+  "scope": "Credential-safe classification of one authentication response; no raw response, credential, endpoint or deployment name exported.",
+  "passed": true,
+  "authentication_reason": "request_succeeded"
+}

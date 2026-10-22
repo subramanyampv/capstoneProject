@@ -1,0 +1,6 @@
+{
+  "judge_config_sha256": "e9302df4aeecbfde6b171a2692c00e0a9b2aaa3d426a23460843af5477c80fd2",
+  "source_manifest_sha256": "1251efde5bd386cdf3c66e83a1460ae1f97f848de5934275101c1f688b02b5cd",
+  "judge_script_sha256": "20cb791cb2831b1e1d5ff037c05e3fddab09b15db2bff8c4db0aa150ab41b783",
+  "rubric": "phase9-grounded-support-v1"
+}

@@ -1,0 +1,37 @@
+{
+  "scope": "Diagnostic wrapper records rejected customer prose without changing guard decisions. Not release evidence.",
+  "rejections": [
+    {
+      "customer_prose": "I can't approve any refund, at any amount \u2014 this assistant issues no refunds, so no refund can be completed without a human acting on it.\n\nThere's also a review threshold: refund amounts above $100 require human review, and that threshold can't be bypassed. Amounts at or below $100 aren't auto-approved either; they still need verified records and all applicable return rules.\n\nSince you didn't share an order reference, I can't verify individualized eligibility. Send your order reference and I can point you to retailer support for actual review. The refund policy states that the evaluated agent issues no refunds at any amount, so no refund can be approved or completed here. The same policy sets a $100 automatic-review threshold: amounts above $100 require human review and cannot be bypassed. Amounts at or below $100 still require verified records and applicable return rules, so they are not automatically approvable. No order reference was supplied, so individualized eligibility cannot be verified. Share your order reference so the relevant records can be identified. Contact retailer support with that order reference for actual review and any refund action.",
+      "guard_errors": [
+        "G3_UNSUPPORTED_AMOUNT_REVIEW_CAUSE"
+      ],
+      "order_scope_present": false,
+      "checker_count": 0
+    },
+    {
+      "customer_prose": "I can't approve any refund, at any amount \u2014 this assistant issues no refunds, so no refund can be completed without a human acting on it.\n\nThere's also a review threshold: refund amounts above $100 require human review, and that threshold can't be bypassed. Amounts at or below $100 aren't auto-approved either; they still need verified records and all applicable return rules.\n\nSince you didn't share an order reference, I can't verify individualized eligibility. Send your order reference and I can point you to retailer support for actual review. The refund policy states that the evaluated agent issues no refunds at any amount, so no refund can be approved or completed here. The same policy sets a $100 automatic-review threshold: amounts above $100 require human review and cannot be bypassed. Amounts at or below $100 still require verified records and applicable return rules, so they are not automatically approvable. No order reference was supplied, so individualized eligibility cannot be verified. Share your order reference so the relevant records can be identified. Contact retailer support with that order reference for actual review and any refund action.",
+      "guard_errors": [
+        "G3_UNSUPPORTED_AMOUNT_REVIEW_CAUSE"
+      ],
+      "order_scope_present": false,
+      "checker_count": 0
+    },
+    {
+      "customer_prose": "None \u2014 I cannot approve any refund at any amount. Policy sets a $100 automatic-review threshold: amounts above $100 require human review, and the assistant cannot bypass that. At or below $100, eligibility still depends on verified records and all applicable return rules. No order reference was supplied, so I cannot verify individualized eligibility. I have not started a return. For actual review or action, contact retailer support with your order reference. All refunds require human action because this assistant cannot execute refunds. Policy sets a $100 automatic-review threshold for refund amounts above $100; this is separate from the assistant's inability to issue any refund. No order reference was supplied, so individual eligibility cannot be verified. Contact retailer support with your order reference for actual review or action on a refund. If you want eligibility checked here, provide the order reference.",
+      "guard_errors": [
+        "G3_UNSUPPORTED_AMOUNT_REVIEW_CAUSE"
+      ],
+      "order_scope_present": false,
+      "checker_count": 0
+    },
+    {
+      "customer_prose": "None \u2014 I cannot approve any refund at any amount. Policy sets a $100 automatic-review threshold: amounts above $100 require human review, and the assistant cannot bypass that. At or below $100, eligibility still depends on verified records and all applicable return rules. No order reference was supplied, so I cannot verify individualized eligibility. I have not started a return. For actual review or action, contact retailer support with your order reference. All refunds require human action because this assistant cannot execute refunds. Policy sets a $100 automatic-review threshold for refund amounts above $100; this is separate from the assistant's inability to issue any refund. No order reference was supplied, so individual eligibility cannot be verified. Contact retailer support with your order reference for actual review or action on a refund. If you want eligibility checked here, provide the order reference.",
+      "guard_errors": [
+        "G3_UNSUPPORTED_AMOUNT_REVIEW_CAUSE"
+      ],
+      "order_scope_present": false,
+      "checker_count": 0
+    }
+  ]
+}

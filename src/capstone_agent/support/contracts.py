@@ -1,5 +1,6 @@
 """Closed schemas for the six tools and bounded support graph."""
 from datetime import date
+import json
 from typing import Literal
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
@@ -16,6 +17,12 @@ class EvidenceRef(Closed):
     source_id: str
     section: str | None = None
     record_version: str | None = None
+
+
+def evidence_ref_key(ref):
+    """Return one canonical identity for evidence refs across every producer."""
+    parsed = ref if isinstance(ref, EvidenceRef) else EvidenceRef.model_validate(ref)
+    return json.dumps(parsed.model_dump(mode='json'), sort_keys=True, separators=(',', ':'))
 
 class OrderArgs(Closed):
     order_id: str = Field(pattern=r'^O-\d{4}$')
@@ -95,6 +102,7 @@ class PolicyResult(Closed):
 class EscalationResult(Closed):
     ticket_id: str; status: Literal['created']; queue: str; priority: Literal['normal','high']
     triggers: list[Trigger]; summary_hash: str; idempotent_replay: bool
+    packet_hash: str | None = Field(default=None,pattern=r'^[0-9a-f]{64}$')
 
 class ToolResult(Closed):
     evidence_refs: list[EvidenceRef] = Field(default_factory=list)

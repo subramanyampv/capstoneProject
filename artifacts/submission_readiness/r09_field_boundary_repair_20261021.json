@@ -1,0 +1,13 @@
+{
+  "status": "confirmed_false_positive_repaired_pending_full_validation",
+  "failed_run": "20261021T190548Z",
+  "diagnostic_run": "20261021T215946Z",
+  "diagnostic_receipt_sha256": "ca1c65df37ef45e9dff941b82d6c4bbe4fa0bc03e2eaea945a504632efd15da8",
+  "root_cause": "Space-joined distinct answer/reason/next-step fields let a generic threshold-review rule absorb an unrelated order-reference next step. The matcher falsely treated that clause as an individual refund amount-review assertion.",
+  "fix": "Preserve newline boundaries only for the amount-review guard; leave the matcher, scoped checker requirements and all other guards unchanged.",
+  "focused_test_result": {
+    "passed": 45,
+    "elapsed_seconds": 5.39
+  },
+  "limits": "Bounded language screening, not arbitrary semantic entailment. Earlier589receipt applies to earlier source; new clean-copy validation and matching live evidence required."
+}

@@ -10,7 +10,7 @@ from build_capability_ladder import IDS
 from capstone_agent.config import LLMConfig,load_environment
 from capstone_agent.evaluation.export import minimized_json,verified_tickets
 from capstone_agent.retrieval.chroma_store import PolicySearch
-from capstone_agent.retrieval.embeddings_voyage import VoyageNanoEmbeddings
+from capstone_agent.retrieval.configured_embeddings import ConfiguredEmbeddings
 from capstone_agent.support.runtime import run_support
 from capstone_agent.support.memory import SessionMemory
 from capstone_agent.support.preferences import PreferenceStore
@@ -30,7 +30,7 @@ def main():
     fingerprint=hashlib.sha256(json.dumps({'settings':config.public_settings(),'endpoint':config.base_url},sort_keys=True).encode()).hexdigest()
     if fingerprint!=manifest['model_config_sha256']:raise ValueError('LADDER_MODEL_MUST_MATCH_FINAL_RUN')
     env=load_environment(ROOT/'.env');secrets=tuple(value for name,value in env.items() if name.endswith('API_KEY') and value)
-    search=SerializedSearch(PolicySearch(VoyageNanoEmbeddings()));search.search('return policy')
+    search=SerializedSearch(PolicySearch(ConfiguredEmbeddings()));search.search('return policy')
     def run(ident):
         if build_hashes()!=locked:raise ValueError('BUILD_CHANGED_DURING_LADDER')
         case=cases[ident];context=contexts[ident];memory=SessionMemory();identity=SessionIdentity(context['customer_id'])

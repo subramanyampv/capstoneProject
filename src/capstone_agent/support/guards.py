@@ -3,6 +3,8 @@ import json
 import re
 from pathlib import Path
 from capstone_agent.support.privacy import minimize
+from capstone_agent.support.contracts import evidence_ref_key
+from capstone_agent.support.eligibility import eligibility_errors,amount_review_errors
 from capstone_agent.retrieval.grounded_answer import POLICY_NUMBER
 
 ROOT=Path(__file__).resolve().parents[3]
@@ -93,16 +95,85 @@ def qualify_empty_tracking(draft):
         'No tracking scan is recorded; its age cannot be established.')
 
 
-def final_errors(draft, *, refs, facts, refusals, triggers, ticket, intents):
+MOCK_PROCESSING=re.compile(r'\b(?:for|to)\s+human\s+(?:support\s+(?:to\s+)?)?(?:processing|review|to\s+process|process)(?:\s+(?:your|the|this)\s+request)?\b',re.I)
+MOCK_EXTERNAL_USE=re.compile(r'\b(?:using|use|reference|provide|mention|quote|give|contact retailer support)\b[^.!?\n]{0,100}\b(?:ticket\b|MOCK-[a-z0-9]+)',re.I)
+
+
+def affirmative_mock_processing(text,match):
+    # Negation is local to this clause; a contrast/new conjunct starts a new
+    # assertion. "Not only" still asserts the processing purpose.
+    prefix=re.split(r'[.!?;\n]|\b(?:but|however|although|and)\b',text[:match.start()],flags=re.I)[-1][-120:]
+    if re.search(r'\bnot\s+(?:only|just|merely)\b',prefix,re.I):return True
+    return not bool(re.search(r"\b(?:not|never|cannot|can't|isn't|isn’t|doesn't|doesn’t)\b(?:\W+\w+){0,4}\W*$",prefix,re.I))
+
+
+def mock_processing_implication(text):
+    return any(re.search(r'\b(?:ticket|handoff)\b',sentence,re.I)
+               and any(affirmative_mock_processing(sentence,match) for match in MOCK_PROCESSING.finditer(sentence))
+               for sentence in re.split(r'(?<=[.!?])\s+',text))
+
+
+def canonical_mock_handoff(draft,ticket):
+    """Repair recognized ticket presentation only, never a transaction/ID claim.
+
+    Callers must reject false transaction/ticket claims before this projection and
+    replay all final gates afterward. Unrecognized implications still fail gates.
+    """
+    if not ticket or ticket.get('status')!='created':return None
+    repaired=draft.model_copy(deep=True)
+    def qualify(text):
+        return ' '.join(MOCK_PROCESSING.sub(lambda match:'as a local demonstration record only'
+                                           if affirmative_mock_processing(sentence,match) else match.group(),sentence)
+            if re.search(r'\b(?:ticket|handoff)\b',sentence,re.I) else sentence
+            for sentence in re.split(r'(?<=[.!?])\s+',text))
+    repaired.answer=qualify(repaired.answer)
+    repaired.why=[qualify(v) for v in repaired.why]
+    steps=[]
+    for value in repaired.next_steps:
+        if MOCK_EXTERNAL_USE.search(value):
+            value='Contact retailer support directly with your order reference for actual review or action.'
+        steps.append(qualify(value))
+    repaired.next_steps=list(dict.fromkeys(steps))
+    # External-use instructions can occur in prose too. Replace only that
+    # instruction's sentence; preserve unrelated facts in other sentences.
+    def external_sentences(value):
+        return ' '.join('Contact retailer support directly with your order reference for actual review or action.'
+            if MOCK_EXTERNAL_USE.search(sentence) else sentence
+            for sentence in re.split(r'(?<=[.!?;])\s+|\s+and\s+(?=(?:contact|reference|provide|mention|quote|give|use|using)\b)',value,flags=re.I))
+    repaired.answer=external_sentences(repaired.answer)
+    repaired.why=[external_sentences(v) for v in repaired.why]
+    disclosure=f"Local mock handoff {ticket['ticket_id']} is recorded in the {ticket['queue']} queue only. It is not sent to retailer support and does not arrange human processing. Contact retailer support directly with your order reference for actual review or action."
+    if repaired.model_dump()==draft.model_dump() and 'not sent to retailer support' in repaired.answer.lower():return None
+    repaired.answer+=' '+disclosure
+    try:return type(draft).model_validate(repaired.model_dump())
+    except ValueError:return None
+
+
+def final_errors(draft, *, refs, facts, refusals, triggers, ticket, intents, order_id=None):
     errors=[]
     if not set(draft.intents_addressed)>=set(intents): errors.append('G5_INTENT_COVERAGE')
-    cited={json.dumps(r.model_dump(),sort_keys=True) for r in draft.citations}
+    cited={evidence_ref_key(r) for r in draft.citations}
     if not cited<=refs: errors.append('G4_UNRESOLVED_CITATION')
-    retrieved={json.dumps({'source_id':'doc:'+r['doc_id'],'section':r['section_id'],'record_version':r['version']},sort_keys=True)
+    retrieved={evidence_ref_key({'source_id':'doc:'+r['doc_id'],'section':r['section_id'],'record_version':r['version']})
         for fact in facts if fact['name']=='search_policy' for r in fact['data']['results']}
-    if any(ref.source_id.startswith('doc:') and json.dumps(ref.model_dump(),sort_keys=True) not in retrieved for ref in draft.citations):
+    if any(ref.source_id.startswith('doc:') and evidence_ref_key(ref) not in retrieved for ref in draft.citations):
         errors.append('G4_POLICY_NOT_RETRIEVED')
     body=' '.join([draft.answer,*draft.why,*draft.next_steps])
+    if re.search(r'\bretailer support\b.{0,80}\bmedical assistance\b|\bmedical assistance\b.{0,80}\bretailer support\b',body,re.I):
+        errors.append('G3_UNSUPPORTED_MEDICAL_HANDOFF')
+    if ticket and ticket.get('status')=='created' and re.search(r'\bnot (?:a )?real retailer delivery\b|\bnot a real (?:parcel|shipment|delivery)\b',body,re.I):
+        errors.append('G1_MOCK_SCOPE_MISSTATED')
+    errors+=eligibility_errors(body,facts,order_id=order_id)
+    # Reasons and next steps are separate prose fields. Without a boundary,
+    # a general threshold rule can absorb "your order reference" from a later
+    # next step and look like an individualized amount-review assertion.
+    amount_body='\n'.join([draft.answer,*draft.why,*draft.next_steps])
+    errors+=amount_review_errors(amount_body,facts,order_id=order_id)
+    utc_carrier_time=any(event.get('ts','').endswith('Z') for fact in facts if fact['name']=='get_tracking_events'
+                         for event in fact['data'].get('events',[]))
+    renders_clock_time=bool(re.search(r'\b\d{1,2}(?::\d{2})?\s*(?:a\.?m\.?|p\.?m\.?)\b|\b\d{1,2}:\d{2}\b',body,re.I))
+    if utc_carrier_time and renders_clock_time and not re.search(r'\bUTC\b|\bGMT\b|[+-]\d{2}:?\d{2}\b',body,re.I):
+        errors.append('G3_UNLABELED_UTC_TIME')
     if any(unsupported_action_conclusion(body,m) for m in NO_ACTION_NEEDED.finditer(body)):
         errors.append('G3_UNSUPPORTED_NO_ACTION_NEEDED')
     if refusals and not re.search(r"cannot|can't|unable|decline|not (?:able|allowed)",body,re.I): errors.append('G2_REFUSAL')
@@ -124,6 +195,9 @@ def final_errors(draft, *, refs, facts, refusals, triggers, ticket, intents):
         if not re.search(r'\blocal mock\b|\bmock (?:ticket|handoff)\b',body,re.I):errors.append('G1_MOCK_SCOPE_REQUIRED')
         promise=r'\b(?:we|(?:our|the|a)\s+(?:(?:safety|support|policy|refunds?)\s+)?(?:team|agent|reviewer|specialist|team member))\s+(?:will|is going to)\s+(?:contact|reach|review|process|handle)\b|\b(?:wait|expect|look)\b.{0,18}\b(?:follow.up|response|contact|team)\b'
         if re.search(promise,body,re.I):errors.append('G1_REAL_HANDOFF_PROMISE')
+        if any(mock_processing_implication(value) for value in [draft.answer,*draft.why,*draft.next_steps]):errors.append('G1_MOCK_HUMAN_PROCESSING')
+        if any(MOCK_EXTERNAL_USE.search(value) for value in [draft.answer,*draft.why,*draft.next_steps]):
+            errors.append('G1_MOCK_EXTERNAL_USE')
     # All code facts may support dates/amounts, but policy text supports a number only
     # when its exact source is cited in this turn. This remains syntactic screening.
     support=[]
@@ -131,7 +205,7 @@ def final_errors(draft, *, refs, facts, refusals, triggers, ticket, intents):
         if record['name']=='search_policy':
             for hit in record['data']['results']:
                 ref={'source_id':'doc:'+hit['doc_id'],'section':hit['section_id'],'record_version':hit['version']}
-                if json.dumps(ref,sort_keys=True) in cited: support.append(hit['text'])
+                if evidence_ref_key(ref) in cited: support.append(hit['text'])
         else: support.append(json.dumps(record['data']))
     source=' '.join(support)
     # A duration alone never establishes the event at which coverage begins.

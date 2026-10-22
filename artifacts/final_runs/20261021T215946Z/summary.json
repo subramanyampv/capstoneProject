@@ -1,0 +1,72 @@
+{
+  "runs": 1,
+  "hard_gate_case_passes": 1,
+  "all_case_check_passes": 0,
+  "scope_exclusions": 0,
+  "case_failures": [
+    {
+      "case_id": "R09",
+      "repeat": 0,
+      "outcome": "INSUFFICIENT_EVIDENCE",
+      "failed_checks": [
+        "expected_terminal_outcome"
+      ]
+    }
+  ],
+  "checks": {
+    "code_contract": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": true
+    },
+    "final_gate_replay": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": true
+    },
+    "independent_request_coverage": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": true
+    },
+    "obligation_evidence_for_answer": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": true
+    },
+    "authoritative_policy_citations": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": true
+    },
+    "expected_terminal_outcome": {
+      "passed": 0,
+      "total": 1,
+      "hard_gate": false
+    },
+    "required_tool:search_policy": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    },
+    "required_citation:refund_policy": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    }
+  },
+  "operations": {
+    "paths": {
+      "INSUFFICIENT_EVIDENCE": {
+        "requests": 1,
+        "latency_ms_p50": 15323.637,
+        "latency_ms_p95": 15323.637,
+        "tokens": 7761,
+        "repairs": 1,
+        "tool_errors": 0
+      }
+    },
+    "limits": "Observed samples by terminal outcome, interpolated percentiles; not a production latency SLA."
+  },
+  "limits": "Exact original inputs plus declared setup. Original deferred action-flow expectations are excluded, not passed. Contract/syntactic scores do not establish semantic faithfulness, human calibration or final acceptance."
+}

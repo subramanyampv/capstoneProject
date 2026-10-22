@@ -1,0 +1,8 @@
+{
+  "status": "stopped_superseded_candidate",
+  "reason": "Frozen case M13 failed feedback recording; runtime source has been repaired and requires a new frozen run. Partial primary scores are retained unchanged.",
+  "judged_cases": 23,
+  "requested_cases": 65,
+  "complete": false,
+  "same_model_self_evaluation": true
+}

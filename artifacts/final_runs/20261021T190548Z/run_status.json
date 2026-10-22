@@ -1,0 +1,30 @@
+{
+  "status": "completed_functional_failure",
+  "run": "20261021T190548Z",
+  "session_id": 49279,
+  "source_frozen": true,
+  "source_matches_target": true,
+  "configuration_matches_target": true,
+  "offline_tests_passed": 589,
+  "targeted_run": "20261021T190406Z",
+  "scope": "65 public cases; one worker; 60-second application and policy retrieval deadlines",
+  "submission_ready": false,
+  "next_steps": [
+    "Diagnose R09 composer/amount-review guard with sanitized diagnostic capture; preserve this completed failure.",
+    "Do not proceed to acceptance or archive approval until functional failure and matching remaining gates are resolved."
+  ],
+  "offline_adapter": "artifacts/submission_readiness/offline_validation_adapter_20261021T190548Z.json",
+  "dependency_receipt": "artifacts/submission_readiness/dependency_check_20261021.json",
+  "known_functional_failure": {
+    "case_id": "R09",
+    "outcome": "INSUFFICIENT_EVIDENCE",
+    "failed_check": "expected_terminal_outcome",
+    "recorded_error": "G3_UNSUPPORTED_AMOUNT_REVIEW_CAUSE",
+    "evidence_obligations_complete": true,
+    "limits": "Read-only diagnosis: retrieval and specialist succeeded; output guard rejected an amount-review claim. Rejected composer wording is not saved, so false-positive versus unsupported generated claim is not established. No provider transport or judge failure recorded for this case."
+  },
+  "cases_recorded": 65,
+  "hard_checks_passed": 65,
+  "complete_checks_passed": 64,
+  "canonical_ticket_readbacks_passed": 19
+}

@@ -1,0 +1,10 @@
+{
+  "tests_passed": 477,
+  "test_command": ".venv/bin/python -m pytest -q",
+  "dependency_check": "passed",
+  "diff_check": "passed",
+  "clean_source_tests_passed_prior_candidate": 470,
+  "limits": "Runtime sources passed all 477 tests in project and clean copy; judge namespace script has two additional focused passing checks. This is not a fresh dependency installation or live quality acceptance.",
+  "clean_source_tests_passed": 477,
+  "clean_source_runtime_matches": true
+}

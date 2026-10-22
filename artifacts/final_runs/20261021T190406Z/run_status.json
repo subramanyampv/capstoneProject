@@ -1,0 +1,15 @@
+{
+  "status": "completed_targeted_pass",
+  "run": "20261021T190406Z",
+  "session_id": 47781,
+  "source_frozen": true,
+  "offline_tests_passed": 589,
+  "scope": "N01, N03, S15 public end-to-end cases; 60-second application and policy deadlines; one worker",
+  "submission_ready": false,
+  "next_steps": [
+    "Start a new full public 65-case run on the same source and application configuration."
+  ],
+  "cases_recorded": 3,
+  "hard_checks_passed": 3,
+  "complete_checks_passed": 3
+}

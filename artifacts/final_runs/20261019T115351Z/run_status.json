@@ -1,0 +1,13 @@
+{
+  "status": "interrupted_after_failure_for_timeout_repair",
+  "recorded_cases": 5,
+  "case_check_passes": 3,
+  "failure": "N01 policy retrieval TIMEOUT at20461.889ms; required return-policy citation and expected outcome missing. Safe fallback does not pass functional criteria.",
+  "next_change": "User explicitly requested60-second timeout. Policy-search tool deadline raised20to60seconds; app deadline remains60. This changes runtime source and requires fresh validation.",
+  "submission_ready": false,
+  "failed_case_ids": [
+    "N01",
+    "N05"
+  ],
+  "judged_cases": 2
+}

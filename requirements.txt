@@ -1,0 +1,4 @@
+# Tested full application/development/evaluation/UI/retrieval environment.
+# Install only with the existing project virtual environment.
+-c constraints-dev.txt
+-e .[dev,eval,ui,rag]

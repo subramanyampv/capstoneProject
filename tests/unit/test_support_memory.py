@@ -46,7 +46,7 @@ def test_follow_up_uses_code_reference_but_reloads_actual_order(setup):
     path.write_text(json.dumps(raw))
     def replies(context):
         assert context['resolved_order_id']=='O-1001'
-        return [plan(),tools(('lookup_order',{'order_id':'O-1001'})),result('order_shipping'),draft('The current status is processing.')]
+        return [plan(),tools(('lookup_order',{'order_id':'O-1001'})),result('order_shipping'),draft('The current status is processing. The tracking scan is stale and does not establish the current location.')]
     response=memory.process('What about that order?',IDENTITY,execute(services,replies))
     assert response['memory']['resolved_reference'] and response['tool_records'][0]['data']['status']=='processing'
     assert 'processing' in response['response']['answer']

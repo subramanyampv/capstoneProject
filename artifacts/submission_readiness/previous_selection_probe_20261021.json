@@ -1,0 +1,6 @@
+{
+  "scope": "Single-word probe of previously successful model selection with current private connection/key settings. No environment changes or acceptance claim.",
+  "passed": false,
+  "category": "MODEL_http_401",
+  "http_status": 401
+}

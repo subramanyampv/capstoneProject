@@ -9,7 +9,7 @@ from capstone_agent.support.memory import SessionMemory
 from capstone_agent.support.registry import SessionIdentity
 from capstone_agent.support.runtime import run_support
 from capstone_agent.support.privacy import minimize
-from capstone_agent.retrieval.embeddings_voyage import VoyageNanoEmbeddings
+from capstone_agent.retrieval.configured_embeddings import ConfiguredEmbeddings
 from capstone_agent.retrieval.chroma_store import PolicySearch
 
 ROOT=Path(__file__).resolve().parents[1]
@@ -28,7 +28,7 @@ def main():
     source=directory/'source';source.mkdir();hashes={}
     for path in sorted((ROOT/'src/capstone_agent/support').glob('*.py')):
         (source/path.name).write_bytes(path.read_bytes());hashes[path.name]=hashlib.sha256(path.read_bytes()).hexdigest()
-    search=PolicySearch(VoyageNanoEmbeddings());search.search('return policy')
+    search=PolicySearch(ConfiguredEmbeddings());search.search('return policy')
     records=[]
     for name,queries,expected_order,expected in CONVERSATIONS:
         if args.conversation and name not in args.conversation:continue

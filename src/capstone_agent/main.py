@@ -119,19 +119,19 @@ def cmd_evaluate(args):
 
 def cmd_ingest(args):
     import json
-    from capstone_agent.retrieval.embeddings_voyage import VoyageNanoEmbeddings
+    from capstone_agent.retrieval.configured_embeddings import ConfiguredEmbeddings
     from capstone_agent.retrieval.chroma_store import ingest
-    manifest = ingest(VoyageNanoEmbeddings(), version=args.index_version)
+    manifest = ingest(ConfiguredEmbeddings(), version=args.index_version)
     print(json.dumps(manifest, indent=2))
     return 0
 
 
 def cmd_search_policy(args):
     import json
-    from capstone_agent.retrieval.embeddings_voyage import VoyageNanoEmbeddings
+    from capstone_agent.retrieval.configured_embeddings import ConfiguredEmbeddings
     from capstone_agent.retrieval.chroma_store import PolicySearch
     from capstone_agent.safety.redaction import sanitize_data
-    result = PolicySearch(VoyageNanoEmbeddings(), version=args.index_version,
+    result = PolicySearch(ConfiguredEmbeddings(), version=args.index_version,
                           threshold=args.threshold).search(args.query, category=args.category, doc_types=args.doc_type, k=args.k)
     print(json.dumps(sanitize_data(result), indent=2))
     return 0
@@ -150,9 +150,9 @@ def cmd_support(args):
     def ask(message):
         nonlocal search
         if not message.strip().startswith(('/reset','/feedback','/forget-preferences')) and search is None:
-            from capstone_agent.retrieval.embeddings_voyage import VoyageNanoEmbeddings
+            from capstone_agent.retrieval.configured_embeddings import ConfiguredEmbeddings
             from capstone_agent.retrieval.chroma_store import PolicySearch
-            search=PolicySearch(VoyageNanoEmbeddings());search.search('return policy')
+            search=PolicySearch(ConfiguredEmbeddings());search.search('return policy')
         result=run_support(message,identity=identity,search=search,faults=faults,
                            memory_enabled=False if args.no_memory else None)
         print(json.dumps({k:result.get(k) for k in ['response','outcome','ticket','triggers','refusals','model_calls','tool_calls','memory','style']},indent=2))
@@ -204,7 +204,7 @@ def build_parser() -> argparse.ArgumentParser:
     evaluate.add_argument("--judge-env-file", help="explicit separate judge provider config; enables LLM scoring")
     evaluate.add_argument("--case", action="append")
     evaluate.set_defaults(func=cmd_evaluate)
-    ingest_p = sub.add_parser("ingest", help="Build the pinned local Voyage/Chroma policy index")
+    ingest_p = sub.add_parser("ingest", help="Build the configured local policy index")
     ingest_p.add_argument("--index-version", default="v2")
     ingest_p.set_defaults(func=cmd_ingest)
     search = sub.add_parser("search-policy", help="Retrieve cited policy passages locally")

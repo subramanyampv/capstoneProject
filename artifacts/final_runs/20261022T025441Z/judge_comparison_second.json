@@ -1,0 +1,455 @@
+{
+  "complete_case_coverage": true,
+  "metrics": {
+    "faithfulness": {
+      "threshold": 0.9,
+      "paired_measurements": 45,
+      "pass_fail_agreement": 0.7777777777777778,
+      "primary": {
+        "measured": 45,
+        "above_threshold": 39,
+        "mean": 0.9607213784762804,
+        "unavailable_case_ids": [
+          "R03",
+          "R06",
+          "R11",
+          "R15",
+          "S04",
+          "S06",
+          "S07",
+          "S08",
+          "S13",
+          "S14",
+          "M03",
+          "M04",
+          "M06",
+          "M07",
+          "M08",
+          "M11",
+          "M12",
+          "M13",
+          "M14",
+          "M15"
+        ]
+      },
+      "second": {
+        "measured": 45,
+        "above_threshold": 39,
+        "mean": 0.9671852657146776,
+        "unavailable_case_ids": [
+          "R03",
+          "R06",
+          "R11",
+          "R15",
+          "S04",
+          "S06",
+          "S07",
+          "S08",
+          "S13",
+          "S14",
+          "M03",
+          "M04",
+          "M06",
+          "M07",
+          "M08",
+          "M11",
+          "M12",
+          "M13",
+          "M14",
+          "M15"
+        ]
+      }
+    },
+    "answer_relevancy": {
+      "threshold": 0.8,
+      "paired_measurements": 65,
+      "pass_fail_agreement": 0.5076923076923077,
+      "primary": {
+        "measured": 65,
+        "above_threshold": 15,
+        "mean": 0.6703909963232939,
+        "unavailable_case_ids": []
+      },
+      "second": {
+        "measured": 65,
+        "above_threshold": 41,
+        "mean": 0.8045154845154845,
+        "unavailable_case_ids": []
+      }
+    },
+    "grounded_support": {
+      "threshold": 0.9,
+      "paired_measurements": 65,
+      "pass_fail_agreement": 1.0,
+      "primary": {
+        "measured": 65,
+        "above_threshold": 62,
+        "mean": 0.9738461538461538,
+        "unavailable_case_ids": []
+      },
+      "second": {
+        "measured": 65,
+        "above_threshold": 62,
+        "mean": 0.9723076923076923,
+        "unavailable_case_ids": []
+      }
+    }
+  },
+  "disagreements": [
+    {
+      "case_id": "N09",
+      "metric": "faithfulness",
+      "primary_score": 0.9375,
+      "second_score": 0.6666666666666666,
+      "threshold_disagreement": true
+    },
+    {
+      "case_id": "N16",
+      "metric": "faithfulness",
+      "primary_score": 0.9545454545454546,
+      "second_score": 0.8461538461538461,
+      "threshold_disagreement": true
+    },
+    {
+      "case_id": "N19",
+      "metric": "faithfulness",
+      "primary_score": 0.7692307692307693,
+      "second_score": 1.0,
+      "threshold_disagreement": true
+    },
+    {
+      "case_id": "R01",
+      "metric": "faithfulness",
+      "primary_score": 1.0,
+      "second_score": 0.875,
+      "threshold_disagreement": true
+    },
+    {
+      "case_id": "R09",
+      "metric": "faithfulness",
+      "primary_score": 0.8333333333333334,
+      "second_score": 1.0,
+      "threshold_disagreement": true
+    },
+    {
+      "case_id": "S02",
+      "metric": "faithfulness",
+      "primary_score": 0.8823529411764706,
+      "second_score": 1.0,
+      "threshold_disagreement": true
+    },
+    {
+      "case_id": "S05",
+      "metric": "faithfulness",
+      "primary_score": 0.9411764705882353,
+      "second_score": 0.8,
+      "threshold_disagreement": true
+    },
+    {
+      "case_id": "S09",
+      "metric": "faithfulness",
+      "primary_score": 0.84,
+      "second_score": 0.9285714285714286,
+      "threshold_disagreement": true
+    },
+    {
+      "case_id": "S10",
+      "metric": "faithfulness",
+      "primary_score": 0.8235294117647058,
+      "second_score": 0.9090909090909091,
+      "threshold_disagreement": true
+    },
+    {
+      "case_id": "M09",
+      "metric": "faithfulness",
+      "primary_score": 1.0,
+      "second_score": 0.8823529411764706,
+      "threshold_disagreement": true
+    },
+    {
+      "case_id": "N01",
+      "metric": "answer_relevancy",
+      "primary_score": 0.6923076923076923,
+      "second_score": 1.0,
+      "threshold_disagreement": true
+    },
+    {
+      "case_id": "N03",
+      "metric": "answer_relevancy",
+      "primary_score": 0.7142857142857143,
+      "second_score": 1.0,
+      "threshold_disagreement": true
+    },
+    {
+      "case_id": "N04",
+      "metric": "answer_relevancy",
+      "primary_score": 0.4,
+      "second_score": 1.0,
+      "threshold_disagreement": true
+    },
+    {
+      "case_id": "N05",
+      "metric": "answer_relevancy",
+      "primary_score": 0.42857142857142855,
+      "second_score": 1.0,
+      "threshold_disagreement": true
+    },
+    {
+      "case_id": "N06",
+      "metric": "answer_relevancy",
+      "primary_score": 0.6666666666666666,
+      "second_score": 0.42857142857142855,
+      "threshold_disagreement": false
+    },
+    {
+      "case_id": "N08",
+      "metric": "answer_relevancy",
+      "primary_score": 0.6818181818181818,
+      "second_score": 1.0,
+      "threshold_disagreement": true
+    },
+    {
+      "case_id": "N11",
+      "metric": "answer_relevancy",
+      "primary_score": 0.6875,
+      "second_score": 1.0,
+      "threshold_disagreement": true
+    },
+    {
+      "case_id": "N12",
+      "metric": "answer_relevancy",
+      "primary_score": 0.42857142857142855,
+      "second_score": 1.0,
+      "threshold_disagreement": true
+    },
+    {
+      "case_id": "N14",
+      "metric": "answer_relevancy",
+      "primary_score": 0.42857142857142855,
+      "second_score": 1.0,
+      "threshold_disagreement": true
+    },
+    {
+      "case_id": "N15",
+      "metric": "answer_relevancy",
+      "primary_score": 0.7333333333333333,
+      "second_score": 1.0,
+      "threshold_disagreement": true
+    },
+    {
+      "case_id": "N19",
+      "metric": "answer_relevancy",
+      "primary_score": 0.7368421052631579,
+      "second_score": 1.0,
+      "threshold_disagreement": true
+    },
+    {
+      "case_id": "R01",
+      "metric": "answer_relevancy",
+      "primary_score": 0.5333333333333333,
+      "second_score": 1.0,
+      "threshold_disagreement": true
+    },
+    {
+      "case_id": "R03",
+      "metric": "answer_relevancy",
+      "primary_score": 0.625,
+      "second_score": 1.0,
+      "threshold_disagreement": true
+    },
+    {
+      "case_id": "R04",
+      "metric": "answer_relevancy",
+      "primary_score": 0.625,
+      "second_score": 0.8,
+      "threshold_disagreement": true
+    },
+    {
+      "case_id": "R07",
+      "metric": "answer_relevancy",
+      "primary_score": 0.6428571428571429,
+      "second_score": 1.0,
+      "threshold_disagreement": true
+    },
+    {
+      "case_id": "R08",
+      "metric": "answer_relevancy",
+      "primary_score": 1.0,
+      "second_score": 0.6,
+      "threshold_disagreement": true
+    },
+    {
+      "case_id": "R09",
+      "metric": "answer_relevancy",
+      "primary_score": 0.5714285714285714,
+      "second_score": 0.8888888888888888,
+      "threshold_disagreement": true
+    },
+    {
+      "case_id": "R12",
+      "metric": "answer_relevancy",
+      "primary_score": 0.2857142857142857,
+      "second_score": 0.8,
+      "threshold_disagreement": true
+    },
+    {
+      "case_id": "R14",
+      "metric": "answer_relevancy",
+      "primary_score": 0.4,
+      "second_score": 0.6666666666666666,
+      "threshold_disagreement": false
+    },
+    {
+      "case_id": "R15",
+      "metric": "answer_relevancy",
+      "primary_score": 0.625,
+      "second_score": 1.0,
+      "threshold_disagreement": true
+    },
+    {
+      "case_id": "S01",
+      "metric": "answer_relevancy",
+      "primary_score": 0.7727272727272727,
+      "second_score": 0.8333333333333334,
+      "threshold_disagreement": true
+    },
+    {
+      "case_id": "S03",
+      "metric": "answer_relevancy",
+      "primary_score": 0.5555555555555556,
+      "second_score": 1.0,
+      "threshold_disagreement": true
+    },
+    {
+      "case_id": "S05",
+      "metric": "answer_relevancy",
+      "primary_score": 0.5909090909090909,
+      "second_score": 1.0,
+      "threshold_disagreement": true
+    },
+    {
+      "case_id": "S08",
+      "metric": "answer_relevancy",
+      "primary_score": 0.625,
+      "second_score": 1.0,
+      "threshold_disagreement": true
+    },
+    {
+      "case_id": "S10",
+      "metric": "answer_relevancy",
+      "primary_score": 1.0,
+      "second_score": 0.2,
+      "threshold_disagreement": true
+    },
+    {
+      "case_id": "S12",
+      "metric": "answer_relevancy",
+      "primary_score": 0.7058823529411765,
+      "second_score": 1.0,
+      "threshold_disagreement": true
+    },
+    {
+      "case_id": "S13",
+      "metric": "answer_relevancy",
+      "primary_score": 0.4444444444444444,
+      "second_score": 0.75,
+      "threshold_disagreement": false
+    },
+    {
+      "case_id": "S14",
+      "metric": "answer_relevancy",
+      "primary_score": 0.42857142857142855,
+      "second_score": 1.0,
+      "threshold_disagreement": true
+    },
+    {
+      "case_id": "M02",
+      "metric": "answer_relevancy",
+      "primary_score": 0.4117647058823529,
+      "second_score": 0.8333333333333334,
+      "threshold_disagreement": true
+    },
+    {
+      "case_id": "M05",
+      "metric": "answer_relevancy",
+      "primary_score": 0.5294117647058824,
+      "second_score": 1.0,
+      "threshold_disagreement": true
+    },
+    {
+      "case_id": "M06",
+      "metric": "answer_relevancy",
+      "primary_score": 0.625,
+      "second_score": 1.0,
+      "threshold_disagreement": true
+    },
+    {
+      "case_id": "M08",
+      "metric": "answer_relevancy",
+      "primary_score": 0.75,
+      "second_score": 0.5,
+      "threshold_disagreement": false
+    },
+    {
+      "case_id": "M10",
+      "metric": "answer_relevancy",
+      "primary_score": 0.7647058823529411,
+      "second_score": 1.0,
+      "threshold_disagreement": true
+    },
+    {
+      "case_id": "M11",
+      "metric": "answer_relevancy",
+      "primary_score": 0.75,
+      "second_score": 1.0,
+      "threshold_disagreement": true
+    },
+    {
+      "case_id": "M12",
+      "metric": "answer_relevancy",
+      "primary_score": 0.7142857142857143,
+      "second_score": 0.8333333333333334,
+      "threshold_disagreement": true
+    },
+    {
+      "case_id": "M13",
+      "metric": "answer_relevancy",
+      "primary_score": 1.0,
+      "second_score": 0.0,
+      "threshold_disagreement": true
+    },
+    {
+      "case_id": "M15",
+      "metric": "answer_relevancy",
+      "primary_score": 0.75,
+      "second_score": 0.5,
+      "threshold_disagreement": false
+    }
+  ],
+  "limits": "Scores remain separate. Agreement is not truth or actual human calibration. Unavailable metrics never count as passes. Deterministic safety and functional failures remain independent blockers.",
+  "source_outputs_sha256": "5263364317e5096b133460cdbe599bb73aecc97cb1905e92d722b7f1ae8e76ee",
+  "primary_settings": {
+    "provider": "openai_compatible",
+    "model": "qwen3.7-max",
+    "timeout_seconds": 30.0,
+    "max_retries": 0,
+    "response_format": "json_object",
+    "temperature": 0,
+    "max_completion_tokens": 2400,
+    "enable_thinking": false
+  },
+  "second_settings": {
+    "provider": "openai_compatible",
+    "model": "qwen3.7-plus",
+    "timeout_seconds": 60.0,
+    "max_retries": 0,
+    "response_format": "json_object",
+    "temperature": 0,
+    "max_completion_tokens": 2400,
+    "enable_thinking": false,
+    "thinking_format": "type_object"
+  },
+  "different_model_ids": true,
+  "primary_namespace": "root",
+  "second_namespace": "second"
+}

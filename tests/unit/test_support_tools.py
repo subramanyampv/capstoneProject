@@ -135,6 +135,32 @@ def test_real_read_deadline_discards_late_result_without_remembering_facts(setup
     result=call(reg,'order_shipping','lookup_order',{'order_id':'O-1001'})
     assert result['error']=='TIMEOUT' and not reg.ctx.facts and not reg.ctx.categories
 
+def test_timed_out_policy_search_keeps_dedicated_capacity_until_worker_finishes(setup,monkeypatch):
+    import time
+    import capstone_agent.support.registry as registry_module
+    services,make=setup
+    original=services.search
+    class SlowSearch:
+        def search(self,*args,**kwargs):
+            time.sleep(.5)
+            return original.search(*args,**kwargs)
+    services.search=SlowSearch()
+    specs=dict(registry_module.SPECS)
+    owner,schema,output,deadline=specs['search_policy']
+    specs['search_policy']=(owner,schema,output,.01)
+    monkeypatch.setattr(registry_module,'SPECS',specs)
+    args={'query':'return window','doc_types':['return_policy']}
+    first=call(make(),'policy_product','search_policy',args)
+    assert first['error']=='TIMEOUT'
+    second=call(make(),'policy_product','search_policy',args)
+    assert second['error']=='TIMEOUT'
+    saturated=call(make(),'policy_product','search_policy',args)
+    assert saturated['error']=='CAPACITY_EXHAUSTED'
+    time.sleep(.55)
+    specs['search_policy']=(owner,schema,output,deadline)
+    recovered=call(make(),'policy_product','search_policy',args)
+    assert recovered['error']!='CAPACITY_EXHAUSTED', recovered
+
 def test_sensitive_output_masking_preserves_scenario_dates():
     from capstone_agent.support.privacy import mask_sensitive
     assert mask_sensitive('Delivered 2026-09-30 for O-1001')=='Delivered 2026-09-30 for O-1001'

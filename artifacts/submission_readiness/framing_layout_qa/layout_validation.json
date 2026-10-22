@@ -1,0 +1,50 @@
+{
+  "purpose": "Private layout QA only; not final deliverable",
+  "source_path": "/Users/sreepavani/workspace/work/capstone_project/capstone_agent/docs/submission/Problem_Framing_Document.md",
+  "source_sha256": "aaed474e05820e670075e614907d89d71de4c34cb706c8dbb5eb62bf2cb1e6e6",
+  "pdf_path": "/Users/sreepavani/workspace/work/capstone_project/capstone_agent/artifacts/submission_readiness/framing_layout_qa/problem_framing_layout_qa.pdf",
+  "pdf_sha256": "f443a30000602a54f39359b7c992f62c0f6ac15d74d2bf5143119c4b9ed91889",
+  "layout": {
+    "paper": "A4",
+    "page_width_points": 595.2755905511812,
+    "page_height_points": 841.8897637795277,
+    "body_font": "Helvetica",
+    "body_font_size_pt": 11,
+    "body_leading_pt": 14,
+    "margin_inches": 1,
+    "heading_font_size_pt": 12,
+    "title_font_size_pt": 17,
+    "widows_and_orphans_allowed": false
+  },
+  "page_count": 2,
+  "maximum_pages": 2,
+  "page_count_passed": true,
+  "text_characters_per_page": [
+    2993,
+    1265
+  ],
+  "rendered_pages": [
+    "/Users/sreepavani/workspace/work/capstone_project/capstone_agent/artifacts/submission_readiness/framing_layout_qa/page-1.png",
+    "/Users/sreepavani/workspace/work/capstone_project/capstone_agent/artifacts/submission_readiness/framing_layout_qa/page-2.png"
+  ],
+  "visual_review": {
+    "status": "passed",
+    "pages_inspected": [
+      1,
+      2
+    ],
+    "checks": {
+      "no_clipped_text": true,
+      "no_overlapping_text": true,
+      "legible_body_and_numbered_list": true,
+      "headings_readable": true,
+      "body_margins_respected": true,
+      "source_unchanged_since_render": true
+    },
+    "notes": "Both rendered pages visually inspected. Two-line paragraph continuation at page break is readable; numbered questions and headings remain intact. Full source retained without trimming."
+  },
+  "rendered_page_sha256": {
+    "page-1.png": "fc3dcfa1bd016346173a03500feb6dd9ac38af9ee5b209801f4e0171666c54b8",
+    "page-2.png": "84bd3d0e3155f302ba0644d00006019987290c16c60ede0c39393057f68d7634"
+  }
+}

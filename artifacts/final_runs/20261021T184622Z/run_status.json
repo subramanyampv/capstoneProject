@@ -1,0 +1,16 @@
+{
+  "status": "completed_targeted_pass",
+  "scope": "User-requested resumption; targeted public N01/N03/S15 only before any full rerun.",
+  "full_run_session_id": 11486,
+  "source_frozen": true,
+  "candidate_identity": "artifacts/submission_readiness/review_repairs_candidate_identity.json",
+  "deadline_seconds": 60,
+  "source_and_configuration_match": true,
+  "next_step": "Wait for exactly3complete passes and inspect outputs before starting full65. If failures recur diagnose ratherthan repeating bulk blindly.",
+  "submission_ready": false,
+  "runs": 3,
+  "hard_gate_case_passes": 3,
+  "all_case_check_passes": 3,
+  "ticket_readbacks_passed": 1,
+  "limits": "Targeted development validation only; does not substitute for full65/safety/judges/demo or acceptance."
+}

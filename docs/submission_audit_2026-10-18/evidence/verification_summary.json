@@ -1,0 +1,218 @@
+{
+  "date": "2026-10-18",
+  "git_head": "2181746994cd7f123c4e03317af814c405907152",
+  "manifest_comparison": {
+    "source_sha256": {
+      "files": 51,
+      "mismatches": []
+    },
+    "build_sha256": {
+      "files": 65,
+      "mismatches": []
+    }
+  },
+  "offline_tests": {
+    "command": ".venv/bin/python -B -m pytest -q --tb=short -p no:cacheprovider",
+    "exit_code": 0,
+    "passed": 413,
+    "seconds": 22.8,
+    "origin": "fresh_execution_in_this_audit"
+  },
+  "recorded_frozen_run": {
+    "runs": 65,
+    "hard_gate_case_passes": 65,
+    "all_case_check_passes": 65,
+    "scope_exclusions": 12
+  },
+  "recorded_repeated_run": {
+    "runs": 45,
+    "hard_gate_case_passes": 45,
+    "all_case_check_passes": 45
+  },
+  "recorded_quality_metrics": {
+    "faithfulness": {
+      "measured": 51,
+      "passed": 50,
+      "not_measured": 14,
+      "failed_cases": [
+        {
+          "case_id": "R04",
+          "score": 0.8333333333333334
+        }
+      ]
+    },
+    "answer_relevancy": {
+      "measured": 65,
+      "passed": 30,
+      "not_measured": 0,
+      "failed_cases": [
+        {
+          "case_id": "N02",
+          "score": 0.7647058823529411
+        },
+        {
+          "case_id": "N03",
+          "score": 0.6
+        },
+        {
+          "case_id": "N04",
+          "score": 0.5
+        },
+        {
+          "case_id": "N05",
+          "score": 0.42857142857142855
+        },
+        {
+          "case_id": "N07",
+          "score": 0.75
+        },
+        {
+          "case_id": "N08",
+          "score": 0.6428571428571429
+        },
+        {
+          "case_id": "N10",
+          "score": 0.6428571428571429
+        },
+        {
+          "case_id": "N11",
+          "score": 0.6875
+        },
+        {
+          "case_id": "N12",
+          "score": 0.42857142857142855
+        },
+        {
+          "case_id": "N14",
+          "score": 0.42857142857142855
+        },
+        {
+          "case_id": "N15",
+          "score": 0.7142857142857143
+        },
+        {
+          "case_id": "N20",
+          "score": 0.7
+        },
+        {
+          "case_id": "N17",
+          "score": 0.5384615384615384
+        },
+        {
+          "case_id": "N19",
+          "score": 0.6666666666666666
+        },
+        {
+          "case_id": "R02",
+          "score": 0.631578947368421
+        },
+        {
+          "case_id": "R03",
+          "score": 0.7857142857142857
+        },
+        {
+          "case_id": "R01",
+          "score": 0.5789473684210527
+        },
+        {
+          "case_id": "R04",
+          "score": 0.6428571428571429
+        },
+        {
+          "case_id": "R08",
+          "score": 0.75
+        },
+        {
+          "case_id": "R07",
+          "score": 0.7142857142857143
+        },
+        {
+          "case_id": "R09",
+          "score": 0.7142857142857143
+        },
+        {
+          "case_id": "R12",
+          "score": 0.625
+        },
+        {
+          "case_id": "R13",
+          "score": 0.2727272727272727
+        },
+        {
+          "case_id": "R14",
+          "score": 0.45454545454545453
+        },
+        {
+          "case_id": "S04",
+          "score": 0.6
+        },
+        {
+          "case_id": "S06",
+          "score": 0.7777777777777778
+        },
+        {
+          "case_id": "S07",
+          "score": 0.5555555555555556
+        },
+        {
+          "case_id": "S08",
+          "score": 0.7647058823529411
+        },
+        {
+          "case_id": "S13",
+          "score": 0.6666666666666666
+        },
+        {
+          "case_id": "S14",
+          "score": 0.3
+        },
+        {
+          "case_id": "M02",
+          "score": 0.36363636363636365
+        },
+        {
+          "case_id": "M06",
+          "score": 0.7692307692307693
+        },
+        {
+          "case_id": "M08",
+          "score": 0.5
+        },
+        {
+          "case_id": "M12",
+          "score": 0.5714285714285714
+        },
+        {
+          "case_id": "M09",
+          "score": 0.7083333333333334
+        }
+      ]
+    },
+    "grounded_support": {
+      "measured": 65,
+      "passed": 61,
+      "not_measured": 0,
+      "failed_cases": [
+        {
+          "case_id": "S14",
+          "score": 0.6
+        },
+        {
+          "case_id": "M08",
+          "score": 0.8
+        },
+        {
+          "case_id": "M15",
+          "score": 0.7
+        },
+        {
+          "case_id": "M13",
+          "score": 0.0
+        }
+      ]
+    }
+  },
+  "live_model_calls_in_this_audit": 0,
+  "blind_evaluation_contents_read": false,
+  "archive_created": false
+}

@@ -1,0 +1,43 @@
+{
+  "runs": 1,
+  "hard_gate_case_passes": 1,
+  "all_case_check_passes": 1,
+  "scope_exclusions": 0,
+  "case_failures": [],
+  "checks": {
+    "code_contract": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": true
+    },
+    "final_gate_replay": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": true
+    },
+    "expected_terminal_outcome": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    },
+    "feedback_category_recorded": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    }
+  },
+  "operations": {
+    "paths": {
+      "COMMAND_HANDLED": {
+        "requests": 1,
+        "latency_ms_p50": 0.0,
+        "latency_ms_p95": 0.0,
+        "tokens": 0,
+        "repairs": 0,
+        "tool_errors": 0
+      }
+    },
+    "limits": "Observed samples by terminal outcome, interpolated percentiles; not a production latency SLA."
+  },
+  "limits": "Exact original inputs plus declared setup. Original deferred action-flow expectations are excluded, not passed. Contract/syntactic scores do not establish semantic faithfulness, human calibration or final acceptance."
+}

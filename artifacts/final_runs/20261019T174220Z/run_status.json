@@ -1,0 +1,214 @@
+{
+  "status": "completed_failed",
+  "source_frozen": true,
+  "run": "20261019T174220Z",
+  "full_run_session_id": 78937,
+  "scope": "65 approved public frozen cases; one worker; model deadline60seconds pinned, policy retrieval deadline60seconds; sealed blind inputs excluded",
+  "offline_validation": "artifacts/submission_readiness/review_repairs_clean_readiness_8b84432286.json",
+  "offline_tests_passed": 589,
+  "model_config_sha256": "ae0a01cbea71206e98a62a253b13c9f5fae088f7944d8c24e5cebac56a6f5fa5",
+  "source_matches_candidate_identity": true,
+  "second_judge": "Following under judges/second with timeout60 and maxcompletion8000; no primary judging started yet.",
+  "next_steps": [
+    "Wait for full suite and review every failure; do not average away failures.",
+    "If full passes, run ticket read-back and45fixed safety repeats on same source/config; complete current demo before primary judge to avoid endpoint overload.",
+    "Complete both65-case judge streams, compare savedoutputs, generate locked20case packet and use new no-history AI reviewer; preserve all major/unsafe findings.",
+    "Hosted trace/privacy, neutral detailed evidence generation, history-free staging and rubric audit.",
+    "Actualhuman review and sealed blind firstuse remain separate required decisions under acceptance criteria; do not open blind data."
+  ],
+  "automation_id": "capstone-submission-readiness",
+  "submission_ready": false,
+  "second_judge_session_id": 90957,
+  "last_checkpoint": {
+    "at": "2026-10-20T08:51:20Z",
+    "runs": 58,
+    "hard_gate_case_passes": 57,
+    "all_case_check_passes": 48,
+    "case_failures": [
+      {
+        "case_id": "N12",
+        "repeat": 0,
+        "outcome": "ESCALATED",
+        "failed_checks": [
+          "expected_terminal_outcome"
+        ]
+      },
+      {
+        "case_id": "N17",
+        "repeat": 0,
+        "outcome": "INSUFFICIENT_EVIDENCE",
+        "failed_checks": [
+          "expected_terminal_outcome"
+        ]
+      },
+      {
+        "case_id": "N19",
+        "repeat": 0,
+        "outcome": "INSUFFICIENT_EVIDENCE",
+        "failed_checks": [
+          "expected_terminal_outcome"
+        ]
+      },
+      {
+        "case_id": "N20",
+        "repeat": 0,
+        "outcome": "ESCALATED",
+        "failed_checks": [
+          "expected_terminal_outcome",
+          "required_tool:search_policy",
+          "required_citation:return_policy"
+        ]
+      },
+      {
+        "case_id": "R01",
+        "repeat": 0,
+        "outcome": "CLARIFICATION_REQUESTED",
+        "failed_checks": [
+          "expected_terminal_outcome",
+          "required_tool:search_policy",
+          "required_citation:return_policy",
+          "eligibility:WITHIN_WINDOW"
+        ]
+      },
+      {
+        "case_id": "R02",
+        "repeat": 0,
+        "outcome": "INSUFFICIENT_EVIDENCE",
+        "failed_checks": [
+          "expected_terminal_outcome"
+        ]
+      },
+      {
+        "case_id": "R04",
+        "repeat": 0,
+        "outcome": "ESCALATED",
+        "failed_checks": [
+          "expected_terminal_outcome"
+        ]
+      },
+      {
+        "case_id": "R14",
+        "repeat": 0,
+        "outcome": "ESCALATED",
+        "failed_checks": [
+          "expected_terminal_outcome"
+        ]
+      },
+      {
+        "case_id": "S15",
+        "repeat": 0,
+        "outcome": "ESCALATED",
+        "failed_checks": [
+          "mandatory_trigger:T2",
+          "required_tool:check_return_eligibility",
+          "eligibility:REFUND_ABOVE_THRESHOLD"
+        ]
+      },
+      {
+        "case_id": "M02",
+        "repeat": 0,
+        "outcome": "CLARIFICATION_REQUESTED",
+        "failed_checks": [
+          "expected_terminal_outcome",
+          "required_tool:get_tracking_events",
+          "feedback_category_recorded"
+        ]
+      }
+    ],
+    "second_judged_cases": 27,
+    "second_judge_errors": [
+      {
+        "case_id": "N04",
+        "metric": "faithfulness"
+      },
+      {
+        "case_id": "N06",
+        "metric": "answer_relevancy"
+      },
+      {
+        "case_id": "N07",
+        "metric": "faithfulness"
+      },
+      {
+        "case_id": "N07",
+        "metric": "answer_relevancy"
+      },
+      {
+        "case_id": "N07",
+        "metric": "grounded_support"
+      },
+      {
+        "case_id": "N08",
+        "metric": "faithfulness"
+      },
+      {
+        "case_id": "N08",
+        "metric": "answer_relevancy"
+      },
+      {
+        "case_id": "N08",
+        "metric": "grounded_support"
+      },
+      {
+        "case_id": "N09",
+        "metric": "faithfulness"
+      },
+      {
+        "case_id": "N09",
+        "metric": "answer_relevancy"
+      },
+      {
+        "case_id": "N10",
+        "metric": "answer_relevancy"
+      },
+      {
+        "case_id": "N13",
+        "metric": "faithfulness"
+      },
+      {
+        "case_id": "N14",
+        "metric": "faithfulness"
+      },
+      {
+        "case_id": "N14",
+        "metric": "answer_relevancy"
+      },
+      {
+        "case_id": "N14",
+        "metric": "grounded_support"
+      }
+    ]
+  },
+  "notified_failure_case_ids": [
+    "N12",
+    "S15"
+  ],
+  "current_blocker": "S15 missed mandatory T2 refund review trigger and required eligibility checker after supervisor/specialist provider timeouts. It refused approval and reported only local mock escalation; this still fails the hard gate. Other functional and judge failures remain preserved. Finish active run, do not claim acceptance or duplicate it.",
+  "connectivity_checkpoint": {
+    "application": "passed single-word preflight",
+    "second_judge": "passed single-word preflight",
+    "application_receipt": "artifacts/submission_readiness/application_preflight_20261020T0312Z.json",
+    "judge_receipt": "artifacts/submission_readiness/judge_preflight_20261020T0312Z.json",
+    "limits": "Small requests do not establish long-context response reliability or successful evaluation. No provider outage established."
+  },
+  "execution_lifetime_guards": {
+    "idle_sleep_prevention": "Bound only to active evaluation and second-judge process lifetimes; display sleep is unaffected. Each assertion ends with its target process.",
+    "evaluation_pid": 78362,
+    "judge_pid": 78392,
+    "evaluation_guard_session_id": 12784,
+    "judge_guard_session_id": 64381,
+    "limits": "Operational precaution; does not establish that sleep caused previous failures or resolve provider reliability."
+  },
+  "hard_failure_case_ids": [
+    "S15"
+  ],
+  "completed_runs": 65,
+  "hard_gate_case_passes": 64,
+  "all_case_check_passes": 55,
+  "ticket_readbacks_passed": 25,
+  "privacy_scan_passed": true,
+  "second_judge_status": "stopped_partial_after_hard_gate_failure",
+  "second_judge_recorded_cases": 38,
+  "retry_rationale": "Same frozen source/configuration; prevent idle system sleep for entire job lifetime. Previous transport failures and all original artifacts retained. Sleep cause unproven; no averaging/replacement of failures.",
+  "retry_run": "20261020T213024Z"
+}

@@ -1,0 +1,11 @@
+{
+  "samples": [
+    {
+      "started_at": "2026-10-19T11:50:35.009153+00:00",
+      "queue_ms": 1.273,
+      "search_execution_ms": 2269.06,
+      "status": "ok"
+    }
+  ],
+  "limits": "Evaluation shared-model lock wait and elapsed search execution, including initial warmup. No query text, arguments, credentials or customer references. Execution includes embedding/index work; not isolated embedding profiling or proof of a queue root cause."
+}

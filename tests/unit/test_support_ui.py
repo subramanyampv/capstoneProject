@@ -10,7 +10,7 @@ def test_support_mode_binds_selected_synthetic_identity_and_renders_sources():
         'why':['The mock ticket store did not confirm creation.'],
         'citations':[{'source_id':'doc:return_policy','section':'window','record_version':'v1'}],
         'next_steps':['Contact retailer support directly.']},'outcome':'ESCALATION_FAILED_DISCLOSED'}
-    with patch('capstone_agent.retrieval.embeddings_voyage.VoyageNanoEmbeddings',return_value=object()), \
+    with patch('capstone_agent.retrieval.configured_embeddings.ConfiguredEmbeddings',return_value=object()), \
          patch('capstone_agent.retrieval.chroma_store.PolicySearch',return_value=MagicMock()), \
          patch('capstone_agent.support.runtime.run_support',return_value=fake) as runner:
         ui=AppTest.from_file(str(ROOT/'streamlit_app.py')).run(timeout=30)
@@ -37,7 +37,7 @@ def test_new_session_control_deletes_the_previous_memory_scope():
 def test_feedback_buttons_share_runtime_and_follow_selected_account():
     fake={'response':{'answer':'Verified product information.','why':[],'citations':[], 'next_steps':[]},
           'outcome':'ANSWERED','style':{'version':0,'verbosity':'standard','format':'prose'}}
-    with patch('capstone_agent.retrieval.embeddings_voyage.VoyageNanoEmbeddings',return_value=object()), \
+    with patch('capstone_agent.retrieval.configured_embeddings.ConfiguredEmbeddings',return_value=object()), \
          patch('capstone_agent.retrieval.chroma_store.PolicySearch',return_value=MagicMock()), \
          patch('capstone_agent.support.runtime.run_support',return_value=fake) as runner:
         ui=AppTest.from_file(str(ROOT/'streamlit_app.py')).run(timeout=30)

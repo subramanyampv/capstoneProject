@@ -1,0 +1,289 @@
+[
+  {
+    "request_ref": "224f5b99676f4c40bd62449f9ac4aa93",
+    "session_ref": "ref:7a718820469a42e9eb2e",
+    "customer_ref": "ref:2b653302f18f5225ce7e",
+    "outcome": "ANSWERED",
+    "stages": [
+      "guard_in",
+      "supervisor_plan",
+      "dispatch",
+      "order_shipping",
+      "collect_result",
+      "dispatch",
+      "policy_product",
+      "collect_result",
+      "dispatch",
+      "composer",
+      "guard_out"
+    ],
+    "triggers": [],
+    "refusals": [],
+    "errors": [],
+    "tools": [
+      {
+        "exec_id": "fa4ebe871057439cb4fda0b1bbe04dff",
+        "name": "lookup_order",
+        "status": "ok",
+        "duration_ms": 2.232,
+        "error": null
+      },
+      {
+        "exec_id": "1161ed424f2b4228a2a55d74f8e2ea48",
+        "name": "check_return_eligibility",
+        "status": "ok",
+        "duration_ms": 14.964,
+        "error": null
+      },
+      {
+        "exec_id": "bbcbb2d77a90427aabc039920ee7a12f",
+        "name": "search_policy",
+        "status": "ok",
+        "duration_ms": 7974.18,
+        "error": null
+      }
+    ],
+    "model_calls": 4,
+    "tool_calls": 3,
+    "handoffs": 2,
+    "replans": 0,
+    "repairs": 0,
+    "tokens": 8862,
+    "latency_ms": 23888.908,
+    "safety_version": "2026-10-18-v7",
+    "ticket_id": null,
+    "style": {
+      "verbosity": "standard",
+      "format": "prose",
+      "version": 0,
+      "word_count": 56
+    },
+    "memory": {
+      "enabled": true,
+      "history_messages": 0,
+      "resolved_reference": false,
+      "expired": false,
+      "reset": false
+    },
+    "trace": {
+      "trace_id": "224f5b99-676f-4c40-bd62-449f9ac4aa93",
+      "status": "queued",
+      "span_count": 16
+    },
+    "spans": [
+      {
+        "id": "9a2213d9-f712-45d3-bfb1-72cc9d1bad7a",
+        "trace_id": "224f5b99-676f-4c40-bd62-449f9ac4aa93",
+        "parent_run_id": "224f5b99-676f-4c40-bd62-449f9ac4aa93",
+        "name": "guard_in",
+        "run_type": "chain",
+        "start_time": "2026-10-18T21:48:55.495820+00:00",
+        "dotted_order": "20261018T214854167112Z224f5b99-676f-4c40-bd62-449f9ac4aa93.20261018T214855495820Z9a2213d9-f712-45d3-bfb1-72cc9d1bad7a",
+        "outputs": {},
+        "end_time": "2026-10-18T21:48:55.497537+00:00"
+      },
+      {
+        "id": "8142fc2f-5b9d-43f7-a6b4-733b0c292087",
+        "trace_id": "224f5b99-676f-4c40-bd62-449f9ac4aa93",
+        "parent_run_id": "c80ce88f-98a4-458c-9708-a5d529d52106",
+        "name": "model",
+        "run_type": "llm",
+        "start_time": "2026-10-18T21:48:55.507660+00:00",
+        "dotted_order": "20261018T214854167112Z224f5b99-676f-4c40-bd62-449f9ac4aa93.20261018T214855503888Zc80ce88f-98a4-458c-9708-a5d529d52106.20261018T214855507660Z8142fc2f-5b9d-43f7-a6b4-733b0c292087",
+        "outputs": {
+          "input_tokens": 1001,
+          "output_tokens": 191,
+          "total_tokens": 1192
+        },
+        "end_time": "2026-10-18T21:49:00.197869+00:00"
+      },
+      {
+        "id": "c80ce88f-98a4-458c-9708-a5d529d52106",
+        "trace_id": "224f5b99-676f-4c40-bd62-449f9ac4aa93",
+        "parent_run_id": "224f5b99-676f-4c40-bd62-449f9ac4aa93",
+        "name": "plan",
+        "run_type": "chain",
+        "start_time": "2026-10-18T21:48:55.503888+00:00",
+        "dotted_order": "20261018T214854167112Z224f5b99-676f-4c40-bd62-449f9ac4aa93.20261018T214855503888Zc80ce88f-98a4-458c-9708-a5d529d52106",
+        "outputs": {},
+        "end_time": "2026-10-18T21:49:00.203425+00:00"
+      },
+      {
+        "id": "33cbbe84-0245-447e-bdcc-b8524beb5125",
+        "trace_id": "224f5b99-676f-4c40-bd62-449f9ac4aa93",
+        "parent_run_id": "224f5b99-676f-4c40-bd62-449f9ac4aa93",
+        "name": "dispatch",
+        "run_type": "chain",
+        "start_time": "2026-10-18T21:49:00.206783+00:00",
+        "dotted_order": "20261018T214854167112Z224f5b99-676f-4c40-bd62-449f9ac4aa93.20261018T214900206783Z33cbbe84-0245-447e-bdcc-b8524beb5125",
+        "outputs": {},
+        "end_time": "2026-10-18T21:49:00.207238+00:00"
+      },
+      {
+        "id": "1ccdd367-35c4-45f2-bcda-aaca34fd1885",
+        "trace_id": "224f5b99-676f-4c40-bd62-449f9ac4aa93",
+        "parent_run_id": "95272607-a071-47f1-97de-bb974faec1bd",
+        "name": "lookup_order",
+        "run_type": "tool",
+        "start_time": "2026-10-18T21:49:00.209976+00:00",
+        "dotted_order": "20261018T214854167112Z224f5b99-676f-4c40-bd62-449f9ac4aa93.20261018T214900209699Z95272607-a071-47f1-97de-bb974faec1bd.20261018T214900209976Z1ccdd367-35c4-45f2-bcda-aaca34fd1885",
+        "outputs": {
+          "failed": false
+        },
+        "end_time": "2026-10-18T21:49:00.212355+00:00"
+      },
+      {
+        "id": "770bddc1-b5d6-48f4-abd4-1592ab34d2df",
+        "trace_id": "224f5b99-676f-4c40-bd62-449f9ac4aa93",
+        "parent_run_id": "95272607-a071-47f1-97de-bb974faec1bd",
+        "name": "model",
+        "run_type": "llm",
+        "start_time": "2026-10-18T21:49:00.227510+00:00",
+        "dotted_order": "20261018T214854167112Z224f5b99-676f-4c40-bd62-449f9ac4aa93.20261018T214900209699Z95272607-a071-47f1-97de-bb974faec1bd.20261018T214900227510Z770bddc1-b5d6-48f4-abd4-1592ab34d2df",
+        "outputs": {
+          "input_tokens": 1497,
+          "output_tokens": 111,
+          "total_tokens": 1608
+        },
+        "end_time": "2026-10-18T21:49:02.562887+00:00"
+      },
+      {
+        "id": "95272607-a071-47f1-97de-bb974faec1bd",
+        "trace_id": "224f5b99-676f-4c40-bd62-449f9ac4aa93",
+        "parent_run_id": "224f5b99-676f-4c40-bd62-449f9ac4aa93",
+        "name": "order_shipping",
+        "run_type": "chain",
+        "start_time": "2026-10-18T21:49:00.209699+00:00",
+        "dotted_order": "20261018T214854167112Z224f5b99-676f-4c40-bd62-449f9ac4aa93.20261018T214900209699Z95272607-a071-47f1-97de-bb974faec1bd",
+        "outputs": {},
+        "end_time": "2026-10-18T21:49:02.572192+00:00"
+      },
+      {
+        "id": "4b75580e-f4cf-4a52-8509-159f68b6dd4a",
+        "trace_id": "224f5b99-676f-4c40-bd62-449f9ac4aa93",
+        "parent_run_id": "224f5b99-676f-4c40-bd62-449f9ac4aa93",
+        "name": "dispatch",
+        "run_type": "chain",
+        "start_time": "2026-10-18T21:49:02.597646+00:00",
+        "dotted_order": "20261018T214854167112Z224f5b99-676f-4c40-bd62-449f9ac4aa93.20261018T214902597646Z4b75580e-f4cf-4a52-8509-159f68b6dd4a",
+        "outputs": {},
+        "end_time": "2026-10-18T21:49:02.597815+00:00"
+      },
+      {
+        "id": "6c4e487d-444f-498e-8e45-0e4d9437f3a7",
+        "trace_id": "224f5b99-676f-4c40-bd62-449f9ac4aa93",
+        "parent_run_id": "12086df3-25f4-4c1a-baf2-6df1ef367f7d",
+        "name": "check_return_eligibility",
+        "run_type": "tool",
+        "start_time": "2026-10-18T21:49:02.600979+00:00",
+        "dotted_order": "20261018T214854167112Z224f5b99-676f-4c40-bd62-449f9ac4aa93.20261018T214902600795Z12086df3-25f4-4c1a-baf2-6df1ef367f7d.20261018T214902600979Z6c4e487d-444f-498e-8e45-0e4d9437f3a7",
+        "outputs": {
+          "failed": false
+        },
+        "end_time": "2026-10-18T21:49:02.616079+00:00"
+      },
+      {
+        "id": "d8a8450f-3c2c-445b-ad53-00afba40cc29",
+        "trace_id": "224f5b99-676f-4c40-bd62-449f9ac4aa93",
+        "parent_run_id": "12086df3-25f4-4c1a-baf2-6df1ef367f7d",
+        "name": "search_policy",
+        "run_type": "tool",
+        "start_time": "2026-10-18T21:49:02.616898+00:00",
+        "dotted_order": "20261018T214854167112Z224f5b99-676f-4c40-bd62-449f9ac4aa93.20261018T214902600795Z12086df3-25f4-4c1a-baf2-6df1ef367f7d.20261018T214902616898Zd8a8450f-3c2c-445b-ad53-00afba40cc29",
+        "outputs": {
+          "failed": false
+        },
+        "end_time": "2026-10-18T21:49:10.596206+00:00"
+      },
+      {
+        "id": "d7460661-5727-4914-a036-6ddb060ced5f",
+        "trace_id": "224f5b99-676f-4c40-bd62-449f9ac4aa93",
+        "parent_run_id": "12086df3-25f4-4c1a-baf2-6df1ef367f7d",
+        "name": "model",
+        "run_type": "llm",
+        "start_time": "2026-10-18T21:49:10.598601+00:00",
+        "dotted_order": "20261018T214854167112Z224f5b99-676f-4c40-bd62-449f9ac4aa93.20261018T214902600795Z12086df3-25f4-4c1a-baf2-6df1ef367f7d.20261018T214910598601Zd7460661-5727-4914-a036-6ddb060ced5f",
+        "outputs": {
+          "input_tokens": 2988,
+          "output_tokens": 194,
+          "total_tokens": 3182
+        },
+        "end_time": "2026-10-18T21:49:14.498741+00:00"
+      },
+      {
+        "id": "12086df3-25f4-4c1a-baf2-6df1ef367f7d",
+        "trace_id": "224f5b99-676f-4c40-bd62-449f9ac4aa93",
+        "parent_run_id": "224f5b99-676f-4c40-bd62-449f9ac4aa93",
+        "name": "policy_product",
+        "run_type": "chain",
+        "start_time": "2026-10-18T21:49:02.600795+00:00",
+        "dotted_order": "20261018T214854167112Z224f5b99-676f-4c40-bd62-449f9ac4aa93.20261018T214902600795Z12086df3-25f4-4c1a-baf2-6df1ef367f7d",
+        "outputs": {},
+        "end_time": "2026-10-18T21:49:14.503236+00:00"
+      },
+      {
+        "id": "ea0325be-e0aa-4fe5-9883-0b63a11c152d",
+        "trace_id": "224f5b99-676f-4c40-bd62-449f9ac4aa93",
+        "parent_run_id": "224f5b99-676f-4c40-bd62-449f9ac4aa93",
+        "name": "dispatch",
+        "run_type": "chain",
+        "start_time": "2026-10-18T21:49:14.519747+00:00",
+        "dotted_order": "20261018T214854167112Z224f5b99-676f-4c40-bd62-449f9ac4aa93.20261018T214914519747Zea0325be-e0aa-4fe5-9883-0b63a11c152d",
+        "outputs": {},
+        "end_time": "2026-10-18T21:49:14.520492+00:00"
+      },
+      {
+        "id": "60c2dd8d-fa28-4617-bae5-56690c387399",
+        "trace_id": "224f5b99-676f-4c40-bd62-449f9ac4aa93",
+        "parent_run_id": "24a89ea6-2413-4111-89c1-891f7944a703",
+        "name": "model",
+        "run_type": "llm",
+        "start_time": "2026-10-18T21:49:14.529593+00:00",
+        "dotted_order": "20261018T214854167112Z224f5b99-676f-4c40-bd62-449f9ac4aa93.20261018T214914523331Z24a89ea6-2413-4111-89c1-891f7944a703.20261018T214914529593Z60c2dd8d-fa28-4617-bae5-56690c387399",
+        "outputs": {
+          "input_tokens": 2592,
+          "output_tokens": 288,
+          "total_tokens": 2880
+        },
+        "end_time": "2026-10-18T21:49:19.311784+00:00"
+      },
+      {
+        "id": "24a89ea6-2413-4111-89c1-891f7944a703",
+        "trace_id": "224f5b99-676f-4c40-bd62-449f9ac4aa93",
+        "parent_run_id": "224f5b99-676f-4c40-bd62-449f9ac4aa93",
+        "name": "compose",
+        "run_type": "chain",
+        "start_time": "2026-10-18T21:49:14.523331+00:00",
+        "dotted_order": "20261018T214854167112Z224f5b99-676f-4c40-bd62-449f9ac4aa93.20261018T214914523331Z24a89ea6-2413-4111-89c1-891f7944a703",
+        "outputs": {
+          "outcome": "ANSWERED"
+        },
+        "end_time": "2026-10-18T21:49:19.317106+00:00"
+      },
+      {
+        "id": "224f5b99-676f-4c40-bd62-449f9ac4aa93",
+        "trace_id": "224f5b99-676f-4c40-bd62-449f9ac4aa93",
+        "parent_run_id": null,
+        "name": "support_request",
+        "run_type": "chain",
+        "start_time": "2026-10-18T21:48:54.167112+00:00",
+        "dotted_order": "20261018T214854167112Z224f5b99-676f-4c40-bd62-449f9ac4aa93",
+        "outputs": {
+          "model_calls": 4,
+          "tool_calls": 3,
+          "handoffs": 2,
+          "replans": 0,
+          "repairs": 0,
+          "tokens": 8862,
+          "latency_ms": 23888.908,
+          "outcome": "ANSWERED",
+          "style_version": 0
+        },
+        "end_time": "2026-10-18T21:49:19.341457+00:00"
+      }
+    ],
+    "order_refs": [
+      "ref:6b2d27e6813f395f2e78"
+    ]
+  }
+]

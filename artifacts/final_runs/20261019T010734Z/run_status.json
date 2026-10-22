@@ -1,0 +1,4 @@
+{
+  "status": "failed_then_configuration_superseded",
+  "reason": "3/4 targeted cases passed; S15 failed mandatory threshold checks after SUPERVISOR_provider_timeout at20 seconds prevented required data reads. Original outputs and summary unchanged. Request deadline increased to60 seconds for a separately identified run; no timeout is counted as a correctness pass."
+}

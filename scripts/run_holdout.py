@@ -13,7 +13,7 @@ from capstone_agent.evaluation.export import minimized_json,verified_tickets
 from capstone_agent.evaluation.final_protocol import assess
 from capstone_agent.evaluation.support_runner import load_cases
 from capstone_agent.retrieval.chroma_store import PolicySearch
-from capstone_agent.retrieval.embeddings_voyage import VoyageNanoEmbeddings
+from capstone_agent.retrieval.configured_embeddings import ConfiguredEmbeddings
 from capstone_agent.support.memory import SessionMemory
 from capstone_agent.support.preferences import PreferenceStore
 from capstone_agent.support.registry import SessionIdentity
@@ -94,7 +94,7 @@ def main():
     else:
         directory.mkdir(parents=True,exist_ok=False);(directory/'manifest.json').write_text(json.dumps(info,indent=2)+'\n')
     env=load_environment(ROOT/'.env');secrets=tuple(value for name,value in env.items() if name.endswith('API_KEY') and value)
-    search=PolicySearch(VoyageNanoEmbeddings());search.search('return policy')
+    search=PolicySearch(ConfiguredEmbeddings());search.search('return policy')
     completed={row['case_id'] for row in map(json.loads,(directory/'outputs.jsonl').read_text().splitlines())} if (directory/'outputs.jsonl').exists() else set()
     with tempfile.TemporaryDirectory() as local:
         preferences=PreferenceStore(Path(local))

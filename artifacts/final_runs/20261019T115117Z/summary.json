@@ -1,0 +1,88 @@
+{
+  "runs": 4,
+  "hard_gate_case_passes": 4,
+  "all_case_check_passes": 4,
+  "scope_exclusions": 1,
+  "case_failures": [],
+  "checks": {
+    "code_contract": {
+      "passed": 4,
+      "total": 4,
+      "hard_gate": true
+    },
+    "final_gate_replay": {
+      "passed": 4,
+      "total": 4,
+      "hard_gate": true
+    },
+    "independent_request_coverage": {
+      "passed": 4,
+      "total": 4,
+      "hard_gate": true
+    },
+    "obligation_evidence_for_answer": {
+      "passed": 4,
+      "total": 4,
+      "hard_gate": true
+    },
+    "authoritative_policy_citations": {
+      "passed": 4,
+      "total": 4,
+      "hard_gate": true
+    },
+    "expected_terminal_outcome": {
+      "passed": 4,
+      "total": 4,
+      "hard_gate": false
+    },
+    "required_tool:check_return_eligibility": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    },
+    "required_tool:search_policy": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    },
+    "required_citation:return_policy": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    },
+    "eligibility:WITHIN_WINDOW": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    },
+    "required_tool:lookup_order": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    },
+    "required_tool:get_tracking_events": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    },
+    "required_tool:get_product_details": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    }
+  },
+  "operations": {
+    "paths": {
+      "ANSWERED": {
+        "requests": 4,
+        "latency_ms_p50": 13178.073,
+        "latency_ms_p95": 23222.411,
+        "tokens": 32404,
+        "repairs": 0,
+        "tool_errors": 0
+      }
+    },
+    "limits": "Observed samples by terminal outcome, interpolated percentiles; not a production latency SLA."
+  },
+  "limits": "Exact original inputs plus declared setup. Original deferred action-flow expectations are excluded, not passed. Contract/syntactic scores do not establish semantic faithfulness, human calibration or final acceptance."
+}

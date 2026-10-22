@@ -1,6 +1,7 @@
 """Read-only synthetic domain services and the sole permitted mock write."""
 import hashlib
 import json
+import re
 import sqlite3
 import threading
 import uuid
@@ -12,6 +13,27 @@ from capstone_agent.support.privacy import minimize, opaque
 
 ROOT = Path(__file__).resolve().parents[3]
 SCENARIO_DATE = date(2026,10,12)
+
+
+def reported_item_condition(query):
+    """Return only a closed customer-report label, never raw text or verification."""
+    if re.search(r"\b(?:I|we)\s+(?:have\s+not|haven't|haven’t|did\s+not|didn't|didn’t)\s+open(?:ed)?\s+(?:the\s+)?(?:box|package|packaging|item|speaker|product)\b",query,re.I):
+        return 'unopened'
+    match=re.search(r'\b(?:I|we)\s+(?:(?:have|had)\s+)?(?:already\s+)?opened\s+(?:the\s+)?(?:box|package|packaging|item|speaker|product)\b',query,re.I)
+    if match:
+        clause=re.split(r'[.!?;]|\b(?:but|however)\b',query[:match.start()],flags=re.I)[-1]
+        if re.search(r'\b(?:if|unless)\s*$',clause,re.I) and not re.search(r'\balready\b',match.group(),re.I):return None
+        return 'opened'
+    return None
+
+
+def condition_qualified_summary(summary,condition):
+    if condition not in {'opened','unopened'}:return summary
+    note=f'The customer reports the item is {condition}; this condition is not independently verified.'
+    summary=re.sub(r'\b(?:the\s+)?(?:item\s+)?condition\s+(?:is|remains)\s+(?:unknown|not known|unverified)\b',
+                   f'item condition is customer-reported as {condition}, not independently verified',summary,flags=re.I)
+    summary=summary.replace(note,'').strip()
+    return note+' '+summary[:1200-len(note)-1]
 
 class ToolFailure(Exception):
     def __init__(self, code, details=None):
@@ -139,7 +161,7 @@ class Services:
     def create_escalation(self,args,ctx):
         if minimize(args.summary,ctx.secrets)!=args.summary:
             raise ToolFailure('PII_REJECTED')
-        if any(json.dumps(ref.model_dump(),sort_keys=True) not in ctx.evidence for ref in args.evidence_refs):
+        if any(evidence_ref_key(ref) not in ctx.evidence for ref in args.evidence_refs):
             raise ToolFailure('UNRESOLVED_EVIDENCE')
         if args.order_ref:
             self.owned(args.order_ref,ctx.customer_id)
@@ -155,9 +177,15 @@ class Services:
         key=hashlib.sha256(identity.encode()).hexdigest()
         # Persist only generated reasons; free-form names cannot evade pattern masking.
         stored_summary='Human review requested. Verified reason codes: '+', '.join(triggers)+'.'
+        condition=getattr(ctx,'customer_reported_condition',None)
+        if condition in {'opened','unopened'}:
+            stored_summary=condition_qualified_summary(stored_summary,condition)
+            identity=json.dumps([ctx.session_id,ctx.customer_id,triggers,reference,queue,priority,condition],sort_keys=True)
+            key=hashlib.sha256(identity.encode()).hexdigest()
         packet={'triggers':triggers,'summary':stored_summary,'evidence_refs':[
             {**ref.model_dump(),'source_id':minimize(ref.source_id)} for ref in args.evidence_refs],
             'order_ref':reference,'customer_ref':opaque(ctx.customer_id),'queue':queue,'priority':priority}
+        packet_hash=hashlib.sha256(json.dumps(packet,sort_keys=True,separators=(',',':')).encode()).hexdigest()
         with self.lock:
             self.ticket_path.parent.mkdir(parents=True,exist_ok=True)
             with sqlite3.connect(self.ticket_path,timeout=1) as db:
@@ -166,12 +194,18 @@ class Services:
                 replay=saved is not None
                 if not saved:
                     result={'ticket_id':'MOCK-'+uuid.uuid4().hex[:12],'status':'created','queue':queue,'priority':priority,
-                        'triggers':triggers,'summary_hash':hashlib.sha256(stored_summary.encode()).hexdigest(),'idempotent_replay':False}
+                        'triggers':triggers,'summary_hash':hashlib.sha256(stored_summary.encode()).hexdigest(),
+                        'packet_hash':packet_hash,'idempotent_replay':False}
                     db.execute('INSERT INTO tickets VALUES (?,?)',(key,json.dumps({'result':result,'packet':packet})))
                     db.commit()
                 saved=db.execute('SELECT payload FROM tickets WHERE key=?',(key,)).fetchone()
                 if not saved: raise ToolFailure('FAILED')
-                result=json.loads(saved[0])['result']
+                stored=json.loads(saved[0]);result=stored['result']
+                actual_hash=hashlib.sha256(json.dumps(stored['packet'],sort_keys=True,separators=(',',':')).encode()).hexdigest()
+                if (actual_hash!=result.get('packet_hash') or
+                    hashlib.sha256(stored['packet']['summary'].encode()).hexdigest()!=result['summary_hash'] or
+                    any(result[key]!=stored['packet'][key] for key in ('queue','priority','triggers'))):
+                    raise ToolFailure('TICKET_INTEGRITY_FAILED')
                 result['idempotent_replay']=replay
         # Read-back above is required before returning a success claim.
         return EscalationResult(**result)

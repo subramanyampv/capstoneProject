@@ -39,8 +39,15 @@ class StyleProfile:
             'step_by_step':'Use numbered steps.'}[form]+' Safety disclosures, evidence, citations and intent coverage take priority over style. Never change eligibility, escalation or tool permissions.'
 
 
+def explicit_feedback_signal(query):
+    """An exact rating command expresses consent; it is not inferred feedback."""
+    if not isinstance(query,str):return None
+    match=re.fullmatch(r'''\s*rate the previous answer:\s*['"]?(too verbose|too long|too short)['"]?[.!]?\s*''',query,re.I)
+    return ('too_short' if match[1].lower()=='too short' else 'too_long') if match else None
+
+
 def is_preference_command(query):
-    return isinstance(query,str) and (query.strip()=='/forget-preferences' or query.strip().split(maxsplit=1)[0:1]==['/feedback'])
+    return isinstance(query,str) and (query.strip()=='/forget-preferences' or query.strip().split(maxsplit=1)[0:1]==['/feedback'] or explicit_feedback_signal(query) is not None)
 
 class PreferenceStore:
     """Single-machine lock and atomic file replacement; history 20, signals 10, feedback 30 days.

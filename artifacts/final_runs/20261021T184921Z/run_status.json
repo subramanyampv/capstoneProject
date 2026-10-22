@@ -1,0 +1,27 @@
+{
+  "status": "completed_authentication_failure",
+  "run": "20261021T184921Z",
+  "full_run_session_id": 26041,
+  "source_frozen": true,
+  "source_matches_589_test_candidate": true,
+  "configuration_matches_prior_target": false,
+  "model_config_sha256": "21412a99a047b3f71a52a4f5204232b14585390209183b9b7b773a7ec5544100",
+  "configuration_note": "This completed run used a changed private application configuration and recorded HTTP 401 failures. Subsequent application preflight passed; the latest separate judge preflight returned HTTP 404. Historical run outputs remain unchanged.",
+  "offline_tests_passed": 589,
+  "offline_receipt": "artifacts/submission_readiness/review_repairs_clean_readiness_8b84432286.json",
+  "targeted_prior_run": "20261021T184622Z",
+  "prior_target_scope": "3/3same-source developmentcases; doesnotvalidatechangedconfiguration.",
+  "scope": "65approvedpublicfrozencases;oneworker;60-second model/retrievaldeadlines;idle-sleeppreventiontiedtojob. No sealed data.",
+  "hold_further_live_runs": true,
+  "primary_judge_started": false,
+  "second_judge_started": false,
+  "next_steps": [
+    "Resolve judge resource access and repeat its bounded preflight.",
+    "Validate the current application configuration with targeted live cases before a new full run.",
+    "Complete matching safety, demo, judge, independent review, tracing, privacy, staging and rubric gates."
+  ],
+  "submission_ready": false,
+  "cases_recorded": 65,
+  "hard_checks_passed": 58,
+  "complete_checks_passed": 24
+}

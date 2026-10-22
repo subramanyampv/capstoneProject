@@ -1,0 +1,6 @@
+{
+  "status": "interrupted_configuration_superseded",
+  "recorded_cases": 4,
+  "reason": "Private application deadline was 20 seconds, unlike the successful 60-second targeted validation. Stopped partial public run and second judge; originals preserved. Restored validated deadline before a new run.",
+  "submission_ready": false
+}

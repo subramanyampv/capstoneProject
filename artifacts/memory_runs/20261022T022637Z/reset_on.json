@@ -1,0 +1,403 @@
+{
+  "conversation": "reset",
+  "memory_enabled": true,
+  "expected_followup": "clarification",
+  "passed": true,
+  "reference_tool_hit": null,
+  "clarifications": 1,
+  "turns": [
+    {
+      "response": {
+        "answer": "Order ref:6b2d27e6813f395f2e78 shows a delivered scan on 2026-09-30 at 10:47 UTC in Denver, CO. Prior tracking events include shipment from Reno, NV on 2026-09-28 at 08:12 UTC and out-for-delivery at the Denver hub on 2026-09-29 at 14:03 UTC. This delivery status reflects carrier records and does not confirm physical receipt or that no further assistance is needed. Please contact retailer support with your order reference if you require additional help.",
+        "why": [
+          "Tracking events show final delivered scan at Denver CO on 2026-09-30T10:47:00Z",
+          "Delivery scan indicates carrier-reported status only, not confirmed physical receipt",
+          "Timestamps are UTC as indicated by Z suffix"
+        ],
+        "citations": [
+          {
+            "source_id": "tracking:ref:6b2d27e6813f395f2e78",
+            "section": null,
+            "record_version": "2026-10-12"
+          },
+          {
+            "source_id": "order:ref:6b2d27e6813f395f2e78",
+            "section": null,
+            "record_version": "2026-10-12"
+          }
+        ],
+        "next_steps": [
+          "Contact retailer support with order reference ref:6b2d27e6813f395f2e78 for further assistance"
+        ],
+        "intents_addressed": [
+          "order_tracking"
+        ],
+        "outcome_claimed": "ANSWERED"
+      },
+      "outcome": "ANSWERED",
+      "ticket": null,
+      "refusals": [],
+      "triggers": [],
+      "obligation_contract": {
+        "intents": [
+          "order_tracking"
+        ],
+        "order_id": "ref:6b2d27e6813f395f2e78",
+        "request_types": [],
+        "policy_docs": [],
+        "tracking": true,
+        "order_status": false,
+        "product": false,
+        "ambiguous_orders": false,
+        "sku": null,
+        "needs_reference": false,
+        "required_sections": [],
+        "unclassified_support": false,
+        "version": "request-obligations-v4"
+      },
+      "obligation_audit": [
+        {
+          "obligation": "order_tracking",
+          "evidence_complete": true,
+          "required": [
+            "get_tracking_events"
+          ]
+        }
+      ],
+      "answer_fallback": false,
+      "bounded_claim_repair": false,
+      "canonical_handoff_repair": false,
+      "rule_citations_completed": false,
+      "authoritative_citations_completed": false,
+      "tool_records": [
+        {
+          "evidence_refs": [
+            {
+              "source_id": "order:ref:6b2d27e6813f395f2e78",
+              "section": null,
+              "record_version": "2026-10-12"
+            }
+          ],
+          "exec_id": "2486928b31904367a266e60e0195d55b",
+          "name": "lookup_order",
+          "status": "ok",
+          "data": {
+            "order_id": "ref:6b2d27e6813f395f2e78",
+            "status": "delivered",
+            "placed_at": "2026-09-25",
+            "dispatched_at": "2026-09-28",
+            "delivered_at": "2026-09-30",
+            "shipping_service": null,
+            "items": [
+              {
+                "sku": "SKU-SHOES-001",
+                "name": "TrailRunner Shoes",
+                "category": "footwear",
+                "price": 89.99
+              }
+            ],
+            "record_version": "2026-10-12"
+          },
+          "error": null,
+          "duration_ms": 1.636
+        },
+        {
+          "evidence_refs": [
+            {
+              "source_id": "tracking:ref:6b2d27e6813f395f2e78",
+              "section": null,
+              "record_version": "2026-10-12"
+            }
+          ],
+          "exec_id": "009d5930e8ba4b958bb7512d139dc5c4",
+          "name": "get_tracking_events",
+          "status": "ok",
+          "data": {
+            "events": [
+              {
+                "ts": "2026-09-28T08:12:00Z",
+                "status": "shipped",
+                "city": "Origin facility, Reno NV"
+              },
+              {
+                "ts": "2026-09-29T14:03:00Z",
+                "status": "out_for_delivery",
+                "city": "Denver CO hub"
+              },
+              {
+                "ts": "2026-09-30T10:47:00Z",
+                "status": "delivered",
+                "city": "Denver CO"
+              }
+            ],
+            "latest": {
+              "ts": "2026-09-30T10:47:00Z",
+              "status": "delivered",
+              "city": "Denver CO"
+            },
+            "carrier_estimate": null,
+            "stale": false,
+            "record_version": "2026-10-12"
+          },
+          "error": null,
+          "duration_ms": 2.139
+        }
+      ],
+      "results": [
+        {
+          "agent_name": "order_shipping",
+          "status": "success",
+          "summary": "Order ref:6b2d27e6813f395f2e78 was delivered on 2026-09-30 at 10:47 UTC in Denver, CO. Latest tracking event confirms delivery; no carrier estimate available and data is not stale.",
+          "evidence": [
+            {
+              "source_id": "order:ref:6b2d27e6813f395f2e78",
+              "section": null,
+              "record_version": "2026-10-12"
+            },
+            {
+              "source_id": "tracking:ref:6b2d27e6813f395f2e78",
+              "section": null,
+              "record_version": "2026-10-12"
+            }
+          ],
+          "facts": {
+            "tools": [
+              {
+                "name": "lookup_order",
+                "args": {
+                  "order_id": "ref:6b2d27e6813f395f2e78"
+                },
+                "data": {
+                  "order_id": "ref:6b2d27e6813f395f2e78",
+                  "status": "delivered",
+                  "placed_at": "2026-09-25",
+                  "dispatched_at": "2026-09-28",
+                  "delivered_at": "2026-09-30",
+                  "shipping_service": null,
+                  "items": [
+                    {
+                      "sku": "SKU-SHOES-001",
+                      "name": "TrailRunner Shoes",
+                      "category": "footwear",
+                      "price": 89.99
+                    }
+                  ],
+                  "record_version": "2026-10-12"
+                }
+              },
+              {
+                "name": "get_tracking_events",
+                "args": {
+                  "order_id": "ref:6b2d27e6813f395f2e78"
+                },
+                "data": {
+                  "events": [
+                    {
+                      "ts": "2026-09-28T08:12:00Z",
+                      "status": "shipped",
+                      "city": "Origin facility, Reno NV"
+                    },
+                    {
+                      "ts": "2026-09-29T14:03:00Z",
+                      "status": "out_for_delivery",
+                      "city": "Denver CO hub"
+                    },
+                    {
+                      "ts": "2026-09-30T10:47:00Z",
+                      "status": "delivered",
+                      "city": "Denver CO"
+                    }
+                  ],
+                  "latest": {
+                    "ts": "2026-09-30T10:47:00Z",
+                    "status": "delivered",
+                    "city": "Denver CO"
+                  },
+                  "carrier_estimate": null,
+                  "stale": false,
+                  "record_version": "2026-10-12"
+                }
+              }
+            ]
+          },
+          "flags": {
+            "conflict": false,
+            "requires_review": false
+          }
+        }
+      ],
+      "stages": [
+        "guard_in",
+        "supervisor_plan",
+        "dispatch",
+        "order_shipping",
+        "collect_result",
+        "dispatch",
+        "composer",
+        "guard_out"
+      ],
+      "errors": [],
+      "model_calls": 3,
+      "tool_calls": 2,
+      "handoffs": 1,
+      "replans": 0,
+      "repairs": 0,
+      "tokens": 5301,
+      "style": {
+        "verbosity": "standard",
+        "format": "prose",
+        "version": 0,
+        "word_count": 70
+      },
+      "safety_version": "2026-10-18-v7",
+      "latency_ms": 13926.512,
+      "memory": {
+        "enabled": true,
+        "history_messages": 0,
+        "resolved_reference": false,
+        "expired": false,
+        "reset": false
+      },
+      "request_id": "cd819bfedb5a4a8797fde0a90ceb7402",
+      "tracing": {
+        "trace_id": "cd819bfe-db5a-4a87-97fd-e0a90ceb7402",
+        "status": "queued",
+        "span_count": 12
+      }
+    },
+    {
+      "response": {
+        "answer": "Session memory cleared. Which order or product would you like help with?",
+        "why": [],
+        "citations": [],
+        "next_steps": [],
+        "intents_addressed": [
+          "reset"
+        ],
+        "outcome_claimed": "COMMAND_HANDLED"
+      },
+      "outcome": "COMMAND_HANDLED",
+      "ticket": null,
+      "refusals": [],
+      "triggers": [],
+      "tool_records": [],
+      "results": [],
+      "stages": [
+        "command_handler",
+        "memory_reset"
+      ],
+      "errors": [],
+      "model_calls": 0,
+      "tool_calls": 0,
+      "handoffs": 0,
+      "replans": 0,
+      "repairs": 0,
+      "tokens": 0,
+      "safety_version": null,
+      "latency_ms": 0.0,
+      "memory": {
+        "enabled": true,
+        "history_messages": 0,
+        "resolved_reference": false,
+        "expired": false,
+        "reset": true
+      },
+      "request_id": "5769fbe9e40a499b8fbde514b6f92d3e",
+      "tracing": {
+        "trace_id": "5769fbe9-e40a-499b-8fbd-e514b6f92d3e",
+        "status": "queued",
+        "span_count": 1
+      }
+    },
+    {
+      "response": {
+        "answer": "Which order or product do you mean? Please provide its reference.",
+        "why": [],
+        "citations": [],
+        "next_steps": [],
+        "intents_addressed": [
+          "order_tracking",
+          "entity_clarification"
+        ],
+        "outcome_claimed": "CLARIFICATION_REQUESTED"
+      },
+      "outcome": "CLARIFICATION_REQUESTED",
+      "ticket": null,
+      "refusals": [],
+      "triggers": [],
+      "obligation_contract": {
+        "intents": [
+          "order_tracking"
+        ],
+        "order_id": null,
+        "request_types": [],
+        "policy_docs": [],
+        "tracking": true,
+        "order_status": false,
+        "product": false,
+        "ambiguous_orders": false,
+        "sku": null,
+        "needs_reference": true,
+        "required_sections": [],
+        "unclassified_support": false,
+        "version": "request-obligations-v4"
+      },
+      "obligation_audit": [
+        {
+          "obligation": "request_reference",
+          "evidence_complete": false,
+          "required": [
+            "valid_order_or_product_reference"
+          ]
+        },
+        {
+          "obligation": "order_tracking",
+          "evidence_complete": false,
+          "required": [
+            "get_tracking_events"
+          ]
+        }
+      ],
+      "answer_fallback": false,
+      "bounded_claim_repair": false,
+      "canonical_handoff_repair": false,
+      "rule_citations_completed": false,
+      "authoritative_citations_completed": false,
+      "tool_records": [],
+      "results": [],
+      "stages": [
+        "guard_in",
+        "memory_clarification",
+        "guard_out"
+      ],
+      "errors": [],
+      "model_calls": 0,
+      "tool_calls": 0,
+      "handoffs": 0,
+      "replans": 0,
+      "repairs": 0,
+      "tokens": 0,
+      "style": {
+        "verbosity": "standard",
+        "format": "prose",
+        "version": 0,
+        "word_count": 11
+      },
+      "safety_version": "2026-10-18-v7",
+      "latency_ms": 163.555,
+      "memory": {
+        "enabled": true,
+        "history_messages": 0,
+        "resolved_reference": false,
+        "expired": false,
+        "reset": false
+      },
+      "request_id": "443300c555224a718923e12d173a608e",
+      "tracing": {
+        "trace_id": "443300c5-5522-4a71-8923-e12d173a608e",
+        "status": "queued",
+        "span_count": 3
+      }
+    }
+  ]
+}

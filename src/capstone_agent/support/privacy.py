@@ -1,6 +1,7 @@
 """Minimize support packets; keep raw order/customer IDs out of operational records."""
 import hashlib
 import re
+from datetime import datetime
 from capstone_agent.safety.redaction import sanitize
 
 PHONE = re.compile(r'(?<!\w)(?:\+?\d[\d ()-]{7,}\d)(?!\w)')
@@ -21,7 +22,29 @@ def mask_sensitive(text: str, secrets=(), *, verified_ticket_ids=()):
             token=chr(0xE000+index);index+=1
         text=text.replace(reference,token);protected[token]=reference
     text = sanitize(text, secrets)
-    text = PHONE.sub(lambda m: m.group() if re.fullmatch(r'\d{4}-\d{2}-\d{2}', m.group()) else '[REDACTED-PHONE]', text)
+    def phone_or_timestamp(match):
+        value=match.group()
+        # A rendered tracking timestamp contains a space before its hour.
+        # The phone pattern stops at the first colon, so validate the complete
+        # adjacent clock/zone before retaining that date/hour prefix.
+        if re.fullmatch(r'\d{4}-\d{2}-\d{2}',value):
+            try:
+                datetime.fromisoformat(value)
+                return value
+            except ValueError:
+                pass
+        if re.fullmatch(r'\d{4}-\d{2}-\d{2} \d{2}',value):
+            clock=re.match(r':\d{2}(?::\d{2})?(?:[ \t]*(?:UTC|GMT|Z)|[+-]\d{2}:?\d{2})(?!\w)',
+                           text[match.end():],re.I)
+            if clock:
+                suffix=re.sub(r'\s*(?:UTC|GMT|Z)$','+00:00',clock.group(),flags=re.I)
+                try:
+                    datetime.fromisoformat(value+suffix)
+                    return value
+                except ValueError:
+                    pass
+        return '[REDACTED-PHONE]'
+    text = PHONE.sub(phone_or_timestamp, text)
     text = ADDRESS.sub('[REDACTED-ADDRESS]', text)
     for token,reference in protected.items():text=text.replace(token,reference)
     return text

@@ -6,7 +6,7 @@ import tempfile
 from datetime import datetime,timezone
 from pathlib import Path
 from capstone_agent.config import LLMConfig
-from capstone_agent.retrieval.embeddings_voyage import VoyageNanoEmbeddings
+from capstone_agent.retrieval.configured_embeddings import ConfiguredEmbeddings
 from capstone_agent.retrieval.chroma_store import PolicySearch
 from capstone_agent.support.memory import SessionMemory
 from capstone_agent.support.preferences import PreferenceStore
@@ -29,7 +29,7 @@ def main():
     source=directory/'source';source.mkdir();hashes={}
     for path in sorted((ROOT/'src/capstone_agent/support').glob('*.py')):
         (source/path.name).write_bytes(path.read_bytes());hashes[path.name]=hashlib.sha256(path.read_bytes()).hexdigest()
-    search=PolicySearch(VoyageNanoEmbeddings());search.search('return policy')
+    search=PolicySearch(ConfiguredEmbeddings());search.search('return policy')
     records=[]
     from capstone_agent.support.model import Gateway
     original_invoke=Gateway.invoke

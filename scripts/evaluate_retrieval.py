@@ -8,7 +8,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from capstone_agent.retrieval.chroma_store import PolicySearch
-from capstone_agent.retrieval.embeddings_voyage import VoyageNanoEmbeddings
+from capstone_agent.retrieval.configured_embeddings import ConfiguredEmbeddings
 from capstone_agent.retrieval.query_expansion import PROFILE
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -21,7 +21,7 @@ def main():
     arguments = parser.parse_args()
     label_path = ROOT / "data/retrieval_labels.json"
     labels = json.loads(label_path.read_text())["labels"]
-    search = PolicySearch(VoyageNanoEmbeddings(), version=arguments.index_version, threshold=-1)
+    search = PolicySearch(ConfiguredEmbeddings(), version=arguments.index_version, threshold=-1)
     raw = [(label, search.search(label["query"])) for label in labels]
     thresholds = sorted({0., 1., *(round(c["score"] + delta, 6) for _, result in raw
                                   for c in result["raw_vector_top_k"] for delta in (0, .000001))})

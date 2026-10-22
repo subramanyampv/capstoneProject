@@ -1,0 +1,281 @@
+{
+  "samples": [
+    {
+      "started_at": "2026-10-19T17:42:38.423947+00:00",
+      "queue_ms": 0.345,
+      "search_execution_ms": 517.564,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-19T17:42:47.576277+00:00",
+      "queue_ms": 0.017,
+      "search_execution_ms": 356.254,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-19T17:43:27.833197+00:00",
+      "queue_ms": 0.016,
+      "search_execution_ms": 537.445,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-19T17:43:29.821704+00:00",
+      "queue_ms": 0.009,
+      "search_execution_ms": 136.367,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-19T17:43:37.021377+00:00",
+      "queue_ms": 0.021,
+      "search_execution_ms": 552.683,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-19T17:43:53.794590+00:00",
+      "queue_ms": 0.022,
+      "search_execution_ms": 483.829,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-19T17:44:25.427897+00:00",
+      "queue_ms": 0.023,
+      "search_execution_ms": 709.92,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-19T17:44:44.883812+00:00",
+      "queue_ms": 0.029,
+      "search_execution_ms": 330.276,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-19T17:44:45.214874+00:00",
+      "queue_ms": 0.008,
+      "search_execution_ms": 82.586,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-19T17:45:19.900919+00:00",
+      "queue_ms": 0.008,
+      "search_execution_ms": 307.173,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-19T17:45:46.582384+00:00",
+      "queue_ms": 0.043,
+      "search_execution_ms": 623.84,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-19T18:18:53.294836+00:00",
+      "queue_ms": 0.041,
+      "search_execution_ms": 4425.093,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-19T18:18:59.917609+00:00",
+      "queue_ms": 0.025,
+      "search_execution_ms": 592.573,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-19T18:19:11.356957+00:00",
+      "queue_ms": 0.03,
+      "search_execution_ms": 767.61,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-19T18:19:13.901690+00:00",
+      "queue_ms": 0.008,
+      "search_execution_ms": 116.047,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-19T18:19:34.327550+00:00",
+      "queue_ms": 0.021,
+      "search_execution_ms": 597.649,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-19T20:41:17.955903+00:00",
+      "queue_ms": 0.021,
+      "search_execution_ms": 3294.749,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-19T20:41:36.184610+00:00",
+      "queue_ms": 0.016,
+      "search_execution_ms": 382.973,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-20T00:52:47.241666+00:00",
+      "queue_ms": 0.043,
+      "search_execution_ms": 7683.039,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-20T02:27:00.972673+00:00",
+      "queue_ms": 0.017,
+      "search_execution_ms": 587.706,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-20T02:55:20.073959+00:00",
+      "queue_ms": 0.021,
+      "search_execution_ms": 737.97,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-20T03:27:32.120394+00:00",
+      "queue_ms": 0.096,
+      "search_execution_ms": 1892.0,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-20T03:27:48.598126+00:00",
+      "queue_ms": 0.016,
+      "search_execution_ms": 499.524,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-20T03:28:05.715556+00:00",
+      "queue_ms": 0.015,
+      "search_execution_ms": 360.683,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-20T03:28:19.196644+00:00",
+      "queue_ms": 0.011,
+      "search_execution_ms": 441.802,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-20T03:28:31.203644+00:00",
+      "queue_ms": 0.008,
+      "search_execution_ms": 278.457,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-20T03:28:38.549057+00:00",
+      "queue_ms": 0.013,
+      "search_execution_ms": 267.033,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-20T03:56:20.421262+00:00",
+      "queue_ms": 0.019,
+      "search_execution_ms": 635.773,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-20T04:56:45.480146+00:00",
+      "queue_ms": 0.026,
+      "search_execution_ms": 572.38,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-20T08:51:26.612155+00:00",
+      "queue_ms": 0.041,
+      "search_execution_ms": 1382.176,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-20T09:24:21.237241+00:00",
+      "queue_ms": 0.007,
+      "search_execution_ms": 663.286,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-20T09:24:26.970654+00:00",
+      "queue_ms": 0.014,
+      "search_execution_ms": 181.296,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-20T10:51:29.674042+00:00",
+      "queue_ms": 0.189,
+      "search_execution_ms": 7122.465,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-20T12:27:35.115355+00:00",
+      "queue_ms": 0.02,
+      "search_execution_ms": 627.774,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-20T13:55:16.022887+00:00",
+      "queue_ms": 0.017,
+      "search_execution_ms": 1780.775,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-20T14:56:02.269278+00:00",
+      "queue_ms": 0.032,
+      "search_execution_ms": 583.437,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-20T14:56:04.785443+00:00",
+      "queue_ms": 0.009,
+      "search_execution_ms": 139.379,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-20T15:56:57.800898+00:00",
+      "queue_ms": 0.019,
+      "search_execution_ms": 749.894,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-20T15:57:45.929441+00:00",
+      "queue_ms": 0.021,
+      "search_execution_ms": 266.753,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-20T17:00:09.542559+00:00",
+      "queue_ms": 0.014,
+      "search_execution_ms": 540.046,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-20T18:15:36.276278+00:00",
+      "queue_ms": 0.018,
+      "search_execution_ms": 504.967,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-20T19:24:25.969348+00:00",
+      "queue_ms": 0.062,
+      "search_execution_ms": 58768.302,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-20T19:25:56.918139+00:00",
+      "queue_ms": 0.48,
+      "search_execution_ms": 38626.966,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-20T19:27:13.949979+00:00",
+      "queue_ms": 0.059,
+      "search_execution_ms": 6604.731,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-20T19:27:42.144759+00:00",
+      "queue_ms": 0.096,
+      "search_execution_ms": 3186.995,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-20T19:28:58.169673+00:00",
+      "queue_ms": 0.107,
+      "search_execution_ms": 5734.802,
+      "status": "ok"
+    }
+  ],
+  "limits": "Evaluation shared-model lock wait and elapsed search execution, including initial warmup. No query text, arguments, credentials or customer references. Execution includes embedding/index work; not isolated embedding profiling or proof of a queue root cause."
+}

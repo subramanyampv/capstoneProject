@@ -5,13 +5,13 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 from capstone_agent.retrieval.chroma_store import PolicySearch
-from capstone_agent.retrieval.embeddings_voyage import VoyageNanoEmbeddings
+from capstone_agent.retrieval.configured_embeddings import ConfiguredEmbeddings
 
 ROOT = Path(__file__).resolve().parents[1]
 
 
 def main():
-    search = PolicySearch(VoyageNanoEmbeddings())
+    search = PolicySearch(ConfiguredEmbeddings())
     records = []
     for category in ["footwear", "apparel", "home", "electronics", "perishable_grocery"]:
         result = search.search("return window and restocking fee", category=category,

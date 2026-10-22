@@ -7,7 +7,7 @@ from pathlib import Path
 from capstone_agent.config import load_environment
 from capstone_agent.evaluation.export import minimized_json,verified_tickets
 from capstone_agent.retrieval.chroma_store import PolicySearch
-from capstone_agent.retrieval.embeddings_voyage import VoyageNanoEmbeddings
+from capstone_agent.retrieval.configured_embeddings import ConfiguredEmbeddings
 from capstone_agent.support.runtime import run_support
 from capstone_agent.support.registry import SessionIdentity
 from capstone_agent.support.memory import SessionMemory
@@ -21,7 +21,7 @@ def main():
     env=load_environment(ROOT/'.env');secrets=tuple(v for k,v in env.items() if k.endswith('API_KEY') and v)
     original=json.loads((ROOT/'data/evaluation_cases.json').read_text())['cases']
     query=next(case['input'] for case in original if case['id']=='R01')
-    search=PolicySearch(VoyageNanoEmbeddings());search.search('return policy');memory=SessionMemory();identity=SessionIdentity('C-100')
+    search=PolicySearch(ConfiguredEmbeddings());search.search('return policy');memory=SessionMemory();identity=SessionIdentity('C-100')
     with tempfile.TemporaryDirectory() as local:
         preferences=PreferenceStore(Path(local));rows=[]
         try:

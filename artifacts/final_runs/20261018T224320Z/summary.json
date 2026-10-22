@@ -1,0 +1,66 @@
+{
+  "runs": 2,
+  "hard_gate_case_passes": 2,
+  "all_case_check_passes": 2,
+  "scope_exclusions": 0,
+  "case_failures": [],
+  "checks": {
+    "code_contract": {
+      "passed": 2,
+      "total": 2,
+      "hard_gate": true
+    },
+    "final_gate_replay": {
+      "passed": 2,
+      "total": 2,
+      "hard_gate": true
+    },
+    "independent_request_coverage": {
+      "passed": 2,
+      "total": 2,
+      "hard_gate": true
+    },
+    "obligation_evidence_for_answer": {
+      "passed": 2,
+      "total": 2,
+      "hard_gate": true
+    },
+    "authoritative_policy_citations": {
+      "passed": 2,
+      "total": 2,
+      "hard_gate": true
+    },
+    "expected_terminal_outcome": {
+      "passed": 2,
+      "total": 2,
+      "hard_gate": false
+    },
+    "required_tool:lookup_order": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    }
+  },
+  "operations": {
+    "paths": {
+      "ESCALATED": {
+        "requests": 1,
+        "latency_ms_p50": 36464.721,
+        "latency_ms_p95": 36464.721,
+        "tokens": 28707,
+        "repairs": 0,
+        "tool_errors": 3
+      },
+      "CLARIFICATION_REQUESTED": {
+        "requests": 1,
+        "latency_ms_p50": 8245.105,
+        "latency_ms_p95": 8245.105,
+        "tokens": 3802,
+        "repairs": 0,
+        "tool_errors": 2
+      }
+    },
+    "limits": "Observed samples by terminal outcome, interpolated percentiles; not a production latency SLA."
+  },
+  "limits": "Exact original inputs plus declared setup. Original deferred action-flow expectations are excluded, not passed. Contract/syntactic scores do not establish semantic faithfulness, human calibration or final acceptance."
+}

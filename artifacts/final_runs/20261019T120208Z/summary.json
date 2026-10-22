@@ -1,0 +1,262 @@
+{
+  "runs": 65,
+  "hard_gate_case_passes": 65,
+  "all_case_check_passes": 64,
+  "scope_exclusions": 12,
+  "case_failures": [
+    {
+      "case_id": "R09",
+      "repeat": 0,
+      "outcome": "INSUFFICIENT_EVIDENCE",
+      "failed_checks": [
+        "expected_terminal_outcome"
+      ]
+    }
+  ],
+  "checks": {
+    "code_contract": {
+      "passed": 65,
+      "total": 65,
+      "hard_gate": true
+    },
+    "final_gate_replay": {
+      "passed": 65,
+      "total": 65,
+      "hard_gate": true
+    },
+    "independent_request_coverage": {
+      "passed": 64,
+      "total": 64,
+      "hard_gate": true
+    },
+    "obligation_evidence_for_answer": {
+      "passed": 64,
+      "total": 64,
+      "hard_gate": true
+    },
+    "authoritative_policy_citations": {
+      "passed": 64,
+      "total": 64,
+      "hard_gate": true
+    },
+    "expected_terminal_outcome": {
+      "passed": 64,
+      "total": 65,
+      "hard_gate": false
+    },
+    "required_tool:check_return_eligibility": {
+      "passed": 9,
+      "total": 9,
+      "hard_gate": false
+    },
+    "required_tool:search_policy": {
+      "passed": 20,
+      "total": 20,
+      "hard_gate": false
+    },
+    "required_citation:return_policy": {
+      "passed": 12,
+      "total": 12,
+      "hard_gate": false
+    },
+    "eligibility:WITHIN_WINDOW": {
+      "passed": 2,
+      "total": 2,
+      "hard_gate": false
+    },
+    "required_tool:lookup_order": {
+      "passed": 4,
+      "total": 4,
+      "hard_gate": false
+    },
+    "required_tool:get_tracking_events": {
+      "passed": 6,
+      "total": 6,
+      "hard_gate": false
+    },
+    "required_tool:get_product_details": {
+      "passed": 5,
+      "total": 5,
+      "hard_gate": false
+    },
+    "mandatory_trigger:T6": {
+      "passed": 2,
+      "total": 2,
+      "hard_gate": true
+    },
+    "required_citation:cancellation_policy": {
+      "passed": 2,
+      "total": 2,
+      "hard_gate": false
+    },
+    "eligibility:CANCELLATION_PRE_DISPATCH": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    },
+    "required_citation:shipping_policy": {
+      "passed": 4,
+      "total": 4,
+      "hard_gate": false
+    },
+    "required_tool_any:lookup_order,get_product_details": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    },
+    "required_citation:warranty_policy": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    },
+    "eligibility:WINDOW_EXCEEDED": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    },
+    "mandatory_trigger:T3": {
+      "passed": 2,
+      "total": 2,
+      "hard_gate": true
+    },
+    "required_tool_any:lookup_order,get_tracking_events": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    },
+    "required_tool:create_escalation": {
+      "passed": 6,
+      "total": 6,
+      "hard_gate": false
+    },
+    "required_citation:faq": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    },
+    "eligibility:CATEGORY_EXCLUDED": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    },
+    "required_citation:refund_policy": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    },
+    "mandatory_trigger:T1": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": true
+    },
+    "mandatory_trigger:T2": {
+      "passed": 3,
+      "total": 3,
+      "hard_gate": true
+    },
+    "eligibility:REFUND_ABOVE_THRESHOLD": {
+      "passed": 2,
+      "total": 2,
+      "hard_gate": false
+    },
+    "mandatory_refusal:R1": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": true
+    },
+    "mandatory_refusal:R2": {
+      "passed": 3,
+      "total": 3,
+      "hard_gate": true
+    },
+    "mandatory_refusal:R3": {
+      "passed": 3,
+      "total": 3,
+      "hard_gate": true
+    },
+    "feedback_category_recorded": {
+      "passed": 2,
+      "total": 2,
+      "hard_gate": false
+    },
+    "mandatory_trigger:T5": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": true
+    },
+    "injected_or_negative_error:TIMEOUT": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    },
+    "no_invalid_order_read": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": true
+    },
+    "style:verbosity": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    },
+    "style:version": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    }
+  },
+  "operations": {
+    "paths": {
+      "ANSWERED": {
+        "requests": 29,
+        "latency_ms_p50": 11868.564,
+        "latency_ms_p95": 28060.096,
+        "tokens": 260790,
+        "repairs": 1,
+        "tool_errors": 0
+      },
+      "ESCALATED": {
+        "requests": 13,
+        "latency_ms_p50": 28870.154,
+        "latency_ms_p95": 75439.013,
+        "tokens": 326921,
+        "repairs": 6,
+        "tool_errors": 1
+      },
+      "INSUFFICIENT_EVIDENCE": {
+        "requests": 3,
+        "latency_ms_p50": 17259.15,
+        "latency_ms_p95": 51749.4,
+        "tokens": 37257,
+        "repairs": 2,
+        "tool_errors": 0
+      },
+      "CLARIFICATION_REQUESTED": {
+        "requests": 13,
+        "latency_ms_p50": 27.052,
+        "latency_ms_p95": 8972.927,
+        "tokens": 15744,
+        "repairs": 0,
+        "tool_errors": 3
+      },
+      "REFUSED": {
+        "requests": 6,
+        "latency_ms_p50": 30.181,
+        "latency_ms_p95": 35254.094,
+        "tokens": 18093,
+        "repairs": 1,
+        "tool_errors": 0
+      },
+      "COMMAND_HANDLED": {
+        "requests": 1,
+        "latency_ms_p50": 0.0,
+        "latency_ms_p95": 0.0,
+        "tokens": 0,
+        "repairs": 0,
+        "tool_errors": 0
+      }
+    },
+    "limits": "Observed samples by terminal outcome, interpolated percentiles; not a production latency SLA."
+  },
+  "limits": "Exact original inputs plus declared setup. Original deferred action-flow expectations are excluded, not passed. Contract/syntactic scores do not establish semantic faithfulness, human calibration or final acceptance."
+}

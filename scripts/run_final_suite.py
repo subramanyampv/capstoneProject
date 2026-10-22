@@ -13,7 +13,7 @@ from capstone_agent.evaluation.final_protocol import assess
 from capstone_agent.evaluation.export import minimized_json,verified_tickets
 from capstone_agent.evaluation.support_runner import load_cases
 from capstone_agent.retrieval.chroma_store import PolicySearch
-from capstone_agent.retrieval.embeddings_voyage import VoyageNanoEmbeddings
+from capstone_agent.retrieval.configured_embeddings import ConfiguredEmbeddings
 from capstone_agent.support.runtime import run_support
 from capstone_agent.support.registry import SessionIdentity
 from capstone_agent.support.memory import SessionMemory
@@ -117,7 +117,7 @@ def main():
             if previous.get(key)!=manifest[key]:raise ValueError('RESUME_BUILD_OR_PROTOCOL_MISMATCH')
     else:(directory/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
     secrets=tuple(value for name,value in env.items() if name.endswith('API_KEY') and value)
-    search=SerializedSearch(PolicySearch(VoyageNanoEmbeddings()));search.search('return policy')
+    search=SerializedSearch(PolicySearch(ConfiguredEmbeddings()));search.search('return policy')
     completed=set()
     if (directory/'outputs.jsonl').exists():completed={(row['case_id'],row['repeat']) for row in map(json.loads,(directory/'outputs.jsonl').read_text().splitlines())}
     print('Run:',directory,flush=True)

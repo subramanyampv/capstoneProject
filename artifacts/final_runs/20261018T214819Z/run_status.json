@@ -1,0 +1,7 @@
+{
+  "status": "stopped_superseded_candidate",
+  "recorded_cases": 35,
+  "hard_gate_case_passes": 35,
+  "all_case_check_passes": 34,
+  "reason": "N17 historical arrival acquired an unnecessary shipping-policy obligation; saturated policy capacity was then retried with invalid arguments. Preserve the failed partial run and partial primary judgments. Candidate repaired; new correctness run will use one worker."
+}

@@ -73,12 +73,12 @@ with chat:
             elif mode == "Support agent":
                 st.session_state.pop("support_last",None)
                 st.session_state.pop("feedback_customer",None)
-                from capstone_agent.retrieval.embeddings_voyage import VoyageNanoEmbeddings
+                from capstone_agent.retrieval.configured_embeddings import ConfiguredEmbeddings
                 from capstone_agent.retrieval.chroma_store import PolicySearch
                 from capstone_agent.support.runtime import run_support
                 @st.cache_resource
                 def local_policy_search():
-                    search = PolicySearch(VoyageNanoEmbeddings())
+                    search = PolicySearch(ConfiguredEmbeddings())
                     search.search('return policy')
                     return search
                 with st.spinner("Checking records and policy evidence…"):

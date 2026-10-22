@@ -8,6 +8,7 @@ from capstone_agent.support.runtime import run_support
 from test_support_tools import setup
 from test_support_graph import ScriptedGateway,plan,tools,result,draft
 from capstone_agent.support.graph import SupportAgent
+from capstone_agent.support.contracts import evidence_ref_key
 
 def test_threshold_consumes_pairs_and_bounds(tmp_path):
     store=PreferenceStore(tmp_path)
@@ -65,13 +66,22 @@ def test_implicit_signals_success_only_and_changed_entities():
         def embed_query(self,text):raise RuntimeError('provider offline')
     assert implicit_signal('Track O-1001',context,embeddings=Broken()) is None
 
-@pytest.mark.parametrize('command',['/feedback too_long','/feedback reset_style','/feedback enable','/feedback disable','/forget-preferences'])
+@pytest.mark.parametrize('command',['/feedback too_long','/feedback reset_style','/feedback enable','/feedback disable','/forget-preferences',"Rate the previous answer: 'too verbose'."])
 def test_commands_without_provider_or_index(setup,command):
     services,_=setup
     response=run_support(command,identity=SessionIdentity('C-100'),root=services.root)
     assert response['outcome']=='COMMAND_HANDLED'
     assert response['model_calls']==response['tool_calls']==0
     assert not response['memory']['reset']
+
+
+def test_explicit_rating_does_not_depend_on_prior_answer_success(setup):
+    services,_=setup
+    response=run_support("Rate the previous answer: 'too verbose'.",identity=SessionIdentity('C-100'),root=services.root)
+    assert response['outcome']=='COMMAND_HANDLED'
+    rows=[json.loads(line) for line in (services.root/'data/runtime/feedback.jsonl').read_text().splitlines()]
+    assert len(rows)==1 and rows[0]['signal']=='too_long' and rows[0]['type']=='explicit'
+    assert 'previous answer' not in json.dumps(rows)
 
 @pytest.mark.parametrize('style',[StyleProfile(),StyleProfile('concise','bullets',1),StyleProfile('detailed','step_by_step',2)])
 def test_safety_invariant_across_styles(setup,style):
@@ -159,7 +169,7 @@ def test_duration_singular_plural_grounding_equivalence():
     def errors(answer):
         response=ResponseDraft(answer=answer,why=[],citations=[ref],next_steps=[],
             intents_addressed=['warranty'],outcome_claimed='ANSWERED')
-        return final_errors(response,refs={json.dumps(ref,sort_keys=True)},facts=facts,
+        return final_errors(response,refs={evidence_ref_key(ref)},facts=facts,
             refusals=[],triggers=[],ticket=None,intents=['warranty'])
     assert 'G3_UNSUPPORTED_NUMBER' not in errors('The warranty lasts 90 days.')
     facts[0]['data']['results'][0]['text']='The footwear warranty lasts 90 days.'

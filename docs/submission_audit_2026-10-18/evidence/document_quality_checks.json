@@ -1,0 +1,20 @@
+{
+  "markdown_documents": 9,
+  "broken_markdown_links": [],
+  "candidate_missing_files": [],
+  "manifest_checks_after_audit": {
+    "source_sha256": {
+      "count": 51,
+      "mismatches": []
+    },
+    "build_sha256": {
+      "count": 65,
+      "mismatches": []
+    }
+  },
+  "env_example_only_empty_keys": true,
+  "new_report_model_or_secret_pattern_findings": [],
+  "json_parse": "passed",
+  "zip_created_by_audit": false,
+  "limitation": "Pattern scan is targeted, not proof of universal secret detection. Proposed file set has not undergone isolated clean-copy dependency validation."
+}

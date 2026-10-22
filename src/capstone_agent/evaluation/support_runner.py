@@ -9,7 +9,7 @@ from pathlib import Path
 os.environ['DEEPEVAL_DISABLE_DOTENV']='1'
 os.environ['DEEPEVAL_TELEMETRY_OPT_OUT']='YES'
 from deepeval.metrics import BaseMetric
-from capstone_agent.support.contracts import ResponseDraft
+from capstone_agent.support.contracts import ResponseDraft, evidence_ref_key
 
 class SupportContractMetric(BaseMetric):
     threshold=1;async_mode=False;evaluation_cost=0
@@ -18,8 +18,8 @@ class SupportContractMetric(BaseMetric):
     def measure(self,test_case,**kwargs):
         try:
             result=json.loads(test_case.actual_output);draft=ResponseDraft.model_validate(result['response'])
-            refs={json.dumps(ref,sort_keys=True) for row in result['tool_records'] if row['status']=='ok' for ref in row['evidence_refs']}
-            cited={json.dumps(ref.model_dump(),sort_keys=True) for ref in draft.citations}
+            refs={evidence_ref_key(ref) for row in result['tool_records'] if row['status']=='ok' for ref in row['evidence_refs']}
+            cited={evidence_ref_key(ref) for ref in draft.citations}
             ok=(draft.outcome_claimed==result['outcome'] and cited<=refs
                 and result['model_calls']<=12 and result['tool_calls']<=8 and result['handoffs']<=4 and result['replans']<=1 and result['repairs']<=1)
             if result['outcome'] in {'ESCALATED','BUDGET_EXHAUSTED_ESCALATED'}:
@@ -62,7 +62,7 @@ def run_evaluation(dataset,output,*,contexts=None,allow_holdout=False,repeats=1,
         'limits':'Code contracts only. Reviewed identity/setup contexts and semantic/expected routing labels require Phase 9 review. Holdout must never be used for tuning.'}
     if dry_run:return manifest
     from capstone_agent.config import LLMConfig
-    from capstone_agent.retrieval.embeddings_voyage import VoyageNanoEmbeddings
+    from capstone_agent.retrieval.configured_embeddings import ConfiguredEmbeddings
     from capstone_agent.retrieval.chroma_store import PolicySearch
     from capstone_agent.support.runtime import run_support
     from capstone_agent.support.registry import SessionIdentity
@@ -72,7 +72,7 @@ def run_evaluation(dataset,output,*,contexts=None,allow_holdout=False,repeats=1,
     from capstone_agent.support.services import ROOT
     from deepeval.test_case import LLMTestCase
     import tempfile
-    config=LLMConfig.from_env(ROOT/'.env');search=PolicySearch(VoyageNanoEmbeddings());search.search('return policy')
+    config=LLMConfig.from_env(ROOT/'.env');search=PolicySearch(ConfiguredEmbeddings());search.search('return policy')
     output=Path(output);output.mkdir(parents=True,exist_ok=False);scores=[]
     with tempfile.TemporaryDirectory() as local:
         store=PreferenceStore(Path(local))

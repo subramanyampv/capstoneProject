@@ -1,0 +1,6 @@
+{
+  "status": "stopped_superseded_before_completion",
+  "completed_runs": 14,
+  "passed_completed_runs": 14,
+  "reason": "Posthoc review of the preceding full run found an unsupported N09 amount-review rationale. Source will be repaired; this partial run cannot establish final consistency. Saved results remain unchanged."
+}

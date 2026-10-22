@@ -1,0 +1,6 @@
+{
+  "status": "passed",
+  "command": ".venv/bin/python -m pip check",
+  "result": "No broken requirements found.",
+  "limits": "Checks installed dependency consistency in the existing project virtual environment; no installations or clean-install claim."
+}

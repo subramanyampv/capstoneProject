@@ -1,0 +1,26 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "check": "model_configuration",
+      "passed": true
+    },
+    {
+      "check": "safety_rules",
+      "passed": true
+    },
+    {
+      "check": "policy_fixture_consistency",
+      "passed": true
+    },
+    {
+      "check": "runtime_flags",
+      "passed": true
+    },
+    {
+      "check": "observability_configuration",
+      "passed": true
+    }
+  ],
+  "limits": "Configuration/local assets only; no provider connectivity, hosted ingestion or final acceptance claim."
+}

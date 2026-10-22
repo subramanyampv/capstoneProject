@@ -1,0 +1,7 @@
+{
+  "recorded_at": "2026-10-19T01:12:04.335297+00:00",
+  "setting": "LLM_TIMEOUT_SECONDS",
+  "previous_value": 20,
+  "new_value": 60,
+  "reason": "Observed SUPERVISOR_provider_timeout prevented required eligibility facts in public targeted case S15; user prioritizes correctness independently of latency. Failed prior run preserved. Source and credentials unchanged; new live runs require new configuration identity."
+}

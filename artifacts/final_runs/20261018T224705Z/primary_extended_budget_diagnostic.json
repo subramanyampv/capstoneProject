@@ -1,0 +1,22 @@
+{
+  "case_id": "N01",
+  "timeout_seconds": 60,
+  "max_completion_tokens": 8000,
+  "failures": [],
+  "metrics": [
+    {
+      "name": "faithfulness",
+      "status": "measured"
+    },
+    {
+      "name": "answer_relevancy",
+      "status": "measured"
+    },
+    {
+      "name": "grounded_support",
+      "status": "measured"
+    }
+  ],
+  "successful_calls": 8,
+  "limits": "Transport/completion-budget diagnostic only; original scores are preserved. Same saved public output and unchanged rubric."
+}

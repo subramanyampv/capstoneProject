@@ -1,0 +1,12 @@
+{
+  "status": "completed_failed_then_source_superseded",
+  "runs": 65,
+  "hard_gate_case_passes": 65,
+  "all_case_check_passes": 64,
+  "failed_case_ids": [
+    "R09"
+  ],
+  "second_judge_completed_cases": 65,
+  "root_cause": "Diagnostic173404 reproduced general-policy prose being rejected by amount-review guard on unbound demonstrative that; originals preserved. Source repaired and requiresfreshvalidation.",
+  "submission_ready": false
+}

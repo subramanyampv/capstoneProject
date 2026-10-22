@@ -9,7 +9,7 @@ from unittest.mock import patch
 from langchain_core.messages import AIMessage
 from capstone_agent.evaluation.export import minimized_json,verified_tickets
 from capstone_agent.retrieval.chroma_store import PolicySearch
-from capstone_agent.retrieval.embeddings_voyage import VoyageNanoEmbeddings
+from capstone_agent.retrieval.configured_embeddings import ConfiguredEmbeddings
 from capstone_agent.support.graph import SupportAgent
 from capstone_agent.support.registry import Registry,SessionIdentity
 from capstone_agent.support.services import Services
@@ -48,7 +48,7 @@ def main():
     parser=argparse.ArgumentParser();parser.add_argument('--output',required=True,type=Path);args=parser.parse_args()
     cases=json.loads((ROOT/'data/evaluation_cases.json').read_text())['cases']
     query=next(case['input'] for case in cases if case['id']=='R05')
-    search=PolicySearch(VoyageNanoEmbeddings());search.search('return policy')
+    search=PolicySearch(ConfiguredEmbeddings());search.search('return policy')
     rows=[]
     with tempfile.TemporaryDirectory() as local:
         for enabled in [False,True]:

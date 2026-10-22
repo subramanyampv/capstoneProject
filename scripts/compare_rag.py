@@ -9,7 +9,7 @@ from pathlib import Path
 from capstone_agent.config import LLMConfig
 from capstone_agent.langchain_client import LangChainChatClient
 from capstone_agent.retrieval.chroma_store import PolicySearch
-from capstone_agent.retrieval.embeddings_voyage import VoyageNanoEmbeddings
+from capstone_agent.retrieval.configured_embeddings import ConfiguredEmbeddings
 from capstone_agent.retrieval.grounded_answer import SYSTEM, VERSION, answer
 from capstone_agent.retrieval.query_expansion import PROFILE
 from capstone_agent.safety.redaction import sanitize_data
@@ -23,7 +23,7 @@ def main():
     parser.add_argument("--case", action="append", choices=CASES, help="Optional targeted frozen-case subset")
     arguments = parser.parse_args()
     selected = list(dict.fromkeys(arguments.case)) if arguments.case else CASES
-    search = PolicySearch(VoyageNanoEmbeddings())
+    search = PolicySearch(ConfiguredEmbeddings())
     config = LLMConfig.from_env(ROOT / ".env")
     cases = json.loads((ROOT / "data/evaluation_cases.json").read_text())["cases"]
     directory = ROOT / "artifacts/rag_runs" / datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")

@@ -1,0 +1,48 @@
+{
+  "recorded_at": "2026-10-19T01:13:10.507657+00:00",
+  "scenario_date": "2026-10-12",
+  "source_sha256": "70696c9d6059db904823162bd56bcc575e1b97a06bc758bd65a69c6884e5c68b",
+  "records": [
+    {
+      "label": "supported_status",
+      "input": "Where is my order ref:c0e6ba7c36a1eeef66bc? Has it shipped?",
+      "result": {
+        "request_id": "3f5975435fdc",
+        "intent": "shipping_tracking",
+        "matched": true,
+        "response": "Order ref:c0e6ba7c36a1eeef66bc: status 'processing'. No carrier events yet (placed 2026-10-11).",
+        "latency_ms": 0.03
+      },
+      "input_sha256": "9ef56ff869c27b1cfeb56241c2c46f023bf2bae30096b2c8e1f0366180cc3ce9"
+    },
+    {
+      "label": "paraphrase_limit",
+      "input": "Am I able to send these trainers back? A fortnight has passed since I got them.",
+      "result": {
+        "request_id": "31bd914bb509",
+        "intent": "fallback",
+        "matched": false,
+        "response": "Sorry \u2014 I didn't understand that request. This assistant matches fixed phrases and can help with: order status, tracking, returns, refunds, cancellation, product info, warranty. Try rephrasing with an order number, e.g. 'Where is order ref:6510d6f84d72e21c51f9?'",
+        "latency_ms": 0.04
+      },
+      "input_sha256": "1acc74a133d893bb61c448cf01f06f3b21170a6dc4a9f12d70280493329dcc57"
+    },
+    {
+      "label": "multiple_intents_limit",
+      "input": "Where is order ref:d45916301dd856974ea6 and can I return the jacket if it arrives late?",
+      "result": {
+        "request_id": "9d258bfb06cf",
+        "intent": "return_eligibility",
+        "matched": true,
+        "response": "Order ref:d45916301dd856974ea6 has not been delivered yet (status: shipped), so the return window has not started. (source: data/sample_orders.json)",
+        "latency_ms": 0.02
+      },
+      "input_sha256": "e50a9501d3399f1254b6faf7e9a043fa06f9fd49b69e08581e2ab38bd09762a1"
+    }
+  ],
+  "observed_limitations": [
+    "Paraphrase is unmatched despite an understandable return request.",
+    "Multiple-intent request produces only a return-window answer and omits requested tracking."
+  ],
+  "limits": "Fresh deterministic baseline replay with synthetic fixtures, no model calls. Baseline is a comparison component, not the final support runtime. Sanitized inputs and exact input digests are retained."
+}

@@ -1,6 +1,8 @@
 """Per-turn permissions, closed schemas, deadlines, budgets and LangChain tools."""
 import asyncio
+from concurrent.futures import ThreadPoolExecutor
 import json
+import threading
 import time
 import uuid
 from dataclasses import dataclass, field
@@ -10,6 +12,13 @@ from pydantic import ValidationError
 from langchain_core.tools import StructuredTool
 from capstone_agent.support.contracts import *
 from capstone_agent.support.services import Services, ToolFailure, SCENARIO_DATE
+
+# Local CPU embeddings must not occupy asyncio's shared default executor, which
+# also services order and product reads. Timed-out searches keep their slot until
+# the underlying synchronous work actually finishes.
+_POLICY_SEARCH_WORKERS = 2
+_POLICY_SEARCH_EXECUTOR = ThreadPoolExecutor(max_workers=_POLICY_SEARCH_WORKERS, thread_name_prefix='policy-search')
+_POLICY_SEARCH_SLOTS = threading.BoundedSemaphore(_POLICY_SEARCH_WORKERS)
 
 @dataclass(frozen=True)
 class SessionIdentity:
@@ -40,9 +49,9 @@ class ToolContext:
 SPECS={
  'lookup_order':('order_shipping',OrderArgs,OrderResult,3.),
  'get_tracking_events':('order_shipping',OrderArgs,TrackingResult,3.),
- # User-approved 20-second local retrieval budget. Latency is measured
+ # User-approved 60-second local retrieval budget. Latency is measured
  # separately from correctness; results after the deadline cannot become evidence.
- 'search_policy':('policy_product',PolicyArgs,PolicyResult,20.),
+ 'search_policy':('policy_product',PolicyArgs,PolicyResult,60.),
  'get_product_details':('policy_product',ProductArgs,ProductResult,2.),
  'check_return_eligibility':('policy_product',EligibilityArgs,EligibilityResult,2.),
  'create_escalation':('escalation',EscalationArgs,EscalationResult,3.),
@@ -89,7 +98,7 @@ class Registry:
         elif name=='search_policy':
             refs=[EvidenceRef(source_id='doc:'+r['doc_id'],section=r['section_id'],record_version=r['version']).model_dump() for r in data['results']]
             if data['conflict']: self.ctx.triggers.add('T3')
-        self.ctx.evidence.update(json.dumps(ref,sort_keys=True) for ref in refs)
+        self.ctx.evidence.update(evidence_ref_key(ref) for ref in refs)
         return refs
 
     async def call(self,agent,name,arguments):
@@ -122,6 +131,17 @@ class Registry:
                 # Controlled local write commits/read-backs synchronously. Never abandon a
                 # write worker on timeout and later create an unreported orphan ticket.
                 result=method(args,self.ctx)
+            elif name=='search_policy':
+                if not _POLICY_SEARCH_SLOTS.acquire(blocking=False):
+                    raise ToolFailure('CAPACITY_EXHAUSTED')
+                try:
+                    worker=_POLICY_SEARCH_EXECUTOR.submit(method,args,self.ctx)
+                except Exception:
+                    _POLICY_SEARCH_SLOTS.release()
+                    raise
+                worker.add_done_callback(lambda _: _POLICY_SEARCH_SLOTS.release())
+                pending=asyncio.wrap_future(worker)
+                result=await asyncio.wait_for(asyncio.shield(pending),timeout)
             else:
                 result=await asyncio.wait_for(asyncio.to_thread(method,args,self.ctx),timeout)
             data=outputs.model_validate(result).model_dump()

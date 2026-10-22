@@ -58,6 +58,30 @@ def test_sensitive_identifier_refusal_addresses_storage_without_echoing_value():
     assert 'save sensitive identifiers' in REFUSAL and 'Social Security' in REFUSAL
 
 
+def test_retailer_cannot_be_mislabeled_as_mock_delivery_after_ticket_creation():
+    draft=ResponseDraft(answer='This is not a real retailer delivery.',why=[],citations=[],next_steps=[],intents_addressed=[],outcome_claimed='ESCALATED')
+    result=final_errors(draft,refs=set(),facts=[],refusals=[],triggers=[],
+        ticket={'status':'created','ticket_id':'MOCK-123456789abc'},intents=[])
+    assert 'G1_MOCK_SCOPE_MISSTATED' in result
+
+
+def test_individual_eligibility_claim_requires_checker_fact():
+    assert 'G3_UNVERIFIED_INDIVIDUAL_ELIGIBILITY' not in errors('Your specific eligibility cannot be confirmed.')
+    assert 'G3_UNVERIFIED_INDIVIDUAL_ELIGIBILITY' in errors('You qualify for a return.')
+    facts=[{'name':'check_return_eligibility','data':{'eligible':False}}]
+    assert 'G3_UNVERIFIED_INDIVIDUAL_ELIGIBILITY' not in errors('Your specific eligibility cannot be confirmed.',facts)
+
+
+def test_carrier_clock_time_requires_utc_label():
+    facts=[{'name':'get_tracking_events','data':{'events':[{'ts':'2026-09-30T10:47:00Z'}]}}]
+    assert 'G3_UNLABELED_UTC_TIME' in errors('The carrier recorded this at 10:47 AM.',facts)
+    assert 'G3_UNLABELED_UTC_TIME' not in errors('The carrier recorded this at 10:47 AM UTC.',facts)
+
+
+def test_retailer_escalation_is_not_a_medical_handoff():
+    assert 'G3_UNSUPPORTED_MEDICAL_HANDOFF' in errors('Contact retailer support for medical assistance.')
+
+
 @pytest.mark.parametrize('claim',['No further shipping action is needed.','No additional delivery support is necessary.','No more action required.'])
 def test_delivered_record_never_establishes_no_more_support_needed(claim):
     assert 'G3_UNSUPPORTED_NO_ACTION_NEEDED' in errors(claim,[{'name':'lookup_order','data':{'status':'delivered'}}])
@@ -111,7 +135,7 @@ def test_conclusion_repair_preserves_mixed_shipping_policy_and_never_waives_othe
         return draft('The order shipped on 2026-09-28 and was recorded delivered on 2026-09-30. No further shipping action is needed.'+extra,
             intents=data['intents'],citations=data['allowed_citations'])
     response=asyncio.run(SupportAgent(services,ScriptedGateway([plan(),result('order_shipping'),result('policy_product'),bad,bad])).run(
-        'When did order O-1001 ship and when did it arrive?',SessionIdentity('C-100')))
+        'When did order O-1001 ship and when did it arrive? Also explain the shipping policy.',SessionIdentity('C-100')))
     assert response['outcome']==expected, {k:response[k] for k in ['errors','obligation_audit','stages','model_calls']}
     if expected=='ANSWERED':
         assert response['bounded_claim_repair'] and not response['answer_fallback']

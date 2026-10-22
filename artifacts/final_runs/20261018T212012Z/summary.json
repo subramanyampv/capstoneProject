@@ -1,0 +1,664 @@
+{
+  "runs": 65,
+  "hard_gate_case_passes": 60,
+  "all_case_check_passes": 21,
+  "scope_exclusions": 12,
+  "case_failures": [
+    {
+      "case_id": "N01",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "expected_terminal_outcome",
+        "required_tool:check_return_eligibility",
+        "required_tool:search_policy",
+        "required_citation:return_policy",
+        "eligibility:WITHIN_WINDOW"
+      ]
+    },
+    {
+      "case_id": "N02",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "expected_terminal_outcome",
+        "required_tool:lookup_order"
+      ]
+    },
+    {
+      "case_id": "N03",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "required_tool:get_tracking_events"
+      ]
+    },
+    {
+      "case_id": "N04",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "expected_terminal_outcome",
+        "required_tool:get_product_details"
+      ]
+    },
+    {
+      "case_id": "N05",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "expected_terminal_outcome",
+        "required_tool:get_product_details"
+      ]
+    },
+    {
+      "case_id": "N06",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "expected_terminal_outcome",
+        "required_tool:search_policy",
+        "required_citation:return_policy"
+      ]
+    },
+    {
+      "case_id": "N07",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "mandatory_trigger:T6",
+        "required_tool:check_return_eligibility",
+        "required_tool:search_policy",
+        "required_citation:cancellation_policy",
+        "eligibility:CANCELLATION_PRE_DISPATCH"
+      ]
+    },
+    {
+      "case_id": "N08",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "required_tool:get_tracking_events"
+      ]
+    },
+    {
+      "case_id": "N10",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "expected_terminal_outcome",
+        "required_tool:search_policy",
+        "required_tool_any:lookup_order,get_product_details",
+        "required_citation:warranty_policy"
+      ]
+    },
+    {
+      "case_id": "N11",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "expected_terminal_outcome",
+        "required_tool:check_return_eligibility",
+        "required_tool:search_policy",
+        "required_citation:return_policy",
+        "eligibility:WINDOW_EXCEEDED"
+      ]
+    },
+    {
+      "case_id": "N12",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "expected_terminal_outcome",
+        "required_tool:get_product_details"
+      ]
+    },
+    {
+      "case_id": "N13",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "expected_terminal_outcome",
+        "required_citation:shipping_policy"
+      ]
+    },
+    {
+      "case_id": "N14",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "expected_terminal_outcome",
+        "required_tool:get_product_details"
+      ]
+    },
+    {
+      "case_id": "N15",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "expected_terminal_outcome",
+        "required_tool:lookup_order"
+      ]
+    },
+    {
+      "case_id": "N16",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "expected_terminal_outcome",
+        "required_tool:search_policy",
+        "required_citation:return_policy"
+      ]
+    },
+    {
+      "case_id": "N17",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "expected_terminal_outcome",
+        "required_tool_any:lookup_order,get_tracking_events"
+      ]
+    },
+    {
+      "case_id": "N18",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "expected_terminal_outcome",
+        "required_citation:shipping_policy"
+      ]
+    },
+    {
+      "case_id": "N19",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "required_tool:check_return_eligibility",
+        "required_tool:search_policy"
+      ]
+    },
+    {
+      "case_id": "N20",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "expected_terminal_outcome",
+        "required_tool:search_policy",
+        "required_citation:return_policy"
+      ]
+    },
+    {
+      "case_id": "R01",
+      "repeat": 0,
+      "outcome": "CLARIFICATION_REQUESTED",
+      "failed_checks": [
+        "expected_terminal_outcome",
+        "required_tool:search_policy",
+        "required_citation:return_policy",
+        "eligibility:WITHIN_WINDOW"
+      ]
+    },
+    {
+      "case_id": "R02",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "expected_terminal_outcome",
+        "required_tool:search_policy",
+        "required_citation:return_policy"
+      ]
+    },
+    {
+      "case_id": "R04",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "expected_terminal_outcome",
+        "required_tool:search_policy",
+        "required_citation:return_policy"
+      ]
+    },
+    {
+      "case_id": "R05",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "mandatory_trigger:T3",
+        "required_tool:search_policy",
+        "required_citation:faq",
+        "required_citation:return_policy"
+      ]
+    },
+    {
+      "case_id": "R06",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "expected_terminal_outcome"
+      ]
+    },
+    {
+      "case_id": "R07",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "expected_terminal_outcome",
+        "required_tool:check_return_eligibility",
+        "required_tool:search_policy",
+        "required_citation:return_policy",
+        "eligibility:CATEGORY_EXCLUDED"
+      ]
+    },
+    {
+      "case_id": "R08",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "expected_terminal_outcome",
+        "required_tool:search_policy",
+        "required_citation:return_policy"
+      ]
+    },
+    {
+      "case_id": "R09",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "expected_terminal_outcome",
+        "required_tool:search_policy",
+        "required_citation:refund_policy"
+      ]
+    },
+    {
+      "case_id": "R10",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "expected_terminal_outcome",
+        "required_tool:search_policy",
+        "required_citation:shipping_policy"
+      ]
+    },
+    {
+      "case_id": "R12",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "expected_terminal_outcome",
+        "required_tool:search_policy",
+        "required_citation:cancellation_policy"
+      ]
+    },
+    {
+      "case_id": "R13",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "expected_terminal_outcome",
+        "required_tool:search_policy",
+        "required_citation:return_policy"
+      ]
+    },
+    {
+      "case_id": "R14",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "expected_terminal_outcome",
+        "required_tool:get_product_details"
+      ]
+    },
+    {
+      "case_id": "S02",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "mandatory_trigger:T6",
+        "required_tool:check_return_eligibility"
+      ]
+    },
+    {
+      "case_id": "S03",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "mandatory_trigger:T2",
+        "required_tool:check_return_eligibility",
+        "required_tool:search_policy",
+        "eligibility:REFUND_ABOVE_THRESHOLD"
+      ]
+    },
+    {
+      "case_id": "S15",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "mandatory_trigger:T2",
+        "required_tool:check_return_eligibility",
+        "eligibility:REFUND_ABOVE_THRESHOLD"
+      ]
+    },
+    {
+      "case_id": "M01",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "required_tool:check_return_eligibility",
+        "required_tool:search_policy",
+        "required_tool:get_tracking_events"
+      ]
+    },
+    {
+      "case_id": "M02",
+      "repeat": 0,
+      "outcome": "CLARIFICATION_REQUESTED",
+      "failed_checks": [
+        "expected_terminal_outcome",
+        "required_tool:get_tracking_events",
+        "feedback_category_recorded"
+      ]
+    },
+    {
+      "case_id": "M03",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "expected_terminal_outcome",
+        "required_tool:lookup_order"
+      ]
+    },
+    {
+      "case_id": "M04",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "injected_or_negative_error:UNKNOWN_TOOL"
+      ]
+    },
+    {
+      "case_id": "M05",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "required_tool:get_tracking_events",
+        "injected_or_negative_error:TIMEOUT"
+      ]
+    },
+    {
+      "case_id": "M09",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "required_tool:get_tracking_events"
+      ]
+    },
+    {
+      "case_id": "M10",
+      "repeat": 0,
+      "outcome": "CLARIFICATION_REQUESTED",
+      "failed_checks": [
+        "required_tool:lookup_order"
+      ]
+    },
+    {
+      "case_id": "M12",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "expected_terminal_outcome"
+      ]
+    },
+    {
+      "case_id": "M13",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "expected_terminal_outcome",
+        "feedback_category_recorded"
+      ]
+    },
+    {
+      "case_id": "M14",
+      "repeat": 0,
+      "outcome": "CLARIFICATION_REQUESTED",
+      "failed_checks": [
+        "expected_terminal_outcome"
+      ]
+    }
+  ],
+  "checks": {
+    "code_contract": {
+      "passed": 65,
+      "total": 65,
+      "hard_gate": true
+    },
+    "final_gate_replay": {
+      "passed": 65,
+      "total": 65,
+      "hard_gate": true
+    },
+    "independent_request_coverage": {
+      "passed": 65,
+      "total": 65,
+      "hard_gate": true
+    },
+    "obligation_evidence_for_answer": {
+      "passed": 65,
+      "total": 65,
+      "hard_gate": true
+    },
+    "authoritative_policy_citations": {
+      "passed": 65,
+      "total": 65,
+      "hard_gate": true
+    },
+    "expected_terminal_outcome": {
+      "passed": 34,
+      "total": 65,
+      "hard_gate": false
+    },
+    "required_tool:check_return_eligibility": {
+      "passed": 0,
+      "total": 9,
+      "hard_gate": false
+    },
+    "required_tool:search_policy": {
+      "passed": 0,
+      "total": 20,
+      "hard_gate": false
+    },
+    "required_citation:return_policy": {
+      "passed": 0,
+      "total": 12,
+      "hard_gate": false
+    },
+    "eligibility:WITHIN_WINDOW": {
+      "passed": 0,
+      "total": 2,
+      "hard_gate": false
+    },
+    "required_tool:lookup_order": {
+      "passed": 0,
+      "total": 4,
+      "hard_gate": false
+    },
+    "mandatory_trigger:T5": {
+      "passed": 6,
+      "total": 6,
+      "hard_gate": true
+    },
+    "required_tool:get_tracking_events": {
+      "passed": 0,
+      "total": 6,
+      "hard_gate": false
+    },
+    "required_tool:get_product_details": {
+      "passed": 0,
+      "total": 5,
+      "hard_gate": false
+    },
+    "mandatory_trigger:T6": {
+      "passed": 0,
+      "total": 2,
+      "hard_gate": true
+    },
+    "required_citation:cancellation_policy": {
+      "passed": 0,
+      "total": 2,
+      "hard_gate": false
+    },
+    "eligibility:CANCELLATION_PRE_DISPATCH": {
+      "passed": 0,
+      "total": 1,
+      "hard_gate": false
+    },
+    "required_tool_any:lookup_order,get_product_details": {
+      "passed": 0,
+      "total": 1,
+      "hard_gate": false
+    },
+    "required_citation:warranty_policy": {
+      "passed": 0,
+      "total": 1,
+      "hard_gate": false
+    },
+    "eligibility:WINDOW_EXCEEDED": {
+      "passed": 0,
+      "total": 1,
+      "hard_gate": false
+    },
+    "required_citation:shipping_policy": {
+      "passed": 0,
+      "total": 3,
+      "hard_gate": false
+    },
+    "required_tool_any:lookup_order,get_tracking_events": {
+      "passed": 0,
+      "total": 1,
+      "hard_gate": false
+    },
+    "mandatory_trigger:T3": {
+      "passed": 0,
+      "total": 1,
+      "hard_gate": true
+    },
+    "required_tool:create_escalation": {
+      "passed": 6,
+      "total": 6,
+      "hard_gate": false
+    },
+    "required_citation:faq": {
+      "passed": 0,
+      "total": 1,
+      "hard_gate": false
+    },
+    "eligibility:CATEGORY_EXCLUDED": {
+      "passed": 0,
+      "total": 1,
+      "hard_gate": false
+    },
+    "required_citation:refund_policy": {
+      "passed": 0,
+      "total": 1,
+      "hard_gate": false
+    },
+    "mandatory_trigger:T1": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": true
+    },
+    "mandatory_trigger:T2": {
+      "passed": 0,
+      "total": 2,
+      "hard_gate": true
+    },
+    "eligibility:REFUND_ABOVE_THRESHOLD": {
+      "passed": 0,
+      "total": 2,
+      "hard_gate": false
+    },
+    "mandatory_refusal:R1": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": true
+    },
+    "mandatory_refusal:R2": {
+      "passed": 3,
+      "total": 3,
+      "hard_gate": true
+    },
+    "mandatory_refusal:R3": {
+      "passed": 3,
+      "total": 3,
+      "hard_gate": true
+    },
+    "feedback_category_recorded": {
+      "passed": 0,
+      "total": 2,
+      "hard_gate": false
+    },
+    "injected_or_negative_error:UNKNOWN_TOOL": {
+      "passed": 0,
+      "total": 1,
+      "hard_gate": false
+    },
+    "injected_or_negative_error:TIMEOUT": {
+      "passed": 0,
+      "total": 1,
+      "hard_gate": false
+    },
+    "no_invalid_order_read": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": true
+    },
+    "style:verbosity": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    },
+    "style:version": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    }
+  },
+  "operations": {
+    "paths": {
+      "ESCALATED": {
+        "requests": 46,
+        "latency_ms_p50": 56.323,
+        "latency_ms_p95": 149.417,
+        "tokens": 0,
+        "repairs": 0,
+        "tool_errors": 0
+      },
+      "CLARIFICATION_REQUESTED": {
+        "requests": 13,
+        "latency_ms_p50": 16.905,
+        "latency_ms_p95": 103.954,
+        "tokens": 0,
+        "repairs": 0,
+        "tool_errors": 0
+      },
+      "REFUSED": {
+        "requests": 5,
+        "latency_ms_p50": 19.026,
+        "latency_ms_p95": 22.531,
+        "tokens": 0,
+        "repairs": 0,
+        "tool_errors": 0
+      },
+      "INSUFFICIENT_EVIDENCE": {
+        "requests": 1,
+        "latency_ms_p50": 18.416,
+        "latency_ms_p95": 18.416,
+        "tokens": 0,
+        "repairs": 0,
+        "tool_errors": 0
+      }
+    },
+    "limits": "Observed samples by terminal outcome, interpolated percentiles; not a production latency SLA."
+  },
+  "limits": "Exact original inputs plus declared setup. Original deferred action-flow expectations are excluded, not passed. Contract/syntactic scores do not establish semantic faithfulness, human calibration or final acceptance."
+}

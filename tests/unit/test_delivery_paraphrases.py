@@ -1,5 +1,6 @@
 """Delivery-date questions keep policy evidence across ordinary paraphrases."""
 
+import re
 import pytest
 
 from capstone_agent.support.obligations import audit, derive
@@ -22,6 +23,10 @@ def test_delivery_date_questions_require_shipping_policy(query):
     assert contract.policy_docs == ('shipping_policy',)
     assert 'policy_question' in contract.intents
     assert not contract.request_types
+    personal = bool(re.search(r'\b(?:my|our|this|that|the)\s+(?:order|package|parcel|shipment|delivery)\b|\bO-\d{4}\b',query,re.I)
+                    or re.search(r'\b(?:it|this|that)\b',query,re.I))
+    assert contract.tracking is personal
+    assert contract.needs_reference is (personal and not bool(re.search(r'\bO-\d{4}\b',query,re.I)))
     assert {'obligation': 'policy:shipping_policy', 'evidence_complete': False,
             'required': ['search_policy:shipping_policy']} in audit(contract, [])
 
@@ -62,6 +67,13 @@ def test_delivery_and_return_policy_questions_keep_both_documents():
     contract = derive('Will O-1001 reach us tomorrow, and what is the return window?')
     assert set(contract.policy_docs) == {'shipping_policy', 'return_policy'}
     assert not contract.request_types
+
+
+def test_specific_delivery_paraphrases_require_order_reference():
+    for query in ['Will my package make it here today?', 'Will this get here by Friday?']:
+        contract=derive(query)
+        assert contract.tracking and contract.needs_reference
+        assert 'shipping_policy' in contract.policy_docs
 
 
 @pytest.mark.parametrize('query', [

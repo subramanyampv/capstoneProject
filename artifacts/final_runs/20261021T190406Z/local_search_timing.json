@@ -1,0 +1,23 @@
+{
+  "samples": [
+    {
+      "started_at": "2026-10-21T19:04:32.245252+00:00",
+      "queue_ms": 0.033,
+      "search_execution_ms": 624.696,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-21T19:04:40.489621+00:00",
+      "queue_ms": 0.008,
+      "search_execution_ms": 483.228,
+      "status": "ok"
+    },
+    {
+      "started_at": "2026-10-21T19:05:08.934824+00:00",
+      "queue_ms": 0.026,
+      "search_execution_ms": 469.358,
+      "status": "ok"
+    }
+  ],
+  "limits": "Evaluation shared-model lock wait and elapsed search execution, including initial warmup. No query text, arguments, credentials or customer references. Execution includes embedding/index work; not isolated embedding profiling or proof of a queue root cause."
+}

@@ -1,0 +1,775 @@
+{
+  "conversation": "switch",
+  "memory_enabled": true,
+  "expected_followup": "fresh_verified_answer",
+  "passed": true,
+  "reference_tool_hit": true,
+  "clarifications": 0,
+  "turns": [
+    {
+      "response": {
+        "answer": "Order ref:6b2d27e6813f395f2e78 shows a delivered scan on 2026-09-30 at 10:47 UTC in Denver, CO. Prior tracking events include shipment from Reno, NV on 2026-09-28 at 08:12 UTC and out-for-delivery at the Denver hub on 2026-09-29 at 14:03 UTC. This delivery status reflects carrier records and does not confirm physical receipt or resolve potential issues. If you have not received the package or need further assistance, please contact retailer support with your order reference for review.",
+        "why": [
+          "Tracking events show a delivered scan on 2026-09-30 at 10:47 UTC in Denver, CO",
+          "Delivery scans reflect carrier records and do not establish physical receipt or eliminate need for support"
+        ],
+        "citations": [
+          {
+            "source_id": "tracking:ref:6b2d27e6813f395f2e78",
+            "section": null,
+            "record_version": "2026-10-12"
+          },
+          {
+            "source_id": "order:ref:6b2d27e6813f395f2e78",
+            "section": null,
+            "record_version": "2026-10-12"
+          }
+        ],
+        "next_steps": [
+          "Contact retailer support with order ref:6b2d27e6813f395f2e78 if the package was not received or further help is needed"
+        ],
+        "intents_addressed": [
+          "order_tracking"
+        ],
+        "outcome_claimed": "ANSWERED"
+      },
+      "outcome": "ANSWERED",
+      "ticket": null,
+      "refusals": [],
+      "triggers": [],
+      "obligation_contract": {
+        "intents": [
+          "order_tracking"
+        ],
+        "order_id": "ref:6b2d27e6813f395f2e78",
+        "request_types": [],
+        "policy_docs": [],
+        "tracking": true,
+        "order_status": false,
+        "product": false,
+        "ambiguous_orders": false,
+        "sku": null,
+        "needs_reference": false,
+        "required_sections": [],
+        "unclassified_support": false,
+        "version": "request-obligations-v4"
+      },
+      "obligation_audit": [
+        {
+          "obligation": "order_tracking",
+          "evidence_complete": true,
+          "required": [
+            "get_tracking_events"
+          ]
+        }
+      ],
+      "answer_fallback": false,
+      "bounded_claim_repair": false,
+      "canonical_handoff_repair": false,
+      "rule_citations_completed": false,
+      "authoritative_citations_completed": false,
+      "tool_records": [
+        {
+          "evidence_refs": [
+            {
+              "source_id": "order:ref:6b2d27e6813f395f2e78",
+              "section": null,
+              "record_version": "2026-10-12"
+            }
+          ],
+          "exec_id": "d3ce1ac673c341b59635c3d3cac39a16",
+          "name": "lookup_order",
+          "status": "ok",
+          "data": {
+            "order_id": "ref:6b2d27e6813f395f2e78",
+            "status": "delivered",
+            "placed_at": "2026-09-25",
+            "dispatched_at": "2026-09-28",
+            "delivered_at": "2026-09-30",
+            "shipping_service": null,
+            "items": [
+              {
+                "sku": "SKU-SHOES-001",
+                "name": "TrailRunner Shoes",
+                "category": "footwear",
+                "price": 89.99
+              }
+            ],
+            "record_version": "2026-10-12"
+          },
+          "error": null,
+          "duration_ms": 0.804
+        },
+        {
+          "evidence_refs": [
+            {
+              "source_id": "tracking:ref:6b2d27e6813f395f2e78",
+              "section": null,
+              "record_version": "2026-10-12"
+            }
+          ],
+          "exec_id": "fda7d3c2dd1d45ac8d59b0e7191d709e",
+          "name": "get_tracking_events",
+          "status": "ok",
+          "data": {
+            "events": [
+              {
+                "ts": "2026-09-28T08:12:00Z",
+                "status": "shipped",
+                "city": "Origin facility, Reno NV"
+              },
+              {
+                "ts": "2026-09-29T14:03:00Z",
+                "status": "out_for_delivery",
+                "city": "Denver CO hub"
+              },
+              {
+                "ts": "2026-09-30T10:47:00Z",
+                "status": "delivered",
+                "city": "Denver CO"
+              }
+            ],
+            "latest": {
+              "ts": "2026-09-30T10:47:00Z",
+              "status": "delivered",
+              "city": "Denver CO"
+            },
+            "carrier_estimate": null,
+            "stale": false,
+            "record_version": "2026-10-12"
+          },
+          "error": null,
+          "duration_ms": 2.266
+        }
+      ],
+      "results": [
+        {
+          "agent_name": "order_shipping",
+          "status": "success",
+          "summary": "Order ref:6b2d27e6813f395f2e78 was delivered on 2026-09-30 at 10:47 UTC in Denver, CO. Tracking shows shipped (Reno NV), out for delivery (Denver hub), and final delivery. No carrier estimate available; data is current.",
+          "evidence": [
+            {
+              "source_id": "order:ref:6b2d27e6813f395f2e78",
+              "section": null,
+              "record_version": "2026-10-12"
+            },
+            {
+              "source_id": "tracking:ref:6b2d27e6813f395f2e78",
+              "section": null,
+              "record_version": "2026-10-12"
+            }
+          ],
+          "facts": {
+            "tools": [
+              {
+                "name": "lookup_order",
+                "args": {
+                  "order_id": "ref:6b2d27e6813f395f2e78"
+                },
+                "data": {
+                  "order_id": "ref:6b2d27e6813f395f2e78",
+                  "status": "delivered",
+                  "placed_at": "2026-09-25",
+                  "dispatched_at": "2026-09-28",
+                  "delivered_at": "2026-09-30",
+                  "shipping_service": null,
+                  "items": [
+                    {
+                      "sku": "SKU-SHOES-001",
+                      "name": "TrailRunner Shoes",
+                      "category": "footwear",
+                      "price": 89.99
+                    }
+                  ],
+                  "record_version": "2026-10-12"
+                }
+              },
+              {
+                "name": "get_tracking_events",
+                "args": {
+                  "order_id": "ref:6b2d27e6813f395f2e78"
+                },
+                "data": {
+                  "events": [
+                    {
+                      "ts": "2026-09-28T08:12:00Z",
+                      "status": "shipped",
+                      "city": "Origin facility, Reno NV"
+                    },
+                    {
+                      "ts": "2026-09-29T14:03:00Z",
+                      "status": "out_for_delivery",
+                      "city": "Denver CO hub"
+                    },
+                    {
+                      "ts": "2026-09-30T10:47:00Z",
+                      "status": "delivered",
+                      "city": "Denver CO"
+                    }
+                  ],
+                  "latest": {
+                    "ts": "2026-09-30T10:47:00Z",
+                    "status": "delivered",
+                    "city": "Denver CO"
+                  },
+                  "carrier_estimate": null,
+                  "stale": false,
+                  "record_version": "2026-10-12"
+                }
+              }
+            ]
+          },
+          "flags": {
+            "conflict": false,
+            "requires_review": false
+          }
+        }
+      ],
+      "stages": [
+        "guard_in",
+        "supervisor_plan",
+        "dispatch",
+        "order_shipping",
+        "collect_result",
+        "dispatch",
+        "composer",
+        "guard_out"
+      ],
+      "errors": [],
+      "model_calls": 3,
+      "tool_calls": 2,
+      "handoffs": 1,
+      "replans": 0,
+      "repairs": 0,
+      "tokens": 5320,
+      "style": {
+        "verbosity": "standard",
+        "format": "prose",
+        "version": 0,
+        "word_count": 75
+      },
+      "safety_version": "2026-10-18-v7",
+      "latency_ms": 14982.081,
+      "memory": {
+        "enabled": true,
+        "history_messages": 0,
+        "resolved_reference": false,
+        "expired": false,
+        "reset": false
+      },
+      "request_id": "0e7b98afe415430d93dd8d22a43d2124",
+      "tracing": {
+        "trace_id": "0e7b98af-e415-430d-93dd-8d22a43d2124",
+        "status": "queued",
+        "span_count": 12
+      }
+    },
+    {
+      "response": {
+        "answer": "Order ref:969b6009fd3109304588 shows a delivered scan on 2026-09-11 at 13:05 UTC in Austin, TX. The prior scan was shipped on 2026-09-10 at 10:00 UTC from the origin facility. This delivery status reflects carrier records and does not confirm physical receipt or that no further assistance is needed. Please contact retailer support with your order reference if you require additional help.",
+        "why": [
+          "Tracking events show a delivered scan on 2026-09-11 at 13:05 UTC in Austin, TX",
+          "Delivery scans report carrier status only and do not establish that no further action is required"
+        ],
+        "citations": [
+          {
+            "source_id": "tracking:ref:969b6009fd3109304588",
+            "section": null,
+            "record_version": "2026-10-12"
+          },
+          {
+            "source_id": "order:ref:969b6009fd3109304588",
+            "section": null,
+            "record_version": "2026-10-12"
+          }
+        ],
+        "next_steps": [
+          "Contact retailer support with order ref:969b6009fd3109304588 for further assistance"
+        ],
+        "intents_addressed": [
+          "order_tracking"
+        ],
+        "outcome_claimed": "ANSWERED"
+      },
+      "outcome": "ANSWERED",
+      "ticket": null,
+      "refusals": [],
+      "triggers": [],
+      "obligation_contract": {
+        "intents": [
+          "order_tracking"
+        ],
+        "order_id": "ref:969b6009fd3109304588",
+        "request_types": [],
+        "policy_docs": [],
+        "tracking": true,
+        "order_status": false,
+        "product": false,
+        "ambiguous_orders": false,
+        "sku": null,
+        "needs_reference": false,
+        "required_sections": [],
+        "unclassified_support": false,
+        "version": "request-obligations-v4"
+      },
+      "obligation_audit": [
+        {
+          "obligation": "order_tracking",
+          "evidence_complete": true,
+          "required": [
+            "get_tracking_events"
+          ]
+        }
+      ],
+      "answer_fallback": false,
+      "bounded_claim_repair": false,
+      "canonical_handoff_repair": false,
+      "rule_citations_completed": false,
+      "authoritative_citations_completed": false,
+      "tool_records": [
+        {
+          "evidence_refs": [
+            {
+              "source_id": "order:ref:969b6009fd3109304588",
+              "section": null,
+              "record_version": "2026-10-12"
+            }
+          ],
+          "exec_id": "a963bff1615147bf899d29313268a05d",
+          "name": "lookup_order",
+          "status": "ok",
+          "data": {
+            "order_id": "ref:969b6009fd3109304588",
+            "status": "delivered",
+            "placed_at": "2026-09-08",
+            "dispatched_at": "2026-09-10",
+            "delivered_at": "2026-09-11",
+            "shipping_service": null,
+            "items": [
+              {
+                "sku": "SKU-POTS-003",
+                "name": "Ceramic Plant Pot Set",
+                "category": "home",
+                "price": 54.0
+              }
+            ],
+            "record_version": "2026-10-12"
+          },
+          "error": null,
+          "duration_ms": 2.215
+        },
+        {
+          "evidence_refs": [
+            {
+              "source_id": "tracking:ref:969b6009fd3109304588",
+              "section": null,
+              "record_version": "2026-10-12"
+            }
+          ],
+          "exec_id": "0a1f8191418f48fbbf5ce1496e0647c7",
+          "name": "get_tracking_events",
+          "status": "ok",
+          "data": {
+            "events": [
+              {
+                "ts": "2026-09-10T10:00:00Z",
+                "status": "shipped",
+                "city": "Origin facility"
+              },
+              {
+                "ts": "2026-09-11T13:05:00Z",
+                "status": "delivered",
+                "city": "Austin TX"
+              }
+            ],
+            "latest": {
+              "ts": "2026-09-11T13:05:00Z",
+              "status": "delivered",
+              "city": "Austin TX"
+            },
+            "carrier_estimate": null,
+            "stale": false,
+            "record_version": "2026-10-12"
+          },
+          "error": null,
+          "duration_ms": 2.424
+        }
+      ],
+      "results": [
+        {
+          "agent_name": "order_shipping",
+          "status": "success",
+          "summary": "Order ref:969b6009fd3109304588 was delivered on 2026-09-11 at 13:05 UTC in Austin, TX. Latest tracking event confirms delivery; no carrier estimate available and data is not stale.",
+          "evidence": [
+            {
+              "source_id": "order:ref:969b6009fd3109304588",
+              "section": null,
+              "record_version": "2026-10-12"
+            },
+            {
+              "source_id": "tracking:ref:969b6009fd3109304588",
+              "section": null,
+              "record_version": "2026-10-12"
+            }
+          ],
+          "facts": {
+            "tools": [
+              {
+                "name": "lookup_order",
+                "args": {
+                  "order_id": "ref:969b6009fd3109304588"
+                },
+                "data": {
+                  "order_id": "ref:969b6009fd3109304588",
+                  "status": "delivered",
+                  "placed_at": "2026-09-08",
+                  "dispatched_at": "2026-09-10",
+                  "delivered_at": "2026-09-11",
+                  "shipping_service": null,
+                  "items": [
+                    {
+                      "sku": "SKU-POTS-003",
+                      "name": "Ceramic Plant Pot Set",
+                      "category": "home",
+                      "price": 54.0
+                    }
+                  ],
+                  "record_version": "2026-10-12"
+                }
+              },
+              {
+                "name": "get_tracking_events",
+                "args": {
+                  "order_id": "ref:969b6009fd3109304588"
+                },
+                "data": {
+                  "events": [
+                    {
+                      "ts": "2026-09-10T10:00:00Z",
+                      "status": "shipped",
+                      "city": "Origin facility"
+                    },
+                    {
+                      "ts": "2026-09-11T13:05:00Z",
+                      "status": "delivered",
+                      "city": "Austin TX"
+                    }
+                  ],
+                  "latest": {
+                    "ts": "2026-09-11T13:05:00Z",
+                    "status": "delivered",
+                    "city": "Austin TX"
+                  },
+                  "carrier_estimate": null,
+                  "stale": false,
+                  "record_version": "2026-10-12"
+                }
+              }
+            ]
+          },
+          "flags": {
+            "conflict": false,
+            "requires_review": false
+          }
+        }
+      ],
+      "stages": [
+        "guard_in",
+        "supervisor_plan",
+        "dispatch",
+        "order_shipping",
+        "collect_result",
+        "dispatch",
+        "composer",
+        "guard_out"
+      ],
+      "errors": [],
+      "model_calls": 3,
+      "tool_calls": 2,
+      "handoffs": 1,
+      "replans": 0,
+      "repairs": 0,
+      "tokens": 5214,
+      "style": {
+        "verbosity": "standard",
+        "format": "prose",
+        "version": 0,
+        "word_count": 60
+      },
+      "safety_version": "2026-10-18-v7",
+      "latency_ms": 12857.31,
+      "memory": {
+        "enabled": true,
+        "history_messages": 2,
+        "resolved_reference": false,
+        "expired": false,
+        "reset": false
+      },
+      "request_id": "3f6740e9006143b3bcd7c5fe3c96f329",
+      "tracing": {
+        "trace_id": "3f6740e9-0061-43b3-bcd7-c5fe3c96f329",
+        "status": "queued",
+        "span_count": 12
+      }
+    },
+    {
+      "response": {
+        "answer": "Order ref:6b2d27e6813f395f2e78 shows a delivered scan on 2026-09-30 at 10:47 UTC in Denver, CO. Prior tracking events include shipment from Reno, NV on 2026-09-28 at 08:12 UTC and out for delivery at the Denver hub on 2026-09-29 at 14:03 UTC. This delivery record reflects carrier reporting and does not confirm physical receipt or that no further assistance is needed. Please contact retailer support if you require additional help with this order.",
+        "why": [
+          "Tracking events retrieved for order ref:6b2d27e6813f395f2e78 show latest status as delivered with timestamp 2026-09-30T10:47:00Z in Denver CO",
+          "Delivery scan indicates carrier-reported status but does not establish physical receipt or negate need for support",
+          "All timestamps preserved in UTC per carrier data"
+        ],
+        "citations": [
+          {
+            "source_id": "tracking:ref:6b2d27e6813f395f2e78",
+            "section": null,
+            "record_version": "2026-10-12"
+          },
+          {
+            "source_id": "order:ref:6b2d27e6813f395f2e78",
+            "section": null,
+            "record_version": "2026-10-12"
+          }
+        ],
+        "next_steps": [
+          "Contact retailer support with order reference ref:6b2d27e6813f395f2e78 if further assistance is needed"
+        ],
+        "intents_addressed": [
+          "order_tracking"
+        ],
+        "outcome_claimed": "ANSWERED"
+      },
+      "outcome": "ANSWERED",
+      "ticket": null,
+      "refusals": [],
+      "triggers": [],
+      "obligation_contract": {
+        "intents": [
+          "order_tracking"
+        ],
+        "order_id": "ref:6b2d27e6813f395f2e78",
+        "request_types": [],
+        "policy_docs": [],
+        "tracking": true,
+        "order_status": false,
+        "product": false,
+        "ambiguous_orders": false,
+        "sku": null,
+        "needs_reference": false,
+        "required_sections": [],
+        "unclassified_support": false,
+        "version": "request-obligations-v4"
+      },
+      "obligation_audit": [
+        {
+          "obligation": "order_tracking",
+          "evidence_complete": true,
+          "required": [
+            "get_tracking_events"
+          ]
+        }
+      ],
+      "answer_fallback": false,
+      "bounded_claim_repair": false,
+      "canonical_handoff_repair": false,
+      "rule_citations_completed": false,
+      "authoritative_citations_completed": false,
+      "tool_records": [
+        {
+          "evidence_refs": [
+            {
+              "source_id": "order:ref:6b2d27e6813f395f2e78",
+              "section": null,
+              "record_version": "2026-10-12"
+            }
+          ],
+          "exec_id": "4f8832bf8eb044c8a4ccce9e67376cb7",
+          "name": "lookup_order",
+          "status": "ok",
+          "data": {
+            "order_id": "ref:6b2d27e6813f395f2e78",
+            "status": "delivered",
+            "placed_at": "2026-09-25",
+            "dispatched_at": "2026-09-28",
+            "delivered_at": "2026-09-30",
+            "shipping_service": null,
+            "items": [
+              {
+                "sku": "SKU-SHOES-001",
+                "name": "TrailRunner Shoes",
+                "category": "footwear",
+                "price": 89.99
+              }
+            ],
+            "record_version": "2026-10-12"
+          },
+          "error": null,
+          "duration_ms": 1.992
+        },
+        {
+          "evidence_refs": [
+            {
+              "source_id": "tracking:ref:6b2d27e6813f395f2e78",
+              "section": null,
+              "record_version": "2026-10-12"
+            }
+          ],
+          "exec_id": "8eca64a8573d414fb6c2d3f6996d50ca",
+          "name": "get_tracking_events",
+          "status": "ok",
+          "data": {
+            "events": [
+              {
+                "ts": "2026-09-28T08:12:00Z",
+                "status": "shipped",
+                "city": "Origin facility, Reno NV"
+              },
+              {
+                "ts": "2026-09-29T14:03:00Z",
+                "status": "out_for_delivery",
+                "city": "Denver CO hub"
+              },
+              {
+                "ts": "2026-09-30T10:47:00Z",
+                "status": "delivered",
+                "city": "Denver CO"
+              }
+            ],
+            "latest": {
+              "ts": "2026-09-30T10:47:00Z",
+              "status": "delivered",
+              "city": "Denver CO"
+            },
+            "carrier_estimate": null,
+            "stale": false,
+            "record_version": "2026-10-12"
+          },
+          "error": null,
+          "duration_ms": 2.038
+        }
+      ],
+      "results": [
+        {
+          "agent_name": "order_shipping",
+          "status": "success",
+          "summary": "Order ref:6b2d27e6813f395f2e78 was delivered on 2026-09-30 at 10:47 UTC in Denver, CO. Tracking shows shipped (Reno NV), out for delivery (Denver hub), and final delivery. No carrier estimate available; data is current.",
+          "evidence": [
+            {
+              "source_id": "order:ref:6b2d27e6813f395f2e78",
+              "section": null,
+              "record_version": "2026-10-12"
+            },
+            {
+              "source_id": "tracking:ref:6b2d27e6813f395f2e78",
+              "section": null,
+              "record_version": "2026-10-12"
+            }
+          ],
+          "facts": {
+            "tools": [
+              {
+                "name": "lookup_order",
+                "args": {
+                  "order_id": "ref:6b2d27e6813f395f2e78"
+                },
+                "data": {
+                  "order_id": "ref:6b2d27e6813f395f2e78",
+                  "status": "delivered",
+                  "placed_at": "2026-09-25",
+                  "dispatched_at": "2026-09-28",
+                  "delivered_at": "2026-09-30",
+                  "shipping_service": null,
+                  "items": [
+                    {
+                      "sku": "SKU-SHOES-001",
+                      "name": "TrailRunner Shoes",
+                      "category": "footwear",
+                      "price": 89.99
+                    }
+                  ],
+                  "record_version": "2026-10-12"
+                }
+              },
+              {
+                "name": "get_tracking_events",
+                "args": {
+                  "order_id": "ref:6b2d27e6813f395f2e78"
+                },
+                "data": {
+                  "events": [
+                    {
+                      "ts": "2026-09-28T08:12:00Z",
+                      "status": "shipped",
+                      "city": "Origin facility, Reno NV"
+                    },
+                    {
+                      "ts": "2026-09-29T14:03:00Z",
+                      "status": "out_for_delivery",
+                      "city": "Denver CO hub"
+                    },
+                    {
+                      "ts": "2026-09-30T10:47:00Z",
+                      "status": "delivered",
+                      "city": "Denver CO"
+                    }
+                  ],
+                  "latest": {
+                    "ts": "2026-09-30T10:47:00Z",
+                    "status": "delivered",
+                    "city": "Denver CO"
+                  },
+                  "carrier_estimate": null,
+                  "stale": false,
+                  "record_version": "2026-10-12"
+                }
+              }
+            ]
+          },
+          "flags": {
+            "conflict": false,
+            "requires_review": false
+          }
+        }
+      ],
+      "stages": [
+        "guard_in",
+        "supervisor_plan",
+        "dispatch",
+        "order_shipping",
+        "collect_result",
+        "dispatch",
+        "composer",
+        "guard_out"
+      ],
+      "errors": [],
+      "model_calls": 3,
+      "tool_calls": 2,
+      "handoffs": 1,
+      "replans": 0,
+      "repairs": 0,
+      "tokens": 5401,
+      "style": {
+        "verbosity": "standard",
+        "format": "prose",
+        "version": 0,
+        "word_count": 71
+      },
+      "safety_version": "2026-10-18-v7",
+      "latency_ms": 14697.115,
+      "memory": {
+        "enabled": true,
+        "history_messages": 4,
+        "resolved_reference": true,
+        "expired": false,
+        "reset": false
+      },
+      "request_id": "f7e7fc70e20c4a24b5338f16ac91344b",
+      "tracing": {
+        "trace_id": "f7e7fc70-e20c-4a24-b533-8f16ac91344b",
+        "status": "queued",
+        "span_count": 12
+      }
+    }
+  ]
+}

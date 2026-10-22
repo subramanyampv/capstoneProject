@@ -1,0 +1,117 @@
+{
+  "runs": 4,
+  "hard_gate_case_passes": 3,
+  "all_case_check_passes": 3,
+  "scope_exclusions": 1,
+  "case_failures": [
+    {
+      "case_id": "S15",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "mandatory_trigger:T2",
+        "required_tool:check_return_eligibility",
+        "eligibility:REFUND_ABOVE_THRESHOLD"
+      ]
+    }
+  ],
+  "checks": {
+    "code_contract": {
+      "passed": 4,
+      "total": 4,
+      "hard_gate": true
+    },
+    "final_gate_replay": {
+      "passed": 4,
+      "total": 4,
+      "hard_gate": true
+    },
+    "independent_request_coverage": {
+      "passed": 4,
+      "total": 4,
+      "hard_gate": true
+    },
+    "obligation_evidence_for_answer": {
+      "passed": 4,
+      "total": 4,
+      "hard_gate": true
+    },
+    "authoritative_policy_citations": {
+      "passed": 4,
+      "total": 4,
+      "hard_gate": true
+    },
+    "expected_terminal_outcome": {
+      "passed": 4,
+      "total": 4,
+      "hard_gate": false
+    },
+    "mandatory_trigger:T6": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": true
+    },
+    "required_tool:check_return_eligibility": {
+      "passed": 1,
+      "total": 2,
+      "hard_gate": false
+    },
+    "required_tool:search_policy": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    },
+    "required_citation:cancellation_policy": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    },
+    "eligibility:CANCELLATION_PRE_DISPATCH": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    },
+    "mandatory_trigger:T2": {
+      "passed": 0,
+      "total": 1,
+      "hard_gate": true
+    },
+    "required_tool:create_escalation": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    },
+    "eligibility:REFUND_ABOVE_THRESHOLD": {
+      "passed": 0,
+      "total": 1,
+      "hard_gate": false
+    },
+    "required_tool:lookup_order": {
+      "passed": 1,
+      "total": 1,
+      "hard_gate": false
+    }
+  },
+  "operations": {
+    "paths": {
+      "ESCALATED": {
+        "requests": 3,
+        "latency_ms_p50": 73554.953,
+        "latency_ms_p95": 81060.597,
+        "tokens": 48752,
+        "repairs": 1,
+        "tool_errors": 0
+      },
+      "CLARIFICATION_REQUESTED": {
+        "requests": 1,
+        "latency_ms_p50": 9039.585,
+        "latency_ms_p95": 9039.585,
+        "tokens": 4550,
+        "repairs": 0,
+        "tool_errors": 2
+      }
+    },
+    "limits": "Observed samples by terminal outcome, interpolated percentiles; not a production latency SLA."
+  },
+  "limits": "Exact original inputs plus declared setup. Original deferred action-flow expectations are excluded, not passed. Contract/syntactic scores do not establish semantic faithfulness, human calibration or final acceptance."
+}

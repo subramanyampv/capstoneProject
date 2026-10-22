@@ -24,9 +24,9 @@ def doctor(root=ROOT,*,index=False):
     check('observability_configuration',lambda:ObservabilityConfig.from_env(root/'.env'))
     if index:
         def retrieval():
-            from capstone_agent.retrieval.embeddings_voyage import VoyageNanoEmbeddings
+            from capstone_agent.retrieval.configured_embeddings import ConfiguredEmbeddings
             from capstone_agent.retrieval.chroma_store import PolicySearch
-            search=PolicySearch(VoyageNanoEmbeddings(),root=root);search.search('return policy')
+            search=PolicySearch(ConfiguredEmbeddings(),root=root);search.search('return policy')
         check('pinned_embedding_and_index',retrieval)
     return {'passed':all(c['passed'] for c in checks),'checks':checks,
         'limits':'Configuration/local assets only; no provider connectivity, hosted ingestion or final acceptance claim.'}

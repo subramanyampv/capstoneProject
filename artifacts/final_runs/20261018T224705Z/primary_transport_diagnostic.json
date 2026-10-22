@@ -1,0 +1,25 @@
+{
+  "case_id": "N01",
+  "timeout_seconds": 20.0,
+  "failures": [
+    {
+      "exception_type": "ModelError",
+      "safe_category": "JUDGE_model_internal_error"
+    }
+  ],
+  "metrics": [
+    {
+      "name": "faithfulness",
+      "status": "judge_failed"
+    },
+    {
+      "name": "answer_relevancy",
+      "status": "measured"
+    },
+    {
+      "name": "grounded_support",
+      "status": "measured"
+    }
+  ],
+  "successful_calls": 4
+}

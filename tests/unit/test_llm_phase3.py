@@ -182,7 +182,7 @@ def test_adapter_contract_and_no_key_for_local_server():
     assert "enable_thinking" not in json.loads(request.data)
 
 
-def test_qwen_thinking_setting_is_explicit_and_recorded():
+def test_thinking_setting_is_explicit_and_recorded():
     client = OpenAICompatibleClient(config(enable_thinking=False))
     client.opener = FakeOpener(wire_response())
     client.complete([])

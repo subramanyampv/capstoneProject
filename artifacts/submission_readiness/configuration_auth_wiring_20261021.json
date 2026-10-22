@@ -1,0 +1,22 @@
+{
+  "application": {
+    "key_present": true,
+    "key_contains_whitespace": false,
+    "key_matches_common_placeholder": false,
+    "endpoint_has_embedded_whitespace": false
+  },
+  "judge": {
+    "key_present": true,
+    "key_contains_whitespace": false,
+    "key_matches_common_placeholder": false,
+    "endpoint_has_embedded_whitespace": false
+  },
+  "same_endpoint": true,
+  "same_key": true,
+  "active_application_key_field": "LLM_API_KEY",
+  "active_application_endpoint_field": "LLM_BASE_URL",
+  "judge_key_field": "JUDGE_API_KEY",
+  "judge_endpoint_field": "JUDGE_BASE_URL",
+  "values_disclosed": false,
+  "limits": "Presence/shape checks do not establish valid credentials or account/model access."
+}

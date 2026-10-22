@@ -17,6 +17,10 @@ dist/
 .deepeval/
 .deepeval*
 data/runtime/
+# Blind evaluation inputs stay local until their first authorized evaluation.
+data/holdout_*_blind.json
+evaluation/phase9/holdout_contexts_*_blind.json
+evaluation/phase9/holdout_*_blind_freeze.json
 submission/
 .cache/
 

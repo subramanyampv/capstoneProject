@@ -6,8 +6,9 @@ recognized support requests; it is not a claim of unrestricted language understa
 from dataclasses import dataclass, asdict
 import json
 import re
+from capstone_agent.support.contracts import evidence_ref_key
 
-VERSION = 'request-obligations-v3'
+VERSION = 'request-obligations-v4'
 ORDER = re.compile(r'\bO-\d{4}\b', re.I)
 RETURN = re.compile(r'\b(?:returns?|returning|retrun|restocking)\b|\bsend\b.{0,25}\bback\b', re.I)
 REFUND = re.compile(r'\brefund\w*\b', re.I)
@@ -30,16 +31,19 @@ RETURN_STATUS = re.compile(
 TRACK = re.compile(r'\btrack\w*\b|latest.{0,20}event|\bwhere.{0,35}\b(?:order|package)\b|\bwhen.{0,35}\b(?:ship|arriv|deliver)', re.I)
 RECENT_TRACKING = re.compile(r'\b(?:latest|most recent|last)\b.{0,30}\b(?:carrier|scan|event|tracking)\b|\bcarrier\s+(?:scan|update)\b', re.I)
 DELIVERY_FUTURE = re.compile(
-    r'\b(?:will|when (?:will|does))\b.{0,40}\b(?:arrive|reach|be delivered|get here)\b|'
+    r'\b(?:will|when (?:will|does))\b.{0,40}\b(?:arrive|reach|be delivered|get here|make it(?: here)?|be here)\b|'
     # Present-tense date questions ("arrives today", "reaches us tomorrow")
     # need the same estimate policy; exclude historic "arrived"/"reached".
     r'\b(?:arrives?|reach(?:es)?|gets? here)\b.{0,30}\b(?:tomorrow|today)\b|'
     r'\b(?:arrival|delivery)\s+(?:date|estimate|time|guarantee)\b|'
     r'\b(?:guarantee\w*|promis\w*|predict\w*|estimat\w*)\b.{0,40}\b(?:arrival|delivery|arrive|get here)\b', re.I)
+PERSONAL_DELIVERY = re.compile(r'\b(?:my|our|this|that|the)\s+(?:order|package|parcel|shipment|delivery)\b', re.I)
 STATUS = re.compile(r'\b(?:order|package).{0,20}\bstatus\b|\b(?:has|did|hadn.t|hasn.t|it|not|never).{0,30}\bship\w*\b|\bdelivery email\b', re.I)
-PRODUCT = re.compile(r'material|\bsize\b|sizing|\bcare\b|\bwash\w*\b|\bclean\w*\b|weight|specification|\bwarrant\w*\b|opened', re.I)
+PRODUCT = re.compile(r'material|\bmade\s+(?:of|from)\b|\bsize\b|sizing|\bcare\b|\bwash\w*\b|\bclean\w*\b|weight|specification|\bwarrant\w*\b|opened', re.I)
 SHIPPING = re.compile(r'\bshipping\b|\bship\b.{0,35}\b(?:canada|international|usually|standard)\b|\barrive\b|\bdelivery estimate\b', re.I)
 GENERAL = re.compile(r'\bpolicy|\brule\b|\bwindow|\bdeadline|\blargest|\bthreshold|how many|\bdocument|\bfee|\bguarantee|how long|\bfaq\b|\bhelp (?:page|center|centre)\b', re.I)
+SUPPORT_DOMAIN = re.compile(r'\b(?:order|package|parcel|shipment|delivery|shipping|tracking|refund|return|warranty|product|policy)\b', re.I)
+QUESTION_SHAPE = re.compile(r'\?|^\s*(?:who|what|where|when|why|how|can|could|would|will|is|are|do|does|did|has|have|may|should)\b', re.I)
 
 @dataclass(frozen=True)
 class Obligations:
@@ -54,6 +58,7 @@ class Obligations:
     sku: str | None = None
     needs_reference: bool = False
     required_sections: tuple[str, ...] = ()
+    unclassified_support: bool = False
     version: str = VERSION
 
     def public(self):
@@ -76,11 +81,24 @@ def derive(query, context=None, *, services=None):
     ids=list(dict.fromkeys(value.upper() for value in ORDER.findall(query)))
     resolved=ids[0] if len(ids)==1 else context.get('resolved_order_id') if not ids else None
     if not resolved and not ids and STATUS.search(query):resolved=context.get('entities',{}).get('order_id')
-    tracking=bool(TRACK.search(query) or RECENT_TRACKING.search(query));status=bool(STATUS.search(query))
     delivery_future=bool(DELIVERY_FUTURE.search(query))
+    # A policy estimate cannot verify a particular customer's delivery. Route
+    # personal ETA questions through owned order/tracking evidence or clarify.
+    personal_delivery=bool(delivery_future and (PERSONAL_DELIVERY.search(query) or ids
+        or re.search(r'\b(?:it|this|that)\b',query,re.I)))
+    tracking=bool(TRACK.search(query) or RECENT_TRACKING.search(query) or personal_delivery)
+    if delivery_future and context.get('resolved_order_id') and re.search(r'\b(?:it|this|that)\b',query,re.I):
+        tracking=True
+    status=bool(STATUS.search(query))
     if re.search(r'what.{0,25}mean.{0,20}\b(?:my|the|that) order\b',query,re.I):
         status=True
         tracking=bool(set(context.get('last_intents',[])) & {'order_tracking','shipping_tracking'})
+    # Reuse a recognized request kind only for an explicit conversational replay.
+    # Resolving an entity alone never establishes what a new question means.
+    if (resolved and context.get('is_followup') and
+        re.fullmatch(r'\s*(?:what|how) about (?:that|this|the|my) order[?.!]*\s*',query,re.I)
+        and 'order_tracking' in context.get('last_intents',[])):
+        tracking=True
     # Named return/refund discussions may include a historic delivery date without
     # asking a new tracking question. Only explicit tracking wording creates it.
     has_return=bool(RETURN.search(query));has_refund=bool(REFUND.search(query) or REIMBURSEMENT.search(query));withdraw=bool(WITHDRAW_CANCELLATION.search(query))
@@ -106,7 +124,7 @@ def derive(query, context=None, *, services=None):
     product=bool(PRODUCT.search(query))
     if product:intents.append('warranty' if re.search(r'warrant',query,re.I) else 'product_information')
     if re.search(r'warrant',query,re.I):docs.append('warranty_policy')
-    if delivery_future or (SHIPPING.search(query) and (not resolved or re.search(r'estimat|arriv|guarantee|usually|standard',query,re.I))):
+    if delivery_future or (SHIPPING.search(query) and (not resolved or re.search(r'estimat|guarantee|usually|standard|policy|international|canada',query,re.I))):
         docs.append('shipping_policy');intents.append('policy_question')
     if refund_status:status=True
     if has_refund and re.search(r'window|deadline|footwear',query,re.I):docs.append('return_policy')
@@ -116,10 +134,13 @@ def derive(query, context=None, *, services=None):
     # order. An individual eligibility request does, even when retrieval succeeds.
     conditional=bool(product_ref and re.search(r'\bif\b',query,re.I))
     unknown_policy_subject=has_return and bool(re.search(r'policy\s+for\b',query,re.I)) and not product_ref and not re.search(r'footwear|apparel|home|electronics|perishable|grocery',query,re.I)
-    needs_reference=not resolved and not conditional and bool(
+    needs_reference=not resolved and bool(
+        personal_delivery or
+        (not conditional and (
         (((has_return and not return_status) or has_refund or has_cancel or tracking or status) and not general)
         or unknown_policy_subject
-        or (not intents and re.search(r'\b(?:again|previous answer|earlier question)\b',query,re.I)))
+        or (not intents and re.search(r'\b(?:again|previous answer|earlier question)\b',query,re.I)))))
+    unclassified_support=not intents and bool(SUPPORT_DOMAIN.search(query) or resolved)
     sections=[]
     if re.search(r'restock',query,re.I):sections.append('return_policy:restocking')
     if 'shipping_policy' in docs and re.search(r'\b(?:international(?:ly)?|canada)\b',query,re.I):
@@ -131,7 +152,7 @@ def derive(query, context=None, *, services=None):
         sections.append('shipping_policy:guarantees')
     return Obligations(tuple(dict.fromkeys(intents)),resolved,tuple(requests),tuple(dict.fromkeys(docs)),
         tracking,status,product,len(ids)>1,product_ref.get('sku') if product_ref else None,
-        needs_reference,tuple(sections))
+        needs_reference,tuple(sections),unclassified_support)
 
 
 def catalog_reference(query, services, context=None):
@@ -184,7 +205,7 @@ async def fulfill(contract,agent,registry,query,context=None):
         # Never retry the same failed read implicitly or spend the handoff slot.
         if any(f['name']==name and all(f['args'].get(k)==v for k,v in args.items()) for f in ctx.facts):return
         if any(row['name']==name and row['status']=='error' and row['error'] in
-               {'NOT_FOUND','TIMEOUT','FAILED','INDEX_UNAVAILABLE','BUDGET_EXCEEDED'} for row in ctx.records):return
+               {'NOT_FOUND','TIMEOUT','FAILED','INDEX_UNAVAILABLE','BUDGET_EXCEEDED','CAPACITY_EXHAUSTED'} for row in ctx.records):return
         await registry.call(agent,name,args)
     if contract.ambiguous_orders:return
     if agent=='order_shipping' and contract.order_id:
@@ -249,6 +270,8 @@ def audit(contract,facts):
     """Record evidence coverage without trusting plan or claimed intent labels."""
     rows=[]
     def add(kind,complete,needed):rows.append({'obligation':kind,'evidence_complete':bool(complete),'required':needed})
+    if not contract.intents or contract.unclassified_support:
+        add('request_understanding',False,['recognized_request_kind'])
     if contract.needs_reference:add('request_reference',False,['valid_order_or_product_reference'])
     if contract.tracking:add('order_tracking',matching_fact(facts,'get_tracking_events',order_id=contract.order_id),['get_tracking_events'])
     elif contract.order_status:add('order_tracking',matching_fact(facts,'lookup_order',order_id=contract.order_id),['lookup_order'])
@@ -280,7 +303,7 @@ def citation_errors(contract,facts,draft):
     citations={ref.source_id for ref in draft.citations}
     required={row['obligation'][7:] for row in audit(contract,facts) if row['obligation'].startswith('policy:') and row['evidence_complete']}
     errors=['O2_AUTHORITATIVE_CITATION:'+doc for doc in sorted(required) if 'doc:'+doc not in citations]
-    cited={json.dumps(ref.model_dump(),sort_keys=True) for ref in draft.citations}
+    cited={evidence_ref_key(ref) for ref in draft.citations}
     hits=[hit for fact in facts if fact['name']=='search_policy' for hit in fact['data']['results']]
     for section in contract.required_sections:
         doc,heading=section.split(':',1)
@@ -289,7 +312,7 @@ def citation_errors(contract,facts,draft):
     for fact in facts:
         if fact['name']=='check_return_eligibility':
             for ref in fact['data']['policy_refs']:
-                if any(hit['doc_id']==ref['source_id'][4:] and hit['section_id']==ref['section'] and hit['version']==ref['record_version'] for hit in hits) and json.dumps(ref,sort_keys=True) not in cited:
+                if any(hit['doc_id']==ref['source_id'][4:] and hit['section_id']==ref['section'] and hit['version']==ref['record_version'] for hit in hits) and evidence_ref_key(ref) not in cited:
                     errors.append('O2_RULE_CITATION:'+ref['source_id']+':'+ref['section'])
     return sorted(set(errors+shipping_answer_errors(contract,hits,draft)))
 

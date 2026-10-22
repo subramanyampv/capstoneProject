@@ -1,0 +1,6 @@
+{
+  "status": "superseded_after_independent_review",
+  "reason": "Fresh20-case AIreview flags N07 localmock-to-real-human processing implication and S15 major usefulness failure from omitted retrieved rulecitation triggering genericfallback. All rawrecords/review unchanged; newrepairs require newvalidation.",
+  "recorded_runs": 2,
+  "all_case_check_passes": 2
+}

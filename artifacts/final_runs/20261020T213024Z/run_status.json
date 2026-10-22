@@ -1,0 +1,47 @@
+{
+  "status": "interrupted_transport_failures_awaiting_configuration_decision",
+  "observed_at": "2026-10-21T01:13:37.247951+00:00",
+  "run": "20261020T213024Z",
+  "source_frozen": true,
+  "runs": 8,
+  "hard_gate_case_passes": 8,
+  "all_case_check_passes": 6,
+  "case_failures": [
+    {
+      "case_id": "N01",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "expected_terminal_outcome",
+        "required_tool:check_return_eligibility",
+        "required_tool:search_policy",
+        "required_citation:return_policy",
+        "eligibility:WITHIN_WINDOW"
+      ]
+    },
+    {
+      "case_id": "N03",
+      "repeat": 0,
+      "outcome": "ESCALATED",
+      "failed_checks": [
+        "expected_terminal_outcome"
+      ]
+    }
+  ],
+  "model_config_sha256": "ae0a01cbea71206e98a62a253b13c9f5fae088f7944d8c24e5cebac56a6f5fa5",
+  "full_run_session_id": 29994,
+  "retry_scope": "Same source/config as589-test candidate;60-second model/retrieval deadlines; idle system sleep prevention tied to job lifetime. Stopped after recurring provider timeouts; no provider outage/root cause conclusively established.",
+  "previous_complete_run": "20261019T174220Z",
+  "previous_complete_result": "64/65 hard,55/65 complete;25/25 local ticket readbacks; scoped privacy scan clean.",
+  "pending_user_decision": null,
+  "hold_further_live_runs": false,
+  "submission_ready": false,
+  "sealed_blind_inputs_used": false,
+  "submission_archive_created": false,
+  "resume_authorization": "User explicitly said let us continue on2026-10-21; bounded retry authorized.",
+  "resume_preflights": {
+    "application": "passed",
+    "second_judge": "passed"
+  },
+  "resume_scope": "Unchanged source/configuration verified; three-case public transport/mandatory-review check before any bulk run."
+}

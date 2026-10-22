@@ -1,0 +1,13 @@
+{
+  "status": "completed_diagnostic_reproduced",
+  "run": "20261021T215946Z",
+  "session_id": 52746,
+  "source_frozen": true,
+  "diagnostic_only": true,
+  "scope": "Single approved public R09 case; guard decisions unchanged; sanitized rejection capture",
+  "submission_ready": false,
+  "cases_recorded": 1,
+  "hard_checks_passed": 1,
+  "complete_checks_passed": 0,
+  "diagnostic_receipt": "artifacts/submission_readiness/r09_current_guard_diagnostic_20261021.json"
+}

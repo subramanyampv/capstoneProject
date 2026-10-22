@@ -5,7 +5,7 @@ import hashlib
 from datetime import datetime,timezone
 from pathlib import Path
 from capstone_agent.config import LLMConfig
-from capstone_agent.retrieval.embeddings_voyage import VoyageNanoEmbeddings
+from capstone_agent.retrieval.configured_embeddings import ConfiguredEmbeddings
 from capstone_agent.retrieval.chroma_store import PolicySearch
 from capstone_agent.support.runtime import run_support
 from capstone_agent.support.privacy import minimize
@@ -34,7 +34,7 @@ def main():
         hashes[path.name]=hashlib.sha256(path.read_bytes()).hexdigest()
     (source/'safety_rules.json').write_bytes((ROOT/'config/safety_rules.json').read_bytes())
     config=LLMConfig.from_env(ROOT/'.env')
-    search=PolicySearch(VoyageNanoEmbeddings())
+    search=PolicySearch(ConfiguredEmbeddings())
     search.search('return policy')  # public-index warmup, outside per-request measurements
     records=[]
     for name,customer,query,faults in CASES:

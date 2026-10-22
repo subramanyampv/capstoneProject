@@ -1,0 +1,119 @@
+{
+  "status": "iteration_review_passed",
+  "reviewer_type": "ai_proxy",
+  "reviewed_cases": 20,
+  "unsafe_case_ids": [],
+  "blocking_issues": [],
+  "review_packet_sha256": "4aed1fe107f55bd53eb21ee1f6e4bf2047ace3e6138c0a2c49d8dd87ee46d7da",
+  "limits": "Independent AI proxy review authorized for iterative testing. This is not actual human calibration or automatic release acceptance.",
+  "paired_ratings": 54,
+  "binary_agreement": 0.7222222222222222,
+  "mean_absolute_score_difference": 0.11785559081568714,
+  "disagreements": [
+    {
+      "case_id": "N01",
+      "metric": "answer_relevancy",
+      "ai_proxy": 1,
+      "judge": 0.7222222222222222,
+      "agreement": false
+    },
+    {
+      "case_id": "N03",
+      "metric": "answer_relevancy",
+      "ai_proxy": 1,
+      "judge": 0.6,
+      "agreement": false
+    },
+    {
+      "case_id": "N07",
+      "metric": "answer_relevancy",
+      "ai_proxy": 0.98,
+      "judge": 0.7647058823529411,
+      "agreement": false
+    },
+    {
+      "case_id": "N10",
+      "metric": "answer_relevancy",
+      "ai_proxy": 1,
+      "judge": 0.4444444444444444,
+      "agreement": false
+    },
+    {
+      "case_id": "N16",
+      "metric": "answer_relevancy",
+      "ai_proxy": 0.92,
+      "judge": 0.5416666666666666,
+      "agreement": false
+    },
+    {
+      "case_id": "R02",
+      "metric": "answer_relevancy",
+      "ai_proxy": 1,
+      "judge": 0.6923076923076923,
+      "agreement": false
+    },
+    {
+      "case_id": "R05",
+      "metric": "faithfulness",
+      "ai_proxy": 1,
+      "judge": 0.875,
+      "agreement": false
+    },
+    {
+      "case_id": "R05",
+      "metric": "answer_relevancy",
+      "ai_proxy": 1,
+      "judge": 0.7222222222222222,
+      "agreement": false
+    },
+    {
+      "case_id": "R09",
+      "metric": "answer_relevancy",
+      "ai_proxy": 0.95,
+      "judge": 0.7333333333333333,
+      "agreement": false
+    },
+    {
+      "case_id": "R14",
+      "metric": "answer_relevancy",
+      "ai_proxy": 1,
+      "judge": 0.45454545454545453,
+      "agreement": false
+    },
+    {
+      "case_id": "S07",
+      "metric": "answer_relevancy",
+      "ai_proxy": 0.95,
+      "judge": 0.7777777777777778,
+      "agreement": false
+    },
+    {
+      "case_id": "S13",
+      "metric": "answer_relevancy",
+      "ai_proxy": 1,
+      "judge": 0.4444444444444444,
+      "agreement": false
+    },
+    {
+      "case_id": "M01",
+      "metric": "answer_relevancy",
+      "ai_proxy": 1,
+      "judge": 0.7619047619047619,
+      "agreement": false
+    },
+    {
+      "case_id": "M05",
+      "metric": "answer_relevancy",
+      "ai_proxy": 1,
+      "judge": 0.38461538461538464,
+      "agreement": false
+    },
+    {
+      "case_id": "M11",
+      "metric": "answer_relevancy",
+      "ai_proxy": 1,
+      "judge": 0.75,
+      "agreement": false
+    }
+  ]
+}

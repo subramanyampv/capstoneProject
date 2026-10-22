@@ -1,0 +1,479 @@
+{
+  "passed": true,
+  "handoffs_checked": 59,
+  "checks": [
+    {
+      "case_id": "N01",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-6cc58a7f7bc0",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "N02",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-24991e51245e",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "N03",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-37a09ed9c12e",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "N04",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-4c475b34af3e",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "N05",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-09d05ca18bcf",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "N06",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-a9a4f7abd38c",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "N07",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-1a95c7906f12",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "N08",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-bab42ce927aa",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "N09",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-c4ba36f38531",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "N10",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-60e27ef7caa7",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "N11",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-ef1155429ef0",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "N12",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-373be1165848",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "N13",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-891b547bdd06",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "N14",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-408fb613456c",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "N15",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-5dae05a03730",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "N16",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-e55d0be48dd2",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "N17",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-7e31a34dbd4d",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "N18",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-c68782809251",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "N19",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-a8f51bc7cebf",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "N20",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-de3398e80734",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "R01",
+      "repeat": 0,
+      "turn": "setup-0",
+      "ticket_id": "MOCK-ded35ad5ff23",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "R02",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-6e70d41b5081",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "R04",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-a5a23d64392c",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "R05",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-c636c7d3eacc",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "R06",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-f81f09e56691",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "R07",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-eacf2c85345b",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "R08",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-7efebae54c62",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "R09",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-d9e1c8e4a1b2",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "R10",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-825d0ddcd751",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "R12",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-80b0c282ea51",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "R13",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-bf2b3188908d",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "R14",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-3f1de7233475",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "S01",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-4361e8631414",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "S02",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-312451aa2951",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "S03",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-4f2a197439ff",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "S05",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-3c46b281aa3e",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "S08",
+      "repeat": 0,
+      "turn": "setup-0",
+      "ticket_id": "MOCK-bec76c7eb6ef",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "S09",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-2542247da6db",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "S09",
+      "repeat": 0,
+      "turn": "setup-0",
+      "ticket_id": "MOCK-2542247da6db",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "S10",
+      "repeat": 0,
+      "turn": "setup-0",
+      "ticket_id": "MOCK-615a142cd89d",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "S11",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-be61767b5d4b",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "S11",
+      "repeat": 0,
+      "turn": "setup-0",
+      "ticket_id": "MOCK-be61767b5d4b",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "S12",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-b5ebd4dda8d6",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "S15",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-307d2de78ad0",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "M01",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-8c539c23e0af",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "M02",
+      "repeat": 0,
+      "turn": "setup-1",
+      "ticket_id": "MOCK-aaf3411c4199",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "M03",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-83153b4827aa",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "M04",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-e3c78f371b06",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "M05",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-5eeb808aeab8",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "M07",
+      "repeat": 0,
+      "turn": "setup-0",
+      "ticket_id": "MOCK-5670fc8cd2c3",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "M08",
+      "repeat": 0,
+      "turn": "setup-0",
+      "ticket_id": "MOCK-2a4ba3dd66bf",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "M09",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-4bcf315c303e",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "M09",
+      "repeat": 0,
+      "turn": "setup-0",
+      "ticket_id": "MOCK-4bcf315c303e",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "M10",
+      "repeat": 0,
+      "turn": "setup-0",
+      "ticket_id": "MOCK-a32ebdea336d",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "M11",
+      "repeat": 0,
+      "turn": "setup-0",
+      "ticket_id": "MOCK-d1f3afcd44de",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "M12",
+      "repeat": 0,
+      "turn": "final",
+      "ticket_id": "MOCK-4b11d8462c63",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "M12",
+      "repeat": 0,
+      "turn": "setup-0",
+      "ticket_id": "MOCK-4b11d8462c63",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "M13",
+      "repeat": 0,
+      "turn": "setup-1",
+      "ticket_id": "MOCK-aa0e51461496",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    },
+    {
+      "case_id": "M14",
+      "repeat": 0,
+      "turn": "setup-0",
+      "ticket_id": "MOCK-559d0f7b07da",
+      "local_store_matches": true,
+      "canonical_packet_hash_matches": true
+    }
+  ],
+  "limits": "Verified local synthetic mock ticket existence and queue/priority/triggers for all recorded final/setup handoffs. Does not prove mandatory handoffs were recognized or that a real human/store transaction occurred. Semantic false-action wording is reviewed separately."
+}

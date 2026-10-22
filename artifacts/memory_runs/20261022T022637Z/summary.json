@@ -1,0 +1,45 @@
+{
+  "recorded_at": "2026-10-22T02:30:39.658170+00:00",
+  "source_sha256": {
+    "__init__.py": "beb0f323dd24341fb2bdfc3d5905fadc80fab5695e9fb52ca5da3c969ce63eac",
+    "contracts.py": "e12d4af78e38f4fe4a806c230899f1a8a6fb58fb0b7ae6a98cdc5a35d4bc8cf4",
+    "eligibility.py": "52fab7df0ee7fa47d0e3029cf6d2de4d6f5a3cb469926d7332a757d1b77b81b2",
+    "graph.py": "aaa171478126e21b2ba8d7c617f54237c919b78178f4adca058c16df6c8b9e16",
+    "guards.py": "f0913d818c90aa4b28847c7a10310b93dd20bb7f387269841eedd42ed69cba2d",
+    "memory.py": "bdf778a30380b151d3879f1559f9e40b49d863597f197d23768f84f5bcdcc1b6",
+    "model.py": "0a97d1c09dda4ddfee767d5f8fd42887e622c84dd5c188a93e3f63b06daaaadb",
+    "obligations.py": "96981cef15ab6ad93a47a72ea48ea9d6196d5a9b6e999608a968e286800151c9",
+    "preferences.py": "92ec0369492d8e39a6fad4bafefd1a69e2c2ff9d7db0f28538f055fac2cd8829",
+    "privacy.py": "94d86daa8f5ec54b345df4f663c50d30f591f0ff4d241fb61dfed332a9c30e8c",
+    "registry.py": "b746ff0b2058985a775a07368a3fe377172052a5b781639772ed7d3dda8d24e0",
+    "runtime.py": "bdda66a7838b346eca29527bac8916e634ea1d4ddcbc5651a49303f833609264",
+    "services.py": "458e895c528569ce8b12467625bed640d41e2a9c99f7844fe68b071a76df7cfb"
+  },
+  "settings": {
+    "provider": "openai_compatible",
+    "model": "qwen3.7-max",
+    "timeout_seconds": 30.0,
+    "max_retries": 1,
+    "response_format": "json_object",
+    "temperature": 0.0,
+    "max_completion_tokens": 1200,
+    "enable_thinking": false
+  },
+  "results": {
+    "off": {
+      "conversations": 5,
+      "expected_behavior_passes": 5,
+      "followups_answered_with_expected_tool": 0,
+      "positive_followups": 4,
+      "clarifications": 5
+    },
+    "on": {
+      "conversations": 5,
+      "expected_behavior_passes": 5,
+      "followups_answered_with_expected_tool": 4,
+      "positive_followups": 4,
+      "clarifications": 1
+    }
+  },
+  "limits": "Five authored development conversations, not frozen/holdout or semantic faithfulness. Reset remains a clarification in both modes. Public-index startup excluded."
+}

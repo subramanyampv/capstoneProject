@@ -5,7 +5,7 @@
 
 The authoritative [Architecture and Plan v3.3](docs/architecture_and_plan.md) supersedes all earlier designs. See the [document index](docs/README.md), [implementation status](docs/implementation_status.md), and [detailed progress summary](docs/project_progress.md), and [task checklist](docs/task_list.md). The [Memory Pad](docs/memory_pad.md) compares ecommerce agents and tracks possible extensions; the earlier [market comparison](docs/market_comparison.md) remains available.
 
-The core now implements a LangGraph supervisor, three LangChain specialists and six typed tools. Policy retrieval uses local Voyage-4-nano and Chroma. Deterministic guards decide safety, eligibility and verified mock escalation. Return/refund/cancellation writes, the knowledge graph and external API ETA are deferred until the initial product succeeds. Synthetic data only.
+The core implements a LangGraph supervisor, three LangChain specialists and six typed tools. Policy retrieval uses normalized embeddings and a versioned Chroma index. Chat and embedding endpoints are independently configurable; the default local embedding identity is pinned in the index manifest. Deterministic guards enforce safety, eligibility and verified local mock escalation. Return/refund/cancellation writes, the knowledge graph and external API ETA remain deferred. Synthetic data only.
 
 | Phase | Status |
 |---|---|
@@ -23,10 +23,13 @@ The core now implements a LangGraph supervisor, three LangChain specialists and 
 Run from `capstone_agent/` using the existing project `.venv`. If it is absent, obtain approval before creating one. Python 3.12.12 is the tested environment.
 
 ```bash
-.venv/bin/python -m pip install -c constraints-dev.txt -e ".[dev,eval,ui,rag]"
+.venv/bin/python -m pip install -r requirements.txt
+.venv/bin/python -m pip check
 .venv/bin/capstone-agent status
-.venv/bin/capstone-agent ask "Can I return order O-1001?" --today 2026-10-12
-bash scripts/run_baseline.sh
+.venv/bin/capstone-agent doctor
+.venv/bin/python scripts/check_model.py
+bash scripts/ingest.sh
+.venv/bin/capstone-agent support "Track order O-1001" --customer C-100
 .venv/bin/python -m pytest -q --tb=no
 bash scripts/run_ui.sh
 ```
@@ -35,7 +38,13 @@ The UI binds to http://127.0.0.1:8501 with Chat, Evaluation and Traces. It expos
 
 ## Model configuration and experiments
 
-Keep credentials only in ignored `.env`. Copy `.env.example` only when creating configuration; do not overwrite an existing configured file. Provide URL, model name and key via existing `LLM_BASE_URL`, `LLM_MODEL`, `LLM_API_KEY`; v3 aliases `MODEL_BASE_URL`, `MODEL_NAME`, `MODEL_API_KEY` are supported. Canonical aliases take precedence when present. Set `CAPSTONE_LLM_PROVIDER=openai` or `openai_compatible`. Loopback servers may omit a key; remote endpoints require HTTPS and a key. Errors do not echo values.
+Keep credentials only in ignored `.env`. Copy `.env.example` only when creating configuration; do not overwrite an existing configured file. The template intentionally contains blank assignments: fill required chat settings before startup. See [environment configuration](docs/environment_configuration.md) for required versus optional fields, defaults, blank-value handling, and independent embedding/judge setup. Use `CAPSTONE_LLM_PROVIDER=openai_compatible`, `LLM_BASE_URL`, `MODEL_NAME`, and `LLM_API_KEY`. Existing `LLM_MODEL` and `MODEL_BASE_URL`/`MODEL_API_KEY` aliases are supported: present `MODEL_*` keys take precedence even when blank. Process environment overrides the local file. Omit optional numeric keys to use defaults. Loopback servers may omit a key; remote endpoints require HTTPS and a key. Errors do not echo values.
+
+For retrieval, `EMBEDDING_BACKEND=local` uses an existing `knowledge/index_manifest.json` identity unless explicitly overridden. A fresh public copy has no deployment manifest or built-in model identity: set `EMBEDDING_MODEL`, `EMBEDDING_REVISION` and `EMBEDDING_DIMENSION` before ingestion. The `openai_compatible` backend additionally requires `EMBEDDING_BASE_URL`; a remote endpoint requires `EMBEDDING_API_KEY`. Local models must expose the query/document encoding interface. Custom model code is permitted only for an exact previously reviewed identity digest; arbitrary configured models receive no remote-code trust. Changing embedding identity requires a new index version and fresh retrieval calibration; an incompatible existing index is rejected. Backend protocol tests use synthetic vectors; they do not establish retrieval quality for an arbitrary replacement model.
+
+`scripts/check_model.py` makes one small live request and reports only a closed error category, HTTP status and retryability. It never prints provider exception bodies, credentials or endpoint paths. A successful ping establishes connectivity only. Run the public frozen evaluation separately for behavior validation.
+
+An independent OpenAI-compatible judge can be configured separately in ignored `.env` with `JUDGE_BASE_URL`, `JUDGE_MODEL`, and `JUDGE_API_KEY`. Keep the application settings unchanged. Run `.venv/bin/python scripts/judge_final_suite.py artifacts/final_runs/RUN --all --judge-id second` to write isolated results under `RUN/judges/second/`; existing primary scores are preserved. Judge identity and source manifests are locked so a resumed file cannot silently combine models. Report each judge separately and review disagreements against source evidence; judge agreement does not waive deterministic safety failures or establish human calibration.
 
 ```bash
 .venv/bin/capstone-agent llm-ask "Can I return my shoes?"  # development default C
@@ -55,7 +64,7 @@ Style feedback works in terminal and Streamlit: `/feedback too_long`, `/feedback
 
 Local retrieval commands: `make ingest`, `make eval-retrieval`, and `.venv/bin/capstone-agent search-policy "footwear return window"`. [Retrieval design and results](docs/retrieval_design.md) record measured coverage and limitations.
 
-LangSmith defaults off in the example configuration. Hosted content-free hierarchy, canary exclusion and exporter-failure isolation are verified; configure credentials only in ignored `.env`. Local JSONL remains primary evidence.
+Hosted metadata tracing defaults off when omitted; its optional settings are documented in [environment configuration](docs/environment_configuration.md). Hosted content-free hierarchy, canary exclusion and exporter-failure isolation have dated verification evidence; configure credentials only in ignored `.env`. Local JSONL remains primary evidence.
 
 ## Evidence and submission
 
@@ -63,4 +72,4 @@ LangSmith defaults off in the example configuration. Hosted content-free hierarc
 
 The existing repository contains a historical revoked credential. A scanned history-free source snapshot has been prepared locally and will be refreshed as work continues. The current repository remains in use; a new repository and author/student name are not required, and existing history will not be rewritten. `.env`, runtime stores, model cache and generated indices remain ignored.
 
-Final operations: `make support-ready`, `make support-ui`, `make verify-hosted` and `make scan-final`. Final-run recording/repeats are available through `capstone-agent evaluate-support`; Phase 9 now has a versioned exact-input frozen recorder, separate DeepEval judgments and human-calibration tooling. The locked release passes all 65 frozen cases and all 45 repeated safety checks; all-65 same-model judgments retain quality misses and one unavailable faithfulness result. Actual release review is complete (82.14% judge agreement). The first holdout passed 8/10 and exposed refund-intent/privacy-routing defects; acceptance is blocked while a new candidate is repaired and a separately authored holdout remains blind. Earlier failures are preserved. See [Phase 9 evaluation](docs/phase9_evaluation.md). See [Phase 8 operations](docs/phase8_operations.md) and [validation](artifacts/phase8/validation.md).
+Final operations: `make support-ready`, `make support-ui`, `make verify-hosted` and `make scan-final`. The exact-input public frozen recorder, separate DeepEval judgments and review tooling are documented in [Phase 9 evaluation](docs/phase9_evaluation.md). Historical passes and reviews apply only to their recorded builds. Current checks and unresolved acceptance gates are in [Current status](docs/current_status.md); no historical result establishes acceptance for the modified source. Unused blind cases remain local and unopened. Stop before ZIP creation under the existing submission instruction. See [Phase 8 operations](docs/phase8_operations.md) for operational scope and historical evidence.
