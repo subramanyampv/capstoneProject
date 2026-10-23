@@ -29,7 +29,7 @@ LLM_BASE_URL="https://your-openai-compatible-endpoint/v1"
 LLM_MODEL="your-model-name"
 LLM_API_KEY="your-api-key"
 ```
-*(Optional: For local mock servers that do not require an API key, `LLM_API_KEY` can be left blank).*
+*(Note: Local policy embeddings default automatically to the pinned manifest in `knowledge/index_manifest.json`. For local mock servers that do not require an API key, `LLM_API_KEY` can be left blank).*
 
 ### 3. Ingest Policies into Vector Store
 Index the raw policy documents into the local Chroma vector store (~5 seconds):
@@ -41,6 +41,7 @@ bash scripts/ingest.sh
 Launch the interactive Streamlit application:
 ```bash
 bash scripts/run_ui.sh
+# (or: bash scripts/run_support_ui.sh)
 ```
 Open **`http://127.0.0.1:8501`** in your browser.
 

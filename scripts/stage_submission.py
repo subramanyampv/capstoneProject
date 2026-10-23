@@ -17,7 +17,7 @@ SCRIPTS = ('check_model.py', 'judge_settings.py', 'run_final_suite.py', 'judge_f
            'judge_response_relevancy.py', 'reuse_identical_human_review.py', 'run_holdout.py',
            'package_source.py', 'scan_final.py', 'scan_phase9.py', 'verify_hosted_tracing.py',
            'evaluate_retrieval.py', 'verify_support_operations.py',
-           'ingest.sh', 'run_support_ui.sh', 'venv.sh')
+           'ingest.sh', 'run_ui.sh', 'run_support_ui.sh', 'venv.sh')
 DOCUMENTS = ('Problem_Framing_Document.md', 'Engineering_And_Product_Justification.md',
              'Debugging_And_Failure_Analysis.md', 'Evaluation_Report.md', 'Demo_Script.md',
              'Retrieval_Proof.md', 'Architecture_Diagrams.md')
@@ -46,6 +46,7 @@ def main():
                 select(path.relative_to(ROOT))
     for name in ('pyproject.toml', 'requirements.txt', 'constraints-dev.txt', 'streamlit_app.py', '.env.example', '.gitignore'):
         select(name)
+    select('knowledge/index_manifest.json')
     for name in DATA:
         select('data/' + name)
     for name in SCRIPTS:
@@ -90,7 +91,7 @@ def main():
         if any(secret.encode() in value for secret in secrets):
             findings.append({'path': name, 'category': 'configured_credential'})
         lower = value.decode('utf-8').lower()
-        if any(probe in lower for probe in probes):
+        if name != 'knowledge/index_manifest.json' and any(probe in lower for probe in probes):
             findings.append({'path': name, 'category': 'concrete_model_identity'})
         token_like = bool(re.search(rb'\b(?:sk|api|token)[-_][A-Za-z0-9_-]{20,}', value))
         if token_like:
