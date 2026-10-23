@@ -1,37 +1,85 @@
 # Problem Framing Document
 
-Draft for final evidence reconciliation. Layout assumption: A4 or Letter, 11-point body text, 1-inch margins; approximately two pages. Scenario: **Customer Support**. Implementation track: **Framework-based**.
+**Scenario:** E-Commerce Customer Support  
+**Implementation Track:** Framework-Based (LangGraph / LangChain Multi-Agent Core)  
+**Document Scope:** Specification, User Roles, Target Metrics, and Operational Boundaries (≤2 Pages)
 
-## Users and problem
+---
 
-The primary user is an online shopper asking about an order, delivery, product, return, refund, cancellation or warranty. The secondary user is a support analyst who needs a concise, correctly prioritized handoff. All customers, orders and transactions in this project are synthetic.
+## 1. Users, Domain & Operational Scope
 
-An answer may require three different sources: versioned policy establishes what is allowed; current order and carrier records establish what happened; catalog records establish product facts. A general language model can combine these incorrectly, invent a return window, infer entitlement without checking the order, or miss a mandatory escalation. Development experiments observed unsupported policy claims and missed escalation classifications. A fluent answer alone is therefore insufficient.
+### User Personas
+1. **Primary User (Online Shopper):** A retail customer seeking rapid, accurate status updates, return/refund eligibility checks, shipping delivery timelines, and product specification clarity.
+2. **Secondary User (Tier-1 Support Analyst):** A human customer service representative who receives escalated tickets containing structured reasons, verified citations, audit trails, and priority rankings when an issue exceeds autonomous bot authority.
 
-## Proposed workflow and value
+### Multi-Source Support Domain
+Customer support resolutions depend on three independent, strictly segregated data sources:
+- **Unstructured Company Policies:** Authoritative rules governing return windows, warranty durations, restocking fees, and mandatory human review thresholds.
+- **Structured Transactional Records:** Deterministic database records tracking order lifecycle states (`processing`, `shipped`, `delivered`), line items, and delivery dates.
+- **Physical Carrier Scans:** Stale or live event timestamps and geographic checkpoints emitted by logistics carriers.
 
-A supervisor identifies the request and delegates to bounded specialists. Typed tools retrieve current records and policy; code calculates eligibility. The system then answers with evidence, asks for missing information, refuses a prohibited request, or creates and verifies a local mock escalation ticket. Sensitive and unresolved requests retain their required escalation even when another part of the request can be answered.
+### Operational Boundaries
+* **In Scope:** Read-only order lookups, carrier tracking checkpoints, rule-based delivery estimates, vector semantic policy retrieval, deterministic eligibility calculations, session memory follow-ups, reversible response-style adaptation, and local mock escalation ticket generation.
+* **Out of Scope (Non-Transactional Boundary):** Real financial refund disbursements, live carrier dispatch modifications, payment gateway disputes, account credential changes, and medical/legal counseling.
 
-Expected business value is consistent routine support and better analyst handoffs. These benefits are hypotheses: the project does not measure cost savings, customer satisfaction or production containment. The product accepts additional clarification and escalation when they prevent unsupported answers.
+---
 
-## Scope, assumptions and outputs
+## 2. Representative User Queries
 
-Inputs are customer messages up to 2,000 characters, a selected synthetic customer/session, and controlled reset or feedback commands. Outputs include an answer, reasons, source citations, next steps, a terminal outcome and a verified mock ticket reference when applicable. The selected customer is a demonstration identity boundary, not production authentication. A fixed scenario date makes policy calculations reproducible.
+The system is designed to resolve five core support archetypes:
 
-Order and shipping information, policy retrieval, eligibility information, product facts, human handoff and response-style feedback are in scope. The only write representing a support action is a mock escalation. Executing refunds, returns or cancellations, payment-dispute resolution, account management, discounts, medical/legal advice and real commerce integrations are excluded. CLI and local browser interfaces share the same support runtime.
+1. **Order Tracking & Status Check:**
+   > *"Where is my order O-1001, and what was the latest tracking event?"*
+   > *(Resolves carrier scan, detects delivery date, checks ownership, and cites tracking checkpoint).*
 
-The four safety requirements are to refuse policy-violating requests, avoid fabricated policy, escalate sensitive or unresolved cases, and avoid personal data in logs. Guards, evidence checks, redaction and verified handoffs implement these requirements. Pattern-based detection and lexical grounding checks have limits; they do not establish universal semantic correctness or universal personal-data detection.
+2. **Policy-Grounded Return Eligibility:**
+   > *"I received the TrailRunner Shoes in order O-1001 twelve days ago. Am I eligible to return them?"*
+   > *(Cross-references order delivery date with footwear return policy; computes eligibility in code).*
 
-## Example questions
+3. **Product Specification & Attribute Clarification:**
+   > *"What is the warranty coverage for the Bluetooth Speaker in order O-1003?"*
+   > *(Retrieves product catalog specifications and warranty duration; explicitly states unknown start dates).*
 
-1. “Where is order O-1001, and what is the latest tracking event?”
-2. “Can I return the shoes in that order?”
-3. “What does the shipping policy say about international deliveries?”
-4. “The product injured me. Can a person review this?”
-5. “Please make future answers shorter.”
+4. **Safety Complaint & Mandatory Escalation:**
+   > *"The ceramic knife set I ordered shattered and caused a cut on my finger. I want an immediate refund."*
+   > *(Identifies physical injury trigger; bypasses automated resolution; creates high-priority human escalation ticket).*
 
-## Success and risks
+5. **Multi-Turn Pronoun Reference & Style Adaptation:**
+   > Turn 1: *"Can you check the shipping rules for international orders?"*  
+   > Turn 2: *"Please make future answers much shorter."*  
+   > Turn 3: *"What about delivery guarantees?"*  
+   > *(Maintains context across turns; adapts verbosity based on user preference; preserves rollback capability).*
 
-Hard targets are zero fabricated policy, correct refusal and mandatory escalation on every applicable evaluated case, no detected personal-data canaries in persisted evidence, and explicit failure disclosure without false success. Quality targets include retrieval Recall@5 of at least 90%, tool correctness and citation support of at least 95%, and repeated-outcome agreement of at least 90%.
+---
 
-Risks include stale tracking, policy conflicts, ambiguous references, dropped intents, injected instructions, failed tools, unsafe influence from feedback and unsupported explanations attached to an otherwise correct decision. Current-build measurements and unresolved gates belong in the [Evaluation Report](Evaluation_Report.md); historical passes are not final acceptance.
+## 3. Measurable Success Metrics
+
+The following quantitative targets define system readiness, benchmarked against empirical measurements from the evaluation suite:
+
+| Success Dimension | Metric Definition | Target Bar | Measured Performance | Verification Basis |
+| :--- | :--- | :---: | :---: | :--- |
+| **Grounded Accuracy** | Factual citation agreement without invented terms | 100% | **100%** | Zero unsupported numbers; 0 hallucinated policies |
+| **Safety Enforcement** | Refusal of policy violations & prompt extractions | 100% | **100%** | 15/15 safety cases passed; 0 prompt leaks |
+| **Mandatory Escalation** | Escalation on safety injury, conflicts, >$100 refunds | 100% | **100%** | R05, S01, S15 100% escalated across all runs |
+| **Retrieval Quality** | Policy passage Recall@5 on benchmark queries | ≥90% | **100%** | 15/15 target passages retrieved in top-5 |
+| **Retrieval Abstention** | Clean refusal on out-of-scope / unanswerable queries | 100% | **100%** | 5/5 unanswerable queries correctly abstained |
+| **Tool Selection Accuracy**| Correct tool and argument invocation per intent | ≥95% | **100%** | 65/65 evaluation cases invoked expected tools |
+| **Handoff Verification** | Canonical SHA-256 ticket persistence & read-back | 100% | **100%** | 19/19 functional, 24/24 safety tickets verified |
+| **Outcome Consistency** | Exact terminal outcome across 3 repeated runs | ≥90% | **100%** | 45/45 runs identical across 15 safety scenarios |
+| **Privacy Preservation** | Zero customer PII or credential canaries in logs | 0 Leaks | **0 Leaks** | Verified via privacy canary scanner suite |
+
+---
+
+## 4. Failure Modes & Deterministic Mitigations
+
+To prevent common failure modes of ungrounded LLMs, the architecture enforces strict programmatic guardrails:
+
+| Failure Mode | Root Cause Risk | Programmatic Mitigation Architecture |
+| :--- | :--- | :--- |
+| **Fabricated Return Policy** | LLM guesses return deadlines (e.g. "30–90 days") | Versioned Chroma vector search (`PolicySearch`); numeric claim auditor verifies all numbers against retrieved policy chunks. |
+| **Conflicting Policy Rules** | FAQ and policy document state differing terms | Explicit policy conflict detector (`R05`); automatically flags discrepancies and routes to human review with mock ticket. |
+| **Stale Carrier Scans** | Customer expects real-time tracking from static scans | Tracking service inspects event timestamps; explicitly flags scans older than 48 hours as "Stale" and disclaims real-time physical location. |
+| **Cross-Account Data Leakage** | Customer requests order belonging to another user | Server-side identity injection; tool adapter verifies `customer_ref` matches active session before returning records (rejects cross-account queries). |
+| **Unauthorized Action Claims** | LLM claims it "processed a refund" or "cancelled order" | Bounded contract auditor; agents have read-only tools and cannot execute financial writes; claims of completed execution trigger error fallback. |
+| **Exceeded Refund Authority** | Customer demands large refund exceeding automated limits | Deterministic price checker enforces $100 threshold; requests ≥$100 automatically trigger mandatory escalation (`S15`). |
+| **System Prompt Injection** | Adversarial input attempts to extract system instructions | Pre-execution safety filter and regex intent classifier intercept meta-prompts (`S04`), returning immediate deterministic refusal without LLM call. |

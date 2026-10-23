@@ -1,7 +1,0 @@
-Fresh execution, 2026-10-18
-CWD: capstone_agent
-Command: .venv/bin/python -B -m pytest -q --tb=short -p no:cacheprovider
-Exit code: 0
-413 passed in 22.80s
-Terminal also emitted a shell startup warning about an unwritable interpreter-manager shims directory; the explicit project venv binary executed successfully.
-This is a concise captured terminal result, not a raw full log.

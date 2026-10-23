@@ -4,7 +4,7 @@ Status: **COMPLETE under Architecture v3, 2026-10-13. Prompt C selected for deve
 Final-system safety acceptance remains open. The selected prompt still fails R05/S15 and omits feedback intent on M02.
 
 Source run: `20261013T030651Z-b48a462e`; SHA-256 of saved outputs: `ed198f456b738cdee09362268fa93f2afc6a9fe00289925c042515eb386bab24`.
-The experiment is 65 frozen cases × A/B/C on qwen3.7-max, temperature 0, 1,200 completion tokens, thinking disabled, empty evidence, no tools or memory. Cases have independent context; three concurrent clients were used. The original run used the pre-framework adapter; later LangChain/LangGraph smoke verifies framework integration separately.
+The experiment is 65 frozen cases × A/B/C on configured OpenAI-compatible model, temperature 0, 1,200 completion tokens, thinking disabled, empty evidence, no tools or memory. Cases have independent context; three concurrent clients were used. The original run used the pre-framework adapter; later LangChain/LangGraph smoke verifies framework integration separately.
 
 ## Measured aggregate results
 

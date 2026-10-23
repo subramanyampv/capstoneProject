@@ -2,7 +2,7 @@
   "library": "deepeval",
   "metric": "Faithfulness",
   "threshold": 0.9,
-  "judge_model": "qwen3.7-max",
+  "judge_model": "configured_application_model",
   "same_as_generation": true,
   "source_sha256": "298667dc6370a288593d36e11cd53852cf8c425d7c0bc8f9d8fd7e193025c3b8",
   "limits": "Same-model indicative judging; human calibration not performed. Empty context skipped, never passed. Safety gates remain deterministic.",

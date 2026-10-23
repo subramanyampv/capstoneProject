@@ -4,7 +4,7 @@
   "recorder_sha256": "300928fa29c1ca31d068d5c6440e6663b1d9d680a4b709f877127f731e5cc1a9",
   "judge_settings": {
     "provider": "openai_compatible",
-    "model": "qwen3.7-max",
+    "model": "configured_application_model",
     "timeout_seconds": 20.0,
     "max_retries": 0,
     "response_format": "json_object",

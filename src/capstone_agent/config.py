@@ -1,5 +1,6 @@
 """Explicit configuration, optional local dotenv loading, no credential diagnostics."""
 
+from __future__ import annotations
 import math
 import os
 from dataclasses import dataclass, field

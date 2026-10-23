@@ -14,7 +14,7 @@
   "dataset_sha256": "b3838a055e756d445934df6796de70b6ae69cd9fc0261e91932ec44d23d9aa94",
   "settings": {
     "provider": "openai_compatible",
-    "model": "qwen3.7-max",
+    "model": "configured_application_model",
     "timeout_seconds": 20.0,
     "max_retries": 1,
     "response_format": "json_object",

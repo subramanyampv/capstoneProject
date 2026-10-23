@@ -107,7 +107,7 @@ A single LLM prompt mixes these and fails in two costly ways, both observed in t
 |---|---|
 | **Inputs** | Free-text customer message (≤2,000 characters); session identity bound to a synthetic customer ID (CLI flag or UI selector); optional slash commands (`/reset`, `/feedback <signal>`, `/forget-preferences`) |
 | **Outputs** | Response with `answer`, `why` (reason codes), `citations` (doc/section/version), `next_steps`; terminal outcome category; escalation ticket ID when escalated; one redacted log record per request |
-| **Constraints** | Synthetic data only; local deployment; no real writes; OpenAI-compatible LLM endpoint (current: `qwen3.7-max`); single developer; 5-day delivery window |
+| **Constraints** | Synthetic data only; local deployment; no real writes; OpenAI-compatible LLM endpoint (current: `configured OpenAI-compatible model`); single developer; 5-day delivery window |
 | **Assumptions** | Fixed scenario clock 2026-10-12 for reproducibility; policy thresholds come from `policy_rules.json`, never from the model; carrier tracking events are authoritative for shipment state; the customer is authenticated by session selection (simulated) |
 
 ### 2.6 Success criteria (targets; final values reported in the Evaluation Report)
@@ -233,7 +233,7 @@ A single LLM prompt mixes these and fails in two costly ways, both observed in t
 
 | Component | Choice | Role | Justification | Status |
 |---|---|---|---|---|
-| LLM access | LangChain `langchain-openai` against an OpenAI-compatible endpoint; model `qwen3.7-max` | All LLM calls | Track A requirement; provider-swappable via base URL and model name; already measured in Phase 3 | IMPLEMENTED |
+| LLM access | LangChain `langchain-openai` against an OpenAI-compatible endpoint; model `configured OpenAI-compatible model` | All LLM calls | Track A requirement; provider-swappable via base URL and model name; already measured in Phase 3 | IMPLEMENTED |
 | Orchestration | LangGraph `StateGraph` + checkpointer | Control flow, multi-agent routing, session memory | Explicit nodes and conditional edges map to safety gates and terminal outcomes; built-in checkpointed memory | IMPLEMENTED: bounded multi-agent core and separate projection memory; final acceptance pending |
 | Specialist agents | Bounded LangChain tool-calling loops inside LangGraph specialist nodes | Bounded tool use | Closed tool allowlists, typed results, explicit step/call limits | IMPLEMENTED / tested; no prebuilt ReAct agent claimed |
 | Embeddings | `voyageai/voyage-4-nano` (Hugging Face, local, pinned revision) | Document and query embeddings | Local (no document export); retrieval-tuned; query/document input modes | IMPLEMENTED / MEASURED, normalized 2048 dimensions |
@@ -985,7 +985,7 @@ Automatic learning is opt-in (`/feedback enable` or explicit feedback); `/feedba
 ```json
 {"ts":"2026-10-16T14:02:11Z","request_id":"r-8f1c","session_ref":"s-3a9e","customer_ref":"c-77d2",
  "versions":{"app":"3.0.0","prompts":"supervisor_v1|order_v1|policy_v1|escalation_v1|composer_v1",
-             "index":"policies_v1","rules":"safety_rules_v1","model":"qwen3.7-max@<returned_id>"},
+             "index":"policies_v1","rules":"safety_rules_v1","model":"configured OpenAI-compatible model@<returned_id>"},
  "input_redacted":"My package is delayed... [order:#h91]",
  "intents":["shipping_tracking","refund_request"],
  "agents":["order_shipping","policy_product","escalation"],"handoffs":3,
@@ -1117,7 +1117,7 @@ The Knowledge and Delivery-estimate tabs are hidden behind `UI_SHOW_DEFERRED=fal
 
 ### 14.3 DeepEval configuration and calibration
 
-- The judge model is separately configurable. The default is the same `qwen3.7-max` endpoint, and **the report discloses this as self-evaluation (indicative only).**
+- The judge model is separately configurable. The default is the same `configured OpenAI-compatible model` endpoint, and **the report discloses this as self-evaluation (indicative only).**
 - Judge temperature 0. Rubric versions are stored in `evaluation/rubrics/`.
 - Missing context or judge errors are recorded as **skipped**, never as passed.
 - **Human calibration:** 20 judged outputs are reviewed manually against the same rubric. The report states the agreement rate and where the judge disagreed.

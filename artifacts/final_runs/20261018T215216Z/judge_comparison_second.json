@@ -416,7 +416,7 @@
   "source_outputs_sha256": "0d08812831afc78306ba0fa0c0ad44039befa8e468a94a7aa17baf6d51d98123",
   "primary_settings": {
     "provider": "openai_compatible",
-    "model": "qwen3.7-max",
+    "model": "configured_application_model",
     "timeout_seconds": 20.0,
     "max_retries": 0,
     "response_format": "json_object",

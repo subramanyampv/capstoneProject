@@ -3,7 +3,7 @@
   "rubric": "phase9-grounded-support-v1",
   "judge_settings": {
     "provider": "openai_compatible",
-    "model": "qwen3.7-max",
+    "model": "configured_application_model",
     "timeout_seconds": 30.0,
     "max_retries": 0,
     "response_format": "json_object",

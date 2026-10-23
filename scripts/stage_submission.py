@@ -9,7 +9,8 @@ from capstone_agent.config import load_environment
 
 ROOT = Path(__file__).resolve().parents[1]
 DATA = ('sample_orders.json', 'sample_tracking_events.json', 'product_catalog.json',
-        'policy_rules.json', 'delivery_estimate_rules.json', 'evaluation_cases.json', 'retrieval_labels.json')
+        'policy_rules.json', 'delivery_estimate_rules.json', 'evaluation_cases.json',
+        'retrieval_labels.json', 'retrieval_heldout_labels.json')
 SCRIPTS = ('check_model.py', 'judge_settings.py', 'run_final_suite.py', 'judge_final_suite.py',
            'compare_judges.py', 'summarize_consistency.py', 'verify_final_tickets.py',
            'replay_submission_demo.py', 'build_submission_evidence.py', 'independent_review_gate.py',

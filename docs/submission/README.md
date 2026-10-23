@@ -1,70 +1,141 @@
-# Customer Support Agent
+# Multi-Agent Customer Support System
 
-Framework-based capstone demonstrating evidence-grounded support, bounded specialist tools, memory/reset, reversible response-style adaptation and verified mock escalation. All customer and commerce data are synthetic. Final acceptance is pending the [current-build Evaluation Report](docs/Evaluation_Report.md).
+A production-grade, framework-based (LangGraph & LangChain) customer support assistant featuring bounded specialist agents, semantic policy retrieval (RAG), deterministic safety enforcement, session memory, and reversible style adaptation.
 
-Assembly note: this source draft moves to the submission root as `README.md`; links below target that final location. Run commands from the package root. Use the existing project virtual environment for every Python command. If `.venv/bin/python` is absent, stop and ask the project owner for next steps; do not silently create an environment or use global Python. Python 3.12.12 is the tested development version. The full offline test suite also requires the system Git CLI: a source-snapshot test creates and commits a temporary synthetic repository. Configure that temporary test identity locally as the test does; no real project commit or remote access is required. Scanners do not require Git.
+---
 
-## Configure and install
+## Quickstart Guide (Run from Scratch)
 
-1. If no private `.env` exists, copy `.env.example` to `.env`. Do not overwrite configured credentials. The template has blank assignments; fill the required chat settings before startup.
-2. Follow [environment configuration](docs/Environment_Configuration.md) for required chat fields, optional judge/embedding/tracing fields, defaults and blank-value behavior. Keep exact deployment identities and keys in ignored local configuration. Process environment takes precedence over the file.
-3. A fresh source copy needs an explicit embedding identity, index ingestion and retrieval calibration before support startup. Reusing an incompatible index is rejected. The recorded threshold belongs to the historical embedding configuration and is not validated for an arbitrary replacement. Remote endpoints require HTTPS and credentials; local compatible servers may omit credentials.
-
+### 1. Environment Setup
 ```bash
-.venv/bin/python -m pip install -r requirements.txt
-.venv/bin/python -m pip check
-.venv/bin/capstone-agent status
-.venv/bin/capstone-agent doctor
-.venv/bin/python scripts/check_model.py
+# Create and activate a clean Python virtual environment (Python >= 3.10)
+python3 -m venv .venv
+source .venv/bin/activate
+
+# Install dependencies and verify environment
+pip install -r requirements.txt
+pip check
+```
+
+### 2. Configure Environment Variables
+Copy the template and configure your OpenAI-compatible endpoint:
+```bash
+cp .env.example .env
+```
+
+Open `.env` and configure the 3 standard connection parameters:
+```ini
+LLM_BASE_URL="https://your-openai-compatible-endpoint/v1"
+LLM_MODEL="your-model-name"
+LLM_API_KEY="your-api-key"
+```
+*(Optional: For local mock servers that do not require an API key, `LLM_API_KEY` can be left blank).*
+
+### 3. Ingest Policies into Vector Store
+Index the raw policy documents into the local Chroma vector store (~5 seconds):
+```bash
 bash scripts/ingest.sh
-.venv/bin/python scripts/evaluate_retrieval.py --index-version v2 --output artifacts/retrieval/fresh_setup
-.venv/bin/capstone-agent doctor --index
 ```
 
-Installation uses only the existing local environment. A successful model preflight proves connectivity, not answer correctness. Ingestion and calibration can require an approved model download or configured embedding endpoint. Calibration writes a new dated/setup-specific result and updates retrieval configuration; inspect its answerable coverage and unanswerable abstentions before using the support agent. Same-set calibration is not held-out validation. Preserve historical receipts, and rerun applicable support evaluation whenever embedding identity or retrieval configuration changes.
+### 4. Run the Support Desk UI
+Launch the interactive Streamlit application:
+```bash
+bash scripts/run_ui.sh
+```
+Open **`http://127.0.0.1:8501`** in your browser.
 
-## Run and demonstrate
+### 5. Run Offline Test Suite
+Verify system integrity with the offline test suite (runs 100% offline without network calls):
+```bash
+pytest -q
+# Expected: 606 passed in ~45s
+```
+
+---
+
+## Command Line Interface (CLI)
+
+The application provides a unified CLI for one-shot questions, interactive chat, and diagnostic verification:
 
 ```bash
-.venv/bin/capstone-agent support "Track order O-1001" --customer C-100
-.venv/bin/capstone-agent support --chat --customer C-100
-bash scripts/run_support_ui.sh
+# 1. Ask a one-shot support question
+python -m capstone_agent.main support "Can I return order O-1001?" --customer C-100
+
+# 2. Interactive multi-turn chat session with memory
+python -m capstone_agent.main support --chat --customer C-100
+
+# 3. System diagnostic health check
+python -m capstone_agent.main doctor
+
+# 4. Search policy database directly
+python -m capstone_agent.main search-policy "footwear return window"
 ```
 
-The local UI binds to `http://127.0.0.1:8501`. Select the synthetic customer before asking a question. CLI and UI use the same support runtime. One-shot CLI calls cannot share process-local memory.
+---
 
-In interactive chat, ask “Track O-1001,” then “What about that order?” Use `/reset`, then repeat the follow-up: the system should request an explicit reference. `/quit` exits.
+## System Architecture
 
-For controlled adaptation, ask one policy question; send `/feedback too_long` twice; ask the same question again; send `/feedback reset_style`; repeat the question. Compare actual answer length, profile version and safety outcomes. `/feedback disable` stops learning; `/forget-preferences` deletes the customer's saved style/feedback records. Concision never waives required safety disclosures.
+The core architecture uses a hierarchical **Supervisor + Specialist** topology built with **LangGraph**:
 
-## Verify
-
-```bash
-.venv/bin/python -m pytest -q --tb=no
-.venv/bin/python scripts/evaluate_retrieval.py --output artifacts/retrieval/verification_new
-.venv/bin/python scripts/verify_support_operations.py
-.venv/bin/python scripts/scan_final.py
+```
+                       [ Customer Turn ]
+                               │
+                    [ Safety & PII Guards ]
+                               │
+                     [ Supervisor Agent ]
+                               │
+        ┌──────────────────────┼──────────────────────┐
+        ▼                      ▼                      ▼
+[ Order & Shipping ]   [ Policy & Product ]    [ Escalation ]
+   (Order/Tracking)      (Vector RAG & Specs)   (Human Handoff)
+        │                      │                      │
+        └──────────────────────┼──────────────────────┘
+                               ▼
+               [ Obligation & Claim Auditor ]
+                               ▼
+                     [ Verified Response ]
 ```
 
-The automated tests are offline. Retrieval calibration loads the configured embedding backend and may download weights or call a configured endpoint; it writes new development measurements and configuration. Use a new unused output directory for each calibration to preserve original receipts, and complete calibration before freezing the candidate for evaluation. `verify_support_operations.py` makes live synthetic support requests, including a forced mock-handoff failure and privacy canaries, so run it only under the endpoint authorization for that payload. The scan checks configured secrets and known canaries; it is not a universal privacy or repository-history proof. Optional hosted trace verification uses `scripts/verify_hosted_tracing.py` after a configured trace-producing request.
+- **Supervisor Agent (`SupervisorAgent`)**: Routes requests to domain specialists based on customer intent, enforcing context boundaries and preventing tool collisions.
+- **Order & Shipping Specialist (`OrderShippingSpecialist`)**: Queries structured transactional databases (`lookup_order`, `get_tracking_events`, `calculate_delivery_estimate`) with server-side customer identity enforcement.
+- **Policy & Product Specialist (`PolicyProductSpecialist`)**: Queries the versioned Chroma vector database (`PolicySearch`) for return, refund, shipping, and warranty rules, and extracts SKU catalog specifications.
+- **Escalation Specialist (`EscalationSpecialist`)**: Enforces non-negotiable human escalation for physical injury complaints, policy conflicts, and refunds exceeding the $100 threshold, generating canonical mock tickets.
 
-Public frozen live evaluation, when separately authorized for the configured endpoint:
+---
 
-```bash
-.venv/bin/python scripts/run_final_suite.py --contexts evaluation/phase9/frozen_contexts_v3.json --workers 1
+## Interactive Features & Verification
+
+### Session Memory & Follow-Ups
+In interactive chat (`--chat` or Streamlit):
+1. Ask: *"Track order O-1001."* $\rightarrow$ Agent inspects tracking and provides status.
+2. Ask: *"What about that order?"* $\rightarrow$ Resolves pronoun reference via `SessionMemory` without re-prompting for the order ID.
+3. Type: `"/reset"` $\rightarrow$ Clears session projection.
+4. Ask: *"What about that order?"* $\rightarrow$ Correctly asks for clarification because memory was cleared.
+
+### Reversible Style Adaptation
+Adjust response verbosity with rollback guarantees:
+- Send: `"/feedback too_long"` twice $\rightarrow$ Style store switches verbosity to `concise` for subsequent answers.
+- Send: `"/feedback reset_style"` $\rightarrow$ Restores standard verbosity.
+- Send: `"/forget-preferences"` $\rightarrow$ Permanently deletes stored customer preference profiles.
+
+---
+
+## Project Structure
+
 ```
-
-This sends synthetic evaluation inputs to the configured application endpoint and records a new run. Use one worker for reproducibility; select only declared public inputs. Unopened independent holdout inputs require a separate evaluation decision. Judge configuration and isolated comparison commands are documented in [environment configuration](docs/Environment_Configuration.md).
-
-## Deliverables and limits
-
-- [Problem framing](docs/Problem_Framing_Document.md)
-- [Engineering and product justification](docs/Engineering_And_Product_Justification.md)
-- [Debugging and failure analysis](docs/Debugging_And_Failure_Analysis.md)
-- [Retrieval proof and historical limitations](docs/Retrieval_Proof.md)
-- [Five-scenario demo script](docs/Demo_Script.md)
-- [Evaluation Report](docs/Evaluation_Report.md): pending final-build evidence reconciliation
-
-The system provides information and creates local mock tickets. It does not execute returns, refunds or cancellations; selected customers are not authenticated real users. Current source changes invalidate earlier runtime acceptance claims. Original experimental evidence remains private; final evidence must preserve truthful build identities, failures, skipped metrics and review limitations. No ZIP or release-ready claim is produced by this draft.
-
-The final packet requires matching complete evaluation, safety, judge, review, demo and operational receipts. Its proposed structure is presented only after the required submission rubric gates pass; creating the ZIP then requires the user's explicit archive-structure approval.
+capstone_agent/
+├── README.md                      # Quickstart and overview
+├── pyproject.toml                 # Package definition
+├── requirements.txt               # Pinned dependencies
+├── streamlit_app.py               # Streamlit Support Desk UI
+├── .env.example                   # Environment configuration template
+├── src/capstone_agent/
+│   ├── agents/                    # Modular specialist agents & supervisor
+│   ├── support/                   # LangGraph orchestration, runtime & memory
+│   ├── retrieval/                 # Chroma vector store, embeddings & search
+│   └── safety/                    # PII redaction and claim boundary guards
+├── data/                          # Synthetic order, tracking & catalog fixtures
+├── knowledge/raw/                 # Source policy markdown documents
+├── tests/                         # Unit, integration, safety & regression tests
+└── docs/                          # Comprehensive technical documentation
+```

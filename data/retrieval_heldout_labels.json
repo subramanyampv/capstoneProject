@@ -1,0 +1,213 @@
+{
+  "version": "1.0",
+  "purpose": "Held-out validation set for retrieval threshold generalization; 15 answerable and 5 unanswerable queries.",
+  "labels": [
+    {
+      "id": "H01",
+      "query": "I received my running shoes 10 days ago, am I still allowed to return them?",
+      "expected": [
+        [
+          "return_policy",
+          "window"
+        ]
+      ],
+      "answerable": true
+    },
+    {
+      "id": "H02",
+      "query": "What is the return cutoff period for electronic sound bars?",
+      "expected": [
+        [
+          "return_policy",
+          "window"
+        ],
+        [
+          "faq",
+          "electronics-returns"
+        ]
+      ],
+      "answerable": true
+    },
+    {
+      "id": "H03",
+      "query": "Do you accept returns on fresh artisanal cheeses and meats?",
+      "expected": [
+        [
+          "return_policy",
+          "exclusions"
+        ]
+      ],
+      "answerable": true
+    },
+    {
+      "id": "H04",
+      "query": "Can I cancel an order that hasn't shipped from the warehouse yet?",
+      "expected": [
+        [
+          "cancellation_policy",
+          "window"
+        ]
+      ],
+      "answerable": true
+    },
+    {
+      "id": "H05",
+      "query": "What are the expedited shipping delivery times for domestic addresses?",
+      "expected": [
+        [
+          "shipping_policy",
+          "methods"
+        ]
+      ],
+      "answerable": true
+    },
+    {
+      "id": "H06",
+      "query": "What warranty protection comes with kitchen appliances?",
+      "expected": [
+        [
+          "warranty_policy",
+          "coverage"
+        ]
+      ],
+      "answerable": true
+    },
+    {
+      "id": "H07",
+      "query": "How do I request an exception if my product was delivered damaged?",
+      "expected": [
+        [
+          "return_policy",
+          "exceptions"
+        ],
+        [
+          "escalation_guidelines",
+          "safety-triggers"
+        ]
+      ],
+      "answerable": true
+    },
+    {
+      "id": "H08",
+      "query": "What is the policy for refunds on orders greater than one hundred dollars?",
+      "expected": [
+        [
+          "refund_policy",
+          "review-threshold"
+        ]
+      ],
+      "answerable": true
+    },
+    {
+      "id": "H09",
+      "query": "Who is responsible for return shipping postage costs?",
+      "expected": [
+        [
+          "return_policy",
+          "fees"
+        ]
+      ],
+      "answerable": true
+    },
+    {
+      "id": "H10",
+      "query": "Can custom personalized engraved mugs be returned?",
+      "expected": [
+        [
+          "return_policy",
+          "exclusions"
+        ]
+      ],
+      "answerable": true
+    },
+    {
+      "id": "H11",
+      "query": "I would like to speak directly with a customer service supervisor.",
+      "expected": [
+        [
+          "escalation_guidelines",
+          "human-requests"
+        ]
+      ],
+      "answerable": true
+    },
+    {
+      "id": "H12",
+      "query": "Do you deliver to APO/FPO military addresses?",
+      "expected": [
+        [
+          "shipping_policy",
+          "destinations"
+        ]
+      ],
+      "answerable": true
+    },
+    {
+      "id": "H13",
+      "query": "Are opened cosmetic creams eligible for store credit?",
+      "expected": [
+        [
+          "return_policy",
+          "condition"
+        ]
+      ],
+      "answerable": true
+    },
+    {
+      "id": "H14",
+      "query": "How many business days does a credit card refund take to show on my bank statement?",
+      "expected": [
+        [
+          "refund_policy",
+          "processing"
+        ]
+      ],
+      "answerable": true
+    },
+    {
+      "id": "H15",
+      "query": "What happens if my package is marked delivered but not on my porch?",
+      "expected": [
+        [
+          "shipping_policy",
+          "lost-packages"
+        ],
+        [
+          "escalation_guidelines",
+          "shipping-issues"
+        ]
+      ],
+      "answerable": true
+    },
+    {
+      "id": "H16",
+      "query": "Can I return a live parrot purchased three weeks ago?",
+      "expected": [],
+      "answerable": false
+    },
+    {
+      "id": "H17",
+      "query": "What will the temperature be in Chicago tomorrow afternoon?",
+      "expected": [],
+      "answerable": false
+    },
+    {
+      "id": "H18",
+      "query": "Can you provide a working promotional coupon code for 50% off?",
+      "expected": [],
+      "answerable": false
+    },
+    {
+      "id": "H19",
+      "query": "How many liters of water can the TrailRunner shoebox hold before leaking?",
+      "expected": [],
+      "answerable": false
+    },
+    {
+      "id": "H20",
+      "query": "What is the return policy for a motorized speedboat bought in 2021?",
+      "expected": [],
+      "answerable": false
+    }
+  ]
+}

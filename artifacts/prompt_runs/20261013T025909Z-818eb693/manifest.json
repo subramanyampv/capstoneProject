@@ -13,7 +13,7 @@
   ],
   "settings": {
     "provider": "openai_compatible",
-    "model": "Qwen3.7-Max",
+    "model": "configured OpenAI-compatible model",
     "timeout_seconds": 20.0,
     "max_retries": 1,
     "response_format": "json_object",

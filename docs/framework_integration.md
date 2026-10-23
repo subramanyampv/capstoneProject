@@ -8,7 +8,7 @@ The existing deterministic domain boundary remains outside model authority.
 ## Current implementation
 
 - `LangChainChatClient` wraps `ChatOpenAI` behind the existing model-client protocol.
-  OpenAI-compatible Qwen configuration, explicit thinking/format settings, safe errors,
+  OpenAI-compatible OpenAI-compatible configuration, explicit thinking/format settings, safe errors,
   disabled SDK retries with the application's bounded retry budget, and no redirects.
 - LangGraph executes `prepare -> model -> validate -> finalize`, with one optional
   `repair -> model -> validate` cycle and recursion budget 12. Graph state does not

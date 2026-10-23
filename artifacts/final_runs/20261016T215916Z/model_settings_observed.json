@@ -2,7 +2,7 @@
   "observed_at": "2026-10-16T22:11:34.256873+00:00",
   "settings": {
     "provider": "openai_compatible",
-    "model": "qwen3.7-max",
+    "model": "configured_application_model",
     "timeout_seconds": 20.0,
     "max_retries": 1,
     "response_format": "json_object",

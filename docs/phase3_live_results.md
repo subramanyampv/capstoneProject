@@ -4,7 +4,7 @@
 
 Run ID: `20261013T030651Z-b48a462e`. Timestamp in the directory name is UTC.
 
-Model: `qwen3.7-max`; OpenAI-compatible Qwen endpoint. Prompt version: `phase3-v1`.
+Model: `configured OpenAI-compatible model`; OpenAI-compatible OpenAI-compatible endpoint. Prompt version: `phase3-v1`.
 65 frozen cases × A/B/C; temperature 0, 1200 completion tokens, thinking disabled,
 three independent concurrent clients, empty evidence, no tools or memory.
 
@@ -19,7 +19,7 @@ three independent concurrent clients, empty evidence, no tools or memory.
 Total recorded token usage: **175,357**. Final schema/citation validity: **195/195**.
 Latency includes network time and any repair; this concurrent workload is not the final
 single-agent latency acceptance benchmark. Tokens include model input and output.
-Monetary cost was not calculated. Returned model IDs were consistently `qwen3.7-max`;
+Monetary cost was not calculated. Returned model IDs were consistently `configured OpenAI-compatible model`;
 this is a provider alias, not proof of an immutable model snapshot.
 
 ## Response review (assistant review of selected cases)

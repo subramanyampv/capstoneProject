@@ -237,3 +237,50 @@ def test_other_order_is_presented_as_one_explicit_reference_to_supervisor(setup)
         return plan()
     response=memory.process('Track my other order',IDENTITY,execute(services,[check,tools(('get_tracking_events',{'order_id':'O-1001'})),result('order_shipping'),draft()]))
     assert response['outcome']=='ANSWERED'
+
+
+def test_contradiction_multi_turn_clears_active_context(setup):
+    """Contradictory/unowned order in turn 2 wipes active entity and prevents turn 3 borrowing."""
+    services, _ = setup
+    memory = SessionMemory()
+    # Turn 1: Valid owned order
+    t1 = memory.process('Track O-1001', IDENTITY, lookup(services))
+    assert memory.snapshot(IDENTITY)['entities'].get('order_id') == 'O-1001'
+
+    # Turn 2: User references an invalid/unowned order O-9999
+    unowned_reply = execute(services, [
+        plan(order='O-9999'),
+        tools(('lookup_order', {'order_id': 'O-9999'})),
+        result('order_shipping'),
+        draft('Order O-9999 not found. Please verify your order number.', outcome='CLARIFICATION_REQUESTED')
+    ])
+    t2 = memory.process('Track O-9999', IDENTITY, unowned_reply)
+    assert t2['outcome'] == 'CLARIFICATION_REQUESTED'
+    # Snapshot entities should now be wiped clean
+    assert memory.snapshot(IDENTITY)['entities'] == {}
+
+    # Turn 3: Ambiguous reference must clarify, not fall back to O-1001
+    t3 = memory.process('Track that order', IDENTITY, execute(services, []))
+    assert t3['outcome'] == 'CLARIFICATION_REQUESTED'
+    assert 'O-1001' not in json.dumps(t3.get('tool_records', []))
+
+
+def test_ttl_expiry_multi_turn_clears_expired_entities(setup):
+    """Session expiry across turns wipes memory and forces clarification."""
+    services, _ = setup
+    clock = Clock()
+    memory = SessionMemory(clock=clock)
+
+    # Turn 1: Valid query at t=0
+    memory.process('Track O-1001', IDENTITY, lookup(services))
+    assert memory.snapshot(IDENTITY)['entities'].get('order_id') == 'O-1001'
+
+    # Fast-forward clock past 30-minute TTL (1800s)
+    clock.now = 1801
+
+    # Turn 2: Reference after TTL expires
+    t2 = memory.process('Track that order', IDENTITY, execute(services, []))
+    assert t2['memory']['expired'] is True
+    assert t2['outcome'] == 'CLARIFICATION_REQUESTED'
+    assert memory.snapshot(IDENTITY)['entities'] == {}
+

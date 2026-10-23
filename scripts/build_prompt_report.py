@@ -59,7 +59,7 @@ def main():
              "Status: **COMPLETE under Architecture v3, 2026-10-13. Prompt C selected for development.**",
              "Final-system safety acceptance remains open. The selected prompt still fails R05/S15 and omits feedback intent on M02.", "",
              f"Source run: `{RUN}`; SHA-256 of saved outputs: `{digest}`.",
-             "The experiment is 65 frozen cases × A/B/C on qwen3.7-max, temperature 0, 1,200 completion tokens, thinking disabled, empty evidence, no tools or memory. Cases have independent context; three concurrent clients were used. The original run used the pre-framework adapter; later LangChain/LangGraph smoke verifies framework integration separately.", "",
+             "The experiment is 65 frozen cases × A/B/C on configured OpenAI-compatible model, temperature 0, 1,200 completion tokens, thinking disabled, empty evidence, no tools or memory. Cases have independent context; three concurrent clients were used. The original run used the pre-framework adapter; later LangChain/LangGraph smoke verifies framework integration separately.", "",
              "## Measured aggregate results", "",
              "| Prompt | Schema-valid | Model calls | Median s | p95 s | Mandatory classification failures |",
              "|---|---:|---:|---:|---:|---|"]

@@ -1,37 +1,32 @@
-# Project documents
+# Project Documentation Index
 
-[Architecture and Plan v3.3](architecture_and_plan.md) is the authoritative design and delivery plan. It supersedes all earlier documents. [Implementation status](implementation_status.md) distinguishes measured results from targets in the plan.
+This directory contains technical specifications, architecture diagrams, and submission deliverables for the Multi-Agent Customer Support System.
 
-| Document | Purpose |
-|---|---|
-| [Phase 6 memory](phase6_memory.md) | Projection checkpoint boundary, follow-ups, reset/expiry and memory on/off evidence |
-| [Phase 5 tools and graph](phase5_tools_and_graph.md) | Typed tool, session identity, safety and multi-agent implementation with live failure history |
-| [Memory Pad](memory_pad.md) | Ecommerce agent feature comparison and evolving extension backlog; ideas do not alter approved scope |
-| [Market comparison](market_comparison.md) | Official-source desk comparison with Fin, Zendesk and Agentforce; analysis only |
-| [Task checklist](task_list.md) | Done / update / not-started ledger with priorities, dependencies and completion criteria |
-| [Detailed progress](project_progress.md) | Completed work, evidence, limitations and remaining delivery steps |
-| [Requirements](requirements.md) | Current scope and frozen dataset boundary |
-| [Acceptance criteria](acceptance_criteria.md) | v3 hard gates and quality targets |
-| [Problem framing](problem_framing.md) | Concise submission framing |
-| [Prompt comparison](prompt_comparison.md) | Completed Phase 3 experiment and development selection |
-| [Retrieval design](retrieval_design.md) | Phase 4 corpus, local index, metrics and known threshold misses |
-| [Phase 2 closure](phase2_closure.md) | Verified baseline evidence |
-| [Framework integration](framework_integration.md) | Existing adapters, evaluation and tracing setup |
-| [Safety and privacy](safety_and_privacy.md) | Current controls and planned v3 safeguards |
-| [Demo script](demo_script.md) | Five protected paths linked to measured release evidence |
-| [Evaluation report](evaluation_report.md) | First holdout failure and new-candidate evidence/limits; acceptance pending |
-| [Engineering justification](engineering_justification.md) | Decisions and deferred scope |
-| [Plan review](plan_review.md) | Reconciliation decisions and issues to resolve |
-| [Archive](archive/v1-v2/) | Superseded designs and earlier assumptions, retained for history |
+---
 
-Existing dated run evidence is preserved. Historical reports describe the code and decisions at that time; they do not override v3.
+## 1. Submission Deliverables (`docs/submission/`)
 
-- [Phase 7 adaptation](phase7_adaptation.md): terminal/Streamlit feedback, consent, style versioning/reset/deletion and measured development evidence.
+The primary deliverable documents required for final evaluation are curated in [`docs/submission/`](submission/):
 
-- [Phase 8 operations](phase8_operations.md): safe hierarchy, hosted verification, readiness commands and clean local deployment.
+| Deliverable | Purpose | Key Content |
+| :--- | :--- | :--- |
+| **[Problem Framing](submission/Problem_Framing_Document.md)** | Problem framing & domain context ($\le 2$ pages) | 5 example user queries, success metrics table with measured numbers, failure modes and mitigations. |
+| **[Engineering Justification](submission/Engineering_And_Product_Justification.md)** | Technical decisions & tradeoffs | Justification for LangGraph/LangChain, Chroma vector store, deterministic guards, and deferred scope. |
+| **[Architecture Diagrams](submission/Architecture_Diagrams.md)** | Visual system architecture | Mermaid diagrams for supervisor/specialist routing, safety boundary enforcement, and data flow. |
+| **[Prompt Comparison Report](submission/Prompt_Comparison_Report.md)** | Comparative prompt evaluation | Prompts A/B/C across 65 cases, Prompt $\rightarrow$ Output $\rightarrow$ Delta analysis, and safety prompt design. |
+| **[Retrieval Proof](submission/Retrieval_Proof.md)** | Semantic search & RAG proof | Vector index design, held-out threshold validation (20 queries), and 20-row retrieval on/off comparison table. |
+| **[Demo Script](submission/Demo_Script.md)** | 5-scenario interactive demonstration | Step-by-step turns for grounding, refusals, mock escalation, multi-turn memory on/off table, and style adaptation. |
+| **[Debugging & RCA](submission/Debugging_And_Failure_Analysis.md)** | Root cause defect analysis | R09 field-boundary repair post-mortem with before/after run IDs (`20261019T120208Z` vs `20261022T025441Z`), regex diff, and regression tests. |
+| **[Evaluation Report](submission/Evaluation_Report.md)** | Authoritative final evaluation ($\le 3$ pages) | Metrics table across 65 cases (`20261022T025441Z`), P50/P95 latency by path, 100% tool selection table, relevancy triage, and safety consistency (`20261022T042440Z`). |
 
-- [Phase 9 evaluation](phase9_evaluation.md): frozen baseline, versioned context review, local DeepEval judging and actual human-calibration requirements.
+---
 
-- [Independent obligation contract](obligation_contract.md): request coverage, evidence and citation safeguards introduced by Phase 9 repairs.
+## 2. Supporting Architecture & Design References
 
-- [Production review](production_review.md): four deferred infrastructure/hardening suggestions; existing defects take priority.
+| Document | Description |
+| :--- | :--- |
+| **[Architecture & Plan](architecture_and_plan.md)** | Authoritative v3.3 architecture and design specification. |
+| **[Framework Integration](framework_integration.md)** | LangGraph supervisor topology, LangChain agent integration, and tracing adapters. |
+| **[Environment Configuration](environment_configuration.md)** | Complete reference for all runtime `.env` parameters and defaults. |
+| **[Safety & Privacy](safety_and_privacy.md)** | PII redaction rules, token canary scanners, and boundary guard policies. |
+| **[Future Product Targets](future_product_targets.md)** | Long-term technical roadmap and deferred production enhancements. |

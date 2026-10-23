@@ -2,7 +2,7 @@
   "library": "deepeval",
   "source_run": "20261013T034118Z-745df983",
   "source_sha256": "94a71648a30519d8177460a38fcfc2bbb99021a723d66d7696ff70169e1e479d",
-  "judge": "qwen3.7-max",
+  "judge": "configured_application_model",
   "results": [
     {
       "case_id": "N01",

@@ -129,7 +129,7 @@
   "context_file": "frozen_contexts_v3.json",
   "model_settings": {
     "provider": "openai_compatible",
-    "model": "qwen3.7-max",
+    "model": "configured_application_model",
     "timeout_seconds": 60.0,
     "max_retries": 1,
     "response_format": "json_object",

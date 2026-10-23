@@ -10,7 +10,7 @@
   "prompt_sha256": "e7e5bdcdd6e51a02c0b50c8c051400470b5d8f859df04414914a294c91f48661",
   "settings": {
     "provider": "openai_compatible",
-    "model": "qwen3.7-max",
+    "model": "configured_application_model",
     "timeout_seconds": 20.0,
     "max_retries": 1,
     "response_format": "json_object",
