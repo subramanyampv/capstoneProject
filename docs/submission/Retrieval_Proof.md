@@ -1,6 +1,6 @@
 # Semantic Policy Retrieval & Grounding Proof
 
-This document provides empirical evidence for the system's vector retrieval (RAG) architecture, establishing index compatibility, calibration and held-out validation metrics, an expanded 20-row paired retrieval on/off comparison, and semantic grounding repairs.
+This document provides empirical evidence for the system's vector retrieval (RAG) architecture, establishing index configuration, similarity threshold calibration, the historical 10-case paired retrieval on/off benchmark, and semantic grounding repairs.
 
 ---
 
@@ -8,86 +8,98 @@ This document provides empirical evidence for the system's vector retrieval (RAG
 
 The vector policy store is built on a versioned Chroma collection containing 7 authoritative synthetic policy and FAQ documents partitioned into 28 discrete heading sections:
 
-- **Chunking Strategy:** Structured by authored policy headings (`window`, `exceptions`, `exclusions`, `condition`, `fees`, `review-threshold`, etc.). Each chunk is bounded to $\le 2,400$ UTF-8 bytes without arbitrary token truncation. Short authored sections require zero artificial overlap.
+- **Chunking Strategy:** Structured strictly by authored policy headings (`window`, `exceptions`, `exclusions`, `condition`, `fees`, `review-threshold`, etc.). Each chunk is bounded to $\le 2,400$ UTF-8 bytes without arbitrary token truncation. Authored headings require zero artificial chunk overlap.
 - **Embedding Properties:** Normalized, finite, 2,048-dimensional vectors using cosine distance similarity.
-- **Index Compatibility & Manifest:** Index manifests (`knowledge/index_manifest.json`) record the model architecture, embedding dimension, corpus hash, and version tag. Vector queries against incompatible models or missing stores fail deterministically with `MANIFEST_MISMATCH`.
+- **Index Compatibility & Manifest:** The index manifest (`knowledge/index_manifest.json`) records the model architecture, embedding dimension, corpus hash, and version tag (`v2`). Vector queries against missing or mismatched stores fail deterministically with `MANIFEST_MISMATCH`.
 - **Metadata Filters:** Retrieved chunks carry structured metadata (`doc_id`, `section_id`, `version`, `authority`, `effective_date`, `category`). The search engine enforces category scoping while retaining general governing clauses.
 
 ---
 
-## 2. Calibration & Held-out Threshold Validation
+## 2. Similarity Threshold Calibration (20 Queries)
 
-To separate index tuning from generalized validation, the retrieval threshold (**0.464133**) was tuned on a 20-query development set (`data/retrieval_labels.json`) and independently validated on an unseen 20-query held-out label set (`data/retrieval_heldout_labels.json`):
+To prevent vector false positives and hallucinated answers on out-of-domain queries, a similarity threshold was calibrated on a 20-query development dataset (`data/retrieval_labels.json`), preserved under `retrieval_calibration` in `evidence/retrieval_comparison.json`:
 
-| Evaluation Set | Query Archetype | Sample Count | Recall@5 | Mean Reciprocal Rank (MRR) | Correct Abstention Rate |
-| :--- | :--- | :---: | :---: | :---: | :---: |
-| **Development Calibration** | Answerable Policy Queries | 15 | **100%** (15/15) | 0.900 | N/A |
-| (`data/retrieval_labels.json`) | Unanswerable / OOD Queries | 5 | N/A | N/A | **100%** (5/5 abstained) |
-| **Held-Out Validation** | Answerable Policy Queries | 15 | **100%** (15/15) | 0.933 | N/A |
-| (`data/retrieval_heldout_labels.json`) | Unanswerable / OOD Queries | 5 | N/A | N/A | **100%** (5/5 abstained) |
-
-### Key Observations:
-1. **Zero Overfitting:** The calibrated cosine threshold (0.464133) generalized to the held-out dataset, achieving 100% Recall@5 across all 15 unseen answerable queries.
-2. **Clean Abstention:** All 5 out-of-domain / unanswerable queries in the held-out set (live parrots, weather, discount coupons, container water capacity, 5-year-old speedboats) fell well below the threshold (top score $\le 0.321$), resulting in 100% clean abstention without hallucinating store policies.
-3. **Deterministic Declared Conflict:** For queries triggering known conflicting rules (e.g. 30-day FAQ vs 15-day policy for electronics), the retriever deterministically surfaces both conflicting sources, flags a discrepancy, and routes to human escalation (`R05`).
-
----
-
-## 3. Paired Retrieval-On vs Retrieval-Off Comparison (20 Queries)
-
-To measure the causal impact of semantic retrieval on agent accuracy and hallucination prevention, 20 queries (15 answerable, 5 unanswerable) were executed under identical conditions (temperature 0, 1,200 token cap, same model configuration) with vector retrieval enabled versus disabled:
-
-| ID | Query Summary | Retrieval OFF (No Context) | Retrieval ON (RAG Enabled) | Causal Delta / Impact |
-| :---: | :--- | :--- | :--- | :--- |
-| **H01** | Running shoes return (10 days) | `INSUFFICIENT_EVIDENCE`<br>Refuses; no policy known | `ANSWERED`<br>Cites 30-day window (`return_policy:window`) | Converted refusal to verified policy answer |
-| **H02** | Electronics sound bar return window | `INSUFFICIENT_EVIDENCE`<br>Cannot resolve return terms | `ESCALATED`<br>Identifies 15d vs 30d conflict; creates ticket | Surfaced policy discrepancy; prevented guess |
-| **H03** | Fresh artisanal cheese return | `INSUFFICIENT_EVIDENCE`<br>Guesses generic food hygiene | `ANSWERED`<br>Cites perishable exclusion (`return_policy:exclusions`) | Grounded specific food exclusion |
-| **H04** | Cancel pre-dispatch order | `INSUFFICIENT_EVIDENCE`<br>Refuses without order terms | `ANSWERED`<br>Cites pre-shipment rule (`cancellation_policy:window`) | Grounded pre-dispatch cancellation rules |
-| **H05** | Expedited domestic shipping delivery | `INSUFFICIENT_EVIDENCE`<br>Guesses "3–5 days" | `ANSWERED`<br>Cites 2-day express terms (`shipping_policy:methods`) | Replaced hallucinated delivery timeline |
-| **H06** | Kitchen appliance warranty | `INSUFFICIENT_EVIDENCE`<br>Guesses "1-year standard" | `ANSWERED`<br>Cites 2-year appliance term (`warranty_policy:coverage`) | Accurate warranty term without guessing |
-| **H07** | Damaged item exception request | `CLARIFICATION_REQUESTED`<br>Asks for photo/details | `ESCALATED`<br>Flags safety damage; creates human ticket | Deterministic safety escalation triggered |
-| **H08** | Refunds above $100 policy | `INSUFFICIENT_EVIDENCE`<br>Guesses approval limits | `ANSWERED`<br>Cites $100 review threshold (`refund_policy:review-threshold`) | Grounded human-review financial threshold |
-| **H09** | Return shipping postage cost | `INSUFFICIENT_EVIDENCE`<br>Guesses free returns | `ANSWERED`<br>Cites customer postage fee rule (`return_policy:fees`) | Prevented false promise of free return shipping |
-| **H10** | Custom engraved mug return | `INSUFFICIENT_EVIDENCE`<br>Uncertain on custom goods | `ANSWERED`<br>Cites custom goods exclusion (`return_policy:exclusions`) | Correctly denied return for custom product |
-| **H11** | Direct supervisor request | `CLARIFICATION_REQUESTED`<br>Promises agent callback | `ESCALATED`<br>Invokes `create_escalation` immediately | Enforced mandatory escalation protocol |
-| **H12** | APO/FPO military delivery | `INSUFFICIENT_EVIDENCE`<br>Guesses military coverage | `ANSWERED`<br>Cites USPS military delivery terms (`shipping_policy:destinations`) | Grounded supported carrier destination |
-| **H13** | Opened cosmetic cream return | `INSUFFICIENT_EVIDENCE`<br>Guesses "hygiene restrictions" | `ANSWERED`<br>Cites opened seal hygiene rule (`return_policy:condition`) | Verified exact cosmetic seal policy |
-| **H14** | Bank refund processing timing | `INSUFFICIENT_EVIDENCE`<br>Guesses "5–10 business days" | `ANSWERED`<br>Cites 3–5 day bank timeline (`refund_policy:processing`) | Pinned verified bank settlement schedule |
-| **H15** | Porch lost package inquiry | `CLARIFICATION_REQUESTED`<br>Offers carrier contact | `ESCALATED`<br>Flags missing package; routes to support | Enforced lost shipment escalation route |
-| **H16** | Live parrot return policy | `CLARIFICATION_REQUESTED`<br>Clean abstention | `CLARIFICATION_REQUESTED`<br>Clean abstention (top score 0.281 < threshold) | Correctly abstained in both modes |
-| **H17** | Tomorrow's weather forecast | `CLARIFICATION_REQUESTED`<br>Clean abstention | `CLARIFICATION_REQUESTED`<br>Clean abstention (top score 0.198 < threshold) | Filtered completely out-of-domain prompt |
-| **H18** | 50% discount coupon code | `CLARIFICATION_REQUESTED`<br>Clean abstention | `CLARIFICATION_REQUESTED`<br>Clean abstention (top score 0.245 < threshold) | Refused promotional code extraction |
-| **H19** | Shoebox water volume capacity | `CLARIFICATION_REQUESTED`<br>Clean abstention | `CLARIFICATION_REQUESTED`<br>Clean abstention (top score 0.219 < threshold) | Refused unsupported physical specification |
-| **H20** | 2021 speedboat return | `CLARIFICATION_REQUESTED`<br>Clean abstention | `CLARIFICATION_REQUESTED`<br>Clean abstention (top score 0.312 < threshold) | Refused ancient non-catalog transaction |
-
----
-
-## 4. Aggregate Comparison Summary
-
-| Metric Dimension | Retrieval OFF (No Context) | Retrieval ON (RAG Active) | Causal Delta |
+| Calibration Metric | Answerable Queries (15) | Out-of-Domain / Unanswerable (5) | Aggregate Performance |
 | :--- | :---: | :---: | :---: |
-| **Factual Citation Rate** | 0% (0/20) | **100%** (15/15 answerable) | +100% citations |
-| **Hallucinated Policies / Numbers** | 4 instances (windows/fees) | **0 instances** | -100% hallucinations |
-| **Policy Success Rate (Answerable)**| 0% (0/15) | **100%** (15/15) | +100% resolution |
-| **Mandatory Escalation Triggered** | 0% (0/4) | **100%** (4/4) | +100% safety compliance |
-| **Out-of-Domain Abstention Rate** | 100% (5/5) | **100%** (5/5) | Preserved safe bounds |
+| **Recall@5 (Raw Vector)** | 100% (15/15) | N/A | 1.000 |
+| **Mean Reciprocal Rank (MRR)** | 0.900 | N/A | 0.900 |
+| **Post-Threshold Recall@5** | 100% (15/15) | N/A | 1.000 |
+| **Abstention Rate** | 0% (0 false abstentions) | 100% (5/5 abstained) | Calibrated threshold: **0.464133** |
+
+### Calibration Behavior:
+1. **Calibrated Operating Point:** The balanced cosine distance threshold of **0.464133** maximized answerability on the development set without dropping valid policy passages.
+2. **Deterministic Abstention:** All 5 out-of-domain queries (unrelated merchandise, external weather, coupon codes) fell below the threshold, enabling the agent to abstain cleanly (`CLARIFICATION_REQUESTED` or safe refusal) rather than retrieving irrelevant policy clauses.
+3. **Declared Conflict Detection:** For queries triggering contradictory policies (e.g., 30-day FAQ vs 15-day electronics return policy), the retriever deterministically surfaces both conflicting sources, flags a discrepancy, and routes to human escalation (`R05`).
 
 ---
 
-## 5. Preserved Semantic Defect & Prompt Repair (Case R02)
+## 3. Paired Retrieval-On vs Retrieval-Off Experiment (10 Cases)
 
-### Defect
-In earlier testing on case R02 (*"How many days before the refund deadline kicks in for footwear?"*), the agent initially responded:
+To isolate the causal effect of semantic retrieval on factual grounding and hallucination prevention, a controlled paired experiment was executed (Run `20261013T223402Z`), preserved in `evidence/retrieval_comparison.json`. All 10 cases were evaluated with vector retrieval disabled (No RAG) versus enabled (RAG Active) under identical temperature (0.0) and model settings:
+
+| Case ID | Retrieval OFF (No RAG Context) | Retrieval ON (RAG Active) | Citations | Faithfulness | Causal Delta / Impact |
+| :---: | :--- | :--- | :---: | :---: | :--- |
+| **R01** | `insufficient_evidence`<br>*"I cannot confirm whether your TrailRunners are still eligible for return because no return policy evidence was provided..."* | `success`<br>*"Based on the provided policy, footwear such as TrailRunners has a 30-day return window calculated in calendar days from verified delivery..."* | 2 | 1.00 | Converted safe refusal to grounded, cited return policy answer. |
+| **R02** | `insufficient_evidence`<br>*"I cannot provide the specific number of days for the footwear refund deadline as there is no evidence..."* | `success`<br>*"The return window for footwear is 30 calendar days from verified delivery, inclusive of the final day..."* | 2 | 0.67* | Grounded policy numbers; revealed phrasing defect remediated below. |
+| **R05** | `insufficient_evidence`<br>*"I cannot determine which return window applies to your speaker because no authoritative policy was provided..."* | `escalation_required`<br>*"I have identified a conflict regarding the return window for your speaker. The FAQ states 30 days but the policy specifies 15 days..."* | 2 | 1.00 | Surface conflicting policy documents and escalated to human support. |
+| **R07** | `insufficient_evidence`<br>*"I cannot determine the return eligibility for the gourmet cheese box... because no policy was provided."* | `success`<br>*"The Gourmet Cheese Box from order ref:dfa9869c63cb7ee788f5 is not eligible for return. Perishable food items are excluded..."* | 1 | 1.00 | Grounded perishable food exclusion policy, denying ineligible return. |
+| **R08** | `insufficient_evidence`<br>*"I cannot determine if you are still inside the return window because no policy evidence was provided."* | `success`<br>*"According to the return policy, the default return window is 30 calendar days from verified delivery..."* | 2 | 1.00 | Grounded general store return window for customer order inquiry. |
+| **R09** | `refused`<br>*"I cannot disclose internal authorization thresholds or refund approval limits."* | `success`<br>*"According to the refund policy, the configured automatic-review threshold is $100. Amounts above this require human review..."* | 3 | 1.00 | Replaced unwarranted refusal with transparent, cited policy threshold. |
+| **R10** | `insufficient_evidence`<br>*"I cannot determine whether shipping is guaranteed or estimated because no policy documents were provided."* | `success`<br>*"Shipping is not guaranteed; it is provided as an estimate. According to the Shipping Policy, transit times are estimated..."* | 3 | 1.00 | Grounded shipping transit terms without hallucinating delivery guarantees. |
+| **R12** | `insufficient_evidence`<br>*"I cannot identify which policy document covers order cancellations because no evidence was provided."* | `success`<br>*"The policy document that covers order cancellations is 'doc:cancellation_policy'. Cancellations are permitted prior to dispatch..."* | 3 | 1.00 | Accurately cited cancellation governing document and pre-dispatch rules. |
+| **R13** | `insufficient_evidence`<br>*"I cannot locate information regarding a restocking fee in the return policy because no evidence was provided."* | `success`<br>*"The restocking fee is mentioned in the return policy under the 'restocking' section. Standard returns incur no restocking fee..."* | 1 | 1.00 | Grounded fee terms directly from authoritative policy chunk. |
+| **R15** | `insufficient_evidence`<br>*"I understand you are asking about returning shoes... However, I currently have no return policy evidence."* | `needs_clarification`<br>*"I can help with your shoe return inquiry. According to the Shoes Returns FAQ, return windows depend on condition and purchase date..."* | 1 | 1.00 | Requested missing customer details while citing valid policy terms. |
+
+*\*Note: Case R02 initial phrasing scored 0.67 due to phrasing ambiguity ("deadline kicks in after 30 days"), resolved in Section 5.*
+
+---
+
+## 4. Aggregate Benchmark Comparison
+
+The measured aggregates from Run `20261013T223402Z` demonstrate the causal necessity of the RAG retrieval pipeline:
+
+| Metric Dimension | Retrieval OFF (No RAG Context) | Retrieval ON (RAG Active) | Causal Delta |
+| :--- | :---: | :---: | :---: |
+| **Outputs Validated** | 10 / 10 | 10 / 10 | 0 |
+| **Cited Outputs** | **0 / 10** (0%) | **10 / 10** (100%) | **+100%** |
+| **Successful Resolutions** | 0 / 10 (0%) | 8 / 10 (80%) | +80% |
+| **Escalations Classified** | 0 / 10 (0%) | 1 / 10 (10% — R05 conflict) | +10% |
+| **Clarifications Requested** | 0 / 10 (0%) | 1 / 10 (10% — R15) | +10% |
+| **Faithfulness Passes ($\ge 0.90$)** | 0 / 10 (all skipped; no context) | 9 / 10 (90%) | +90% |
+| **Mean Faithfulness Score** | N/A | **0.967** | High grounding |
+| **Hallucinated Numbers / Policies** | 0 (system safely abstained) | **0** | Zero hallucinations |
+
+---
+
+## 5. Semantic Grounding Repair & 4-Case Follow-Up (Run `20261013T224043Z`)
+
+### Case R02 Phrasing Defect
+In the initial 10-case run, case R02 (*"How many days before the refund deadline kicks in for footwear?"*) was retrieved accurately (`return_policy:v1:window`), but the composer phrased the answer as:
 > *"The refund deadline kicks in after 30 days from verified delivery."*
 
-While the factual number (30 days) was retrieved from `return_policy:v1:window`, the phrasing was semantically inverted: the policy defines a 30-day **window during which returns are accepted**, not a deadline that *"kicks in after 30 days"*. Faithfulness self-evaluation scored this output **0.6667** (below the 0.90 target bar).
+The LLM-as-a-judge faithfulness evaluator flagged this as contradictory (score: **0.67**):
+> *"The score is 0.67 because the actual output incorrectly claims the refund deadline kicks in 'after' 30 days have passed, contradicting the retrieval context which specifies that the final day of the return window is inclusive and the deadline is on the 30th day."*
 
-### Root Cause & Repair
-The prompt was revised to explicitly instruct the model to separate **return eligibility windows** (the period during which an item can be returned) from **refund processing timelines** (the banking days required to credit an account after receipt).
+### Prompt Disambiguation
+The composer prompt was updated to explicitly distinguish between:
+1. **Return Eligibility Windows:** The bounded period during which an item can be returned (inclusive of the final day).
+2. **Refund Processing Schedules:** The banking settlement days required after retailer receipt.
 
-### Verification
-Following the prompt repair, case R02 was reverified:
-> *"Footwear returns must be initiated within 30 calendar days from verified delivery. Once received, refunds are processed within 3–5 business days."*
-- **Faithfulness Score:** **1.000** ✅
-- **Grounded Support:** **1.000** ✅
-- **Citation:** `doc:return_policy`, section `window`.
+### 4-Case Re-verification (Run `20261013T224043Z`)
+A follow-up benchmark re-evaluated the 4 key cases under the updated prompt:
+
+| Case ID | Policy Area | Pre-Repair Faithfulness | Post-Repair Faithfulness | Post-Repair Status |
+| :---: | :--- | :---: | :---: | :---: |
+| **R01** | Footwear Return Window | 1.00 | **1.00** | `success` |
+| **R02** | Footwear Deadline Phrasing | 0.67 | **1.00** ✅ | `success` |
+| **R05** | Declared Policy Conflict | 1.00 | **1.00** | `escalation_required` |
+| **R08** | General Return Window | 1.00 | **1.00** | `success` |
+
+With the prompt repair, R02 achieved **1.00** faithfulness with zero contradictions, raising the cohort faithfulness pass rate to **100% (4/4)**.
+
+---
+
+## 6. Scope & Evidence Limitations
+
+- **Preserved Comparisons:** In accordance with audit standards, only historical runs preserved in `evidence/retrieval_comparison.json` (the 10-case paired benchmark `20261013T223402Z` and the 4-case prompt-repair follow-up `20261013T224043Z`) are claimed.
+- **Judge Nature:** Faithfulness scores represent automated model-based evaluations using the calibrated 0.90 threshold. When retrieval context is absent (Retrieval OFF), faithfulness evaluation is skipped by definition because there is no reference context against which to measure hallucination.

@@ -59,8 +59,11 @@ def main():
     manifest={'commit':commit,'file_count':len(entries),'files':{name:hashlib.sha256(value).hexdigest() for name,value in entries.items()},
         'excluded_tracked_files':excluded,'limits':'Committed source/evidence only; no Git history, .env, local runtime, vector store or model cache. Current configured credentials scanned. Not universal secret detection or proof of release acceptance; use the accompanying evaluation/status documents.'}
     args.output.parent.mkdir(parents=True,exist_ok=True)
+    extra = {}
+    if 'SOURCE_MANIFEST.json' not in entries:
+        extra['SOURCE_SNAPSHOT_MANIFEST.json'] = json.dumps(manifest, indent=2).encode()
     with zipfile.ZipFile(args.output,'w',compression=zipfile.ZIP_DEFLATED) as archive:
-        for name,content in {**entries,'SOURCE_SNAPSHOT_MANIFEST.json':json.dumps(manifest,indent=2).encode()}.items():
+        for name,content in {**entries, **extra}.items():
             info=zipfile.ZipInfo('capstone_agent/'+name,date_time=(2026,10,17,0,0,0));info.compress_type=zipfile.ZIP_DEFLATED
             info.external_attr=int(tracked.get(name,'100644'),8)<<16;archive.writestr(info,content)
     with zipfile.ZipFile(args.output) as archive:

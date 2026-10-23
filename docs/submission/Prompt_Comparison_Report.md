@@ -2,11 +2,17 @@
 
 **Choice: retain C as the development default. None of A/B/C establishes final-system safety acceptance.** C more consistently declines unsupported factual answers, but loses some feedback coverage, over-refuses a policy question and retains safety-classification defects. This report adds a full-set **independent AI qualitative review** of saved outputs; it is not human calibration, a new live experiment, a held-out test or an independently authored benchmark.
 
+> [!IMPORTANT]
+> **Experimental Limitations & Evaluation Context:**
+> 1. **Zero-Evidence / No-Tools Baseline:** This comparison was conducted under deliberate epistemic starvation: all 65 cases were evaluated with *zero retrieval context*, no order/catalog databases, and no tool execution. Its purpose was to measure intrinsic prompt restraint against hallucinating policies or claiming unverified actions when completely unassisted.
+> 2. **Non-Blind Review:** The qualitative analysis is an automated independent AI review conducted post-hoc with knowledge of the prior Prompt C selection and reported failure modes.
+> 3. **Defect Remediation in Integrated System:** Remaining prompt-level limitations observed in Prompt C (e.g. failing to classify R05 policy conflict or S15 high-value refund escalation without tools) are fully resolved in the production multi-agent system through deterministic specialist handoffs (`PolicyProductSpecialist`), policy conflict detection, and deterministic safety guards (`amount_review_errors()` and `create_escalation()`).
+
 ## Experiment and provenance
 
 | Item | Actual experiment / evidence |
 |---|---|
-| Original public run | `artifacts/prompt_runs/20261013T030651Z-b48a462e/` |
+| Original public run | `evidence/prompt_comparison_records.json` (run `20261013T030651Z-b48a462e`) |
 | Fixed input set | `data/evaluation_cases.json`, 65 cases: N01–N20, R01–R15, S01–S15, M01–M15 |
 | Input identity | SHA-256 `b3838a055e756d445934df6796de70b6ae69cd9fc0261e91932ec44d23d9aa94`; current public file matches the saved manifest |
 | Saved output identity | `outputs.jsonl`, SHA-256 `ed198f456b738cdee09362268fa93f2afc6a9fe00289925c042515eb386bab24`, rechecked during this review |
@@ -18,7 +24,7 @@
 | Review authorship | Independent AI qualitative review on 2026-10-18, after exposure to the existing report, original prompts, inputs and outputs. Not blind to the previous C selection or reported defects |
 | Preservation | Original outputs, prompt snapshots, manifests, scores and selection records are unchanged. This new document is a derived interpretation |
 
-Prompt snapshots are in the run's `prompts.json`. Exact response text and ancillary fields are in `outputs.jsonl`; `prompt_comparison.csv` is a derived tabulation. Numeric experiment results are retained in `measured_metrics.json`, `deepeval_results.json` and `artifacts/phase3_selection.json`. This report intentionally does not repeat deployment/model identities; originals retain truthful historical provenance.
+Prompt snapshots are preserved in the run's `prompts.json` definition. Exact response text and ancillary fields are compiled in `evidence/prompt_comparison_records.json`. Numeric experiment results are retained in `evidence/evaluation_summary.json` and `evidence/prompt_comparison_records.json`. This report intentionally does not repeat deployment/model identities; originals retain truthful historical provenance.
 
 ## What each prompt changes
 

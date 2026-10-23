@@ -1,6 +1,6 @@
 # Multi-Agent Customer Support System
 
-A production-grade, framework-based (LangGraph & LangChain) customer support assistant featuring bounded specialist agents, semantic policy retrieval (RAG), deterministic safety enforcement, session memory, and reversible style adaptation.
+A framework-based (LangGraph & LangChain) customer support assistant featuring bounded specialist agents, semantic policy retrieval (RAG), deterministic safety enforcement, session memory, and reversible style adaptation.
 
 ---
 
@@ -23,13 +23,29 @@ Copy the template and configure your OpenAI-compatible endpoint:
 cp .env.example .env
 ```
 
-Open `.env` and configure the 3 standard connection parameters:
+Open `.env` and configure the connection parameters:
 ```ini
+# Required Chat Model Settings
 LLM_BASE_URL="https://your-openai-compatible-endpoint/v1"
 LLM_MODEL="your-model-name"
 LLM_API_KEY="your-api-key"
+
+# Policy Embeddings Settings
+# (Defaults to local pinned manifest: voyageai/voyage-4-nano, 2048 dims)
+EMBEDDING_BACKEND="local"
+EMBEDDING_MODEL="voyageai/voyage-4-nano"
+EMBEDDING_REVISION="67fabc9bef010dabc5f6024aa1b1b6b93410426f"
+EMBEDDING_DIMENSION="2048"
+
+# Optional: If using an OpenAI-compatible remote embedding endpoint instead of local:
+# EMBEDDING_BACKEND="openai_compatible"
+# EMBEDDING_BASE_URL="https://your-openai-compatible-endpoint/v1"
+# EMBEDDING_MODEL="text-embedding-3-small"
+# EMBEDDING_DIMENSION="1536"
+# EMBEDDING_REVISION="1"
+# EMBEDDING_API_KEY="your-api-key"
 ```
-*(Note: Local policy embeddings default automatically to the pinned manifest in `knowledge/index_manifest.json`. For local mock servers that do not require an API key, `LLM_API_KEY` can be left blank).*
+*(Note: For local mock servers that do not require an API key, `LLM_API_KEY` can be left blank).*
 
 ### 3. Ingest Policies into Vector Store
 Index the raw policy documents into the local Chroma vector store (~5 seconds):
@@ -40,8 +56,8 @@ bash scripts/ingest.sh
 ### 4. Run the Support Desk UI
 Launch the interactive Streamlit application:
 ```bash
-bash scripts/run_ui.sh
-# (or: bash scripts/run_support_ui.sh)
+bash scripts/run_support_ui.sh
+# (or: bash scripts/run_ui.sh)
 ```
 Open **`http://127.0.0.1:8501`** in your browser.
 
@@ -49,7 +65,7 @@ Open **`http://127.0.0.1:8501`** in your browser.
 Verify system integrity with the offline test suite (runs 100% offline without network calls):
 ```bash
 pytest -q
-# Expected: 606 passed in ~45s
+# Expected: 612 passed in ~45s
 ```
 
 ---

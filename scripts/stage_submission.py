@@ -20,7 +20,7 @@ SCRIPTS = ('check_model.py', 'judge_settings.py', 'run_final_suite.py', 'judge_f
            'ingest.sh', 'run_ui.sh', 'run_support_ui.sh', 'venv.sh')
 DOCUMENTS = ('Problem_Framing_Document.md', 'Engineering_And_Product_Justification.md',
              'Debugging_And_Failure_Analysis.md', 'Evaluation_Report.md', 'Demo_Script.md',
-             'Retrieval_Proof.md', 'Architecture_Diagrams.md')
+             'Retrieval_Proof.md', 'Architecture_Diagrams.md', 'Prompt_Comparison_Report.md')
 
 
 def main():
@@ -56,9 +56,6 @@ def main():
     select('docs/submission/README.md', 'README.md')
     for name in DOCUMENTS:
         select('docs/submission/' + name, 'docs/' + name)
-    select('docs/environment_configuration.md', 'docs/Environment_Configuration.md')
-    select('docs/submission_prompt_comparison.md', 'docs/Prompt_Comparison_Report.md')
-    select('docs/submission_quality_analysis.md', 'docs/Quality_Analysis.md')
     evidence = args.evidence_dir.resolve()
     if not evidence.is_relative_to(ROOT / 'submission'):
         raise ValueError('DERIVED_SUBMISSION_EVIDENCE_REQUIRED')
@@ -74,10 +71,7 @@ def main():
     # Resolve probes privately; no configured values are written to the report.
     env = load_environment(ROOT / '.env')
     secrets = {value for name, value in env.items() if name.endswith('API_KEY') and value}
-    identities = {env.get(name, '') for name in ('MODEL_NAME', 'LLM_MODEL', 'JUDGE_MODEL', 'EMBEDDING_MODEL')}
-    manifest = ROOT / 'knowledge/index_manifest.json'
-    if manifest.exists():
-        identities.add(json.loads(manifest.read_text()).get('model_id', ''))
+    identities = {env.get(name, '') for name in ('MODEL_NAME', 'LLM_MODEL', 'JUDGE_MODEL')}
     identities.discard('')
     family_probes = {m.group().lower() for identity in identities
                      if (m := re.match(r'[A-Za-z]{4,}', identity.split('/')[-1]))}

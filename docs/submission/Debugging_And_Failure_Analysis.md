@@ -7,10 +7,10 @@ This document provides a comprehensive post-mortem of an empirical system defect
 ## 1. Case Study: R09 Amount-Review Boundary Repair
 
 ### 1.1 Defect Manifestation
-During full evaluation run **`20261019T120208Z`**, 64 out of 65 cases passed all checks. The sole functional failure was evaluation case **`R09`** (User query: *"What is the policy on refunds above $100?"*):
+During full evaluation run **`20261021T190548Z`**, 64 out of 65 cases passed all checks. The sole functional failure was evaluation case **`R09`** (User query: *"What is the policy on refunds above $100?"*):
 
 - **Expected Outcome:** `ANSWERED` (The agent must retrieve the refund review policy and explain that amounts exceeding $100 require human review, citing `doc:refund_policy`).
-- **Observed Outcome in `20261019T120208Z`:** `INSUFFICIENT_EVIDENCE` (Hard gate passed, but `expected_terminal_outcome` failed, causing `case_checks_passed: False`).
+- **Observed Outcome in `20261021T190548Z`:** `INSUFFICIENT_EVIDENCE` (Hard gate passed, but `expected_terminal_outcome` failed, causing `case_checks_passed: False`).
 - **Observed Response:** *"I cannot provide a fully verified answer from the available evidence. Please confirm the order or product, or contact retailer support."*
 
 ---
@@ -18,63 +18,70 @@ During full evaluation run **`20261019T120208Z`**, 64 out of 65 cases passed all
 ### 1.2 Root Cause Analysis (RCA)
 
 #### Diagnostic Trace
-Inspection of the execution trace revealed that the policy specialist successfully retrieved chunk `refund_policy:v1:review-threshold:0` containing:
-> *"Amounts above $100 require additional review before approval. Human action is always required for refund execution."*
+To isolate the failure without altering production behavior, diagnostic run **`20261021T215946Z`** was executed to capture sanitized rejected composer prose (diagnostic receipt SHA-256: `ca1c65df37ef45e9dff941b82d6c4bbe4fa0bc03e2eaea945a504632efd15da8`).
 
-The LLM generated an accurate draft:
-> *"I cannot approve any refunds. All refunds require human execution regardless of amount. The configured automatic-review threshold is $100; amounts above this require additional human review..."*
+Inspection of the diagnostic execution trace revealed:
+1. The policy specialist agent properly retrieved chunk `refund_policy:v1:review-threshold:0` containing:
+   > *"Amounts above $100 require additional review before approval. Human action is always required for refund execution."*
+2. The composer generated structured draft fields:
+   - `draft.answer`: *"I cannot approve any refunds. All refunds require human execution regardless of amount."*
+   - `draft.why`: `["Amounts above $100 require additional review before approval"]` (explaining store threshold policy, ending without a period).
+   - `draft.next_steps`: `["Please contact retailer support with your order reference for actual review"]` (guiding the customer on next steps).
 
-However, the deterministic output safety gate (`amount_review_errors()` in `src/capstone_agent/support/eligibility.py`) rejected the response with error code:
+However, the deterministic output safety gate (`final_errors()` in `src/capstone_agent/support/guards.py`) rejected the draft with error code:
 `G3_UNSUPPORTED_AMOUNT_REVIEW_CAUSE`
 
-#### Mechanism of Failure
-In `src/capstone_agent/support/eligibility.py`, the regex pattern `amount_review_claims()` was designed to prevent the LLM from making unauthorized factual claims about a customer's specific order refund. 
-
-The original regex inspected clauses containing "threshold" or "amount above":
+#### Mechanism of Failure: Field Boundary Collisions
+In `src/capstone_agent/support/guards.py`, the validation pipeline previously assembled the draft text by space-joining all prose fields:
 ```python
-# Flawed original pattern:
-individual = re.search(
-    r'\b(?:this|that|the|our)\s+(?:refund|request|amount|threshold)\b',
-    clause, re.I
-)
+# Flawed field-joining logic prior to repair:
+body = ' '.join([draft.answer, *draft.why, *draft.next_steps])
+errors += amount_review_errors(body, facts, order_id=order_id)
 ```
-Because the phrase *"amounts above this"* contained the demonstrative pronoun *"this"* preceding a threshold discussion, the parser misclassified a statement about **general store policy** as an assertion of an **individual customer's order eligibility**. 
 
-Since case R09 was a general policy question with no active order context or order-check tool calls, `amount_review_errors()` looked for a verified tool fact `check_return_eligibility` confirming that the customer's specific order exceeded $100. Finding none, it flagged `G3_UNSUPPORTED_AMOUNT_REVIEW_CAUSE`, which forced the system into a safe fallback of `INSUFFICIENT_EVIDENCE`.
+In `src/capstone_agent/support/eligibility.py`, `amount_review_claims()` splits text into clauses using sentence terminators and conjunctions:
+```python
+re.split(r'(?<!\d)\.|\.(?!\d)|[!?;\n]|\b(?:but|however|although)\b', body, flags=re.I)
+```
+
+Because `draft.why` contained a general threshold policy without a trailing period and was joined by a single space to `draft.next_steps`, the two separate fields collided into a single unpunctuated clause:
+> *"Amounts above $100 require additional review before approval Please contact retailer support with your order reference for actual review"*
+
+Within this single merged clause:
+1. It matched the threshold review pattern: `\bthreshold\b|\b(?:amount|refund)\b.{0,45}\b(?:exceeds?|above|over)\b` and `\b(?:requires?|needs?|must)\b.{0,55}\bhuman review\b`.
+2. It absorbed the customer instruction from `next_steps`, matching the individual transaction pattern: `\b(?:your|my)\s+(?:refund|request|amount|order)\b` (specifically *"your order reference"*).
+
+Consequently, `amount_review_claims` misclassified a generic statement about store-wide policy as an assertion about an individual customer's order refund eligibility. Because case R09 was a general informational inquiry with no active order context or supporting `check_return_eligibility` tool records, `amount_review_errors()` flagged `G3_UNSUPPORTED_AMOUNT_REVIEW_CAUSE`, triggering an unnecessary safety fallback to `INSUFFICIENT_EVIDENCE`.
 
 ---
 
 ### 1.3 Implemented Code Repair
 
-The regular expression was surgically updated to bind demonstrative pronouns strictly to transaction entities (`order`, `refund`, `request`), while explicitly excluding policy boundary nouns (`threshold`, `limit`, `policy`, `rules`):
+The defect was resolved surgically in `src/capstone_agent/support/guards.py` line 170. Rather than space-joining distinct prose fields for the amount-review guard, newline delimiters are explicitly preserved:
 
 ```python
-# Repaired pattern in src/capstone_agent/support/eligibility.py:
-individual = re.search(
-    r'\b(?:your|my)\s+(?:(?:specific|individual|requested)\s+)?(?:refund|request|amount|order)\b|'
-    r'\b(?:this|that|the|our)\s+(?:(?:specific|individual|requested)\s+)?'
-    r'(?:refund|request|amount|order)\b(?!\s+(?:amount\s+)?(?:threshold|limit|policy|rules?)\b)',
-    clause, re.I
-)
-if not individual and re.search(r'\b(?:refunds|amounts)\b.{0,35}\b(?:above|over|exceed\w*)\b', clause, re.I):
-    continue
-causal = re.search(r'\b(?:because|due to|per|under|based on)\b.{0,50}\b(?:threshold|amount)\b', clause, re.I)
-if individual or causal:
-    yield AmountReviewClaim()
+# Repaired logic in src/capstone_agent/support/guards.py:
+# Reasons and next steps are separate prose fields. Without a boundary,
+# a general threshold rule can absorb "your order reference" from a later
+# next step and look like an individualized amount-review assertion.
+amount_body = '\n'.join([draft.answer, *draft.why, *draft.next_steps])
+errors += amount_review_errors(amount_body, facts, order_id=order_id)
 ```
 
-This ensures:
-1. General policy descriptions (*"The configured threshold is $100; amounts above this require human review"*) are recognized as public policy and permitted without requiring order tool facts.
-2. Individualized claims (*"Your refund requires review because this order exceeds $100"*) strictly require supporting facts from `check_return_eligibility`.
+Because `\n` is explicitly included in the regex clause delimiter set `[!?;\n]`, `amount_review_claims()` evaluates each field within its own bounded clause:
+- Clause 1 (`draft.why`): *"Amounts above $100 require additional review before approval"* — Contains general policy without individual order demonstratives (`AmountReviewClaim` not triggered).
+- Clause 2 (`draft.next_steps`): *"Please contact retailer support with your order reference for actual review"* — Contains customer instructions without threshold claims (`AmountReviewClaim` not triggered).
+
+This surgical change preserved strict deterministic safety enforcement for actual order claims while eliminating false-positive trigger bleed across multi-field drafts.
 
 ---
 
 ### 1.4 Empirical Verification & Receipts
 
 #### Before vs After Run Comparison
-The fix was validated by comparing identical execution parameters across the before and after benchmark runs:
+The fix was validated by comparing identical execution parameters between the failing run and the final production run:
 
-| Attribute | Failing Run (`20261019T120208Z`) | Final Passing Run (`20261022T025441Z`) |
+| Attribute | Failing Run (`20261021T190548Z`) | Final Passing Run (`20261022T025441Z`) |
 | :--- | :--- | :--- |
 | **R09 Terminal Outcome** | `INSUFFICIENT_EVIDENCE` ❌ | `ANSWERED` ✅ |
 | **R09 Expected Outcome Check** | `False` | `True` |
@@ -84,10 +91,10 @@ The fix was validated by comparing identical execution parameters across the bef
 | **Overall Suite Hard Gates** | 65 / 65 (100%) | **65 / 65 (100%)** |
 
 #### Permanent Regression Testing
-To guarantee that this defect never regresses, dedicated automated regression suites were added:
-- `tests/regression/test_r09_boundary_regression.py` validates boundary rule limits.
-- `tests/unit/test_submission_repairs.py` validates that demonstrative policy phrases do not trigger false `AmountReviewClaim` yields.
-- Full offline test suite: **606 / 606 tests passing**.
+To guarantee that this boundary collision defect never regresses, an automated regression test was added to `tests/regression/test_r09_boundary_regression.py`:
+- **Negative Case (Pre-fix defect):** Asserts that space-joining multi-field drafts containing threshold policies and next-step order instructions triggers `G3_UNSUPPORTED_AMOUNT_REVIEW_CAUSE`.
+- **Positive Case (Post-fix repair):** Asserts that newline-joining isolates the fields and passes cleanly with 0 errors (`errors == []`).
+- **Full Test Suite:** 612 / 612 tests passing offline.
 
 ---
 

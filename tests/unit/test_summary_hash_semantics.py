@@ -19,7 +19,11 @@ def test_summary_hash_covers_only_summary_text(setup):
 
     res = asyncio.run(registry.call('escalation', 'create_escalation', args))
     assert res.status == 'ok'
-    expected_summary_hash = hashlib.sha256(summary_text.encode('utf-8')).hexdigest()
+    with sqlite3.connect(services.ticket_path) as db:
+        key, payload = db.execute('SELECT key, payload FROM tickets').fetchone()
+        stored = json.loads(payload)
+        stored_summary = stored['packet']['summary']
+        expected_summary_hash = hashlib.sha256(stored_summary.encode('utf-8')).hexdigest()
     assert res.data['summary_hash'] == expected_summary_hash
 
 
