@@ -17,9 +17,10 @@ ROOT = Path(__file__).resolve().parents[1]
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--index-version", default="v2")
+    parser.add_argument("--labels", default="data/retrieval_labels.json")
     parser.add_argument("--output", default="artifacts/retrieval/category_v2_20261013")
     arguments = parser.parse_args()
-    label_path = ROOT / "data/retrieval_labels.json"
+    label_path = ROOT / arguments.labels
     labels = json.loads(label_path.read_text())["labels"]
     search = PolicySearch(ConfiguredEmbeddings(), version=arguments.index_version, threshold=-1)
     raw = [(label, search.search(label["query"])) for label in labels]
