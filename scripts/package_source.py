@@ -1,4 +1,5 @@
 """Build a scanned history-free snapshot of committed files only."""
+from __future__ import annotations
 import argparse
 import hashlib
 import json
@@ -10,23 +11,51 @@ from capstone_agent.config import load_environment
 ROOT=Path(__file__).resolve().parents[1]
 
 def main():
-    parser=argparse.ArgumentParser();parser.add_argument('--output',type=Path,required=True);args=parser.parse_args()
-    commit=subprocess.run(['git','rev-parse','HEAD'],cwd=ROOT,check=True,capture_output=True,text=True).stdout.strip()
-    listing=subprocess.run(['git','ls-tree','-rz',commit],cwd=ROOT,check=True,capture_output=True).stdout.decode().split('\0')
-    tracked={entry.split('\t',1)[1]:entry.split('\t',1)[0].split()[0] for entry in listing if entry}
-    env=load_environment(ROOT/'.env');secrets=[value.encode() for key,value in env.items() if key.endswith('API_KEY') and value]
-    entries={};excluded=[]
-    for name,mode in sorted(tracked.items()):
-        path=Path(name)
-        if any(part in {'.git','.venv','.cache','__pycache__','.pytest_cache','submission'} for part in path.parts) or name.startswith(('data/runtime/','knowledge/index/')) or (path.name.startswith('.env') and path.name!='.env.example'):
-            excluded.append(name);continue
-        local=ROOT/path
-        if local.is_symlink() or mode=='120000':raise ValueError('SOURCE_SNAPSHOT_REJECTS_SYMLINKS')
-        if mode not in {'100644','100755'}:raise ValueError('UNSUPPORTED_SOURCE_ENTRY')
-        # Use the committed bytes, never accidentally include uncommitted edits.
-        content=subprocess.run(['git','show',commit+':'+name],cwd=ROOT,check=True,capture_output=True).stdout
-        if any(secret in content for secret in secrets):raise ValueError('CONFIGURED_CREDENTIAL_FOUND_IN_SOURCE')
-        entries[name]=content
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--output', type=Path, required=True)
+    parser.add_argument('--from-staged', type=Path, default=None,
+                        help='Package from pre-staged allowlist directory instead of git tree')
+    args = parser.parse_args()
+
+    commit = subprocess.run(['git', 'rev-parse', 'HEAD'], cwd=ROOT, check=True,
+                            capture_output=True, text=True).stdout.strip()
+
+    if args.from_staged:
+        staged = args.from_staged.resolve()
+        if not staged.exists() or not staged.is_dir():
+            raise ValueError('STAGED_DIRECTORY_NOT_FOUND')
+        entries = {}
+        for path in sorted(staged.rglob('*')):
+            if path.is_file() and not path.is_symlink():
+                rel = str(path.relative_to(staged))
+                entries[rel] = path.read_bytes()
+        excluded = []
+        tracked = {name: '100644' for name in entries}
+    else:
+        listing = subprocess.run(['git', 'ls-tree', '-rz', commit], cwd=ROOT, check=True,
+                                 capture_output=True).stdout.decode().split('\0')
+        tracked = {entry.split('\t', 1)[1]: entry.split('\t', 1)[0].split()[0] for entry in listing if entry}
+        env = load_environment(ROOT / '.env')
+        secrets = [value.encode() for key, value in env.items() if key.endswith('API_KEY') and value]
+        entries = {}
+        excluded = []
+        for name, mode in sorted(tracked.items()):
+            path = Path(name)
+            if (any(part in {'.git', '.venv', '.cache', '__pycache__', '.pytest_cache', 'submission'} for part in path.parts)
+                    or name.startswith(('data/runtime/', 'knowledge/index/'))
+                    or (path.name.startswith('.env') and path.name != '.env.example')):
+                excluded.append(name)
+                continue
+            local = ROOT / path
+            if local.is_symlink() or mode == '120000':
+                raise ValueError('SOURCE_SNAPSHOT_REJECTS_SYMLINKS')
+            if mode not in {'100644', '100755'}:
+                raise ValueError('UNSUPPORTED_SOURCE_ENTRY')
+            content = subprocess.run(['git', 'show', commit + ':' + name], cwd=ROOT, check=True,
+                                     capture_output=True).stdout
+            if any(secret in content for secret in secrets):
+                raise ValueError('CONFIGURED_CREDENTIAL_FOUND_IN_SOURCE')
+            entries[name] = content
     manifest={'commit':commit,'file_count':len(entries),'files':{name:hashlib.sha256(value).hexdigest() for name,value in entries.items()},
         'excluded_tracked_files':excluded,'limits':'Committed source/evidence only; no Git history, .env, local runtime, vector store or model cache. Current configured credentials scanned. Not universal secret detection or proof of release acceptance; use the accompanying evaluation/status documents.'}
     args.output.parent.mkdir(parents=True,exist_ok=True)
